@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\gui",
+    "\\gui\\uis",
+    "\\gui\\uis\\pages",
+    "\\gui\\uis\\pattern_columns",
+    "\\gui\\uis\\windows",
+    "\\gui\\uis\\windows\\main_window",
+    "\\gui\\widgets",
+    "\\gui\\widgets\\py_pattern",
+    "\\system"
+  ],
+  "SelectedNode": "\\gui\\uis\\windows\\main_window\\setup_main_window.py",
+  "PreviewInSolutionExplorer": false
+}

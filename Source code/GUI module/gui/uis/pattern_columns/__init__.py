@@ -1,0 +1,1 @@
+from .temp_pattern_setting import TempPatternWidget
