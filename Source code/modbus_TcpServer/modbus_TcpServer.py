@@ -112,7 +112,8 @@ def run_async_server():
     # ----------------------------------------------------------------------- # 
 
     # TCP Server
-    StartTcpServer(context, identity=identity, address=("192.168.0.105", 502))
+
+    StartTcpServer(context, identity=identity, address=("192.168.0.229", 502))
 
     # TCP Server with deferred reactor run
 

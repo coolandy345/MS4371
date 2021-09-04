@@ -147,13 +147,13 @@ class MainWindow(QMainWindow):
         if (btn.objectName()[0:21]) == "menu_temp_Step_Buttom":
             if (self.focus_step_number) == 0 :
                 self.focus_step_number=int(''.join(filter(str.isdigit,btn.objectName())))
-                self.tempPattern.Step_List[self.focus_step_number-1].show_menu()
+                self.tempPattern.temp_widges_list[self.focus_step_number-1].show_menu()
             else:
-                self.tempPattern.Step_List[self.focus_step_number-1].close_menu()
+                self.tempPattern.temp_widges_list[self.focus_step_number-1].close_menu()
                 self.focus_step_number=0
         else:
             if (self.focus_step_number) != 0 :
-                self.tempPattern.Step_List[self.focus_step_number-1].close_menu()
+                self.tempPattern.temp_widges_list[self.focus_step_number-1].close_menu()
                 self.focus_step_number=0
 
 
@@ -185,7 +185,7 @@ class MainWindow(QMainWindow):
     # ///////////////////////////////////////////////////////////////
     def mousePressEvent(self, event):
         # SET DRAG POS WINDOW
-        self.tempPattern.Step_List[self.focus_step_number-1].close_menu()
+        self.tempPattern.temp_widges_list[self.focus_step_number-1].close_menu()
         self.focus_step_number=0
         self.dragPos = event.globalPos()
 

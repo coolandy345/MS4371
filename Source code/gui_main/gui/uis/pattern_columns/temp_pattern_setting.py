@@ -6,16 +6,76 @@ from gui_main.gui.core.json_themes import Themes
 from gui_main.qt_core import *
 
 
+class tempUnit():
+    def __init__(
+        self,
+        SV=0,
+        time_hour=0,
+        time_min=0,
+        time_keep=0,
+        N2_flowRate=0,
+        PID_No=0,
+        test_measure=False,
+        test_measure_PatternNo=0,
+        cascade_control=False,
+        end_step=False,
+        Step_Commend=""
+        ):
+        
+        
+        self.Step_Commend=Step_Commend
+
+
+        if test_measure==False and end_step==False:
+            self.SV=SV
+            self.time_hour=time_hour
+            self.time_min=time_min
+            self.time_keep=time_keep
+            self.N2_flowRate=N2_flowRate
+            self.PID_No=PID_No
+            self.cascade_control=cascade_control
+        elif test_measure==True:
+            self.test_measure=test_measure
+            self.test_measure_PatternNo=test_measure_PatternNo
+        else:
+            self.end_step=end_step
+        
+            
+            
+        
+
+
+class templist():
+    def __init__(
+        self,
+        name="",
+        step=0,
+        gas_condition=0,
+        RT_measure=False,
+        units=[]
+        ):
+        self.name=name
+        self.step=step
+        self.gas_condition=gas_condition
+        self.RT_measure=RT_measure
+        self.units=units
+      
+
 
 class TempPatternWidget():
     
     def __init__(
             self, 
             parent,
-            app_parent
+            app_parent,
+            choose_list=0,
+            Step_Lists=[]
         ):
-        self.Step_number=0
-        self.Step_List=[]
+        self.Step_Lists=Step_Lists
+        self.choose_list=choose_list
+
+
+        self.temp_widges_list=[]
         self._parent=parent
         self._app_parent=app_parent
         self.setup_utility()
@@ -97,23 +157,25 @@ class TempPatternWidget():
             parent = self._parent,
             app_parent=self._app_parent,
             )
-        self.Step_List.append(self.first_pattern)
-        self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.Step_List[0])
+        
+        self.temp_widges_list.append(self.first_pattern)
+        self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.temp_widges_list[0])
         
 
     def new_TempPattern(self):
         self.Step_number+=1
-        self.Step_List[self.Step_number-1].pattern.page.setCurrentIndex(True)
+        self.temp_widges_list[self.Step_number-1].pattern.page.setCurrentIndex(True)
         if self.Step_number<20:
-            self.new_pattern = PyTempStep(
+
+            new_pattern = PyTempStep(
                 active=False,
                 step=self.Step_number+1,
                 type=PyTempStep.Temp_Type,
                 parent = self._parent,
                 app_parent=self._app_parent
                 )
-            self.Step_List.append(self.new_pattern)
-            self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.Step_List[self.Step_number])
+            self.temp_widges_list.append(new_pattern)
+            self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.temp_widges_list[self.Step_number])
 
     def scroll_adjust_TempPattern(self):
         self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().maximum())

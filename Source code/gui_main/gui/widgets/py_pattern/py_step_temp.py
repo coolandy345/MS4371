@@ -52,17 +52,9 @@ class PyTempStep(QWidget):
     Test_Type     = 1
     End_Type     =  2
 
-
-
-    
-
-
-
-
-
-    step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(225, 230, 241);padding-left:5px;background-color: rgb(53, 59, 72);border:none;"
-    step_test_type_style="font: 12px \"游ゴシック\";color: rgb(225, 230, 241);padding-left:5px;background-color: rgb(53, 59, 72);border:none;"
-    step_end_type_style="font: 12px \"游ゴシック\";color: rgb(225, 230, 241);padding-left:5px;background-color: rgb(53, 59, 72);border:none;"
+    step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);;border:none;"
+    step_test_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);;border:none;"
+    step_end_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
 
     time_gray_out_style="border:none;background-color: rgb(30, 34, 41);color: rgb(30, 34, 41);"
     time_normal_style="border:none;background-color: rgb(30, 34, 41);color: rgb(225, 230, 241);"
@@ -223,7 +215,7 @@ class PyTempStep(QWidget):
 
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":
             
-            #self.pattern.Step_label.setStyleSheet(self.step_temp_type_style)
+            self.pattern.Step_label.setStyleSheet(self.step_temp_type_style)
 
             self.pattern.Hour_lineEdit.setEnabled(True)
             self.pattern.Hour_lineEdit.setStyleSheet(self.time_normal_style)
@@ -249,6 +241,8 @@ class PyTempStep(QWidget):
             self.pattern.TestPattern_label.setStyleSheet(self.label_gray_out_style)
             
         elif (self.pattern.Type_comboBox.currentText()) == "測定":
+
+            self.pattern.Step_label.setStyleSheet(self.step_test_type_style)
 
             self.pattern.Hour_lineEdit.setEnabled(True)
             self.pattern.Hour_lineEdit.setStyleSheet(self.time_normal_style)
@@ -276,6 +270,8 @@ class PyTempStep(QWidget):
             
             #self.pattern.comboBox_2.addItems(profile_manager.scan_temp_profile())
         elif (self.pattern.Type_comboBox.currentText()) == "END":
+
+            self.pattern.Step_label.setStyleSheet(self.step_end_type_style)
 
             self.pattern.Hour_lineEdit.setEnabled(False)
             self.pattern.Hour_lineEdit.setStyleSheet(self.time_gray_out_style)

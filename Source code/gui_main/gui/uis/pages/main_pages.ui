@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1286</width>
-    <height>661</height>
+    <width>1228</width>
+    <height>645</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -3107,8 +3107,8 @@ background-color: rgb(16, 18, 22);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1233</width>
-            <height>1216</height>
+            <width>1166</width>
+            <height>1266</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -3424,7 +3424,7 @@ border-color: rgb(44, 49, 60);</string>
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>500</height>
+                  <height>550</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -3438,8 +3438,8 @@ border-color: rgb(44, 49, 60);</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1193</width>
-                   <height>498</height>
+                   <width>1126</width>
+                   <height>548</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_24">
@@ -3900,7 +3900,7 @@ border-color: rgb(44, 49, 60);</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1193</width>
+                   <width>1126</width>
                    <height>498</height>
                   </rect>
                  </property>
