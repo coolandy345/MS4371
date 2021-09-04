@@ -1,0 +1,1 @@
+from .registor_manager import loadMemoryPool

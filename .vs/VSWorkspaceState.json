@@ -2,9 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\Source code",
-    "\\Source code\\modbusTcpServer",
-    "\\Source code\\registor_manager"
+    "\\Source code\\gui_main",
+    "\\Source code\\gui_main\\gui",
+    "\\Source code\\gui_main\\gui\\uis",
+    "\\Source code\\gui_main\\gui\\uis\\pattern_columns",
+    "\\Source code\\gui_main\\gui\\uis\\windows\\main_window",
+    "\\Source code\\gui_main\\gui\\widgets",
+    "\\Source code\\gui_main\\gui\\widgets\\py_pattern",
+    "\\Source code\\gui_main\\user\\profiles"
   ],
-  "SelectedNode": "\\Source code\\modbusTcpServer\\ModbusTcpServer.py",
+  "SelectedNode": "\\Source code\\gui_main\\gui\\widgets\\py_pattern\\py_step_temp.py",
   "PreviewInSolutionExplorer": false
 }
