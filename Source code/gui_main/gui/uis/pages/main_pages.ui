@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1228</width>
-    <height>645</height>
+    <width>1234</width>
+    <height>836</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -3107,8 +3107,8 @@ background-color: rgb(16, 18, 22);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1166</width>
-            <height>1266</height>
+            <width>1181</width>
+            <height>1716</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -3421,10 +3421,16 @@ border-color: rgb(44, 49, 60);</string>
               </item>
               <item row="2" column="0" colspan="5">
                <widget class="QScrollArea" name="scrollArea_3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>550</height>
+                  <height>1000</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -3438,13 +3444,25 @@ border-color: rgb(44, 49, 60);</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1126</width>
-                   <height>548</height>
+                   <width>1141</width>
+                   <height>998</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_24">
                   <item row="0" column="0">
                    <widget class="QFrame" name="frame_35">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>0</height>
+                     </size>
+                    </property>
                     <property name="styleSheet">
                      <string notr="true">QFrame{
 	background-color: rgb(25, 28, 34);
@@ -3465,6 +3483,12 @@ border-color: rgb(44, 49, 60);</string>
                   </item>
                   <item row="1" column="0">
                    <widget class="QFrame" name="frame_36">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
                     <property name="styleSheet">
                      <string notr="true">QFrame{
 	background-color: rgb(25, 28, 34);
@@ -3487,7 +3511,7 @@ border-color: rgb(44, 49, 60);</string>
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
-                         <height>270</height>
+                         <height>300</height>
                         </size>
                        </property>
                        <property name="maximumSize">
@@ -3900,7 +3924,7 @@ border-color: rgb(44, 49, 60);</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>1126</width>
+                   <width>1141</width>
                    <height>498</height>
                   </rect>
                  </property>

@@ -64,11 +64,6 @@ import pyqtgraph as pg
 class SetupMainWindow:
     def __init__(self):
         super().__init__()
-        # SETUP MAIN WINDOw
-        # Load widgets from "gui\uis\main_window\ui_main.py"
-        # ///////////////////////////////////////////////////////////////
-        self.ui = UI_MainWindow()
-        self.ui.setup_ui(self)
 
     # ADD LEFT MENUS
     # ///////////////////////////////////////////////////////////////

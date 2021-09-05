@@ -67,8 +67,8 @@ class MainWindow(QMainWindow):
         # SETUP MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
         self.hide_grips = True # Show/Hide resize grips
-        SetupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
 
+        SetupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
         self.show()
@@ -78,6 +78,7 @@ class MainWindow(QMainWindow):
     # Check funtion by object name / btn_id
     # ///////////////////////////////////////////////////////////////
     def btn_clicked(self):
+        print("2qd")
         # GET BT CLICKED
         btn = SetupMainWindow.setup_btns(self)
         
@@ -141,22 +142,23 @@ class MainWindow(QMainWindow):
             self.tempPattern.new_TempPattern()
 
         
-
+        #self.SetupMainWindow.
+        
         
 
         if (btn.objectName()[0:21]) == "menu_temp_Step_Buttom":
             if (self.focus_step_number) == 0 :
                 self.focus_step_number=int(''.join(filter(str.isdigit,btn.objectName())))
-                self.tempPattern.step_widges_list[self.focus_step_number-1].show_menu()
+                self.tempPattern.step_widges_list[self.focus_step_number].show_menu()
             else:
-                self.tempPattern.step_widges_list[self.focus_step_number-1].close_menu()
+                self.tempPattern.step_widges_list[self.focus_step_number].close_menu()
                 self.focus_step_number=0
         else:
             if (self.focus_step_number) != 0 :
-                self.tempPattern.step_widges_list[self.focus_step_number-1].close_menu()
+                self.tempPattern.step_widges_list[self.focus_step_number].close_menu()
                 self.focus_step_number=0
 
-
+        self.tempPattern.close_menu()
 
         # DEBUG 
         #print(f"Button {btn.objectName()}, clicked!")
@@ -185,9 +187,11 @@ class MainWindow(QMainWindow):
     # ///////////////////////////////////////////////////////////////
     def mousePressEvent(self, event):
         # SET DRAG POS WINDOW
-        self.tempPattern.step_widges_list[self.focus_step_number-1].close_menu()
+        self.tempPattern.close_menu()
+       # self.tempPattern.step_widges_list[self.focus_step_number-1].close_menu()
         self.focus_step_number=0
         self.dragPos = event.globalPos()
+
 
 
 

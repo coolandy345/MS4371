@@ -23,8 +23,6 @@ from .ui_temp_pattern import *
 # ///////////////////////////////////////////////////////////////
 from gui_main.gui.widgets import *
 
-from gui_main.gui.core.functions import *
-
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////
 from gui_main.gui.core.json_settings import Settings
@@ -45,8 +43,8 @@ from .py_pattern_menu import *
 
 class PyTempStep(QWidget):
 
-    clicked = Signal(object)
-    released = Signal(object)
+    #clicked = Signal(object)
+    #released = Signal(object)
 
     Temp_Type  =    0
     Test_Type  =    1
@@ -82,7 +80,8 @@ class PyTempStep(QWidget):
         minute = 0,
         keep_seccond = 0,
         test_pattern = "",
-        n2_flowrate = 0
+        n2_flowrate = 0,
+        cascade_control = 0
     ):
         super().__init__()
         # Parameter
@@ -95,13 +94,14 @@ class PyTempStep(QWidget):
         self._keep_seccond = keep_seccond
         self._test_pattern = test_pattern
         self._n2_flowrate = n2_flowrate
+        self._cascade_control = cascade_control
         # Parent
         self._parent = parent
         self._app_parent = app_parent
 
         # base prepare
         # ///////////////////////////////////////////////////////////////
-        self.setFixedSize(195,265)
+        self.setFixedSize(200,300)
         self.pattern_frame = QFrame(self)
         self.pattern_frame.setContentsMargins(0,0,0,0)
         self.pattern = Ui_temp_pattern()
@@ -122,7 +122,7 @@ class PyTempStep(QWidget):
             parent=self,
             app_parent=self._parent
             )
-        self._menu.menu_frame.move(50, 0)
+        self._menu.menu_frame.move(60, 0)
         self.close_menu()
 
         self.mode_respond()
@@ -135,6 +135,8 @@ class PyTempStep(QWidget):
         # Step type setting
         # ///////////////////////////////////////////////////////////////
         self.pattern.Type_comboBox.setCurrentIndex(self._type)
+
+        self.pattern.cascade_comboBox.setCurrentIndex(self._cascade_control)
 
         # temperature setting
         # ///////////////////////////////////////////////////////////////
@@ -206,6 +208,7 @@ class PyTempStep(QWidget):
             )
         self.pattern.gridLayout_6.addWidget(self.menu_icon, Qt.AlignCenter, Qt.AlignCenter)
         self.menu_icon.clicked.connect(self._parent.btn_clicked)
+        self.menu_icon.clicked.connect(self.show_menu)
         self.menu_icon.setObjectName("menu_temp_Step_Buttom - STEP %d" %self._step)
 
         self.pattern.Type_comboBox.currentIndexChanged.connect(self.mode_respond)
@@ -243,6 +246,10 @@ class PyTempStep(QWidget):
 
             self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
             self.pattern.label_4.setStyleSheet(self.time_normal_style)
+
+            self.pattern.cascade_label.setStyleSheet(self.label_normal_style)
+            self.pattern.cascade_comboBox.setEnabled(True)
+            self.pattern.cascade_comboBox.setStyleSheet(self.line_normal_style)
             
             
         elif (self.pattern.Type_comboBox.currentText()) == "測定":
@@ -276,6 +283,10 @@ class PyTempStep(QWidget):
 
             self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
             self.pattern.label_4.setStyleSheet(self.time_normal_style)
+
+            self.pattern.cascade_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.cascade_comboBox.setEnabled(False)
+            self.pattern.cascade_comboBox.setStyleSheet(self.line_gray_out_style)
             
             
         elif (self.pattern.Type_comboBox.currentText()) == "RT測定":
@@ -310,6 +321,10 @@ class PyTempStep(QWidget):
             self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
             self.pattern.label_4.setStyleSheet(self.time_normal_style)
 
+            self.pattern.cascade_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.cascade_comboBox.setEnabled(False)
+            self.pattern.cascade_comboBox.setStyleSheet(self.line_gray_out_style)
+
         elif (self.pattern.Type_comboBox.currentText()) == "END":
 
             self.pattern.Step_label.setStyleSheet(self.step_end_type_style)
@@ -339,6 +354,10 @@ class PyTempStep(QWidget):
 
             self.pattern.time_frame.setStyleSheet(self.timeframe_grayout)
             self.pattern.label_4.setStyleSheet(self.time_gray_out_style)
+
+            self.pattern.cascade_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.cascade_comboBox.setEnabled(False)
+            self.pattern.cascade_comboBox.setStyleSheet(self.line_gray_out_style)
             
 
             
@@ -357,4 +376,12 @@ class PyTempStep(QWidget):
 
     def move_menu(self):
         pass
+
+    def mousePressEvent(self, event):
+        self._parent.tempPattern.close_menu()
+
+    def enterEvent(self, event):
+        print("happy-2")
+
+        
 

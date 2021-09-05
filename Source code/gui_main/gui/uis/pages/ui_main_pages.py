@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesnPktbc.ui'
+## Form generated from reading UI file 'main_pagesAspUVo.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -17,7 +17,7 @@ class Ui_MainPages(object):
     def setupUi(self, MainPages):
         if not MainPages.objectName():
             MainPages.setObjectName(u"MainPages")
-        MainPages.resize(1228, 645)
+        MainPages.resize(1234, 836)
         MainPages.setMinimumSize(QSize(0, 0))
         self.gridLayout_8 = QGridLayout(MainPages)
         self.gridLayout_8.setObjectName(u"gridLayout_8")
@@ -1423,7 +1423,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1166, 1266))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1181, 1216))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -1553,16 +1553,21 @@ class Ui_MainPages(object):
 
         self.scrollArea_3 = QScrollArea(self.frame_20)
         self.scrollArea_3.setObjectName(u"scrollArea_3")
-        self.scrollArea_3.setMinimumSize(QSize(0, 550))
+        sizePolicy.setHeightForWidth(self.scrollArea_3.sizePolicy().hasHeightForWidth())
+        self.scrollArea_3.setSizePolicy(sizePolicy)
+        self.scrollArea_3.setMinimumSize(QSize(0, 500))
         self.scrollArea_3.setStyleSheet(u"background-color: rgb(30, 34, 41);")
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1126, 548))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1141, 498))
         self.gridLayout_24 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_24.setObjectName(u"gridLayout_24")
         self.frame_35 = QFrame(self.scrollAreaWidgetContents_3)
         self.frame_35.setObjectName(u"frame_35")
+        sizePolicy.setHeightForWidth(self.frame_35.sizePolicy().hasHeightForWidth())
+        self.frame_35.setSizePolicy(sizePolicy)
+        self.frame_35.setMinimumSize(QSize(0, 0))
         self.frame_35.setStyleSheet(u"QFrame{\n"
 "	background-color: rgb(25, 28, 34);\n"
 "	border-color:rgb(30, 34, 41);\n"
@@ -1578,6 +1583,8 @@ class Ui_MainPages(object):
 
         self.frame_36 = QFrame(self.scrollAreaWidgetContents_3)
         self.frame_36.setObjectName(u"frame_36")
+        sizePolicy.setHeightForWidth(self.frame_36.sizePolicy().hasHeightForWidth())
+        self.frame_36.setSizePolicy(sizePolicy)
         self.frame_36.setStyleSheet(u"QFrame{\n"
 "	background-color: rgb(25, 28, 34);\n"
 "	border-color: rgb(36, 41, 49);\n"
@@ -1592,7 +1599,7 @@ class Ui_MainPages(object):
         self.gridLayout_22.setObjectName(u"gridLayout_22")
         self.frame_32 = QFrame(self.frame_36)
         self.frame_32.setObjectName(u"frame_32")
-        self.frame_32.setMinimumSize(QSize(0, 270))
+        self.frame_32.setMinimumSize(QSize(0, 0))
         self.frame_32.setMaximumSize(QSize(16777215, 16777215))
         self.frame_32.setStyleSheet(u"")
         self.frame_32.setFrameShape(QFrame.StyledPanel)
@@ -1764,7 +1771,7 @@ class Ui_MainPages(object):
         self.scrollArea_6.setWidgetResizable(True)
         self.scrollAreaWidgetContents_6 = QWidget()
         self.scrollAreaWidgetContents_6.setObjectName(u"scrollAreaWidgetContents_6")
-        self.scrollAreaWidgetContents_6.setGeometry(QRect(0, 0, 1126, 498))
+        self.scrollAreaWidgetContents_6.setGeometry(QRect(0, 0, 1141, 498))
         self.gridLayout_52 = QGridLayout(self.scrollAreaWidgetContents_6)
         self.gridLayout_52.setObjectName(u"gridLayout_52")
         self.frame_65 = QFrame(self.scrollAreaWidgetContents_6)
