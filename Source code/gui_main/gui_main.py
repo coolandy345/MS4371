@@ -78,10 +78,8 @@ class MainWindow(QMainWindow):
     # Check funtion by object name / btn_id
     # ///////////////////////////////////////////////////////////////
     def btn_clicked(self):
-        print("2qd")
         # GET BT CLICKED
         btn = SetupMainWindow.setup_btns(self)
-        
         # LEFT MENU
         # ///////////////////////////////////////////////////////////////
 

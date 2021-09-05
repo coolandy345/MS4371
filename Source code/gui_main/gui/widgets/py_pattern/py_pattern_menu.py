@@ -48,7 +48,6 @@ class PyStepMenu(QWidget):
         self.menu_frame.setContentsMargins(0,0,0,0)
         self.menu = Ui_pattern_menu()
         self.menu.setupUi( self.menu_frame)
-        print(self._app_parent.btn_clicked)
         self.menu.pattern_menu_cut_pushButton.clicked.connect(self._app_parent.btn_clicked)
         self.menu.pattern_menu_cut_pushButton.setObjectName("pattern_menu_cut_pushButton")
 
