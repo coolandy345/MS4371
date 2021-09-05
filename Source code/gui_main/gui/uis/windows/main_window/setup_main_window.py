@@ -133,7 +133,7 @@ class SetupMainWindow:
 
     # SETUP MAIN WINDOW WITH CUSTOM PARAMETERS
     # ///////////////////////////////////////////////////////////////
-    def setup_gui(self):
+    def setup_gui(self,memory_pool):
         # APP TITLE
         # ///////////////////////////////////////////////////////////////
         self.setWindowTitle(self.settings["app_name"])
@@ -225,7 +225,7 @@ class SetupMainWindow:
         self.Tester_ConnectionToggle=PyToggle()
         self.ui.load_pages.gridLayout_28.addWidget(self.Tester_ConnectionToggle)
         
-        self.tempPattern=TempPatternWidget(self,app_parent=self.ui.central_widget)
+        self.tempPattern=TempPatternWidget(self,app_parent=self.ui.central_widget,memory_pool=memory_pool)
 
 
         

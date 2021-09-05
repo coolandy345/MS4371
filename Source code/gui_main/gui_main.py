@@ -48,7 +48,7 @@ os.environ["QT_FONT_DPI"] = "96"
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self,memory_pool):
         super().__init__()
 
 
@@ -58,7 +58,7 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.ui = UI_MainWindow()
         self.ui.setup_ui(self)
-
+        self.memory_pool=memory_pool
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
         settings = Settings()
@@ -67,7 +67,7 @@ class MainWindow(QMainWindow):
         # SETUP MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
         self.hide_grips = True # Show/Hide resize grips
-        SetupMainWindow.setup_gui(self)
+        SetupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
 
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
@@ -147,13 +147,13 @@ class MainWindow(QMainWindow):
         if (btn.objectName()[0:21]) == "menu_temp_Step_Buttom":
             if (self.focus_step_number) == 0 :
                 self.focus_step_number=int(''.join(filter(str.isdigit,btn.objectName())))
-                self.tempPattern.temp_widges_list[self.focus_step_number-1].show_menu()
+                self.tempPattern.step_widges_list[self.focus_step_number-1].show_menu()
             else:
-                self.tempPattern.temp_widges_list[self.focus_step_number-1].close_menu()
+                self.tempPattern.step_widges_list[self.focus_step_number-1].close_menu()
                 self.focus_step_number=0
         else:
             if (self.focus_step_number) != 0 :
-                self.tempPattern.temp_widges_list[self.focus_step_number-1].close_menu()
+                self.tempPattern.step_widges_list[self.focus_step_number-1].close_menu()
                 self.focus_step_number=0
 
 
@@ -185,17 +185,17 @@ class MainWindow(QMainWindow):
     # ///////////////////////////////////////////////////////////////
     def mousePressEvent(self, event):
         # SET DRAG POS WINDOW
-        self.tempPattern.temp_widges_list[self.focus_step_number-1].close_menu()
+        self.tempPattern.step_widges_list[self.focus_step_number-1].close_menu()
         self.focus_step_number=0
         self.dragPos = event.globalPos()
 
 
 
-def initial_GUI():
+def initial_GUI(memory_pool):
     print("Gui initialing")
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon("motoyama_icon.ico"))
-    window = MainWindow()
+    window = MainWindow(memory_pool)
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
     

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patternkDEWcW.ui'
+## Form generated from reading UI file 'temp_patternTYIRWf.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import *  # type: ignore
+from PySide6.QtGui import *  # type: ignore
+from PySide6.QtWidgets import *  # type: ignore
 
 
 class Ui_temp_pattern(object):
@@ -193,8 +193,8 @@ class Ui_temp_pattern(object):
         self.Step_label.setStyleSheet(u"font:17px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(0, 0, 0);\n"
 "padding-left:5px;\n"
-"background-color: rgb(247, 165, 0);\n"
-"background-color: rgb(200, 133, 0);\n"
+"\n"
+"background-color: rgb(73, 73, 220);\n"
 "border:none;")
 
         self.gridLayout_4.addWidget(self.Step_label, 0, 0, 1, 2)
@@ -209,11 +209,11 @@ class Ui_temp_pattern(object):
 
         self.gridLayout_4.addWidget(self.label_8, 1, 0, 1, 3)
 
-        self.frame_4 = QFrame(self.page2)
-        self.frame_4.setObjectName(u"frame_4")
-        self.frame_4.setMinimumSize(QSize(80, 20))
-        self.frame_4.setMaximumSize(QSize(16777215, 20))
-        self.frame_4.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
+        self.time_frame = QFrame(self.page2)
+        self.time_frame.setObjectName(u"time_frame")
+        self.time_frame.setMinimumSize(QSize(80, 20))
+        self.time_frame.setMaximumSize(QSize(16777215, 20))
+        self.time_frame.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
 "color: rgb(225, 230, 241);\n"
 "border-width: 1px;\n"
 "border-style: solid;\n"
@@ -221,12 +221,12 @@ class Ui_temp_pattern(object):
 "border-color: rgb(0, 0, 0);\n"
 "font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "")
-        self.frame_4.setFrameShape(QFrame.StyledPanel)
-        self.frame_4.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout = QHBoxLayout(self.frame_4)
+        self.time_frame.setFrameShape(QFrame.StyledPanel)
+        self.time_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout = QHBoxLayout(self.time_frame)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(9, 0, 9, 0)
-        self.Hour_lineEdit = QLineEdit(self.frame_4)
+        self.Hour_lineEdit = QLineEdit(self.time_frame)
         self.Hour_lineEdit.setObjectName(u"Hour_lineEdit")
         self.Hour_lineEdit.setMaximumSize(QSize(18, 18))
         self.Hour_lineEdit.setStyleSheet(u"border:none;\n"
@@ -235,7 +235,7 @@ class Ui_temp_pattern(object):
 
         self.horizontalLayout.addWidget(self.Hour_lineEdit)
 
-        self.label_4 = QLabel(self.frame_4)
+        self.label_4 = QLabel(self.time_frame)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setMaximumSize(QSize(3, 18))
         self.label_4.setStyleSheet(u"border:none;\n"
@@ -243,7 +243,7 @@ class Ui_temp_pattern(object):
 
         self.horizontalLayout.addWidget(self.label_4)
 
-        self.Min_lineEdit = QLineEdit(self.frame_4)
+        self.Min_lineEdit = QLineEdit(self.time_frame)
         self.Min_lineEdit.setObjectName(u"Min_lineEdit")
         self.Min_lineEdit.setMaximumSize(QSize(18, 18))
         self.Min_lineEdit.setStyleSheet(u"border:none;\n"
@@ -253,7 +253,7 @@ class Ui_temp_pattern(object):
         self.horizontalLayout.addWidget(self.Min_lineEdit)
 
 
-        self.gridLayout_4.addWidget(self.frame_4, 3, 1, 1, 2)
+        self.gridLayout_4.addWidget(self.time_frame, 3, 1, 1, 2)
 
         self.N2_lineEdit = QLineEdit(self.page2)
         self.N2_lineEdit.setObjectName(u"N2_lineEdit")
@@ -292,6 +292,10 @@ class Ui_temp_pattern(object):
         self.gridLayout_4.addWidget(self.PID_label, 8, 0, 1, 1)
 
         self.PID_comboBox = QComboBox(self.page2)
+        self.PID_comboBox.addItem("")
+        self.PID_comboBox.addItem("")
+        self.PID_comboBox.addItem("")
+        self.PID_comboBox.addItem("")
         self.PID_comboBox.setObjectName(u"PID_comboBox")
         self.PID_comboBox.setMinimumSize(QSize(80, 20))
         self.PID_comboBox.setMaximumSize(QSize(16777215, 20))
@@ -315,7 +319,7 @@ class Ui_temp_pattern(object):
 
         self.page.setCurrentIndex(1)
         self.TestPattern_comboBox.setCurrentIndex(-1)
-        self.PID_comboBox.setCurrentIndex(-1)
+        self.PID_comboBox.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(temp_pattern)
@@ -341,5 +345,10 @@ class Ui_temp_pattern(object):
         self.N2_lineEdit.setText(QCoreApplication.translate("temp_pattern", u"12", None))
         self.KeepTime_label.setText(QCoreApplication.translate("temp_pattern", u"\u30ad\u30fc\u30d7\u6642\u9593(s)", None))
         self.PID_label.setText(QCoreApplication.translate("temp_pattern", u"PID", None))
+        self.PID_comboBox.setItemText(0, QCoreApplication.translate("temp_pattern", u"No.1", None))
+        self.PID_comboBox.setItemText(1, QCoreApplication.translate("temp_pattern", u"No.2", None))
+        self.PID_comboBox.setItemText(2, QCoreApplication.translate("temp_pattern", u"No.3", None))
+        self.PID_comboBox.setItemText(3, QCoreApplication.translate("temp_pattern", u"No.4", None))
+
     # retranslateUi
 

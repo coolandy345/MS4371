@@ -48,16 +48,21 @@ class PyTempStep(QWidget):
     clicked = Signal(object)
     released = Signal(object)
 
-    Temp_Type  =  0
-    Test_Type     = 1
-    End_Type     =  2
+    Temp_Type  =    0
+    Test_Type  =    1
+    End_Type   =    2
+    RT_Type    =    3
 
-    step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);;border:none;"
-    step_test_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);;border:none;"
+    timeframe_grayout="background-color: rgb(41,45,55);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
+    timeframe_normal="background-color: rgb(30,34,41);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
+
+    step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);border:none;"
+    step_test_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);border:none;"
+    step_RTtest_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(53 ,206, 220);border:none;"
     step_end_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
 
-    time_gray_out_style="border:none;background-color: rgb(30, 34, 41);color: rgb(30, 34, 41);"
-    time_normal_style="border:none;background-color: rgb(30, 34, 41);color: rgb(225, 230, 241);"
+    time_gray_out_style="background-color: rgb(41,45,55);border:none;color: rgb(41,45,55);"
+    time_normal_style="background-color: rgb(30,34,41);border:none;color: rgb(225, 230, 241);"
 
     label_gray_out_style="font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\"; color: rgb(91, 94, 98); border:none;"
     label_normal_style="font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\"; color: rgb(225, 230, 241); border:none;"
@@ -205,10 +210,6 @@ class PyTempStep(QWidget):
 
         self.pattern.Type_comboBox.currentIndexChanged.connect(self.mode_respond)
 
-        self.pattern.Temp_lineEdit.textEdited.connect(self.hello)
-
-    def hello(self):
-        print("hello")
         
 
     def mode_respond(self):
@@ -239,14 +240,18 @@ class PyTempStep(QWidget):
             self.pattern.PID_label.setStyleSheet(self.label_normal_style)
             self.pattern.KeepTime_label.setStyleSheet(self.label_gray_out_style)
             self.pattern.TestPattern_label.setStyleSheet(self.label_gray_out_style)
+
+            self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
+            self.pattern.label_4.setStyleSheet(self.time_normal_style)
+            
             
         elif (self.pattern.Type_comboBox.currentText()) == "測定":
 
             self.pattern.Step_label.setStyleSheet(self.step_test_type_style)
 
-            self.pattern.Hour_lineEdit.setEnabled(True)
+            self.pattern.Hour_lineEdit.setEnabled(False)
             self.pattern.Hour_lineEdit.setStyleSheet(self.time_normal_style)
-            self.pattern.Min_lineEdit.setEnabled(True)
+            self.pattern.Min_lineEdit.setEnabled(False)
             self.pattern.Min_lineEdit.setStyleSheet(self.time_normal_style)
             self.pattern.Temp_lineEdit.setEnabled(False)
             self.pattern.Temp_lineEdit.setStyleSheet(self.line_gray_out_style)
@@ -254,7 +259,7 @@ class PyTempStep(QWidget):
             self.pattern.N2_lineEdit.setStyleSheet(self.line_gray_out_style)
             self.pattern.PID_comboBox.setEnabled(False)
             self.pattern.PID_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.KeepTime_lineEdit.setDisabled(True)
+            self.pattern.KeepTime_lineEdit.setEnabled(True)
             self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_normal_style)
             self.pattern.TestPattern_comboBox.setDisabled(True)
             self.pattern.TestPattern_comboBox.setStyleSheet(self.line_normal_style)
@@ -266,9 +271,45 @@ class PyTempStep(QWidget):
             self.pattern.PID_label.setStyleSheet(self.label_gray_out_style)
             self.pattern.KeepTime_label.setStyleSheet(self.label_normal_style)
             self.pattern.TestPattern_label.setStyleSheet(self.label_normal_style)
+
+
+
+            self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
+            self.pattern.label_4.setStyleSheet(self.time_normal_style)
             
             
-            #self.pattern.comboBox_2.addItems(profile_manager.scan_temp_profile())
+        elif (self.pattern.Type_comboBox.currentText()) == "RT測定":
+
+            self.pattern.Step_label.setStyleSheet(self.step_RTtest_type_style)
+
+            self.pattern.Hour_lineEdit.setEnabled(False)
+            self.pattern.Hour_lineEdit.setStyleSheet(self.time_normal_style)
+            self.pattern.Min_lineEdit.setEnabled(False)
+            self.pattern.Min_lineEdit.setStyleSheet(self.time_normal_style)
+            self.pattern.Temp_lineEdit.setEnabled(False)
+            self.pattern.Temp_lineEdit.setStyleSheet(self.line_gray_out_style)
+            self.pattern.N2_lineEdit.setEnabled(False)
+            self.pattern.N2_lineEdit.setStyleSheet(self.line_gray_out_style)
+            self.pattern.PID_comboBox.setEnabled(False)
+            self.pattern.PID_comboBox.setStyleSheet(self.line_gray_out_style)
+            self.pattern.KeepTime_lineEdit.setEnabled(True)
+            self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_normal_style)
+            self.pattern.TestPattern_comboBox.setDisabled(True)
+            self.pattern.TestPattern_comboBox.setStyleSheet(self.line_normal_style)
+            
+            
+            self.pattern.Time_label.setStyleSheet(self.label_normal_style)
+            self.pattern.Temp_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.N2_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.PID_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.KeepTime_label.setStyleSheet(self.label_normal_style)
+            self.pattern.TestPattern_label.setStyleSheet(self.label_normal_style)
+
+
+
+            self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
+            self.pattern.label_4.setStyleSheet(self.time_normal_style)
+
         elif (self.pattern.Type_comboBox.currentText()) == "END":
 
             self.pattern.Step_label.setStyleSheet(self.step_end_type_style)
@@ -295,6 +336,9 @@ class PyTempStep(QWidget):
             self.pattern.PID_label.setStyleSheet(self.label_gray_out_style)
             self.pattern.KeepTime_label.setStyleSheet(self.label_gray_out_style)
             self.pattern.TestPattern_label.setStyleSheet(self.label_gray_out_style)
+
+            self.pattern.time_frame.setStyleSheet(self.timeframe_grayout)
+            self.pattern.label_4.setStyleSheet(self.time_gray_out_style)
             
 
             

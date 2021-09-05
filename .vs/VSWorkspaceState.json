@@ -4,13 +4,13 @@
     "\\Source code",
     "\\Source code\\gui_main",
     "\\Source code\\gui_main\\gui",
+    "\\Source code\\gui_main\\gui\\themes",
     "\\Source code\\gui_main\\gui\\uis",
     "\\Source code\\gui_main\\gui\\uis\\pattern_columns",
-    "\\Source code\\gui_main\\gui\\uis\\windows\\main_window",
+    "\\Source code\\gui_main\\gui\\uis\\windows",
     "\\Source code\\gui_main\\gui\\widgets",
-    "\\Source code\\gui_main\\gui\\widgets\\py_pattern",
-    "\\Source code\\gui_main\\user\\profiles"
+    "\\Source code\\gui_main\\gui\\widgets\\py_left_column"
   ],
-  "SelectedNode": "\\Source code\\gui_main\\gui\\widgets\\py_pattern\\py_step_temp.py",
+  "SelectedNode": "\\Source code\\gui_main\\gui\\uis\\pattern_columns\\temp_pattern_setting.py",
   "PreviewInSolutionExplorer": false
 }
