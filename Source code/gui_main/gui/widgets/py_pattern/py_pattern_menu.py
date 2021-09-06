@@ -41,7 +41,7 @@ class PyStepMenu(QWidget):
 
         # Parent
         self._parent = parent
-        self._app_parent = app_parent
+        self._app_parent = app_parent 
         self._step = step
         
         # base prepare

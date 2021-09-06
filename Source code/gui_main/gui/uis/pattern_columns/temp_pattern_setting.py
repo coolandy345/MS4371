@@ -41,6 +41,8 @@ class tempUnit():
         self.test_measure=test_measure
         self.test_measure_PatternNo=test_measure_PatternNo
         self.end_step=end_step
+
+
         
             
             
@@ -88,6 +90,9 @@ class TempPatternWidget(QWidget):
         self.memory_reader()
         self.choose_step=choose_step
         self.choose_pattern=choose_pattern
+
+        self.cache_step=None
+        self.cache_steplist=None
 
 
         self.updata_step_widge()
@@ -224,10 +229,11 @@ class TempPatternWidget(QWidget):
 
 
         
-    
+     
     def new_TempPattern(self):
-        self.pattern_lists[self.choose_pattern].step_number+=1
-        self.updata_step_widge()
+        #self.pattern_lists[self.choose_pattern].step_number+=1
+        #self.updata_step_widge()
+        pass
 
 
     
@@ -238,7 +244,7 @@ class TempPatternWidget(QWidget):
         
 
         for _step in range(1,21):
-
+            print(_step)
             if _step<=self.pattern_lists[self.choose_pattern].step_number :
                 self.step_widges_list[_step].setVisible (True)
                 self.step_widges_list[_step].pattern.page.setCurrentIndex(True)
@@ -289,10 +295,24 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().maximum())
 
     def menu_btn_handler(self,btn):
+
+        self.close_menu()
         if btn == "pattern_menu_cut_pushButton":
             self.temp_step_widges=self.step_widges_list[self.choose_step]
             print("step ",self.choose_step)
+            new_step = PyTempStep(
+                active=False,
+                step=20,
+                type=PyTempStep.End_Type,
+                parent = self._parent,
+                app_parent=self._app_parent,
+                )
+            self.step_widges_list.append(new_step)
+            self.step_widges_list[21].setVisible (False)
             self.step_widges_list.remove(self.step_widges_list[self.choose_step])
+            
+
+
             pass
         elif btn == "pattern_menu_copy_pushButton":
             pass
@@ -308,8 +328,6 @@ class TempPatternWidget(QWidget):
             pass
         elif btn == "pattern_menu_delete_pushButton":
             pass
-
-        self.close_menu()
         self.updata_step_widge()
 
     def close_menu(self):
