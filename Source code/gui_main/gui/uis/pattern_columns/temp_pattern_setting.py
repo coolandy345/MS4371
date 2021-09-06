@@ -70,7 +70,7 @@ class TempPatternWidget(QWidget):
             self, 
             parent = None,
             app_parent = None,
-            choose_step=1,
+            choose_step=0,
             choose_pattern=1,
             memory_pool={}
     ):
@@ -88,6 +88,7 @@ class TempPatternWidget(QWidget):
         self.memory_reader()
         self.choose_step=choose_step
         self.choose_pattern=choose_pattern
+
 
         self.updata_step_widge()
 
@@ -287,10 +288,48 @@ class TempPatternWidget(QWidget):
     def scroll_adjust_TempPattern(self):
         self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().maximum())
 
+    def menu_btn_handler(self,btn):
+        if btn == "pattern_menu_cut_pushButton":
+            self.temp_step_widges=self.step_widges_list[self.choose_step]
+            print("step ",self.choose_step)
+            self.step_widges_list.remove(self.step_widges_list[self.choose_step])
+            pass
+        elif btn == "pattern_menu_copy_pushButton":
+            pass
+        elif btn == "pattern_menu_paste_pushButton":
+            pass
+        elif btn == "pattern_menu_rightinsert_pushButton":
+            pass
+        elif btn == "pattern_menu_leftinsert_pushButton":
+            pass
+        elif btn == "pattern_menu_rightinsertblank_pushButton":
+            pass
+        elif btn == "pattern_menu_leftinsertblank_pushButton":
+            pass
+        elif btn == "pattern_menu_delete_pushButton":
+            pass
+
+        self.close_menu()
+        self.updata_step_widge()
+
     def close_menu(self):
-        print("close menu")
-        for _step in range(1,21):
-            self.step_widges_list[_step].close_menu()
+        if not self.choose_step==0:
+            self.step_widges_list[self.choose_step]._menu.menu_frame.hide()
+            self.choose_step=0
+
+    def show_one_menu(self,step):        
+        #self.close_one_menu(step)
+        if self.choose_step==step:
+            self.close_menu()
+            self.choose_step=0
+        elif  self.choose_step==0:
+            self.step_widges_list[step]._menu.menu_frame.show()
+            self.choose_step=step
+        else:
+            self.close_menu()
+            self.step_widges_list[step]._menu.menu_frame.show()
+            self.choose_step=step
+        
 
     
 

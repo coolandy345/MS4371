@@ -141,21 +141,6 @@ class MainWindow(QMainWindow):
 
         
         #self.SetupMainWindow.
-        
-        
-
-        if (btn.objectName()[0:21]) == "menu_temp_Step_Buttom":
-            if (self.focus_step_number) == 0 :
-                self.focus_step_number=int(''.join(filter(str.isdigit,btn.objectName())))
-                self.tempPattern.step_widges_list[self.focus_step_number].show_menu()
-            else:
-                self.tempPattern.step_widges_list[self.focus_step_number].close_menu()
-                self.focus_step_number=0
-        else:
-            if (self.focus_step_number) != 0 :
-                self.tempPattern.step_widges_list[self.focus_step_number].close_menu()
-                self.focus_step_number=0
-
         self.tempPattern.close_menu()
 
         # DEBUG 

@@ -120,10 +120,13 @@ class PyTempStep(QWidget):
         # ///////////////////////////////////////////////////////////////
         self._menu=PyStepMenu(
             parent=self,
-            app_parent=self._parent
+            app_parent=self._parent,
+            step=self._step
+
             )
         self._menu.menu_frame.move(60, 0)
-        self.close_menu()
+
+        self._menu.menu_frame.hide()
 
         self.mode_respond()
 
@@ -207,7 +210,8 @@ class PyTempStep(QWidget):
                 bg_color_pressed = "#6db6ee",
             )
         self.pattern.gridLayout_6.addWidget(self.menu_icon, Qt.AlignCenter, Qt.AlignCenter)
-        self.menu_icon.clicked.connect(self._parent.btn_clicked)
+
+        #self.menu_icon.clicked.connect(self._parent.btn_clicked)
         self.menu_icon.clicked.connect(self.show_menu)
         self.menu_icon.setObjectName("menu_temp_Step_Buttom - STEP %d" %self._step)
 
@@ -366,22 +370,15 @@ class PyTempStep(QWidget):
 
 
     def show_menu(self):
-        self.move_menu()
-        self._menu.menu_frame.show()
-        pass
+        print("step ",self._step," menu in pressed")
+        self._parent.tempPattern.show_one_menu(self._step)
 
     def close_menu(self):
-        self._menu.menu_frame.hide()
+        #self._menu.menu_frame.hide()
         pass
-
-    def move_menu(self):
-        pass
-
+        
     def mousePressEvent(self, event):
         self._parent.tempPattern.close_menu()
-
-    def enterEvent(self, event):
-        print("happy-2")
 
         
 

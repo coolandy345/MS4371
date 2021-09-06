@@ -34,6 +34,7 @@ class PyStepMenu(QWidget):
         self , 
         parent = None,
         app_parent = None,
+        step = 1,
     ):
         super().__init__()
         # Parameter
@@ -41,34 +42,25 @@ class PyStepMenu(QWidget):
         # Parent
         self._parent = parent
         self._app_parent = app_parent
-
+        self._step = step
+        
         # base prepare
         # ///////////////////////////////////////////////////////////////
         self.menu_frame = QFrame(self._parent)
         self.menu_frame.setContentsMargins(0,0,0,0)
         self.menu = Ui_pattern_menu()
         self.menu.setupUi( self.menu_frame)
-        self.menu.pattern_menu_cut_pushButton.clicked.connect(self._app_parent.btn_clicked)
-        self.menu.pattern_menu_cut_pushButton.setObjectName("pattern_menu_cut_pushButton")
+        self.menu.pattern_menu_cut_pushButton.clicked.connect(self.function_callback)
+        self.menu.pattern_menu_copy_pushButton.clicked.connect(self.function_callback)
+        self.menu.pattern_menu_paste_pushButton.clicked.connect(self.function_callback)
+        self.menu.pattern_menu_rightinsert_pushButton.clicked.connect(self.function_callback)
+        self.menu.pattern_menu_leftinsert_pushButton.clicked.connect(self.function_callback)
+        self.menu.pattern_menu_rightinsertblank_pushButton.clicked.connect(self.function_callback)
+        self.menu.pattern_menu_leftinsertblank_pushButton.clicked.connect(self.function_callback)
+        self.menu.pattern_menu_delete_pushButton.clicked.connect(self.function_callback)
 
-        self.menu.pattern_menu_copy_pushButton.clicked.connect(self._app_parent.btn_clicked)
-        self.menu.pattern_menu_copy_pushButton.setObjectName("pattern_menu_copy_pushButton")
+    def function_callback(self):
+        btn = self.sender()
+        self._app_parent.tempPattern.menu_btn_handler(btn.objectName())
 
-        self.menu.pattern_menu_paste_pushButton.clicked.connect(self._app_parent.btn_clicked)
-        self.menu.pattern_menu_paste_pushButton.setObjectName("pattern_menu_paste_pushButton")
-
-        self.menu.pattern_menu_rightinsert_pushButton.clicked.connect(self._app_parent.btn_clicked)
-        self.menu.pattern_menu_rightinsert_pushButton.setObjectName("pattern_menu_rightinsert_pushButton")
-
-        self.menu.pattern_menu_leftinsert_pushButton.clicked.connect(self._app_parent.btn_clicked)
-        self.menu.pattern_menu_leftinsert_pushButton.setObjectName("pattern_menu_leftinsert_pushButton")
-
-        self.menu.pattern_menu_rightinsertblank_pushButton.clicked.connect(self._app_parent.btn_clicked)
-        self.menu.pattern_menu_rightinsertblank_pushButton.setObjectName("pattern_menu_rightinsertblank_pushButton")
-
-        self.menu.pattern_menu_leftinsertblank_pushButton.clicked.connect(self._app_parent.btn_clicked)
-        self.menu.pattern_menu_leftinsertblank_pushButton.setObjectName("pattern_menu_leftinsertblank_pushButton")
-
-        self.menu.pattern_menu_delete_pushButton.clicked.connect(self._app_parent.btn_clicked)
-        self.menu.pattern_menu_delete_pushButton.setObjectName("pattern_menu_delete_pushButton")
 
