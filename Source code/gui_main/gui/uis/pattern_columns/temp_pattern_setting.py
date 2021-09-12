@@ -29,7 +29,6 @@ class tempUnit():
         Unit_type=0
         ):
         
-        
         self.Step_Type=Step_Type
         self.SV=SV
         self.time_hour=time_hour
@@ -55,14 +54,16 @@ class templist():
         name="",
         step_number=0,
         gas_condition=0,
-        RT_measure=False,
-        units=[]
+        RT_measure=False
         ):
+        
         self.name=name
         self.step_number=step_number
         self.gas_condition=gas_condition
         self.RT_measure=RT_measure
-        self.units=units
+        self.units=[]
+        for _step in range(1,21):
+            self.units.append(tempUnit())
       
 
 
@@ -82,19 +83,18 @@ class TempPatternWidget(QWidget):
         self.step_widges_list=[]
         self._parent=parent
         self._app_parent=app_parent
-        self.setup_utility()
-        self.setup_TempPattern()
         self.Step_number=0
         self.memory_pool=memory_pool
         self.pattern_lists=[]
         self.memory_reader()
         self.choose_step=choose_step
         self.choose_pattern=choose_pattern
-
-        self.cache_step=None
-        self.cache_steplist=None
-
-
+        self.cache_step=tempUnit()
+        self.cache_steplist=templist()
+        
+        self.setup_utility()
+        self.setup_TempPattern()
+        self.load_list_From_Memory()
         self.updata_step_widge()
 
     
@@ -218,34 +218,38 @@ class TempPatternWidget(QWidget):
             self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.step_widges_list[_step])
 
 
-            self.step_widges_list[_step].pattern.Type_comboBox.currentIndexChanged.connect(self.ui_click_callback)
-            self.step_widges_list[_step].pattern.Hour_lineEdit.editingFinished.connect(self.ui_click_callback)
-            self.step_widges_list[_step].pattern.Min_lineEdit.editingFinished.connect(self.ui_click_callback)
-            self.step_widges_list[_step].pattern.Temp_lineEdit.editingFinished.connect(self.ui_click_callback)
-            self.step_widges_list[_step].pattern.N2_lineEdit.editingFinished.connect(self.ui_click_callback)
-            self.step_widges_list[_step].pattern.PID_comboBox.currentIndexChanged.connect(self.ui_click_callback)
-            self.step_widges_list[_step].pattern.KeepTime_lineEdit.editingFinished.connect(self.ui_click_callback)
-            self.step_widges_list[_step].pattern.TestPattern_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+            self.step_widges_list[_step].pattern.Type_comboBox.currentIndexChanged.connect(self.step_modifly_manager)
+            self.step_widges_list[_step].pattern.Hour_lineEdit.editingFinished.connect(self.step_modifly_manager)
+            self.step_widges_list[_step].pattern.Min_lineEdit.editingFinished.connect(self.step_modifly_manager)
+            self.step_widges_list[_step].pattern.Temp_lineEdit.editingFinished.connect(self.step_modifly_manager)
+            self.step_widges_list[_step].pattern.N2_lineEdit.editingFinished.connect(self.step_modifly_manager)
+            self.step_widges_list[_step].pattern.PID_comboBox.currentIndexChanged.connect(self.step_modifly_manager)
+            self.step_widges_list[_step].pattern.KeepTime_lineEdit.editingFinished.connect(self.step_modifly_manager)
+            self.step_widges_list[_step].pattern.TestPattern_comboBox.currentIndexChanged.connect(self.step_modifly_manager)
 
 
         
      
     def new_TempPattern(self):
-        #self.pattern_lists[self.choose_pattern].step_number+=1
-        #self.updata_step_widge()
+        
+        self.cache_steplist.units[self.cache_steplist.step_number]=tempUnit()
+        self.cache_steplist.step_number+=1
+        self.updata_step_widge()
         pass
 
-
+    def load_list_From_Memory(self):
+        if(self.choose_pattern>=1 and self.choose_pattern<=20):
+            self.cache_steplist=self.pattern_lists[self.choose_pattern]
+        else:
+            print("Choose list is out of range , now is choose No.",self.choose_pattern)
     
     # update step widge
     # /////////////////////////////
     def updata_step_widge(self):
         #adjust the Visible of each step
-        
 
         for _step in range(1,21):
-            print(_step)
-            if _step<=self.pattern_lists[self.choose_pattern].step_number :
+            if _step<=self.cache_steplist.step_number :
                 self.step_widges_list[_step].setVisible (True)
                 self.step_widges_list[_step].pattern.page.setCurrentIndex(True)
             else:
@@ -253,7 +257,7 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
 
             unit=tempUnit()
-            unit=self.pattern_lists[self.choose_pattern].units[_step]
+            unit=self.cache_steplist.units[_step]
             index=unit.Step_Type
             self.step_widges_list[_step].pattern.Type_comboBox.setCurrentIndex(index)
             
@@ -273,18 +277,16 @@ class TempPatternWidget(QWidget):
             elif index==3:  #RT test 
                 self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
                 pass
-        self.step_widges_list[1].pattern.Type_comboBox.clear()
-        self.step_widges_list[1].pattern.Type_comboBox.addItems(["昇降温","測定","END","RT測定"])
 
 
-        if not self.pattern_lists[self.choose_pattern].step_number ==20:
-            self.step_widges_list[self.pattern_lists[self.choose_pattern].step_number+1].setVisible (True)
-            self.step_widges_list[self.pattern_lists[self.choose_pattern].step_number+1].pattern.page.setCurrentIndex(False)
+        if not self.cache_steplist.step_number ==20:
+            self.step_widges_list[self.cache_steplist.step_number+1].setVisible (True)
+            self.step_widges_list[self.cache_steplist.step_number+1].pattern.page.setCurrentIndex(False)
             
 
     def ui_click_callback(self):
         #self.updata_step_widge()
-        print("click")
+        #print("click")
         pass
 
     #def sayhi(self):
@@ -296,22 +298,16 @@ class TempPatternWidget(QWidget):
 
     def menu_btn_handler(self,btn):
 
-        self.close_menu()
+        
         if btn == "pattern_menu_cut_pushButton":
-            self.temp_step_widges=self.step_widges_list[self.choose_step]
-            print("step ",self.choose_step)
-            new_step = PyTempStep(
-                active=False,
-                step=20,
-                type=PyTempStep.End_Type,
-                parent = self._parent,
-                app_parent=self._app_parent,
-                )
-            self.step_widges_list.append(new_step)
-            self.step_widges_list[21].setVisible (False)
-            self.step_widges_list.remove(self.step_widges_list[self.choose_step])
+            self.cache_step=self.cache_steplist.units[self.choose_step]
+
+            print("pattern_menu_cut ",self.choose_step)
             
 
+            self.cache_steplist.step_number-=1
+            self.cache_steplist.units.append(tempUnit())
+            self.cache_steplist.units.remove(self.cache_steplist.units[self.choose_step])
 
             pass
         elif btn == "pattern_menu_copy_pushButton":
@@ -328,6 +324,7 @@ class TempPatternWidget(QWidget):
             pass
         elif btn == "pattern_menu_delete_pushButton":
             pass
+        self.close_menu()
         self.updata_step_widge()
 
     def close_menu(self):
@@ -335,8 +332,7 @@ class TempPatternWidget(QWidget):
             self.step_widges_list[self.choose_step]._menu.menu_frame.hide()
             self.choose_step=0
 
-    def show_one_menu(self,step):        
-        #self.close_one_menu(step)
+    def show_one_menu(self,step):
         if self.choose_step==step:
             self.close_menu()
             self.choose_step=0
@@ -347,6 +343,10 @@ class TempPatternWidget(QWidget):
             self.close_menu()
             self.step_widges_list[step]._menu.menu_frame.show()
             self.choose_step=step
+
+    def step_modifly_manager(self):
+        print("edit!")
+        pass
         
 
     

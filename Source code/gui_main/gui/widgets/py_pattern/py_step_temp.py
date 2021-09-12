@@ -213,7 +213,7 @@ class PyTempStep(QWidget):
 
         #self.menu_icon.clicked.connect(self._parent.btn_clicked)
         self.menu_icon.clicked.connect(self.show_menu)
-        self.menu_icon.setObjectName("menu_temp_Step_Buttom - STEP %d" %self._step)
+        #self.menu_icon.setObjectName("menu_temp_Step_Buttom - STEP %d" %self._step)
 
         self.pattern.Type_comboBox.currentIndexChanged.connect(self.mode_respond)
 
@@ -293,41 +293,41 @@ class PyTempStep(QWidget):
             self.pattern.cascade_comboBox.setStyleSheet(self.line_gray_out_style)
             
             
-        elif (self.pattern.Type_comboBox.currentText()) == "RT測定":
+        #elif (self.pattern.Type_comboBox.currentText()) == "RT測定":
 
-            self.pattern.Step_label.setStyleSheet(self.step_RTtest_type_style)
+        #    self.pattern.Step_label.setStyleSheet(self.step_RTtest_type_style)
 
-            self.pattern.Hour_lineEdit.setEnabled(False)
-            self.pattern.Hour_lineEdit.setStyleSheet(self.time_normal_style)
-            self.pattern.Min_lineEdit.setEnabled(False)
-            self.pattern.Min_lineEdit.setStyleSheet(self.time_normal_style)
-            self.pattern.Temp_lineEdit.setEnabled(False)
-            self.pattern.Temp_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.N2_lineEdit.setEnabled(False)
-            self.pattern.N2_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.PID_comboBox.setEnabled(False)
-            self.pattern.PID_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.KeepTime_lineEdit.setEnabled(True)
-            self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.TestPattern_comboBox.setDisabled(True)
-            self.pattern.TestPattern_comboBox.setStyleSheet(self.line_normal_style)
+        #    self.pattern.Hour_lineEdit.setEnabled(False)
+        #    self.pattern.Hour_lineEdit.setStyleSheet(self.time_normal_style)
+        #    self.pattern.Min_lineEdit.setEnabled(False)
+        #    self.pattern.Min_lineEdit.setStyleSheet(self.time_normal_style)
+        #    self.pattern.Temp_lineEdit.setEnabled(False)
+        #    self.pattern.Temp_lineEdit.setStyleSheet(self.line_gray_out_style)
+        #    self.pattern.N2_lineEdit.setEnabled(False)
+        #    self.pattern.N2_lineEdit.setStyleSheet(self.line_gray_out_style)
+        #    self.pattern.PID_comboBox.setEnabled(False)
+        #    self.pattern.PID_comboBox.setStyleSheet(self.line_gray_out_style)
+        #    self.pattern.KeepTime_lineEdit.setEnabled(True)
+        #    self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_normal_style)
+        #    self.pattern.TestPattern_comboBox.setDisabled(True)
+        #    self.pattern.TestPattern_comboBox.setStyleSheet(self.line_normal_style)
             
             
-            self.pattern.Time_label.setStyleSheet(self.label_normal_style)
-            self.pattern.Temp_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.N2_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.PID_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.KeepTime_label.setStyleSheet(self.label_normal_style)
-            self.pattern.TestPattern_label.setStyleSheet(self.label_normal_style)
+        #    self.pattern.Time_label.setStyleSheet(self.label_normal_style)
+        #    self.pattern.Temp_label.setStyleSheet(self.label_gray_out_style)
+        #    self.pattern.N2_label.setStyleSheet(self.label_gray_out_style)
+        #    self.pattern.PID_label.setStyleSheet(self.label_gray_out_style)
+        #    self.pattern.KeepTime_label.setStyleSheet(self.label_normal_style)
+        #    self.pattern.TestPattern_label.setStyleSheet(self.label_normal_style)
 
 
 
-            self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
-            self.pattern.label_4.setStyleSheet(self.time_normal_style)
+        #    self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
+        #    self.pattern.label_4.setStyleSheet(self.time_normal_style)
 
-            self.pattern.cascade_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.cascade_comboBox.setEnabled(False)
-            self.pattern.cascade_comboBox.setStyleSheet(self.line_gray_out_style)
+        #    self.pattern.cascade_label.setStyleSheet(self.label_gray_out_style)
+        #    self.pattern.cascade_comboBox.setEnabled(False)
+        #    self.pattern.cascade_comboBox.setStyleSheet(self.line_gray_out_style)
 
         elif (self.pattern.Type_comboBox.currentText()) == "END":
 
@@ -370,7 +370,7 @@ class PyTempStep(QWidget):
 
 
     def show_menu(self):
-        print("step ",self._step," menu in pressed")
+        #print("step ",self._step," menu in pressed")
         self._parent.tempPattern.show_one_menu(self._step)
 
     def close_menu(self):
