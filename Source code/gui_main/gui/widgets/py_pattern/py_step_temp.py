@@ -216,15 +216,28 @@ class PyTempStep(QWidget):
         #self.menu_icon.setObjectName("menu_temp_Step_Buttom - STEP %d" %self._step)
 
         self.pattern.Type_comboBox.currentIndexChanged.connect(self.mode_respond)
+        #self.pattern.Type_comboBox.currentIndexChanged.connect(self.step_modifly_respond)
 
         
+        self.pattern.Hour_lineEdit.editingFinished.connect(self.step_modifly_respond)
+        self.pattern.Min_lineEdit.editingFinished.connect(self.step_modifly_respond)
+        self.pattern.Temp_lineEdit.editingFinished.connect(self.step_modifly_respond)
+        self.pattern.N2_lineEdit.editingFinished.connect(self.step_modifly_respond)
+        self.pattern.PID_comboBox.currentIndexChanged.connect(self.step_modifly_respond)
+        self.pattern.KeepTime_lineEdit.editingFinished.connect(self.step_modifly_respond)
+        self.pattern.TestPattern_comboBox.currentIndexChanged.connect(self.step_modifly_respond)
+
+    def step_modifly_respond(self):
+        print("click in side step after modifly STEP ", self._step)
+        self._parent.tempPattern.close_menu()
+        pass
+
 
     def mode_respond(self):
 
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":
             
             self.pattern.Step_label.setStyleSheet(self.step_temp_type_style)
-
             self.pattern.Hour_lineEdit.setEnabled(True)
             self.pattern.Hour_lineEdit.setStyleSheet(self.time_normal_style)
             self.pattern.Min_lineEdit.setEnabled(True)
@@ -364,20 +377,17 @@ class PyTempStep(QWidget):
             self.pattern.cascade_comboBox.setStyleSheet(self.line_gray_out_style)
             
 
-            
-            #self.pattern.comboBox_2.clear()
-
-
 
     def show_menu(self):
-        #print("step ",self._step," menu in pressed")
         self._parent.tempPattern.show_one_menu(self._step)
 
     def close_menu(self):
-        #self._menu.menu_frame.hide()
-        pass
+        self._parent.tempPattern.close_menu()
         
     def mousePressEvent(self, event):
+        self._parent.tempPattern.close_menu()
+
+    def leaveEvent(self, event):
         self._parent.tempPattern.close_menu()
 
         

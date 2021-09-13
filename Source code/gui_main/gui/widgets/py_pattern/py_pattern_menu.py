@@ -63,4 +63,6 @@ class PyStepMenu(QWidget):
         btn = self.sender()
         self._app_parent.tempPattern.menu_btn_handler(btn.objectName())
 
+    
+
 

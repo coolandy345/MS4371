@@ -218,14 +218,7 @@ class TempPatternWidget(QWidget):
             self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.step_widges_list[_step])
 
 
-            self.step_widges_list[_step].pattern.Type_comboBox.currentIndexChanged.connect(self.step_modifly_manager)
-            self.step_widges_list[_step].pattern.Hour_lineEdit.editingFinished.connect(self.step_modifly_manager)
-            self.step_widges_list[_step].pattern.Min_lineEdit.editingFinished.connect(self.step_modifly_manager)
-            self.step_widges_list[_step].pattern.Temp_lineEdit.editingFinished.connect(self.step_modifly_manager)
-            self.step_widges_list[_step].pattern.N2_lineEdit.editingFinished.connect(self.step_modifly_manager)
-            self.step_widges_list[_step].pattern.PID_comboBox.currentIndexChanged.connect(self.step_modifly_manager)
-            self.step_widges_list[_step].pattern.KeepTime_lineEdit.editingFinished.connect(self.step_modifly_manager)
-            self.step_widges_list[_step].pattern.TestPattern_comboBox.currentIndexChanged.connect(self.step_modifly_manager)
+            
 
 
         
@@ -333,14 +326,15 @@ class TempPatternWidget(QWidget):
             self.choose_step=0
 
     def show_one_menu(self,step):
+
+        self.close_menu()
+
         if self.choose_step==step:
-            self.close_menu()
             self.choose_step=0
         elif  self.choose_step==0:
             self.step_widges_list[step]._menu.menu_frame.show()
             self.choose_step=step
         else:
-            self.close_menu()
             self.step_widges_list[step]._menu.menu_frame.show()
             self.choose_step=step
 
