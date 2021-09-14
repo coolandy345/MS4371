@@ -23,7 +23,6 @@ class tempUnit():
         PID_No=0,
         test_measure=False,
         test_measure_PatternNo=0,
-        cascade_control=False,
         end_step=False,
         Step_Type=0,
         Unit_type=0
@@ -36,7 +35,6 @@ class tempUnit():
         self.time_keep=time_keep
         self.N2_flowRate=N2_flowRate
         self.PID_No=PID_No
-        self.cascade_control=cascade_control
         self.test_measure=test_measure
         self.test_measure_PatternNo=test_measure_PatternNo
         self.end_step=end_step
@@ -86,12 +84,12 @@ class TempPatternWidget(QWidget):
         self.Step_number=0
         self.memory_pool=memory_pool
         self.pattern_lists=[]
-        self.memory_reader()
         self.choose_step=choose_step
         self.choose_pattern=choose_pattern
         self.cache_step=tempUnit()
         self.cache_steplist=templist()
         
+        self.memory_reader()
         self.setup_utility()
         self.setup_TempPattern()
         self.load_list_From_Memory()
@@ -125,7 +123,6 @@ class TempPatternWidget(QWidget):
                     PID_No          =Modbus_Registor_pool["PTNData_{}_STEP_{}_PID No.".format(ptn_no,step_no)].value,
                     test_measure    =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
                     #test_measure_PatternNo=Modbus_Registor_pool["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].value,
-                    cascade_control =Modbus_Registor_pool["PTNData_{}_STEP_{}_カスケード制御有".format(ptn_no,step_no)].value,
                     Step_Type       =Modbus_Registor_pool["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].value
                     )
                 units.append(unit)
@@ -216,8 +213,8 @@ class TempPatternWidget(QWidget):
             self.step_widges_list.append(temp_step)
             self.step_widges_list[_step].setVisible (False)
             self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.step_widges_list[_step])
-
-
+        
+        
             
 
 
@@ -255,14 +252,15 @@ class TempPatternWidget(QWidget):
             self.step_widges_list[_step].pattern.Type_comboBox.setCurrentIndex(index)
             
             if index==0:    #temp unit
-                self.step_widges_list[_step].pattern.Hour_lineEdit.setText("{}".format(unit.time_hour))
-                self.step_widges_list[_step].pattern.Min_lineEdit.setText("{}".format(unit.time_min))
-                self.step_widges_list[_step].pattern.Temp_lineEdit.setText("{}".format(unit.SV))
-                self.step_widges_list[_step].pattern.N2_lineEdit.setText("{}".format(unit.N2_flowRate))
+                self.step_widges_list[_step].pattern.Hour_lineEdit.setValue(unit.time_hour)
+                self.step_widges_list[_step].pattern.Min_lineEdit.setValue(unit.time_min)
+
+                self.step_widges_list[_step].pattern.Temp_lineEdit.setValue(unit.SV)
+                self.step_widges_list[_step].pattern.N2_lineEdit.setValue(unit.N2_flowRate)
                 self.step_widges_list[_step].pattern.PID_comboBox.setCurrentIndex(unit.PID_No)
                 pass
             elif index==1:  #test unit
-                self.step_widges_list[_step].pattern.KeepTime_lineEdit.setText("{}".format(unit.time_keep))
+                self.step_widges_list[_step].pattern.KeepTime_lineEdit.setValue(unit.time_keep)
                 self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
                 pass
             elif index==2:  #End unit
