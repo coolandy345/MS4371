@@ -220,15 +220,18 @@ class PyTempStep(QWidget):
 
         print("click in side step after modifly STEP ", self._step," name = ",self.sender().objectName())
         self._hour=self.pattern.Hour_lineEdit.value()
-        self._minute=self.pattern.Hour_lineEdit.value()
-        self._temperature=self.pattern.Hour_lineEdit.value()
-        self._n2_flowrate=self.pattern.Hour_lineEdit.value()
-        self._keep_seccond=self.pattern.Hour_lineEdit.value()
-        self._test_pattern=self.pattern.Hour_lineEdit.value()
-        self._hour=self.pattern.Hour_lineEdit.value()
-        self._hour=self.pattern.Hour_lineEdit.value()
+        self._minute=self.pattern.Min_lineEdit.value()
 
+        self._temperature=self.pattern.Temp_lineEdit.value()
+        self._n2_flowrate=self.pattern.N2_lineEdit.value()
+        self._PID_no=self.pattern.PID_comboBox.currentIndex()
 
+        self._keep_seccond=self.pattern.KeepTime_lineEdit.value()
+        self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
+        
+        #Call upper mother renew information
+        self._parent.tempPattern.step_modifly_manager(self._step)
+        
     def type_change_callback(self):
 
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":

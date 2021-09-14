@@ -15,29 +15,27 @@ import time
 class tempUnit():
     def __init__(
         self,
-        SV=0,
+        Step_Type=0,
         time_hour=0,
         time_min=0,
-        time_keep=0,
+        SV=0,
         N2_flowRate=0,
         PID_No=0,
-        test_measure=False,
+        time_keep=0,
+        test_measure_enable=0,
         test_measure_PatternNo=0,
-        end_step=False,
-        Step_Type=0,
-        Unit_type=0
         ):
         
         self.Step_Type=Step_Type
-        self.SV=SV
         self.time_hour=time_hour
         self.time_min=time_min
-        self.time_keep=time_keep
+        self.SV=SV
         self.N2_flowRate=N2_flowRate
         self.PID_No=PID_No
-        self.test_measure=test_measure
+        self.time_keep=time_keep
+        self.test_measure_enable=test_measure_enable
         self.test_measure_PatternNo=test_measure_PatternNo
-        self.end_step=end_step
+        
 
 
         
@@ -103,6 +101,7 @@ class TempPatternWidget(QWidget):
         Modbus_Registor_pool=self.memory_pool["Modbus Registor Memory"]
 
         _20_pattern_lists=[None]
+        
         for ptn_no in range(1,21):
             pattern=templist(
                 name            =Modbus_Registor_pool["PTNData_{}_名称".format(ptn_no)].value,
@@ -112,18 +111,20 @@ class TempPatternWidget(QWidget):
                 )
             units=[None]
             
+            print("1")
             for step_no in range(1,21):
                 
+                print("2")
                 unit=tempUnit(
-                    SV              =Modbus_Registor_pool["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].value,
-                    time_hour       =Modbus_Registor_pool["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].value,
-                    time_min        =Modbus_Registor_pool["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].value,
-                    time_keep       =Modbus_Registor_pool["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].value,
-                    N2_flowRate     =Modbus_Registor_pool["PTNData_{}_STEP_{}_N2流量".format(ptn_no,step_no)].value,
-                    PID_No          =Modbus_Registor_pool["PTNData_{}_STEP_{}_PID No.".format(ptn_no,step_no)].value,
-                    test_measure    =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
-                    #test_measure_PatternNo=Modbus_Registor_pool["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].value,
-                    Step_Type       =Modbus_Registor_pool["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].value
+                    Step_Type               =Modbus_Registor_pool["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].value,
+                    time_hour               =Modbus_Registor_pool["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].value,
+                    time_min                =Modbus_Registor_pool["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].value,
+                    SV                      =Modbus_Registor_pool["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].value,
+                    N2_flowRate             =Modbus_Registor_pool["PTNData_{}_STEP_{}_N2流量".format(ptn_no,step_no)].value,
+                    PID_No                  =Modbus_Registor_pool["PTNData_{}_STEP_{}_PID No.".format(ptn_no,step_no)].value,
+                    time_keep               =Modbus_Registor_pool["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].value,
+                    #test_measure_enable     =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
+                    #test_measure_PatternNo  =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定 No.".format(ptn_no,step_no)].value
                     )
                 units.append(unit)
             pattern.units=units
@@ -228,11 +229,13 @@ class TempPatternWidget(QWidget):
         pass
 
     def load_list_From_Memory(self):
+        
+        
         if(self.choose_pattern>=1 and self.choose_pattern<=20):
             self.cache_steplist=self.pattern_lists[self.choose_pattern]
         else:
             print("Choose list is out of range , now is choose No.",self.choose_pattern)
-    
+        
     # update step widge
     # /////////////////////////////
     def updata_step_widge(self):
@@ -336,9 +339,19 @@ class TempPatternWidget(QWidget):
             self.step_widges_list[step]._menu.menu_frame.show()
             self.choose_step=step
 
-    def step_modifly_manager(self):
-        print("edit!")
-        pass
+    def step_modifly_manager(self,step):
+        print("Step: ",step," has edit!")
+
+        self.cache_steplist.units[step].Step_Type=self.step_widges_list[step]._type#
+        self.cache_steplist.units[step].time_hour=self.step_widges_list[step]._type
+        self.cache_steplist.units[step].time_min=self.step_widges_list[step]._type
+        self.cache_steplist.units[step].SV=self.step_widges_list[step]._type
+        self.cache_steplist.units[step].N2_flowRate=self.step_widges_list[step]._type
+        self.cache_steplist.units[step].PID_No=self.step_widges_list[step]._type
+        self.cache_steplist.units[step].time_keep=self.step_widges_list[step]._type
+        self.cache_steplist.units[step].test_measure_enable=self.step_widges_list[step]._type
+        self.cache_steplist.units[step].test_measure_PatternNo=self.step_widges_list[step]._type
+        
         
 
     
