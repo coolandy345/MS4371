@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patterndyQfyx.ui'
+## Form generated from reading UI file 'temp_patternLIBeSc.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -89,12 +89,12 @@ class Ui_temp_pattern(object):
 
         self.gridLayout_4.addWidget(self.Type_comboBox, 2, 0, 1, 3)
 
-        self.Temp_lineEdit = QSpinBox(self.page2)
-        self.Temp_lineEdit.setObjectName(u"Temp_lineEdit")
-        self.Temp_lineEdit.setMinimumSize(QSize(80, 20))
-        self.Temp_lineEdit.setMaximumSize(QSize(16777215, 20))
-        self.Temp_lineEdit.setMouseTracking(False)
-        self.Temp_lineEdit.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
+        self.SV_lineEdit = QSpinBox(self.page2)
+        self.SV_lineEdit.setObjectName(u"SV_lineEdit")
+        self.SV_lineEdit.setMinimumSize(QSize(80, 20))
+        self.SV_lineEdit.setMaximumSize(QSize(16777215, 20))
+        self.SV_lineEdit.setMouseTracking(False)
+        self.SV_lineEdit.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
 "color: rgb(225, 230, 241);\n"
 "border-width: 1px;\n"
 "border-style: solid;\n"
@@ -102,14 +102,14 @@ class Ui_temp_pattern(object):
 "padding-left:5px;\n"
 "padding-right:5px;\n"
 "font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";")
-        self.Temp_lineEdit.setFrame(True)
-        self.Temp_lineEdit.setAlignment(Qt.AlignCenter)
-        self.Temp_lineEdit.setButtonSymbols(QAbstractSpinBox.NoButtons)
-        self.Temp_lineEdit.setMaximum(999)
-        self.Temp_lineEdit.setStepType(QAbstractSpinBox.DefaultStepType)
-        self.Temp_lineEdit.setValue(23)
+        self.SV_lineEdit.setFrame(True)
+        self.SV_lineEdit.setAlignment(Qt.AlignCenter)
+        self.SV_lineEdit.setButtonSymbols(QAbstractSpinBox.NoButtons)
+        self.SV_lineEdit.setMaximum(999)
+        self.SV_lineEdit.setStepType(QAbstractSpinBox.DefaultStepType)
+        self.SV_lineEdit.setValue(23)
 
-        self.gridLayout_4.addWidget(self.Temp_lineEdit, 7, 1, 1, 2)
+        self.gridLayout_4.addWidget(self.SV_lineEdit, 7, 1, 1, 2)
 
         self.PID_comboBox = QComboBox(self.page2)
         self.PID_comboBox.addItem("")
@@ -140,15 +140,15 @@ class Ui_temp_pattern(object):
 
         self.gridLayout_4.addWidget(self.KeepTime_label, 14, 0, 1, 1)
 
-        self.Temp_label = QLabel(self.page2)
-        self.Temp_label.setObjectName(u"Temp_label")
-        self.Temp_label.setMinimumSize(QSize(80, 0))
-        self.Temp_label.setMaximumSize(QSize(80, 16777215))
-        self.Temp_label.setStyleSheet(u"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.SV_label = QLabel(self.page2)
+        self.SV_label.setObjectName(u"SV_label")
+        self.SV_label.setMinimumSize(QSize(80, 0))
+        self.SV_label.setMaximumSize(QSize(80, 16777215))
+        self.SV_label.setStyleSheet(u"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "border:none;")
 
-        self.gridLayout_4.addWidget(self.Temp_label, 7, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.SV_label, 7, 0, 1, 1)
 
         self.PID_label = QLabel(self.page2)
         self.PID_label.setObjectName(u"PID_label")
@@ -379,7 +379,7 @@ class Ui_temp_pattern(object):
         self.PID_comboBox.setItemText(3, QCoreApplication.translate("temp_pattern", u"No.4", None))
 
         self.KeepTime_label.setText(QCoreApplication.translate("temp_pattern", u"\u30ad\u30fc\u30d7\u6642\u9593(s)", None))
-        self.Temp_label.setText(QCoreApplication.translate("temp_pattern", u"\u4e3b\u7089(\u2103)", None))
+        self.SV_label.setText(QCoreApplication.translate("temp_pattern", u"\u4e3b\u7089(\u2103)", None))
         self.PID_label.setText(QCoreApplication.translate("temp_pattern", u"PID", None))
         self.TestPattern_label.setText(QCoreApplication.translate("temp_pattern", u"\u6e2c\u5b9a\u30d1\u30bf\u30fc\u30f3", None))
         self.Time_label.setText(QCoreApplication.translate("temp_pattern", u"\u6642\uff1a\u5206", None))

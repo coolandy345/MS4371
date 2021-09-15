@@ -86,7 +86,6 @@ class TempPatternWidget(QWidget):
         self.choose_pattern=choose_pattern
         self.cache_step=tempUnit()
         self.cache_steplist=templist()
-        
         self.memory_reader()
         self.setup_utility()
         self.setup_TempPattern()
@@ -111,10 +110,8 @@ class TempPatternWidget(QWidget):
                 )
             units=[None]
             
-            print("1")
             for step_no in range(1,21):
                 
-                print("2")
                 unit=tempUnit(
                     Step_Type               =Modbus_Registor_pool["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].value,
                     time_hour               =Modbus_Registor_pool["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].value,
@@ -258,7 +255,7 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].pattern.Hour_lineEdit.setValue(unit.time_hour)
                 self.step_widges_list[_step].pattern.Min_lineEdit.setValue(unit.time_min)
 
-                self.step_widges_list[_step].pattern.Temp_lineEdit.setValue(unit.SV)
+                self.step_widges_list[_step].pattern.SV_lineEdit.setValue(unit.SV)
                 self.step_widges_list[_step].pattern.N2_lineEdit.setValue(unit.N2_flowRate)
                 self.step_widges_list[_step].pattern.PID_comboBox.setCurrentIndex(unit.PID_No)
                 pass
@@ -340,7 +337,6 @@ class TempPatternWidget(QWidget):
             self.choose_step=step
 
     def step_modifly_manager(self,step):
-        print("Step: ",step," has edit!")
 
         self.cache_steplist.units[step].Step_Type=self.step_widges_list[step]._type#
         self.cache_steplist.units[step].time_hour=self.step_widges_list[step]._type

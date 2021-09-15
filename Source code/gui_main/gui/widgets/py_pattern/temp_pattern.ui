@@ -170,7 +170,7 @@ border-radius: 4px;</string>
         </widget>
        </item>
        <item row="7" column="1" colspan="2">
-        <widget class="QSpinBox" name="Temp_lineEdit">
+        <widget class="QSpinBox" name="SV_lineEdit">
          <property name="minimumSize">
           <size>
            <width>80</width>
@@ -292,7 +292,7 @@ border:none;</string>
         </widget>
        </item>
        <item row="7" column="0">
-        <widget class="QLabel" name="Temp_label">
+        <widget class="QLabel" name="SV_label">
          <property name="minimumSize">
           <size>
            <width>80</width>
@@ -717,16 +717,11 @@ border-style: solid;
 border-radius: 4px;</string>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>-1</number>
          </property>
          <property name="maxVisibleItems">
           <number>5</number>
          </property>
-         <item>
-          <property name="text">
-           <string>No.1</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item row="1" column="0" colspan="3">
