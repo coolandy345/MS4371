@@ -30,6 +30,7 @@ logging.basicConfig(format=FORMAT)
 log = logging.getLogger()
 log.setLevel(logging.DEBUG)
 
+import socket
 
 def run_async_server():
     # ----------------------------------------------------------------------- # 
@@ -112,8 +113,7 @@ def run_async_server():
     # ----------------------------------------------------------------------- # 
 
     # TCP Server
-
-    StartTcpServer(context, identity=identity, address=("192.168.0.229", 502))
+    StartTcpServer(context, identity=identity, address=(socket.gethostbyname(socket.gethostname()), 502))
 
     # TCP Server with deferred reactor run
 

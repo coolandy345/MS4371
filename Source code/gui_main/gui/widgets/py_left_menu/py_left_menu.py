@@ -123,6 +123,7 @@ class PyLeftMenu(QWidget):
         self.div_bottom.hide()
         self.bottom_layout.addWidget(self.div_bottom)
 
+
     # ADD BUTTONS TO LEFT MENU
     # Add btns and emit signals
     # ///////////////////////////////////////////////////////////////
@@ -176,6 +177,7 @@ class PyLeftMenu(QWidget):
     # EXPAND / RETRACT LEF MENU
     # ///////////////////////////////////////////////////////////////
     def toggle_animation(self):
+        print("sgsgg")
         # CREATE ANIMATION
         self.animation = QPropertyAnimation(self._parent, b"minimumWidth")
         self.animation.stop()

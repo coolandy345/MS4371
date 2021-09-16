@@ -71,7 +71,11 @@ class MainWindow(QMainWindow):
         SetupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
+
+
         self.show()
+        
+        self.ui.left_menu.toggle_animation()
 
     # LEFT MENU BTN IS CLICKED
     # Run function when btn is clicked

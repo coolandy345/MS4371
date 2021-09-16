@@ -11,6 +11,9 @@ import threading
 import modbus_TcpServer
 import time
 
+import numpy as np
+import pyqtgraph as pg
+
 
 class tempUnit():
     def __init__(
@@ -89,6 +92,7 @@ class TempPatternWidget(QWidget):
         self.memory_reader()
         self.setup_utility()
         self.setup_TempPattern()
+        self.setup_TempGraph()
         self.load_list_From_Memory()
         self.updata_step_widge()
 
@@ -198,6 +202,9 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.gridLayout_36.addWidget(self.icon, Qt.AlignCenter, Qt.AlignCenter)
         self.icon.clicked.connect(self.ui_click_callback)
 
+        self.RT_MeasurementToggle=PyToggle()
+        self._parent.ui.load_pages.gridLayout_37.addWidget(self.RT_MeasurementToggle, Qt.AlignCenter, Qt.AlignCenter)
+
     def setup_TempPattern(self):
         self.step_widges_list=[None]
         for _step in range(1,21):
@@ -211,9 +218,33 @@ class TempPatternWidget(QWidget):
             self.step_widges_list.append(temp_step)
             self.step_widges_list[_step].setVisible (False)
             self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.step_widges_list[_step])
+            self._parent.ui.load_pages.scrollArea_3.setMinimumSize(QSize(0, 340))
         
         
-            
+    def setup_TempGraph(self):
+        self.win1 =pg.PlotWidget(background=None,title="予定パターン")
+        
+        self.win1.setLabel(axis='left', text='温度', units='℃')
+
+        self.win1.setLimits(xMin=0.9,xMax=20.9)
+        self.axis = self.win1.getAxis('bottom')
+        self.axis.setStyle(autoReduceTextSpace=True)
+        self.axis.setTickSpacing(1,1)
+        self.win1.setAxisItems({'bottom':self.axis})
+        
+        self.win1.showGrid(x=True, y=True)
+        self.win1.setMouseEnabled(x=False, y=False)
+
+        #self.win1.addLegend()
+
+        
+        self.win1.setMinimumSize(QSize(1100, 300))
+        self.win1.plot(x=[1,2,3,4,5,6,7,8],y=[0,0,10,10,30,30,0,0],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
+        
+        self._parent.ui.load_pages.horizontalLayout_4.addWidget(self.win1, Qt.AlignCenter, Qt.AlignCenter)
+
+
+        pass
 
 
         

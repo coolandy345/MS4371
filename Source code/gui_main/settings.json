@@ -6,12 +6,12 @@
     "theme_name" : "default",
     "custom_title_bar": true,
     "startup_size": [
-        1350,
-        900
+        1470,
+        930
     ],
     "minimum_size": [
-        1350,
-        780
+        1470,
+        930
     ],
     "lef_menu_size" : {
         "minimum" : 50,

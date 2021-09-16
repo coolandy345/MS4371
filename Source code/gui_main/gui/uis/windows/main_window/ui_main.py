@@ -138,6 +138,7 @@ class UI_MainWindow(object):
             text_foreground = self.themes["app_color"]["text_foreground"],
             text_active = self.themes["app_color"]["text_active"]
         )
+        
         self.left_menu_layout.addWidget(self.left_menu)
 
         # ADD LEFT COLUMN
