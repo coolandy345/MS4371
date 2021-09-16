@@ -35,6 +35,7 @@ class PyStepMenu(QWidget):
         parent = None,
         app_parent = None,
         step = 1,
+        parent_type=""
     ):
         super().__init__()
         # Parameter
@@ -43,6 +44,7 @@ class PyStepMenu(QWidget):
         self._parent = parent
         self._app_parent = app_parent 
         self._step = step
+        self._parent_type = parent_type
         
         # base prepare
         # ///////////////////////////////////////////////////////////////
@@ -61,7 +63,10 @@ class PyStepMenu(QWidget):
 
     def function_callback(self):
         btn = self.sender()
-        self._app_parent.tempPattern.menu_btn_handler(btn.objectName())
+        if self._parent_type=="Temp type":
+            self._app_parent.tempPattern.menu_btn_handler(btn.objectName())
+        elif self._parent_type=="Test type":
+            self._app_parent.testPattern.menu_btn_handler(btn.objectName())
 
     
 

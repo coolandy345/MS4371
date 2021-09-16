@@ -23,7 +23,8 @@ class tempUnit():
         time_min=0,
         SV=0,
         N2_flowRate=0,
-        PID_No=0,
+        PID_muffle_No=0,
+        PID_heater_No=0,
         time_keep=0,
         test_measure_enable=0,
         test_measure_PatternNo=0,
@@ -34,15 +35,12 @@ class tempUnit():
         self.time_min=time_min
         self.SV=SV
         self.N2_flowRate=N2_flowRate
-        self.PID_No=PID_No
+        self.PID_muffle_No=PID_muffle_No
+        self.PID_heater_No=PID_heater_No
         self.time_keep=time_keep
         self.test_measure_enable=test_measure_enable
         self.test_measure_PatternNo=test_measure_PatternNo
         
-
-
-        
-            
             
         
 
@@ -102,7 +100,6 @@ class TempPatternWidget(QWidget):
 
         mudbusunit=modbus_TcpServer.ModbusPackage()
         Modbus_Registor_pool=self.memory_pool["Modbus Registor Memory"]
-
         _20_pattern_lists=[None]
         
         for ptn_no in range(1,21):
@@ -115,14 +112,15 @@ class TempPatternWidget(QWidget):
             units=[None]
             
             for step_no in range(1,21):
-                
+
                 unit=tempUnit(
                     Step_Type               =Modbus_Registor_pool["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].value,
                     time_hour               =Modbus_Registor_pool["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].value,
                     time_min                =Modbus_Registor_pool["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].value,
                     SV                      =Modbus_Registor_pool["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].value,
                     N2_flowRate             =Modbus_Registor_pool["PTNData_{}_STEP_{}_N2流量".format(ptn_no,step_no)].value,
-                    PID_No                  =Modbus_Registor_pool["PTNData_{}_STEP_{}_PID No.".format(ptn_no,step_no)].value,
+                    PID_muffle_No           =Modbus_Registor_pool["PTNData_{}_STEP_{}_マッフル_PID_No".format(ptn_no,step_no)].value,
+                    PID_heater_No           =Modbus_Registor_pool["PTNData_{}_STEP_{}_ヒーター_PID_No".format(ptn_no,step_no)].value,
                     time_keep               =Modbus_Registor_pool["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].value,
                     #test_measure_enable     =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
                     #test_measure_PatternNo  =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定 No.".format(ptn_no,step_no)].value
@@ -130,7 +128,6 @@ class TempPatternWidget(QWidget):
                 units.append(unit)
             pattern.units=units
             _20_pattern_lists.append(pattern)
-
         self.pattern_lists=_20_pattern_lists
 
     def setup_utility(self):
@@ -218,7 +215,7 @@ class TempPatternWidget(QWidget):
             self.step_widges_list.append(temp_step)
             self.step_widges_list[_step].setVisible (False)
             self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.step_widges_list[_step])
-            self._parent.ui.load_pages.scrollArea_3.setMinimumSize(QSize(0, 340))
+            self._parent.ui.load_pages.scrollArea_3.setMinimumSize(QSize(0, 320))
         
         
     def setup_TempGraph(self):
@@ -237,14 +234,11 @@ class TempPatternWidget(QWidget):
 
         #self.win1.addLegend()
 
-        
         self.win1.setMinimumSize(QSize(1100, 300))
         self.win1.plot(x=[1,2,3,4,5,6,7,8],y=[0,0,10,10,30,30,0,0],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
         
         self._parent.ui.load_pages.horizontalLayout_4.addWidget(self.win1, Qt.AlignCenter, Qt.AlignCenter)
-
-
-        pass
+        
 
 
         
@@ -288,16 +282,15 @@ class TempPatternWidget(QWidget):
 
                 self.step_widges_list[_step].pattern.SV_lineEdit.setValue(unit.SV)
                 self.step_widges_list[_step].pattern.N2_lineEdit.setValue(unit.N2_flowRate)
-                self.step_widges_list[_step].pattern.PID_comboBox.setCurrentIndex(unit.PID_No)
+                self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
+                self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
+
                 pass
             elif index==1:  #test unit
                 self.step_widges_list[_step].pattern.KeepTime_lineEdit.setValue(unit.time_keep)
                 self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
                 pass
             elif index==2:  #End unit
-                pass
-            elif index==3:  #RT test 
-                self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
                 pass
 
 

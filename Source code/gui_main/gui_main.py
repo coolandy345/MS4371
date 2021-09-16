@@ -72,7 +72,7 @@ class MainWindow(QMainWindow):
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
 
-
+        
         self.show()
         
         self.ui.left_menu.toggle_animation()

@@ -219,12 +219,9 @@ class SetupMainWindow:
 
         self.Tester_ConnectionToggle=PyToggle()
         self.ui.load_pages.gridLayout_28.addWidget(self.Tester_ConnectionToggle)
-        
         self.tempPattern=TempPatternWidget(self,app_parent=self.ui.central_widget,memory_pool=memory_pool)
-
-
+        self.testPattern=TestPatternWidget(self,app_parent=self.ui.central_widget,memory_pool=memory_pool)
         
-
         self.stop_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("stop-button-extralarge.svg"),
                 parent = self,

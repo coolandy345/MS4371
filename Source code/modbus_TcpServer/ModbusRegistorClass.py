@@ -1,9 +1,7 @@
 class ModbusPackage():
     def __init__(self,
                  number=0,
-                 name_sub1="",
-                 name_sub2="",
-                 name_sub3="",
+                 name="",
                  min=0,
                  value=0,
                  max=1,
@@ -11,16 +9,7 @@ class ModbusPackage():
                  comment=""
                  ):
         self.registor_number=number
-        self.name=""
-        if type(name_sub1)==type(self.name) and name_sub1!="":
-            self.name+=name_sub1
-        if type(name_sub2)==type(self.name) and name_sub2!="":
-            self.name+="_"+name_sub2
-        if type(name_sub3)==type(self.name) and name_sub3!="":
-            self.name+="_"+name_sub3
-        self.name_sub1=name_sub1
-        self.name_sub2=name_sub2
-        self.name_sub3=name_sub3
+        self.name=name
         self.min=min
         if not value==None:
             self.value=value
@@ -36,10 +25,10 @@ class ModbusPackage():
     def setValue(value):
         if value >self.max:
             value=self.max
-            print("Set too large value to this registor")
+            print("Set too large value to this registor ,Register number = ",number)
         elif value<self.min:
             value=self.min
-            print("Set too small value to this registor")
+            print("Set too small value to this registor ,Register number = ",number)
 
         self.value=value
 

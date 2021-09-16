@@ -80,7 +80,8 @@ class PyTempStep(QWidget):
         keep_seccond = 0,
         test_pattern = 0,
         n2_flowrate = 0,
-        PID_no = 0
+        PID_muffle_no = 0,
+        PID_heater_no = 0,
     ):
         super().__init__()
         # Parameter
@@ -93,7 +94,8 @@ class PyTempStep(QWidget):
         self._keep_seccond = keep_seccond
         self._test_pattern = test_pattern
         self._n2_flowrate = n2_flowrate
-        self._PID_no = PID_no
+        self._PID_muffle_no = PID_muffle_no
+        self._PID_heater_no = PID_heater_no
 
         # Parent
         self._parent = parent
@@ -120,7 +122,8 @@ class PyTempStep(QWidget):
         self._menu=PyStepMenu(
             parent=self,
             app_parent=self._parent,
-            step=self._step
+            step=self._step,
+            parent_type="Temp type"
 
             )
         self._menu.menu_frame.move(60, 0)
@@ -136,7 +139,10 @@ class PyTempStep(QWidget):
         self.pattern.Min_lineEdit.setValue(self._minute)
         self.pattern.SV_lineEdit.setValue(self._temperature)
         self.pattern.N2_lineEdit.setValue(self._n2_flowrate)
-        self.pattern.PID_comboBox.setCurrentIndex(self._PID_no)
+
+        self.pattern.PID_muffle_comboBox.setCurrentIndex(self._PID_muffle_no)
+        self.pattern.PID_heater_comboBox.setCurrentIndex(self._PID_heater_no)
+
         self.pattern.KeepTime_lineEdit.setValue(self._keep_seccond)
         self.pattern.TestPattern_comboBox.setCurrentIndex(self._test_pattern)
 
@@ -199,9 +205,11 @@ class PyTempStep(QWidget):
         self.pattern.Min_lineEdit.editingFinished.connect(self.modifly_callback)
         self.pattern.SV_lineEdit.editingFinished.connect(self.modifly_callback)
         self.pattern.N2_lineEdit.editingFinished.connect(self.modifly_callback)
-        self.pattern.PID_comboBox.currentIndexChanged.connect(self.modifly_callback)
         self.pattern.KeepTime_lineEdit.editingFinished.connect(self.modifly_callback)
         self.pattern.TestPattern_comboBox.currentIndexChanged.connect(self.modifly_callback)
+
+        self.pattern.PID_muffle_comboBox.currentIndexChanged.connect(self.modifly_callback)
+        self.pattern.PID_heater_comboBox.currentIndexChanged.connect(self.modifly_callback)
 
 
     #When infomation is modifly by user , call back to this function
@@ -223,7 +231,9 @@ class PyTempStep(QWidget):
 
         self._temperature=self.pattern.SV_lineEdit.value()
         self._n2_flowrate=self.pattern.N2_lineEdit.value()
-        self._PID_no=self.pattern.PID_comboBox.currentIndex()
+
+        self._PID_muffle_no=self.pattern.PID_muffle_comboBox.currentIndex()
+        self._PID_heater_no=self.pattern.PID_heater_comboBox.currentIndex()
 
         self._keep_seccond=self.pattern.KeepTime_lineEdit.value()
         self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
@@ -251,9 +261,12 @@ class PyTempStep(QWidget):
             self.pattern.N2_lineEdit.setEnabled(True)
             self.pattern.N2_lineEdit.setStyleSheet(self.line_normal_style)
             self.pattern.N2_label.setStyleSheet(self.label_normal_style)
-            self.pattern.PID_comboBox.setEnabled(True)
-            self.pattern.PID_comboBox.setStyleSheet(self.line_normal_style)
-            self.pattern.PID_label.setStyleSheet(self.label_normal_style)
+            self.pattern.PID_muffle_comboBox.setEnabled(True)
+            self.pattern.PID_muffle_comboBox.setStyleSheet(self.line_normal_style)
+            self.pattern.PID_heater_comboBox.setEnabled(True)
+            self.pattern.PID_heater_comboBox.setStyleSheet(self.line_normal_style)
+            self.pattern.PID_muffle_label.setStyleSheet(self.label_normal_style)
+            self.pattern.PID_heater_label.setStyleSheet(self.label_normal_style)
             self.pattern.KeepTime_lineEdit.setValue(0)
             self.pattern.KeepTime_lineEdit.setDisabled(True)
             self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_gray_out_style)
@@ -282,9 +295,15 @@ class PyTempStep(QWidget):
             self.pattern.N2_lineEdit.setEnabled(False)
             self.pattern.N2_lineEdit.setStyleSheet(self.line_gray_out_style)
             self.pattern.N2_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.PID_comboBox.setEnabled(False)
-            self.pattern.PID_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.PID_label.setStyleSheet(self.label_gray_out_style)
+
+            self.pattern.PID_muffle_comboBox.setEnabled(False)
+            self.pattern.PID_muffle_comboBox.setStyleSheet(self.line_gray_out_style)
+            self.pattern.PID_muffle_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.PID_heater_comboBox.setEnabled(False)
+            self.pattern.PID_heater_comboBox.setStyleSheet(self.line_gray_out_style)
+            self.pattern.PID_heater_label.setStyleSheet(self.label_gray_out_style)
+
+
             self.pattern.KeepTime_lineEdit.setEnabled(True)
             self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_normal_style)
             self.pattern.KeepTime_label.setStyleSheet(self.label_normal_style)
@@ -314,9 +333,15 @@ class PyTempStep(QWidget):
             self.pattern.N2_lineEdit.setEnabled(False)
             self.pattern.N2_lineEdit.setStyleSheet(self.line_gray_out_style)
             self.pattern.N2_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.PID_comboBox.setEnabled(False)
-            self.pattern.PID_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.PID_label.setStyleSheet(self.label_gray_out_style)
+
+
+            self.pattern.PID_muffle_comboBox.setEnabled(False)
+            self.pattern.PID_muffle_comboBox.setStyleSheet(self.line_gray_out_style)
+            self.pattern.PID_muffle_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.PID_heater_comboBox.setEnabled(False)
+            self.pattern.PID_heater_comboBox.setStyleSheet(self.line_gray_out_style)
+            self.pattern.PID_heater_label.setStyleSheet(self.label_gray_out_style)
+
             self.pattern.KeepTime_lineEdit.setValue(0)
             self.pattern.KeepTime_lineEdit.setDisabled(False)
             self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_gray_out_style)
