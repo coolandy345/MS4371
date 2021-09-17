@@ -53,6 +53,7 @@ from gui_main.gui.widgets.py_left_column.py_icon import *
 
 from gui_main.gui.uis.pattern_columns import *
 
+
 import numpy as np
 import pyqtgraph as pg
 
@@ -427,12 +428,25 @@ class SetupMainWindow:
         self.win.setMouseEnabled(x=True, y=False)
         self.win.addLegend()
 
-        self.win.plot(x=[0,1,2],y=[5,10,10],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
+        self.win.plot(x=[0,1,2,3,8],y=[5,10,10,0,50],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
         
         self.ui.load_pages.gridLayout_9.addWidget(self.win, Qt.AlignCenter, Qt.AlignCenter)
         
-        print("self.win.",self.ui.load_pages.frame_2.sizePolicy())
-        
+        region = pg.LinearRegionItem(
+            brush = QBrush(QColor(0, 0, 0, 0)),
+            pen=pg.mkPen(0,0,200),
+            movable=False,
+            )
+        region.setRegion([1, 2])
+
+        test=pg.TextItem(
+            text='124',
+            )
+        test.setPos(3, 1)
+
+
+        self.win.plotItem.addItem(region, ignoreBounds=True)
+        self.win.plotItem.addItem(test, ignoreBounds=True)
 
     # RESIZE GRIPS AND CHANGE POSITION
     # Resize or change position when window is resized

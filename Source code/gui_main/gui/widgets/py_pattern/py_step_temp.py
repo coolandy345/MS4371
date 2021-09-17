@@ -291,17 +291,16 @@ class PyTempStep(QWidget):
             self.pattern.SV_lineEdit.setEnabled(False)
             self.pattern.SV_lineEdit.setStyleSheet(self.line_gray_out_style)
             self.pattern.SV_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.N2_lineEdit.setValue(0)
-            self.pattern.N2_lineEdit.setEnabled(False)
-            self.pattern.N2_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.N2_label.setStyleSheet(self.label_gray_out_style)
-
-            self.pattern.PID_muffle_comboBox.setEnabled(False)
-            self.pattern.PID_muffle_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.PID_muffle_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.PID_heater_comboBox.setEnabled(False)
-            self.pattern.PID_heater_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.PID_heater_label.setStyleSheet(self.label_gray_out_style)
+            
+            self.pattern.N2_lineEdit.setEnabled(True)
+            self.pattern.N2_lineEdit.setStyleSheet(self.line_normal_style)
+            self.pattern.N2_label.setStyleSheet(self.label_normal_style)
+            self.pattern.PID_muffle_comboBox.setEnabled(True)
+            self.pattern.PID_muffle_comboBox.setStyleSheet(self.line_normal_style)
+            self.pattern.PID_heater_comboBox.setEnabled(True)
+            self.pattern.PID_heater_comboBox.setStyleSheet(self.line_normal_style)
+            self.pattern.PID_muffle_label.setStyleSheet(self.label_normal_style)
+            self.pattern.PID_heater_label.setStyleSheet(self.label_normal_style)
 
 
             self.pattern.KeepTime_lineEdit.setEnabled(True)

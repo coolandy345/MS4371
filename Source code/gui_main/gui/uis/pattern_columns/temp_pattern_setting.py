@@ -237,7 +237,7 @@ class TempPatternWidget(QWidget):
         self.axis.enableAutoSIPrefix(False)
         
         self.win1.showGrid(x=True, y=True)
-        self.win1.setMouseEnabled(x=False, y=False)
+        self.win1.setMouseEnabled(x=True, y=False)
 
         #self.win1.addLegend()
 
