@@ -159,7 +159,6 @@ class SetupMainWindow:
         # SET SIGNALS
         self.ui.left_menu.clicked.connect(self.btn_clicked)
         self.ui.left_menu.released.connect(self.btn_released)
-
         # TITLE BAR / ADD EXTRA BUTTONS
         # ///////////////////////////////////////////////////////////////
         # ADD MENUS
@@ -174,7 +173,7 @@ class SetupMainWindow:
             self.ui.title_bar.set_title(self.settings["app_name"])
         else:
             self.ui.title_bar.set_title("Welcome to PyOneDark")
-
+        
         # LEFT COLUMN SET SIGNALS
         # ///////////////////////////////////////////////////////////////
         self.ui.left_column.clicked.connect(self.btn_clicked)
@@ -190,7 +189,6 @@ class SetupMainWindow:
             icon_path = Functions.set_svg_icon("icon_settings.svg")
         )
         MainFunctions.set_right_column_menu(self, self.ui.right_column.menu_1)
-
         # ///////////////////////////////////////////////////////////////
         # EXAMPLE CUSTOM WIDGETS
         # Here are added the custom widgets to pages and columns that
@@ -203,7 +201,6 @@ class SetupMainWindow:
         # ///////////////////////////////////////////////////////////////
         settings = Settings()
         self.settings = settings.items
-
         # LOAD THEME COLOR
         # ///////////////////////////////////////////////////////////////
         themes = Themes()
@@ -216,12 +213,13 @@ class SetupMainWindow:
 
         self.MS_ConnectionToggle=PyToggle()
         self.ui.load_pages.gridLayout_27.addWidget(self.MS_ConnectionToggle)
-
+        
         self.Tester_ConnectionToggle=PyToggle()
         self.ui.load_pages.gridLayout_28.addWidget(self.Tester_ConnectionToggle)
         self.tempPattern=TempPatternWidget(self,app_parent=self.ui.central_widget,memory_pool=memory_pool)
         self.testPattern=TestPatternWidget(self,app_parent=self.ui.central_widget,memory_pool=memory_pool)
         
+
         self.stop_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("stop-button-extralarge.svg"),
                 parent = self,
@@ -432,6 +430,8 @@ class SetupMainWindow:
         self.win.plot(x=[0,1,2],y=[5,10,10],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
         
         self.ui.load_pages.gridLayout_9.addWidget(self.win, Qt.AlignCenter, Qt.AlignCenter)
+        
+        print("self.win.",self.ui.load_pages.frame_2.sizePolicy())
         
 
     # RESIZE GRIPS AND CHANGE POSITION

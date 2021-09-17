@@ -5,6 +5,7 @@ from gui_main.gui.widgets import *
 from gui_main.gui.core.functions import *
 from gui_main.gui.core.json_settings import Settings
 from gui_main.gui.core.json_themes import Themes
+from PySide6.QtCore import QTimer
 import threading
 
 #from modbus_TcpServer import ModbusRegistorClass
@@ -74,6 +75,9 @@ class TempPatternWidget(QWidget):
             choose_pattern=1,
             memory_pool={}
     ):
+        #self.timer=QTimer()
+        #self.timer.timeout.connect(self.sayhi)
+        #self.timer.start(10)
         #threading.Timer(1,self.sayhi).start()
         super().__init__()
 
@@ -225,9 +229,12 @@ class TempPatternWidget(QWidget):
 
         self.win1.setLimits(xMin=0.9,xMax=20.9)
         self.axis = self.win1.getAxis('bottom')
-        self.axis.setStyle(autoReduceTextSpace=True)
+        self.axis.setStyle(autoReduceTextSpace=False)
         self.axis.setTickSpacing(1,1)
         self.win1.setAxisItems({'bottom':self.axis})
+        
+        self.axis = self.win1.getAxis('left')
+        self.axis.enableAutoSIPrefix(False)
         
         self.win1.showGrid(x=True, y=True)
         self.win1.setMouseEnabled(x=False, y=False)
@@ -304,9 +311,14 @@ class TempPatternWidget(QWidget):
         #print("click")
         pass
 
-    #def sayhi(self):
-    #    print("hi")
-    #    threading.Timer(1, self.sayhi).start()
+    def sayhi(self):
+        self.axis = self.win1.getAxis('left')
+        self.axis.label.setRotation(0)
+        self.axis.label.setPos(-40,110)
+        self.win1.setPos(50,6)
+        if self.win1.isVisible():
+            print("temp finish")
+            self.timer.stop()
 
     def scroll_adjust_TempPattern(self):
         self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().maximum())

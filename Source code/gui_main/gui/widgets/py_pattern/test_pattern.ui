@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
+    <width>140</width>
     <height>133</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>150</width>
-    <height>0</height>
+    <width>140</width>
+    <height>133</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>150</width>
+    <width>140</width>
     <height>133</height>
    </size>
   </property>
@@ -87,7 +87,7 @@ border-radius: 10px;</string>
      <widget class="QWidget" name="page2">
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="Step_label">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -104,7 +104,6 @@ border-radius: 10px;</string>
           <string notr="true">font:17px &quot;游ゴシック&quot;;
 color: rgb(0, 0, 0);
 padding-left:5px;
-
 background-color: rgb(73, 73, 220);
 border:none;</string>
          </property>
@@ -169,7 +168,7 @@ border:none;</string>
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="SV_label">
          <property name="maximumSize">
           <size>
            <width>16777215</width>

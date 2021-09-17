@@ -74,8 +74,10 @@ class MainWindow(QMainWindow):
 
         
         self.show()
-        
+
+
         self.ui.left_menu.toggle_animation()
+
 
     # LEFT MENU BTN IS CLICKED
     # Run function when btn is clicked
@@ -143,9 +145,12 @@ class MainWindow(QMainWindow):
         if btn.objectName() == "new_temp_Step_Buttom":
             self.tempPattern.new_TempPattern()
 
+        if btn.objectName() == "new_test_Step_Buttom":
+            self.testPattern.new_TestPattern()
         
         #self.SetupMainWindow.
         self.tempPattern.close_menu()
+        self.testPattern.close_menu()
 
         # DEBUG 
         #print(f"Button {btn.objectName()}, clicked!")
@@ -160,6 +165,10 @@ class MainWindow(QMainWindow):
 
         if btn.objectName() == "new_temp_Step_Buttom":
             self.tempPattern.scroll_adjust_TempPattern()
+            pass
+
+        if btn.objectName() == "new_test_Step_Buttom":
+            self.testPattern.scroll_adjust_TestPattern()
             pass
 
         # DEBUG

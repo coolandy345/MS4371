@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'test_patternBtERxj.ui'
+## Form generated from reading UI file 'test_patternrgbmlt.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -17,9 +17,9 @@ class Ui_test_pattern(object):
     def setupUi(self, test_pattern):
         if not test_pattern.objectName():
             test_pattern.setObjectName(u"test_pattern")
-        test_pattern.resize(150, 133)
-        test_pattern.setMinimumSize(QSize(150, 0))
-        test_pattern.setMaximumSize(QSize(150, 133))
+        test_pattern.resize(140, 133)
+        test_pattern.setMinimumSize(QSize(140, 133))
+        test_pattern.setMaximumSize(QSize(140, 133))
         test_pattern.setStyleSheet(u"background-color: rgb(44, 49, 60);\n"
 "border-radius: 10px;")
         self.gridLayout_3 = QGridLayout(test_pattern)
@@ -49,18 +49,18 @@ class Ui_test_pattern(object):
         self.page2.setObjectName(u"page2")
         self.gridLayout_4 = QGridLayout(self.page2)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.label = QLabel(self.page2)
-        self.label.setObjectName(u"label")
-        self.label.setMinimumSize(QSize(0, 25))
-        self.label.setMaximumSize(QSize(16777215, 30))
-        self.label.setStyleSheet(u"font:17px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.Step_label = QLabel(self.page2)
+        self.Step_label.setObjectName(u"Step_label")
+        self.Step_label.setMinimumSize(QSize(0, 25))
+        self.Step_label.setMaximumSize(QSize(16777215, 30))
+        self.Step_label.setStyleSheet(u"font:17px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(0, 0, 0);\n"
 "padding-left:5px;\n"
 "\n"
 "background-color: rgb(73, 73, 220);\n"
 "border:none;")
 
-        self.gridLayout_4.addWidget(self.label, 0, 0, 1, 2)
+        self.gridLayout_4.addWidget(self.Step_label, 0, 0, 1, 2)
 
         self.frame_3 = QFrame(self.page2)
         self.frame_3.setObjectName(u"frame_3")
@@ -84,14 +84,14 @@ class Ui_test_pattern(object):
 
         self.gridLayout_4.addWidget(self.frame_2, 2, 0, 1, 3)
 
-        self.label_2 = QLabel(self.page2)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setMaximumSize(QSize(16777215, 16777215))
-        self.label_2.setStyleSheet(u"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.SV_label = QLabel(self.page2)
+        self.SV_label.setObjectName(u"SV_label")
+        self.SV_label.setMaximumSize(QSize(16777215, 16777215))
+        self.SV_label.setStyleSheet(u"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "border:none;")
 
-        self.gridLayout_4.addWidget(self.label_2, 4, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.SV_label, 4, 0, 1, 1)
 
         self.Type_comboBox = QComboBox(self.page2)
         self.Type_comboBox.addItem("")
@@ -147,8 +147,8 @@ class Ui_test_pattern(object):
 
     def retranslateUi(self, test_pattern):
         test_pattern.setWindowTitle(QCoreApplication.translate("test_pattern", u"Form", None))
-        self.label.setText(QCoreApplication.translate("test_pattern", u"STEP 1", None))
-        self.label_2.setText(QCoreApplication.translate("test_pattern", u"\u6e2c\u5b9a\u96fb\u5727 V", None))
+        self.Step_label.setText(QCoreApplication.translate("test_pattern", u"STEP 1", None))
+        self.SV_label.setText(QCoreApplication.translate("test_pattern", u"\u6e2c\u5b9a\u96fb\u5727 V", None))
         self.Type_comboBox.setItemText(0, QCoreApplication.translate("test_pattern", u"BG", None))
         self.Type_comboBox.setItemText(1, QCoreApplication.translate("test_pattern", u"\u6e2c\u5b9a+BG", None))
         self.Type_comboBox.setItemText(2, QCoreApplication.translate("test_pattern", u"END", None))
