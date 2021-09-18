@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Source code",
+    "\\Source code\\gui_main",
+    "\\Source code\\gui_main\\gui",
+    "\\Source code\\gui_main\\gui\\uis",
+    "\\Source code\\gui_main\\gui\\uis\\pattern_columns",
+    "\\Source code\\gui_main\\gui\\widgets",
+    "\\Source code\\gui_main\\gui\\widgets\\py_pattern",
+    "\\Source code\\gui_main\\user",
+    "\\Source code\\gui_main\\user\\profiles",
+    "\\Source code\\modbus_TcpServer"
+  ],
+  "SelectedNode": "\\Source code\\main.py",
+  "PreviewInSolutionExplorer": false
+}
