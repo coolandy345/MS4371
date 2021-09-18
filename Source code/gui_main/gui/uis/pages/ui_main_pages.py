@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesUArYBJ.ui'
+## Form generated from reading UI file 'main_pagesxfzOfp.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import *  # type: ignore
+from PySide6.QtGui import *  # type: ignore
+from PySide6.QtWidgets import *  # type: ignore
 
 
 class Ui_MainPages(object):
     def setupUi(self, MainPages):
         if not MainPages.objectName():
             MainPages.setObjectName(u"MainPages")
-        MainPages.resize(1322, 689)
+        MainPages.resize(1234, 689)
         MainPages.setMinimumSize(QSize(0, 0))
         self.gridLayout_8 = QGridLayout(MainPages)
         self.gridLayout_8.setObjectName(u"gridLayout_8")
@@ -1413,7 +1413,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -338, 1269, 991))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -338, 1181, 991))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -1499,7 +1499,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1211, 200))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1123, 200))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -2007,11 +2007,22 @@ class Ui_MainPages(object):
         self.frame_46.setFrameShape(QFrame.StyledPanel)
         self.frame_46.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_5 = QHBoxLayout(self.frame_46)
-        self.horizontalLayout_5.setSpacing(5)
+        self.horizontalLayout_5.setSpacing(0)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(6, 6, 6, 6)
+        self.label = QLabel(self.frame_46)
+        self.label.setObjectName(u"label")
+        self.label.setMinimumSize(QSize(60, 0))
+        self.label.setMaximumSize(QSize(60, 16777215))
+        self.label.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(65, 74, 88);\n"
+"padding-right:5px;\n"
+"border:none")
 
-        self.verticalLayout_2.addWidget(self.frame_46)
+        self.horizontalLayout_5.addWidget(self.label)
+
+
+        self.verticalLayout_2.addWidget(self.frame_46, 0, Qt.AlignLeft)
 
         self.scrollArea_4 = QScrollArea(self.frame_44)
         self.scrollArea_4.setObjectName(u"scrollArea_4")
@@ -2028,7 +2039,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 1211, 69))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 1123, 69))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -2491,7 +2502,7 @@ class Ui_MainPages(object):
 
         self.spinBox = QSpinBox(self.frame_58)
         self.spinBox.setObjectName(u"spinBox")
-        self.spinBox.setMinimumSize(QSize(60, 35))
+        self.spinBox.setMinimumSize(QSize(60, 32))
         self.spinBox.setMaximumSize(QSize(60, 16777215))
         self.spinBox.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
 "color: rgb(225, 230, 241);\n"
@@ -2734,6 +2745,7 @@ class Ui_MainPages(object):
         self.label_62.setText(QCoreApplication.translate("MainPages", u"BG0 \u6e2c\u5b9a\u6642\u9593(min)", None))
         self.label_58.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u6642\u9593(min)", None))
         self.label_41.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u30d1\u30bf\u30fc\u30f3", None))
+        self.label.setText(QCoreApplication.translate("MainPages", u"\u96fb\u5727(V)", None))
         self.label_43.setText(QCoreApplication.translate("MainPages", u"\u30d1\u30bf\u30fc\u30f3\u540d", None))
         self.label_yesr_3.setText(QCoreApplication.translate("MainPages", u"192.168.0.105:502", None))
         self.label_yesr_2.setText(QCoreApplication.translate("MainPages", u"IPv4 \u30a2\u30c9\u30ec\u30b9:", None))

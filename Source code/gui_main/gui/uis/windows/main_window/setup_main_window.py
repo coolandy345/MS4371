@@ -442,6 +442,9 @@ class SetupMainWindow:
         test=pg.TextItem(
             text='124',
             )
+        test=pg.LabelItem(
+            text='12wdqd4',
+            )
         test.setPos(3, 1)
 
 

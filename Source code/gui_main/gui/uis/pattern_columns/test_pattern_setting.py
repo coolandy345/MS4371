@@ -211,7 +211,6 @@ class TestPatternWidget(QWidget):
     def setup_TempGraph(self):
         self.win1 =pg.PlotWidget(parent=self._parent,background=None,title="予定パターン")
         
-        self.win1.setLabel(axis='left', text='電圧', units='V')
 
         self.win1.setLimits(xMin=0.9,xMax=20.9)
         self.axis = self.win1.getAxis('bottom')
@@ -225,24 +224,12 @@ class TestPatternWidget(QWidget):
         self.win1.showGrid(x=True, y=True)
         self.win1.setMouseEnabled(x=False, y=False)
 
-        #self.win1.addLegend()
-
         self.win1.setMinimumSize(QSize(1100, 300))
 
-        self.win1.plot(x=[1,2,2,3,3,4,4,5,5,6,7,8,9,10],y=[0,0,2000,2000,0,0,-100,-100,0,0,0,0,0,0],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
+        self.win1.plot(x=[1,2,2,3,3,4,4,5,5,6,7,8,9,10],y=[0,0,2000,2000,0,0,-100,-100,0,0,0,0,0,0],pen=pg.mkPen((225, 230, 241), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
         
         self._parent.ui.load_pages.horizontalLayout_5.addWidget(self.win1, Qt.AlignCenter, Qt.AlignCenter)
-        #self.win1.resize()
-        #self.label = QLabel()
-        #self.label.setObjectName(u"label")
-        #self.label.setStyleSheet(u"background-color: rgb(235, 255, 199);")
-
-        #self._parent.ui.load_pages.horizontalLayout_5.addWidget(self.label)
-
-
-
-
-        #self._parent.ui.load_pages.horizontalLayout_5.update()
+        
         
         
 
@@ -297,13 +284,8 @@ class TestPatternWidget(QWidget):
         pass
 
     def sayhi(self):
-        self.axis = self.win1.getAxis('left')
-        self.axis.label.setRotation(0)
-        self.axis.label.setPos(-40,110)
-        self.win1.setPos(50,6)
-        if self.win1.isVisible():
-            print("test finish")
-            self.timer.stop()
+        pass
+
 
     def scroll_adjust_TestPattern(self):
         self._parent.ui.load_pages.scrollArea_4.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_4.horizontalScrollBar().maximum())

@@ -225,6 +225,9 @@ class TempPatternWidget(QWidget):
     def setup_TempGraph(self):
         self.win1 =pg.PlotWidget(background=None,title="予定パターン")
         
+
+
+        
         self.win1.setLabel(axis='left', text='温度', units='℃')
 
         self.win1.setLimits(xMin=0.9,xMax=20.9)
@@ -235,7 +238,7 @@ class TempPatternWidget(QWidget):
         
         self.axis = self.win1.getAxis('left')
         self.axis.enableAutoSIPrefix(False)
-        
+
         self.win1.showGrid(x=True, y=True)
         self.win1.setMouseEnabled(x=True, y=False)
 
