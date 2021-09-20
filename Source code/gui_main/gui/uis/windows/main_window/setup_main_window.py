@@ -57,6 +57,7 @@ from gui_main.gui.uis.pattern_columns import *
 import numpy as np
 import pyqtgraph as pg
 
+
 #from gui.uis.control_column import *
 
 
@@ -432,24 +433,45 @@ class SetupMainWindow:
         
         self.ui.load_pages.gridLayout_9.addWidget(self.win, Qt.AlignCenter, Qt.AlignCenter)
         
-        region = pg.LinearRegionItem(
+        #region = pg.LinearRegionItem(
+        #    #brush = QBrush(QColor(0, 0, 0, 0)),
+        #    #pen=pg.mkPen(0,0,200),
+        #    movable=True,
+        #    bounds=[1, 2],
+        #    )
+
+        
+        region = PyGraph(
             brush = QBrush(QColor(0, 0, 0, 0)),
-            pen=pg.mkPen(0,0,200),
+            hoverBrush=QBrush(QColor(0, 0, 255, 50)),
+            pen=pg.mkPen(50,50,50),
+            step=3276,
             movable=False,
             )
+        region2 = PyGraph(
+            brush = QBrush(QColor(0, 0, 0, 0)),
+            hoverBrush=QBrush(QColor(0, 0, 255, 50)),
+            pen=pg.mkPen(50,50,50),
+            step=32,
+            movable=False,
+            )
+
+        
         region.setRegion([1, 2])
+        region2.setRegion([2, 4])
 
         test=pg.TextItem(
             text='124',
             )
-        test=pg.LabelItem(
-            text='12wdqd4',
-            )
-        test.setPos(3, 1)
-
 
         self.win.plotItem.addItem(region, ignoreBounds=True)
-        self.win.plotItem.addItem(test, ignoreBounds=True)
+        self.win.plotItem.addItem(region2, ignoreBounds=True)
+        #region.show(False)
+        print(test.pos())
+
+        test.setPos(1.5, 15)
+        print(test.isVisible())
+        print(region.pos())
 
     # RESIZE GRIPS AND CHANGE POSITION
     # Resize or change position when window is resized

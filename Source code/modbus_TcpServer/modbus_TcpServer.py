@@ -32,7 +32,7 @@ log.setLevel(logging.DEBUG)
 
 import socket
 
-def run_async_server():
+def run_async_server(memory_pool):
     # ----------------------------------------------------------------------- # 
     # initialize your data store
     # ----------------------------------------------------------------------- # 

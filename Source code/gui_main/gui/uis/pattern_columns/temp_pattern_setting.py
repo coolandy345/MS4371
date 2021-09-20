@@ -307,7 +307,15 @@ class TempPatternWidget(QWidget):
         if not self.cache_steplist.step_number ==20:
             self.step_widges_list[self.cache_steplist.step_number+1].setVisible (True)
             self.step_widges_list[self.cache_steplist.step_number+1].pattern.page.setCurrentIndex(False)
-            
+           
+    def update_graph(self):
+        for _step in range(1,1+self.cache_steplist.step_number):
+            pass
+
+
+
+
+        pass
 
     def ui_click_callback(self):
         #self.updata_step_widge()
@@ -386,6 +394,8 @@ class TempPatternWidget(QWidget):
         self.cache_steplist.units[step].time_keep=self.step_widges_list[step]._type
         self.cache_steplist.units[step].test_measure_enable=self.step_widges_list[step]._type
         self.cache_steplist.units[step].test_measure_PatternNo=self.step_widges_list[step]._type
+
+        self.update_graph()
         
         
 

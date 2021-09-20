@@ -74,3 +74,5 @@ from . py_table_widget import PyTableWidget
 # PY pattern
 # ///////////////////////////////////////////////////////////////
 from . py_pattern import *
+
+from . py_graph import *

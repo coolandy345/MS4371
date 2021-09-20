@@ -5,13 +5,11 @@
     "\\Source code\\gui_main",
     "\\Source code\\gui_main\\gui",
     "\\Source code\\gui_main\\gui\\uis",
+    "\\Source code\\gui_main\\gui\\uis\\pages",
     "\\Source code\\gui_main\\gui\\uis\\pattern_columns",
-    "\\Source code\\gui_main\\gui\\widgets",
-    "\\Source code\\gui_main\\gui\\widgets\\py_pattern",
-    "\\Source code\\gui_main\\user",
-    "\\Source code\\gui_main\\user\\profiles",
-    "\\Source code\\modbus_TcpServer"
+    "\\Source code\\gui_main\\gui\\uis\\windows",
+    "\\Source code\\gui_main\\gui\\uis\\windows\\main_window"
   ],
-  "SelectedNode": "\\Source code\\main.py",
+  "SelectedNode": "\\Source code\\gui_main\\gui\\uis\\windows\\main_window\\setup_main_window.py",
   "PreviewInSolutionExplorer": false
 }
