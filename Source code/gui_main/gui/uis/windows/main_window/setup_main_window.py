@@ -439,6 +439,9 @@ class SetupMainWindow:
     # Resize or change position when window is resized
     # ///////////////////////////////////////////////////////////////
     def resize_grips(self):
+
+        self.tempPattern.graphResize()
+
         if self.settings["custom_title_bar"]:
             self.left_grip.setGeometry(5, 10, 10, self.height())
             self.right_grip.setGeometry(self.width() - 15, 10, 10, self.height())

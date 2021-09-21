@@ -13,6 +13,8 @@ import modbus_TcpServer
 import time
 import sys
 
+
+
 import numpy as np
 import pyqtgraph as pg
 
@@ -64,13 +66,61 @@ class templist():
         for _step in range(1,21):
             self.units.append(tempUnit())
 
-    def refreshData(self):
+    def checkData(self):
 
+        for step in range(1,self.step_number+1):
+
+            if(self.units[step].Step_Type==PyTempStep.Temp_Type):
+                pass
+            elif (self.units[step].Step_Type==PyTempStep.Test_Type):
+                if not(step==0):
+                    self.units[step].SV=self.units[step-1].SV
+                pass
+            elif (self.units[step].Step_Type==PyTempStep.End_Type):
+                pass
 
         pass
+    def checkRule(self):
+        hasEndStep=False
+        errorRule=""
+        for step in range(1,self.step_number+1):
+            if(self.units[step].Step_Type==PyTempStep.End_Type):
+                hasEndStep=True
+            
+        if not hasEndStep:
+            errorRule+="無効入力：Endステップは必要"
 
-    def getData(self):
-        pass
+        return errorRule
+    
+
+    def getStep(self,step):
+        unit=tempUnit()
+        unit.Step_Type=self.units[step].Step_Type
+        unit.SV=self.units[step].SV
+        unit.N2_flowRate=self.units[step].N2_flowRate
+        unit.PID_muffle_No=self.units[step].PID_muffle_No
+        unit.PID_heater_No=self.units[step].PID_heater_No
+        unit.test_measure_enable=self.units[step].test_measure_enable
+        unit.test_measure_PatternNo=self.units[step].test_measure_PatternNo
+        unit.time_hour=self.units[step].time_hour
+        unit.time_keep=self.units[step].time_keep
+        unit.time_min=self.units[step].time_min
+
+        return unit
+
+    def setStep(self,step,input):
+
+        self.units[step].Step_Type=input.Step_Type
+        self.units[step].SV=input.SV
+        self.units[step].N2_flowRate=input.N2_flowRate
+        self.units[step].PID_muffle_No=input.PID_muffle_No
+        self.units[step].PID_heater_No=input.PID_heater_No
+        self.units[step].test_measure_enable=input.test_measure_enable
+        self.units[step].test_measure_PatternNo=input.test_measure_PatternNo
+        self.units[step].time_hour=input.time_hour
+        self.units[step].time_keep=input.time_keep
+        self.units[step].time_min=input.time_min
+
       
 
 
@@ -100,6 +150,9 @@ class TempPatternWidget(QWidget):
         self.choose_pattern=choose_pattern
         self.cache_step=tempUnit()
         self.cache_steplist=templist()
+
+        self.paste_ready=False
+
         self.memory_reader()
         self.setup_utility()
         self.setup_TempPattern()
@@ -254,7 +307,7 @@ class TempPatternWidget(QWidget):
         self.graph.setMouseEnabled(x=True, y=False)
         self.graph.setLimits(minXRange=9,maxXRange=20)
         self.graph.setMinimumSize(QSize(1100, 300))
-        #self.graph.plot(x=[1,2,3,4,5,6,7,8],y=[0,0,10,10,30,30,0,0],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
+
         self.curve=self.graph.plot(pen=pg.mkPen((225, 230, 241),width=5), 
                                    symbolBrush=(0,0,0),
                                    symbolPen='w', 
@@ -297,7 +350,6 @@ class TempPatternWidget(QWidget):
             
      
     def new_TempPattern(self):
-        print("new_TempPattern")
 
         self.cache_steplist.units[self.cache_steplist.step_number+1]=tempUnit()
         self.cache_steplist.step_number+=1
@@ -306,8 +358,10 @@ class TempPatternWidget(QWidget):
         self.update_graph()
 
     def load_list_From_Memory(self):
-        
-        
+
+        #Reset paste function
+        self.paste_ready=False
+
         if(self.choose_pattern>=1 and self.choose_pattern<=20):
             self.cache_steplist=self.pattern_lists[self.choose_pattern]
         else:
@@ -319,6 +373,7 @@ class TempPatternWidget(QWidget):
         #adjust the Visible of each step
         for _step in range(1,21):
 
+
             if _step<=self.cache_steplist.step_number :
                 self.step_widges_list[_step].setVisible (True)
                 self.step_widges_list[_step].pattern.page.setCurrentIndex(True)
@@ -329,7 +384,16 @@ class TempPatternWidget(QWidget):
                 else:
                     self.step_widges_list[_step].setVisible (False)
                     self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
+            #Only last step has End type
+            if _step==self.cache_steplist.step_number :
+                self.step_widges_list[_step].enableEndType(True)
+            else:
+                self.step_widges_list[_step].enableEndType(False)
 
+            if self.paste_ready:
+                self.step_widges_list[_step]._menu.menu.pattern_menu_paste_pushButton.setEnabled(True)
+            else:
+                self.step_widges_list[_step]._menu.menu.pattern_menu_paste_pushButton.setEnabled(False)
 
             unit=tempUnit()
             unit=self.cache_steplist.units[_step]
@@ -346,11 +410,17 @@ class TempPatternWidget(QWidget):
 
                 pass
             elif index==1:  #test unit
+                self.step_widges_list[_step].pattern.SV_lineEdit.setValue(unit.SV)
+                self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
+                self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
                 self.step_widges_list[_step].pattern.KeepTime_lineEdit.setValue(unit.time_keep)
                 self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
                 pass
             elif index==2:  #End unit
                 pass
+
+        errormessage=self.cache_steplist.checkRule()
+        self._parent.ui.load_pages.PatternErrorMessagelabel.setText(errormessage)
 
     def update_graph(self):
 
@@ -378,7 +448,6 @@ class TempPatternWidget(QWidget):
         self.curve.setData(data_array)
         maxpos=max(SV_array)
         if(maxpos<1):
-            print("1")
             self.graph.setYRange(0, 10)
             for _step in range(1,21):
                 self.GraphStepLabelList[_step].setPos(_step+0.1,10)
@@ -411,32 +480,74 @@ class TempPatternWidget(QWidget):
 
         
         if btn == "pattern_menu_cut_pushButton":
-            self.cache_step=self.cache_steplist.units[self.choose_step]
-
-            print("pattern_menu_cut ",self.choose_step)
-            
-
+            self.cache_step=self.cache_steplist.getStep(self.choose_step)
             self.cache_steplist.step_number-=1
             self.cache_steplist.units.append(tempUnit())
-            self.cache_steplist.units.remove(self.cache_steplist.units[self.choose_step])
+            self.cache_steplist.units.pop(self.choose_step)
+            self.paste_ready=True
+            #print("pattern_menu_cut ",self.choose_step)
+            pass
 
-            pass
         elif btn == "pattern_menu_copy_pushButton":
+
+            self.cache_step=self.cache_steplist.getStep(self.choose_step)
+            self.paste_ready=True
+
+            #print("pattern_menu_copy ",self.choose_step)
             pass
+
         elif btn == "pattern_menu_paste_pushButton":
+            if self.paste_ready:
+                self.cache_steplist.setStep(self.choose_step,self.cache_step)
+            #print("pattern_menu_paste ",self.choose_step)
             pass
+
         elif btn == "pattern_menu_rightinsert_pushButton":
+            if not self.cache_steplist.step_number==20:
+                if self.paste_ready:
+                    self.cache_steplist.units.pop(20)
+                    self.cache_steplist.units.insert(self.choose_step+1,tempUnit())
+                    self.cache_steplist.setStep(self.choose_step+1,self.cache_step)
+                    self.cache_steplist.step_number+=1
+            #print("pattern_menu_rightinsert ",self.choose_step)
             pass
+
         elif btn == "pattern_menu_leftinsert_pushButton":
+            if not self.cache_steplist.step_number==20:
+                if self.paste_ready:
+                    self.cache_steplist.units.pop(20)
+                    self.cache_steplist.units.insert(self.choose_step,tempUnit())
+                    self.cache_steplist.setStep(self.choose_step,self.cache_step)
+                    self.cache_steplist.step_number+=1
+            #print("pattern_menu_leftinsert ",self.choose_step)
             pass
+
         elif btn == "pattern_menu_rightinsertblank_pushButton":
+            if not self.cache_steplist.step_number==20:
+                self.cache_steplist.units.pop(20)
+                self.cache_steplist.units.insert(self.choose_step+1,tempUnit())
+                self.cache_steplist.step_number+=1
+            #print("pattern_menu_rightinsertblank ",self.choose_step)
             pass
+
         elif btn == "pattern_menu_leftinsertblank_pushButton":
+            if not self.cache_steplist.step_number==20:
+                self.cache_steplist.units.pop(20)
+                self.cache_steplist.units.insert(self.choose_step,tempUnit())
+                self.cache_steplist.step_number+=1
+            #print("pattern_menu_leftinsertblank ",self.choose_step)
             pass
+
         elif btn == "pattern_menu_delete_pushButton":
+            self.cache_steplist.units.append(tempUnit())
+            self.cache_steplist.units.pop(self.choose_step)
+            self.cache_steplist.step_number-=1
+            #print("pattern_menu_delete ",self.choose_step)
             pass
+
         self.close_menu()
         self.updata_step_widge()
+        self.update_graph()
 
     def focus_step(self,_step):
         self.step_widges_list[_step].setFocusStyle(True)
@@ -468,7 +579,6 @@ class TempPatternWidget(QWidget):
         
 
     def step_modifly_manager(self,step):
-        print("step_modifly_manager")
         self.cache_steplist.units[step].Step_Type=self.step_widges_list[step]._type
         self.cache_steplist.units[step].time_hour=self.step_widges_list[step]._hour
         self.cache_steplist.units[step].time_min=self.step_widges_list[step]._minute
@@ -479,11 +589,15 @@ class TempPatternWidget(QWidget):
         self.cache_steplist.units[step].time_keep=self.step_widges_list[step]._keep_seccond
         self.cache_steplist.units[step].test_measure_PatternNo=self.step_widges_list[step]._test_pattern
         
-        self.cache_steplist.refreshData()
-
+        self.cache_steplist.checkData()
+        
+        self.updata_step_widge()
         self.update_graph()
         
-        
+    def graphResize(self):
+        addwidth=self._parent.width()-1470
+        self.graph.setMinimumSize(QSize(1100+addwidth, 300))
+        pass
 
     
 

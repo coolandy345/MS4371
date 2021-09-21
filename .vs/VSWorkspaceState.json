@@ -5,12 +5,12 @@
     "\\Source code\\gui_main",
     "\\Source code\\gui_main\\gui",
     "\\Source code\\gui_main\\gui\\uis",
-    "\\Source code\\gui_main\\gui\\uis\\windows",
-    "\\Source code\\gui_main\\gui\\uis\\windows\\main_window",
+    "\\Source code\\gui_main\\gui\\uis\\pattern_columns",
     "\\Source code\\gui_main\\gui\\widgets",
     "\\Source code\\gui_main\\gui\\widgets\\py_graph",
-    "\\Source code\\gui_main\\gui\\widgets\\py_pattern"
+    "\\Source code\\gui_main\\gui\\widgets\\py_pattern",
+    "\\Source code\\registor_manager"
   ],
-  "SelectedNode": "\\Source code\\gui_main\\gui\\widgets\\py_graph\\py_graph.py",
+  "SelectedNode": "\\Source code\\main.py",
   "PreviewInSolutionExplorer": false
 }

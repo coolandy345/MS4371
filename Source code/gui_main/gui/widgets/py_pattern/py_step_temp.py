@@ -115,6 +115,8 @@ class PyTempStep(QWidget):
         self.pattern = Ui_temp_pattern()
         self.pattern.setupUi( self.pattern_frame)
         self.pattern.page.setCurrentIndex(self._active)
+
+        self.test=False
         
         # icon_bottum_ui_setting
         # ///////////////////////////////////////////////////////////////
@@ -231,7 +233,7 @@ class PyTempStep(QWidget):
         except AttributeError: #When self._parent.tempPattern is not initial yet
             return
 
-        print("click in side step after modifly STEP ", self._step," name = ",self.sender().objectName())
+        #print("click in side step after modifly STEP ", self._step," name = ",self.sender().objectName())
         self._hour=self.pattern.Hour_lineEdit.value()
         self._minute=self.pattern.Min_lineEdit.value()
 
@@ -293,19 +295,18 @@ class PyTempStep(QWidget):
             self.pattern.Time_label.setStyleSheet(self.label_normal_style)
             self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
             self.pattern.label_4.setStyleSheet(self.time_normal_style)
-            self.pattern.SV_lineEdit.setValue(0)
             self.pattern.SV_lineEdit.setEnabled(False)
-            self.pattern.SV_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.SV_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.SV_lineEdit.setStyleSheet(self.line_normal_style)
+            self.pattern.SV_label.setStyleSheet(self.label_normal_style)
             
             self.pattern.N2_lineEdit.setEnabled(True)
             self.pattern.N2_lineEdit.setStyleSheet(self.line_normal_style)
             self.pattern.N2_label.setStyleSheet(self.label_normal_style)
             self.pattern.PID_muffle_comboBox.setEnabled(True)
             self.pattern.PID_muffle_comboBox.setStyleSheet(self.line_normal_style)
+            self.pattern.PID_muffle_label.setStyleSheet(self.label_normal_style)
             self.pattern.PID_heater_comboBox.setEnabled(True)
             self.pattern.PID_heater_comboBox.setStyleSheet(self.line_normal_style)
-            self.pattern.PID_muffle_label.setStyleSheet(self.label_normal_style)
             self.pattern.PID_heater_label.setStyleSheet(self.label_normal_style)
 
 
@@ -387,6 +388,15 @@ class PyTempStep(QWidget):
         else:
             self.pattern.page.setStyleSheet(self.focus_gray_out_style)
             pass
+
+    def enableEndType(self,enable):
+        if enable:
+            if self.pattern.Type_comboBox.count()==2:
+                self.pattern.Type_comboBox.addItems(["END"])
+
+        else:
+            self.pattern.Type_comboBox.removeItem(2)
+
     
 
         
