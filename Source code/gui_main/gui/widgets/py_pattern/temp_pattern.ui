@@ -50,6 +50,13 @@ border-radius: 10px;</string>
    </property>
    <item row="0" column="0">
     <widget class="QStackedWidget" name="page">
+     <property name="styleSheet">
+      <string notr="true">border-color: rgb(44, 49, 60);
+background-color: rgb(44, 49, 60);
+border-width: 5px;    
+border-style: solid;   
+ border-radius: 10px;</string>
+     </property>
      <property name="currentIndex">
       <number>1</number>
      </property>
@@ -57,7 +64,23 @@ border-radius: 10px;</string>
       <property name="enabled">
        <bool>true</bool>
       </property>
+      <property name="styleSheet">
+       <string notr="true">
+border:none;</string>
+      </property>
       <layout class="QGridLayout" name="gridLayout">
+       <property name="leftMargin">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>9</number>
+       </property>
+       <property name="rightMargin">
+        <number>9</number>
+       </property>
+       <property name="bottomMargin">
+        <number>9</number>
+       </property>
        <item row="0" column="0">
         <widget class="QFrame" name="frame">
          <property name="styleSheet">
@@ -91,7 +114,23 @@ border-radius: 10px;</string>
       </layout>
      </widget>
      <widget class="QWidget" name="page2">
+      <property name="styleSheet">
+       <string notr="true">
+border:none;</string>
+      </property>
       <layout class="QGridLayout" name="gridLayout_4">
+       <property name="leftMargin">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>9</number>
+       </property>
+       <property name="rightMargin">
+        <number>9</number>
+       </property>
+       <property name="bottomMargin">
+        <number>9</number>
+       </property>
        <item row="13" column="0" colspan="3">
         <widget class="QFrame" name="frame_5">
          <property name="minimumSize">
@@ -107,7 +146,8 @@ border-radius: 10px;</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(65, 72, 88);</string>
+          <string notr="true">background-color: rgb(65, 72, 88);
+border:none;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -608,7 +648,8 @@ font: 12px &quot;游ゴシック&quot;;</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(65, 72, 88);</string>
+          <string notr="true">background-color: rgb(65, 72, 88);
+border:none;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>

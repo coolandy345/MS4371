@@ -11,6 +11,7 @@ import threading
 #from modbus_TcpServer import ModbusRegistorClass
 import modbus_TcpServer
 import time
+import sys
 
 import numpy as np
 import pyqtgraph as pg
@@ -62,6 +63,14 @@ class templist():
         self.units=[]
         for _step in range(1,21):
             self.units.append(tempUnit())
+
+    def refreshData(self):
+
+
+        pass
+
+    def getData(self):
+        pass
       
 
 
@@ -97,7 +106,10 @@ class TempPatternWidget(QWidget):
         self.setup_TempGraph()
         self.load_list_From_Memory()
         self.updata_step_widge()
+        self.update_graph()
 
+        self.step_widges_list[1].setVisible (True)
+        self.step_widges_list[1].pattern.page.setCurrentIndex(False)
     
 
     def memory_reader(self):
@@ -223,42 +235,75 @@ class TempPatternWidget(QWidget):
         
         
     def setup_TempGraph(self):
-        self.win1 =pg.PlotWidget(background=None,title="予定パターン")
+        
+        self.graph =pg.PlotWidget(background=None,title="予定パターン")
+        
+        self.graph.setLabel(axis='left', text='温度', units='℃')
+
+        self.graph.setLimits(xMin=0.9,xMax=20.9)
+        self.Xaxis = self.graph.getAxis('bottom')
+        self.Xaxis.setStyle(autoReduceTextSpace=False)
+        self.Xaxis.setTickSpacing(1,1)
+        self.Xaxis.setTextPen(pg.mkPen((25,28,34)))
+        self.graph.setAxisItems({'bottom':self.Xaxis})
+        
+        self.Yaxis = self.graph.getAxis('left')
+        self.Yaxis.enableAutoSIPrefix(False)
+
+        self.graph.showGrid(x=True, y=True)
+        self.graph.setMouseEnabled(x=True, y=False)
+        self.graph.setLimits(minXRange=9,maxXRange=20)
+        self.graph.setMinimumSize(QSize(1100, 300))
+        #self.graph.plot(x=[1,2,3,4,5,6,7,8],y=[0,0,10,10,30,30,0,0],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
+        self.curve=self.graph.plot(pen=pg.mkPen((225, 230, 241),width=5), 
+                                   symbolBrush=(0,0,0),
+                                   symbolPen='w', 
+                                   #symbol='o', 
+                                   symbolSize=5, 
+                                   name="予定パターン")
+        
+        self._parent.ui.load_pages.horizontalLayout_4.addWidget(self.graph, Qt.AlignCenter, Qt.AlignCenter)
+        
         
 
+        self.GraphRegionList=[]
+        self.GraphRegionList.append(None)
+        self.GraphStepLabelList=[]
+        self.GraphStepLabelList.append(None)
 
-        
-        self.win1.setLabel(axis='left', text='温度', units='℃')
+        for _step in range(1,21):
 
-        self.win1.setLimits(xMin=0.9,xMax=20.9)
-        self.axis = self.win1.getAxis('bottom')
-        self.axis.setStyle(autoReduceTextSpace=False)
-        self.axis.setTickSpacing(1,1)
-        self.win1.setAxisItems({'bottom':self.axis})
-        
-        self.axis = self.win1.getAxis('left')
-        self.axis.enableAutoSIPrefix(False)
-
-        self.win1.showGrid(x=True, y=True)
-        self.win1.setMouseEnabled(x=True, y=False)
-
-        #self.win1.addLegend()
-
-        self.win1.setMinimumSize(QSize(1100, 300))
-        self.win1.plot(x=[1,2,3,4,5,6,7,8],y=[0,0,10,10,30,30,0,0],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
-        
-        self._parent.ui.load_pages.horizontalLayout_4.addWidget(self.win1, Qt.AlignCenter, Qt.AlignCenter)
-        
-
-
-        
+            region = PyGraphRegionItem(
+                    parent = self._parent,
+                    brush = QBrush(QColor(0, 0, 0, 0)),
+                    hoverBrush=QBrush(QColor(0, 10, 10, 100)),
+                    pen=pg.mkPen(50,50,50),
+                    step=_step,
+                    movable=False
+                    )
+            region.setRegion([_step, 1+_step])
+            self.GraphRegionList.append(region)
+            self.graph.plotItem.addItem(self.GraphRegionList[_step], ignoreBounds=True)
+            
+            #text="STEP %d" %_step
+            #print(text)
+            label=pg.TextItem(
+                text="STEP %d" %_step,
+                )
+            label.setPos(_step+0.1, 20)
+            self.GraphStepLabelList.append(label)
+            self.graph.plotItem.addItem(self.GraphStepLabelList[_step], ignoreBounds=True)
+            
+            
      
     def new_TempPattern(self):
-        
-        self.cache_steplist.units[self.cache_steplist.step_number]=tempUnit()
+        print("new_TempPattern")
+
+        self.cache_steplist.units[self.cache_steplist.step_number+1]=tempUnit()
         self.cache_steplist.step_number+=1
+
         self.updata_step_widge()
-        pass
+        self.update_graph()
 
     def load_list_From_Memory(self):
         
@@ -272,20 +317,24 @@ class TempPatternWidget(QWidget):
     # /////////////////////////////
     def updata_step_widge(self):
         #adjust the Visible of each step
-
         for _step in range(1,21):
+
             if _step<=self.cache_steplist.step_number :
                 self.step_widges_list[_step].setVisible (True)
                 self.step_widges_list[_step].pattern.page.setCurrentIndex(True)
             else:
-                self.step_widges_list[_step].setVisible (False)
-                self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
+                if _step==self.cache_steplist.step_number+1:
+                    self.step_widges_list[_step].setVisible (True)
+                    self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
+                else:
+                    self.step_widges_list[_step].setVisible (False)
+                    self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
+
 
             unit=tempUnit()
             unit=self.cache_steplist.units[_step]
             index=unit.Step_Type
             self.step_widges_list[_step].pattern.Type_comboBox.setCurrentIndex(index)
-            
             if index==0:    #temp unit
                 self.step_widges_list[_step].pattern.Hour_lineEdit.setValue(unit.time_hour)
                 self.step_widges_list[_step].pattern.Min_lineEdit.setValue(unit.time_min)
@@ -303,19 +352,44 @@ class TempPatternWidget(QWidget):
             elif index==2:  #End unit
                 pass
 
-
-        if not self.cache_steplist.step_number ==20:
-            self.step_widges_list[self.cache_steplist.step_number+1].setVisible (True)
-            self.step_widges_list[self.cache_steplist.step_number+1].pattern.page.setCurrentIndex(False)
-           
     def update_graph(self):
-        for _step in range(1,1+self.cache_steplist.step_number):
-            pass
+
+        data_array=[{"x":1,"y":0}]
+        SV_array=[0]
+        for _step in range(1,21):
+            if _step<=self.cache_steplist.step_number:
+                #load Graph data
+                xy_dot={}
+                unit=self.cache_steplist.units[_step]
+                xy_dot["x"]=_step+1
+                xy_dot["y"]=unit.SV
+                data_array.append(xy_dot)
+                SV_array.append(unit.SV)
+                #load Region
+                self.GraphRegionList[_step].show()
+                #load Label
+                self.GraphStepLabelList[_step].show()
+            else:
+                #load Region
+                self.GraphRegionList[_step].hide()
+                #load Label
+                self.GraphStepLabelList[_step].hide()
+                  
+        self.curve.setData(data_array)
+        maxpos=max(SV_array)
+        if(maxpos<1):
+            print("1")
+            self.graph.setYRange(0, 10)
+            for _step in range(1,21):
+                self.GraphStepLabelList[_step].setPos(_step+0.1,10)
+        else:
+            self.graph.setYRange(0, 1.2*maxpos)
+            for _step in range(1,21):
+                self.GraphStepLabelList[_step].setPos(_step+0.1,1.2*maxpos)
+        
+        
 
 
-
-
-        pass
 
     def ui_click_callback(self):
         #self.updata_step_widge()
@@ -328,7 +402,6 @@ class TempPatternWidget(QWidget):
         self.axis.label.setPos(-40,110)
         self.win1.setPos(50,6)
         if self.win1.isVisible():
-            print("temp finish")
             self.timer.stop()
 
     def scroll_adjust_TempPattern(self):
@@ -365,35 +438,48 @@ class TempPatternWidget(QWidget):
         self.close_menu()
         self.updata_step_widge()
 
-    def close_menu(self):
-        if not self.choose_step==0:
-            self.step_widges_list[self.choose_step]._menu.menu_frame.hide()
+    def focus_step(self,_step):
+        self.step_widges_list[_step].setFocusStyle(True)
+        self.GraphRegionList[_step].setFocusStyle(True)
+        self.choose_step=_step
+        self.updata_step_widge()
+        self.update_graph()
+
+    def un_focus_step(self,_step):
+        self.step_widges_list[_step].setFocusStyle(False)
+        self.GraphRegionList[_step].setFocusStyle(False)
+        if self.choose_step==_step:
             self.choose_step=0
+            self.updata_step_widge()
+            self.update_graph()
+        self.close_menu()
+
+    def close_menu(self):
+        for step in range(1,21):
+            self.step_widges_list[step]._menu.menu_frame.hide()
+        self.choose_step=0
 
     def show_one_menu(self,step):
 
-        self.close_menu()
-
-        if self.choose_step==step:
-            self.choose_step=0
-        elif  self.choose_step==0:
-            self.step_widges_list[step]._menu.menu_frame.show()
-            self.choose_step=step
+        if self.step_widges_list[step]._menu.menu_frame.isVisible():
+            self.close_menu()
         else:
             self.step_widges_list[step]._menu.menu_frame.show()
-            self.choose_step=step
+        
 
     def step_modifly_manager(self,step):
-
-        self.cache_steplist.units[step].Step_Type=self.step_widges_list[step]._type#
-        self.cache_steplist.units[step].time_hour=self.step_widges_list[step]._type
-        self.cache_steplist.units[step].time_min=self.step_widges_list[step]._type
-        self.cache_steplist.units[step].SV=self.step_widges_list[step]._type
-        self.cache_steplist.units[step].N2_flowRate=self.step_widges_list[step]._type
-        self.cache_steplist.units[step].PID_No=self.step_widges_list[step]._type
-        self.cache_steplist.units[step].time_keep=self.step_widges_list[step]._type
-        self.cache_steplist.units[step].test_measure_enable=self.step_widges_list[step]._type
-        self.cache_steplist.units[step].test_measure_PatternNo=self.step_widges_list[step]._type
+        print("step_modifly_manager")
+        self.cache_steplist.units[step].Step_Type=self.step_widges_list[step]._type
+        self.cache_steplist.units[step].time_hour=self.step_widges_list[step]._hour
+        self.cache_steplist.units[step].time_min=self.step_widges_list[step]._minute
+        self.cache_steplist.units[step].SV=self.step_widges_list[step]._temperature
+        self.cache_steplist.units[step].N2_flowRate=self.step_widges_list[step]._n2_flowrate
+        self.cache_steplist.units[step].PID_muffle_No=self.step_widges_list[step]._PID_muffle_no
+        self.cache_steplist.units[step].PID_heater_No=self.step_widges_list[step]._PID_heater_no
+        self.cache_steplist.units[step].time_keep=self.step_widges_list[step]._keep_seccond
+        self.cache_steplist.units[step].test_measure_PatternNo=self.step_widges_list[step]._test_pattern
+        
+        self.cache_steplist.refreshData()
 
         self.update_graph()
         

@@ -163,10 +163,6 @@ class MainWindow(QMainWindow):
         # GET BT CLICKED
         btn = SetupMainWindow.setup_btns(self)
 
-        if btn.objectName() == "new_temp_Step_Buttom":
-            self.tempPattern.scroll_adjust_TempPattern()
-            pass
-
         if btn.objectName() == "new_test_Step_Buttom":
             self.testPattern.scroll_adjust_TestPattern()
             pass
@@ -183,9 +179,6 @@ class MainWindow(QMainWindow):
     # ///////////////////////////////////////////////////////////////
     def mousePressEvent(self, event):
         # SET DRAG POS WINDOW
-        self.tempPattern.close_menu()
-       # self.tempPattern.step_widges_list[self.focus_step_number-1].close_menu()
-        self.focus_step_number=0
         self.dragPos = event.globalPos()
 
 

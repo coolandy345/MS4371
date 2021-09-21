@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patternDYcBnk.ui'
+## Form generated from reading UI file 'temp_patternoRohwV.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -32,11 +32,19 @@ class Ui_temp_pattern(object):
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.page = QStackedWidget(temp_pattern)
         self.page.setObjectName(u"page")
+        self.page.setStyleSheet(u"border-color: rgb(44, 49, 60);\n"
+"background-color: rgb(44, 49, 60);\n"
+"border-width: 5px;    \n"
+"border-style: solid;   \n"
+" border-radius: 10px;")
         self.page1 = QWidget()
         self.page1.setObjectName(u"page1")
         self.page1.setEnabled(True)
+        self.page1.setStyleSheet(u"\n"
+"border:none;")
         self.gridLayout = QGridLayout(self.page1)
         self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setContentsMargins(9, 9, 9, 9)
         self.frame = QFrame(self.page1)
         self.frame.setObjectName(u"frame")
         self.frame.setStyleSheet(u"border:none;")
@@ -52,13 +60,17 @@ class Ui_temp_pattern(object):
         self.page.addWidget(self.page1)
         self.page2 = QWidget()
         self.page2.setObjectName(u"page2")
+        self.page2.setStyleSheet(u"\n"
+"border:none;")
         self.gridLayout_4 = QGridLayout(self.page2)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.gridLayout_4.setContentsMargins(9, 9, 9, 9)
         self.frame_5 = QFrame(self.page2)
         self.frame_5.setObjectName(u"frame_5")
         self.frame_5.setMinimumSize(QSize(0, 3))
         self.frame_5.setMaximumSize(QSize(16777215, 3))
-        self.frame_5.setStyleSheet(u"background-color: rgb(65, 72, 88);")
+        self.frame_5.setStyleSheet(u"background-color: rgb(65, 72, 88);\n"
+"border:none;")
         self.frame_5.setFrameShape(QFrame.StyledPanel)
         self.frame_5.setFrameShadow(QFrame.Raised)
 
@@ -278,7 +290,8 @@ class Ui_temp_pattern(object):
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setMinimumSize(QSize(0, 3))
         self.frame_2.setMaximumSize(QSize(16777215, 3))
-        self.frame_2.setStyleSheet(u"background-color: rgb(65, 72, 88);")
+        self.frame_2.setStyleSheet(u"background-color: rgb(65, 72, 88);\n"
+"border:none;")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
 
