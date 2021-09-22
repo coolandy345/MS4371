@@ -1,10 +1,27 @@
 import sqlite3
 from modbus_TcpServer import ModbusRegistorClass
+import sys
+import os
 
+def get_Abs_path(relative):
+    #if hasattr(sys, '_MEIPASS'):
+    #    join_path=os.path.join(sys._MEIPASS, relative)
+    #    norm_path=os.path.normpath(join_path)
+    #    return 
+    input("stage1")
+    join_path=os.path.join(os.path.abspath(os.getcwd()), relative)
+    norm_path=os.path.normpath(join_path)
+    return norm_path
 
 def loadMemoryPool(memoryPool):
 
-    System_Registor_Database = sqlite3.connect('../Database and Profile/System Registor Structure Database.db')
+    input("stage1")
+
+    return
+
+    database_relative_path="Database and Profile/System Registor Structure Database.db"
+    
+    System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
 
     pool={}
