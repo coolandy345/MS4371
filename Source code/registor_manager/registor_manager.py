@@ -4,20 +4,16 @@ import sys
 import os
 
 def get_Abs_path(relative):
-    #if hasattr(sys, '_MEIPASS'):
-    #    join_path=os.path.join(sys._MEIPASS, relative)
-    #    norm_path=os.path.normpath(join_path)
-    #    return 
-    input("stage1")
+    if hasattr(sys, '_MEIPASS'):
+        join_path=os.path.join(sys._MEIPASS, relative)
+        norm_path=os.path.normpath(join_path)
+        return 
     join_path=os.path.join(os.path.abspath(os.getcwd()), relative)
     norm_path=os.path.normpath(join_path)
     return norm_path
 
 def loadMemoryPool(memoryPool):
 
-    input("stage1")
-
-    return
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     

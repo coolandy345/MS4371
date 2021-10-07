@@ -31,16 +31,14 @@ def shotdown_entire_app(future):
 
 
 if __name__ == "__main__":
-    input("wait")
-    #MemoryPoolManager=Manager()
-    #MemoryPool = MemoryPoolManager.dict()
-    #loadMemoryPool(MemoryPool)
-    #print(MemoryPool)
-    input("wait")
-    #with ProcessPoolExecutor(max_workers=10) as executor:
-    #    executor.submit(run_async_server,MemoryPool)
-    #    Gui_future = executor.submit(initial_GUI,MemoryPool)
-    #    Gui_future.add_done_callback(shotdown_entire_app)
+    MemoryPoolManager=Manager()
+    MemoryPool = MemoryPoolManager.dict()
+    loadMemoryPool(MemoryPool)
+
+    with ProcessPoolExecutor(max_workers=10) as executor:
+        executor.submit(run_async_server,MemoryPool)
+        Gui_future = executor.submit(initial_GUI,MemoryPool)
+        Gui_future.add_done_callback(shotdown_entire_app)
 
 
 

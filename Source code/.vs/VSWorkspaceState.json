@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Registor_Manager"
+    "\\gui_main",
+    "\\gui_main\\gui",
+    "\\gui_main\\gui\\uis",
+    "\\gui_main\\gui\\uis\\pattern_columns",
+    "\\gui_main\\gui\\widgets",
+    "\\gui_main\\gui\\widgets\\py_pattern"
   ],
+  "SelectedNode": "\\gui_main\\gui\\uis\\pattern_columns\\temp_pattern_setting.py",
   "PreviewInSolutionExplorer": false
 }

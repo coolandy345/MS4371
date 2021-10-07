@@ -478,7 +478,6 @@ class TempPatternWidget(QWidget):
 
     def menu_btn_handler(self,btn):
 
-        
         if btn == "pattern_menu_cut_pushButton":
             self.cache_step=self.cache_steplist.getStep(self.choose_step)
             self.cache_steplist.step_number-=1
@@ -553,17 +552,17 @@ class TempPatternWidget(QWidget):
         self.step_widges_list[_step].setFocusStyle(True)
         self.GraphRegionList[_step].setFocusStyle(True)
         self.choose_step=_step
-        self.updata_step_widge()
-        self.update_graph()
+        #self.updata_step_widge()
+        #self.update_graph()
 
     def un_focus_step(self,_step):
         self.step_widges_list[_step].setFocusStyle(False)
         self.GraphRegionList[_step].setFocusStyle(False)
         if self.choose_step==_step:
             self.choose_step=0
-            self.updata_step_widge()
-            self.update_graph()
-        self.close_menu()
+            #self.updata_step_widge()
+            #self.update_graph()
+        #self.close_menu()
 
     def close_menu(self):
         for step in range(1,21):
