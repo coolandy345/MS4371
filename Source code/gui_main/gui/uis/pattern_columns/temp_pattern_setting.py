@@ -18,6 +18,18 @@ import sys
 import numpy as np
 import pyqtgraph as pg
 
+class workThread(QThread):
+
+    trigger = Signal()
+
+    def __int__(self):
+        # 初始化函式
+        print("Initial")
+        super(workThread, self).__init__()
+
+    def run(self):
+        self.trigger.emit()
+
 
 class tempUnit():
     def __init__(
@@ -67,7 +79,6 @@ class templist():
             self.units.append(tempUnit())
 
     def checkData(self):
-
         for step in range(1,self.step_number+1):
 
             if(self.units[step].Step_Type==PyTempStep.Temp_Type):
@@ -80,6 +91,7 @@ class templist():
                 pass
 
         pass
+
     def checkRule(self):
         hasEndStep=False
         errorRule=""
@@ -109,7 +121,6 @@ class templist():
         return unit
 
     def setStep(self,step,input):
-
         self.units[step].Step_Type=input.Step_Type
         self.units[step].SV=input.SV
         self.units[step].N2_flowRate=input.N2_flowRate
@@ -134,10 +145,8 @@ class TempPatternWidget(QWidget):
             choose_pattern=1,
             memory_pool={}
     ):
-        #self.timer=QTimer()
-        #self.timer.timeout.connect(self.sayhi)
-        #self.timer.start(10)
-        #threading.Timer(1,self.sayhi).start()
+        
+
         super().__init__()
 
         self.step_widges_list=[]
@@ -158,15 +167,25 @@ class TempPatternWidget(QWidget):
         self.setup_TempPattern()
         self.setup_TempGraph()
         self.load_list_From_Memory()
-        self.updata_step_widge()
-        self.update_graph()
+        self.updata_step_request=True
+        self.update_graph_request=True
 
         self.step_widges_list[1].setVisible (True)
         self.step_widges_list[1].pattern.page.setCurrentIndex(False)
-    
+
+        self.updata_step_widgeWorker = workThread()
+        self.updata_step_widgeWorker.trigger.connect(self.updata_step_widge)
+        self.update_graphWorker = workThread(self)
+        self.update_graphWorker.trigger.connect(self.update_graph)
+        
+        self.refreshing=False
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.sayhi)
+        self.timer.start(100)
+
+        self.test=0
 
     def memory_reader(self):
-
         mudbusunit=modbus_TcpServer.ModbusPackage()
         Modbus_Registor_pool=self.memory_pool["Modbus Registor Memory"]
         _20_pattern_lists=[None]
@@ -288,7 +307,6 @@ class TempPatternWidget(QWidget):
         
         
     def setup_TempGraph(self):
-        
         self.graph =pg.PlotWidget(background=None,title="予定パターン")
         
         self.graph.setLabel(axis='left', text='温度', units='℃')
@@ -350,15 +368,13 @@ class TempPatternWidget(QWidget):
             
      
     def new_TempPattern(self):
-
         self.cache_steplist.units[self.cache_steplist.step_number+1]=tempUnit()
         self.cache_steplist.step_number+=1
 
-        self.updata_step_widge()
-        self.update_graph()
+        self.updata_step_request=True
+        self.update_graph_request=True
 
     def load_list_From_Memory(self):
-
         #Reset paste function
         self.paste_ready=False
 
@@ -423,7 +439,6 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.PatternErrorMessagelabel.setText(errormessage)
 
     def update_graph(self):
-
         data_array=[{"x":1,"y":0}]
         SV_array=[0]
         for _step in range(1,21):
@@ -466,18 +481,30 @@ class TempPatternWidget(QWidget):
         pass
 
     def sayhi(self):
-        self.axis = self.win1.getAxis('left')
-        self.axis.label.setRotation(0)
-        self.axis.label.setPos(-40,110)
-        self.win1.setPos(50,6)
-        if self.win1.isVisible():
-            self.timer.stop()
+        
+        
+
+        if self.refreshing:
+            print("Action overflow")
+
+        self.refreshing=True
+
+        if self.updata_step_request==True:
+            self.updata_step_widgeWorker.start()
+            self.updata_step_request=False
+
+        if self.update_graph_request==True:
+            self.update_graphWorker.start()
+            self.update_graph_request=False
+
+        self.refreshing=False
+
+
 
     def scroll_adjust_TempPattern(self):
         self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().maximum())
 
     def menu_btn_handler(self,btn):
-
         if btn == "pattern_menu_cut_pushButton":
             self.cache_step=self.cache_steplist.getStep(self.choose_step)
             self.cache_steplist.step_number-=1
@@ -544,33 +571,35 @@ class TempPatternWidget(QWidget):
             #print("pattern_menu_delete ",self.choose_step)
             pass
 
+
         self.close_menu()
-        self.updata_step_widge()
-        self.update_graph()
+        self.updata_step_request=True
+        self.update_graph_request=True
 
     def focus_step(self,_step):
+        print("self.test = ",self.test)
+        self.test+=1
         self.step_widges_list[_step].setFocusStyle(True)
         self.GraphRegionList[_step].setFocusStyle(True)
         self.choose_step=_step
-        #self.updata_step_widge()
-        #self.update_graph()
 
     def un_focus_step(self,_step):
+        print("self.test = ",self.test)
+        self.test+=1
         self.step_widges_list[_step].setFocusStyle(False)
         self.GraphRegionList[_step].setFocusStyle(False)
-        if self.choose_step==_step:
-            self.choose_step=0
-            #self.updata_step_widge()
-            #self.update_graph()
-        #self.close_menu()
+        #if self.choose_step==_step:
+        #    print("...")
+        #    self.choose_step=0
 
     def close_menu(self):
         for step in range(1,21):
             self.step_widges_list[step]._menu.menu_frame.hide()
-        self.choose_step=0
+
+    def close_one_menu(self,step):
+        self.step_widges_list[step]._menu.menu_frame.hide()
 
     def show_one_menu(self,step):
-
         if self.step_widges_list[step]._menu.menu_frame.isVisible():
             self.close_menu()
         else:
@@ -590,8 +619,8 @@ class TempPatternWidget(QWidget):
         
         self.cache_steplist.checkData()
         
-        self.updata_step_widge()
-        self.update_graph()
+        self.updata_step_request=True
+        self.update_graph_request=True
         
     def graphResize(self):
         addwidth=self._parent.width()-1470

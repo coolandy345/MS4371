@@ -40,6 +40,19 @@ from gui_main.gui.core.functions import *
 
 from .py_pattern_menu import *
 
+import time
+
+class workThread(QThread):
+
+    trigger = Signal()
+
+    def __int__(self):
+        # 初始化函式
+        print("Initial")
+        super(workThread, self).__init__()
+
+    def run(self):
+        self.trigger.emit()
 
 class PyTempStep(QWidget):
 
@@ -117,6 +130,12 @@ class PyTempStep(QWidget):
         self.pattern.page.setCurrentIndex(self._active)
 
         self.test=False
+
+        self.enterEventWorker = workThread()
+        self.enterEventWorker.trigger.connect(self.enterEventWork)
+
+        self.leaveEventWorker = workThread(self)
+        self.leaveEventWorker.trigger.connect(self.leaveEventWork)
         
         # icon_bottum_ui_setting
         # ///////////////////////////////////////////////////////////////
@@ -139,8 +158,9 @@ class PyTempStep(QWidget):
         self._menu.menu_frame.hide()
         self.type_modifly_callback()
 
+
+
     def parameter_setting(self):
-        
         self.pattern.Step_label.setText("STEP %d" %self._step)
         self.pattern.Type_comboBox.setCurrentIndex(self._type)
         self.pattern.Hour_lineEdit.setValue(self._hour)
@@ -222,7 +242,6 @@ class PyTempStep(QWidget):
 
     #When infomation is modifly by user , call back to this function
     def modifly_callback(self):
-
         if (self.sender()==None):
             return
         
@@ -250,7 +269,6 @@ class PyTempStep(QWidget):
         self._parent.tempPattern.step_modifly_manager(self._step)
         
     def type_modifly_callback(self):
-
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":
             
             self._type=self.Temp_Type
@@ -373,13 +391,24 @@ class PyTempStep(QWidget):
         self._parent.tempPattern.close_menu()
 
     def enterEvent(self, event):
+        if self.enterEventWorker.isRunning():
+            print("work over flow - enterEvent - temp")
+        self.enterEventWorker.start()
+
+    def enterEventWork(self):
         self.mouseHovering=True
         if self.pattern.page.currentIndex() ==1:
             self._parent.tempPattern.focus_step(self._step)
 
     def leaveEvent(self, event):
+        if self.leaveEventWorker.isRunning():
+            print("work over flow - leaveEvent - temp")
+        self.leaveEventWorker.start()
+
+    def leaveEventWork(self):
         self.mouseHovering=False
         self._parent.tempPattern.un_focus_step(self._step)
+        self._parent.tempPattern.close_one_menu(self._step)
 
     def setFocusStyle(self,enable):
         if enable:

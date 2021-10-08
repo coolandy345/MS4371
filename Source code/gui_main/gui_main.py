@@ -186,16 +186,15 @@ class MainWindow(QMainWindow):
 
 def initial_GUI(memory_pool):
     print("Gui initialing")
+    # EXEC APP
+    # ///////////////////////////////////////////////////////////////
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon("motoyama_icon.ico"))
     window = MainWindow(memory_pool)
+    
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
-    
-    #sys.exit(app.exec_())
-    app.exec_()
-    print("Gui has been close")
-    #shotdown_entire_app()
+    sys.exit(app.exec_())
 
 
 # SETTINGS WHEN TO START

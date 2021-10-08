@@ -4,10 +4,13 @@
     "\\gui_main",
     "\\gui_main\\gui",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\uis\\pattern_columns",
+    "\\gui_main\\gui\\uis\\pages",
+    "\\gui_main\\gui\\uis\\windows",
+    "\\gui_main\\gui\\uis\\windows\\main_window",
     "\\gui_main\\gui\\widgets",
-    "\\gui_main\\gui\\widgets\\py_pattern"
+    "\\gui_main\\gui\\widgets\\py_graph",
+    "\\modbus_TcpServer"
   ],
-  "SelectedNode": "\\gui_main\\gui\\uis\\pattern_columns\\temp_pattern_setting.py",
+  "SelectedNode": "\\gui_main\\gui\\widgets\\py_pattern\\py_step_temp.py",
   "PreviewInSolutionExplorer": false
 }
