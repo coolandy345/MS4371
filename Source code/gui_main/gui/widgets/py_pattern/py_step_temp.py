@@ -133,13 +133,16 @@ class PyTempStep(QWidget):
 
         self.enterEventWorker = workThread()
         self.enterEventWorker.trigger.connect(self.enterEventWork)
-        self.enterEventWorker.setStackSize(1000)
-        self.enterEventWorker.setObjectName("enterEventWorker {}".format(self._step))
 
-        self.leaveEventWorker = workThread(self)
+        self.leaveEventWorker = workThread()
         self.leaveEventWorker.trigger.connect(self.leaveEventWork)
-        self.leaveEventWorker.setStackSize(1000)
-        self.leaveEventWorker.setObjectName("leaveEventWorker {}".format(self._step))
+
+        self.modifly_callbackWorker = workThread()
+        self.modifly_callbackWorker.trigger.connect(self.modifly_callbackWork)
+
+        self.type_modifly_callbackWorker = workThread()
+        self.type_modifly_callbackWorker.trigger.connect(self.type_modifly_callbackWork)
+
         
         # icon_bottum_ui_setting
         # ///////////////////////////////////////////////////////////////
@@ -243,9 +246,9 @@ class PyTempStep(QWidget):
         self.pattern.PID_muffle_comboBox.currentIndexChanged.connect(self.modifly_callback)
         self.pattern.PID_heater_comboBox.currentIndexChanged.connect(self.modifly_callback)
         
-
+    
     #When infomation is modifly by user , call back to this function
-    def modifly_callback(self):
+    def modifly_callbackWork(self):
         if (self.sender()==None):
             return
         
@@ -271,8 +274,13 @@ class PyTempStep(QWidget):
         
         #Call upper mother renew information
         self._parent.tempPattern.step_modifly_manager(self._step)
+
+    def modifly_callback(self):
+        self.modifly_callbackWorker.start()
         
-    def type_modifly_callback(self):
+
+        
+    def type_modifly_callbackWork(self):
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":
             
             self._type=self.Temp_Type
@@ -379,6 +387,9 @@ class PyTempStep(QWidget):
             self.pattern.TestPattern_label.setStyleSheet(self.label_gray_out_style) 
 
         self.modifly_callback()
+
+    def type_modifly_callback(self):
+        self.type_modifly_callbackWorker.start()
 
     def addStepBtn_presscallback(self):
         self._parent.tempPattern.new_TempPattern()

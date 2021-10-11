@@ -181,8 +181,8 @@ class TempPatternWidget(QWidget):
         self.timer.timeout.connect(self.timerCallback)
         self.timer.start(10)
 
-        self.timerCallbackThread=workThread()
-        self.timerCallbackThread.trigger.connect(self.timerCallbackThreadWork)
+        self.timerCallbackWorker=workThread()
+        self.timerCallbackWorker.trigger.connect(self.timerCallbackWork)
 
         
         
@@ -483,9 +483,9 @@ class TempPatternWidget(QWidget):
         pass
 
     def timerCallback(self):
-        self.timerCallbackThread.start()
+        self.timerCallbackWorker.start()
 
-    def timerCallbackThreadWork(self):
+    def timerCallbackWork(self):
         
         print("self.test1 = ",self.test1)
         self.test1+=1

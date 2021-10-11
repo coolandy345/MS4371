@@ -193,6 +193,10 @@ def initial_GUI(memory_pool):
     app.setWindowIcon(QIcon("icon.ico"))
     window = MainWindow(memory_pool)
     
+    QThreadPool.globalInstance().setExpiryTimeout(1000)
+    print(QThreadPool.globalInstance().stackSize())
+    QThreadPool.globalInstance().setStackSize(10000)
+    print(QThreadPool.globalInstance().stackSize())
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
     app.exec_()
