@@ -49,7 +49,8 @@ class workThread(QThread):
     def __int__(self):
         # 初始化函式
         print("Initial")
-        super(workThread, self).__init__()
+        super().__init__()
+        self.setStackSize(1000)
 
     def run(self):
         self.trigger.emit()
@@ -115,7 +116,6 @@ class PyTempStep(QWidget):
         self._n2_flowrate = n2_flowrate
         self._PID_muffle_no = PID_muffle_no
         self._PID_heater_no = PID_heater_no
-        self.mouseHovering=False
         # Parent
         self._parent = parent
         self._app_parent = app_parent
@@ -129,13 +129,17 @@ class PyTempStep(QWidget):
         self.pattern.setupUi( self.pattern_frame)
         self.pattern.page.setCurrentIndex(self._active)
 
-        self.test=False
+        self.test=0
 
         self.enterEventWorker = workThread()
         self.enterEventWorker.trigger.connect(self.enterEventWork)
+        self.enterEventWorker.setStackSize(1000)
+        self.enterEventWorker.setObjectName("enterEventWorker {}".format(self._step))
 
         self.leaveEventWorker = workThread(self)
         self.leaveEventWorker.trigger.connect(self.leaveEventWork)
+        self.leaveEventWorker.setStackSize(1000)
+        self.leaveEventWorker.setObjectName("leaveEventWorker {}".format(self._step))
         
         # icon_bottum_ui_setting
         # ///////////////////////////////////////////////////////////////
@@ -394,9 +398,9 @@ class PyTempStep(QWidget):
         if self.enterEventWorker.isRunning():
             print("work over flow - enterEvent - temp")
         self.enterEventWorker.start()
+        
 
     def enterEventWork(self):
-        self.mouseHovering=True
         if self.pattern.page.currentIndex() ==1:
             self._parent.tempPattern.focus_step(self._step)
 
@@ -404,9 +408,9 @@ class PyTempStep(QWidget):
         if self.leaveEventWorker.isRunning():
             print("work over flow - leaveEvent - temp")
         self.leaveEventWorker.start()
+        
 
     def leaveEventWork(self):
-        self.mouseHovering=False
         self._parent.tempPattern.un_focus_step(self._step)
         self._parent.tempPattern.close_one_menu(self._step)
 

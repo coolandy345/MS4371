@@ -1,5 +1,6 @@
 import pyqtgraph as pg
 from gui_main.qt_core import *
+import time
 
 class workThread(QThread):
 
@@ -29,8 +30,12 @@ class PyGraphRegionItem(pg.LinearRegionItem):
 
         self.enterEventWorker = workThread()
         self.enterEventWorker.trigger.connect(self.enterEventWork)
+        self.enterEventWorker.setStackSize(1000)
         self.leaveEventWorker = workThread(self)
         self.leaveEventWorker.trigger.connect(self.leaveEventWork)
+        self.leaveEventWorker.setStackSize(1000)
+
+        self.test=0
 
         
     def hoverEnterEvent(self, ev):
@@ -41,7 +46,6 @@ class PyGraphRegionItem(pg.LinearRegionItem):
     def enterEventWork(self):
         self._parent.tempPattern.focus_step(self.step)
 
-
     def hoverLeaveEvent(self, ev):
         if self.leaveEventWorker.isRunning():
             print("work over flow - leaveEvent - graph")
@@ -49,10 +53,6 @@ class PyGraphRegionItem(pg.LinearRegionItem):
 
     def leaveEventWork(self):
         self._parent.tempPattern.un_focus_step(self.step)
-
-
-    def hoverEvent(self, ev):
-        pass
 
     def setFocusStyle(self,enable):
         if enable:

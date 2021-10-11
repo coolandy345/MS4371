@@ -60,12 +60,28 @@ import pyqtgraph as pg
 
 #from gui.uis.control_column import *
 
+class workThread(QThread):
+
+    trigger = Signal()
+
+    #def __int__(self):
+    #    # 初始化函式
+    #    print("Initial")
+    #    super(workThread, self).__init__()
+
+    def run(self):
+        self.trigger.emit()
+
 
 # PY WINDOW
 # ///////////////////////////////////////////////////////////////
 class SetupMainWindow:
-    def __init__(self):
+    def __init__(self,main_namespace,memorypool):
         super().__init__()
+
+        self.main_namespace=main_namespace
+        self.memorypool=memorypool
+        self.setup_gui(self.memorypool)
 
     # ADD LEFT MENUS
     # ///////////////////////////////////////////////////////////////
@@ -128,69 +144,76 @@ class SetupMainWindow:
         else:
             return self.sender()
 
+
+    def tempPatternInitWork(self):
+        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memory_pool=self.memorypool)
+        
+
+    def testPatternInitWork(self):
+        self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memory_pool=self.memorypool)
+        
+
+
     # SETUP MAIN WINDOW WITH CUSTOM PARAMETERS
     # ///////////////////////////////////////////////////////////////
     def setup_gui(self,memory_pool):
         # APP TITLE
         # ///////////////////////////////////////////////////////////////
-        self.setWindowTitle(self.settings["app_name"])
+        self.main_namespace.setWindowTitle(self.main_namespace.settings["app_name"])
         
         # REMOVE TITLE BAR
         # ///////////////////////////////////////////////////////////////
-        if self.settings["custom_title_bar"]:
-            self.setWindowFlag(Qt.FramelessWindowHint)
-            self.setAttribute(Qt.WA_TranslucentBackground)
+        if self.main_namespace.settings["custom_title_bar"]:
+            self.main_namespace.setWindowFlag(Qt.FramelessWindowHint)
+            self.main_namespace.setAttribute(Qt.WA_TranslucentBackground)
 
         # ADD GRIPS
         # ///////////////////////////////////////////////////////////////
-        if self.settings["custom_title_bar"]:
-            self.left_grip = PyGrips(self, "left", self.hide_grips)
-            self.right_grip = PyGrips(self, "right", self.hide_grips)
-            self.top_grip = PyGrips(self, "top", self.hide_grips)
-            self.bottom_grip = PyGrips(self, "bottom", self.hide_grips)
-            self.top_left_grip = PyGrips(self, "top_left", self.hide_grips)
-            self.top_right_grip = PyGrips(self, "top_right", self.hide_grips)
-            self.bottom_left_grip = PyGrips(self, "bottom_left", self.hide_grips)
-            self.bottom_right_grip = PyGrips(self, "bottom_right", self.hide_grips)
+        if self.main_namespace.settings["custom_title_bar"]:
+            self.main_namespace.left_grip = PyGrips(self.main_namespace, "left", self.main_namespace.hide_grips)
+            self.main_namespace.right_grip = PyGrips(self.main_namespace, "right", self.main_namespace.hide_grips)
+            self.main_namespace.top_grip = PyGrips(self.main_namespace, "top", self.main_namespace.hide_grips)
+            self.main_namespace.bottom_grip = PyGrips(self.main_namespace, "bottom", self.main_namespace.hide_grips)
+            self.main_namespace.top_left_grip = PyGrips(self.main_namespace, "top_left", self.main_namespace.hide_grips)
+            self.main_namespace.top_right_grip = PyGrips(self.main_namespace, "top_right", self.main_namespace.hide_grips)
+            self.main_namespace.bottom_left_grip = PyGrips(self.main_namespace, "bottom_left", self.main_namespace.hide_grips)
+            self.main_namespace.bottom_right_grip = PyGrips(self.main_namespace, "bottom_right", self.main_namespace.hide_grips)
 
         # LEFT MENUS / GET SIGNALS WHEN LEFT MENU BTN IS CLICKED / RELEASED
         # ///////////////////////////////////////////////////////////////
         # ADD MENUS
-        self.ui.left_menu.add_menus(SetupMainWindow.add_left_menus)
+        self.main_namespace.ui.left_menu.add_menus(SetupMainWindow.add_left_menus)
 
         # SET SIGNALS
-        self.ui.left_menu.clicked.connect(self.btn_clicked)
-        self.ui.left_menu.released.connect(self.btn_released)
+        self.main_namespace.ui.left_menu.clicked.connect(self.main_namespace.btn_clicked)
+        self.main_namespace.ui.left_menu.released.connect(self.main_namespace.btn_released)
         # TITLE BAR / ADD EXTRA BUTTONS
         # ///////////////////////////////////////////////////////////////
         # ADD MENUS
-        self.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
+        self.main_namespace.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
 
         # SET SIGNALS
-        self.ui.title_bar.clicked.connect(self.btn_clicked)
-        self.ui.title_bar.released.connect(self.btn_released)
+        self.main_namespace.ui.title_bar.clicked.connect(self.main_namespace.btn_clicked)
+        self.main_namespace.ui.title_bar.released.connect(self.main_namespace.btn_released)
 
         # ADD Title
-        if self.settings["custom_title_bar"]:
-            self.ui.title_bar.set_title(self.settings["app_name"])
-        else:
-            self.ui.title_bar.set_title("Welcome to PyOneDark")
+        self.main_namespace.ui.title_bar.set_title(self.main_namespace.settings["app_name"])
         
         # LEFT COLUMN SET SIGNALS
         # ///////////////////////////////////////////////////////////////
-        self.ui.left_column.clicked.connect(self.btn_clicked)
-        self.ui.left_column.released.connect(self.btn_released)
+        self.main_namespace.ui.left_column.clicked.connect(self.main_namespace.btn_clicked)
+        self.main_namespace.ui.left_column.released.connect(self.main_namespace.btn_released)
 
         # SET INITIAL PAGE / SET LEFT AND RIGHT COLUMN MENUS
         # ///////////////////////////////////////////////////////////////
-        MainFunctions.set_page(self, self.ui.load_pages.page_1)
+        MainFunctions.set_page(self.main_namespace, self.main_namespace.ui.load_pages.page_1)
         MainFunctions.set_left_column_menu(
-            self,
-            menu = self.ui.left_column.menus.menu_1,
+            self.main_namespace,
+            menu = self.main_namespace.ui.left_column.menus.menu_1,
             title = "Settings Left Column",
             icon_path = Functions.set_svg_icon("icon_settings.svg")
         )
-        MainFunctions.set_right_column_menu(self, self.ui.right_column.menu_1)
+        MainFunctions.set_right_column_menu(self.main_namespace, self.main_namespace.ui.right_column.menu_1)
         # ///////////////////////////////////////////////////////////////
         # EXAMPLE CUSTOM WIDGETS
         # Here are added the custom widgets to pages and columns that
@@ -202,236 +225,228 @@ class SetupMainWindow:
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
         settings = Settings()
-        self.settings = settings.items
+        self.main_namespace.settings = settings.items
         # LOAD THEME COLOR
         # ///////////////////////////////////////////////////////////////
         themes = Themes()
-        self.themes = themes.items
+        self.main_namespace.themes = themes.items
 
-        self.ui.load_pages.stackedWidget.setCurrentWidget(self.ui.load_pages.page_AutoOperate)
+        self.main_namespace.ui.load_pages.stackedWidget.setCurrentWidget(self.main_namespace.ui.load_pages.page_AutoOperate)
 
-        self.ui.load_pages.btn_AutoMode.clicked.connect(self.btn_clicked)
-        self.ui.load_pages.btn_ManaualMode.clicked.connect(self.btn_clicked)
+        self.main_namespace.ui.load_pages.btn_AutoMode.clicked.connect(self.main_namespace.btn_clicked)
+        self.main_namespace.ui.load_pages.btn_ManaualMode.clicked.connect(self.main_namespace.btn_clicked)
 
-        self.MS_ConnectionToggle=PyToggle()
-        self.ui.load_pages.gridLayout_27.addWidget(self.MS_ConnectionToggle)
+        self.main_namespace.MS_ConnectionToggle=PyToggle()
+        self.main_namespace.ui.load_pages.gridLayout_27.addWidget(self.main_namespace.MS_ConnectionToggle)
         
-        self.Tester_ConnectionToggle=PyToggle()
-        self.ui.load_pages.gridLayout_28.addWidget(self.Tester_ConnectionToggle)
-        self.tempPattern=TempPatternWidget(self,app_parent=self.ui.central_widget,memory_pool=memory_pool)
-        self.testPattern=TestPatternWidget(self,app_parent=self.ui.central_widget,memory_pool=memory_pool)
+        self.main_namespace.Tester_ConnectionToggle=PyToggle()
+        self.main_namespace.ui.load_pages.gridLayout_28.addWidget(self.main_namespace.Tester_ConnectionToggle)
         
+        self.tempPatternThread = workThread(self.main_namespace)
+        self.tempPatternThread.trigger.connect(self.tempPatternInitWork)
+        self.tempPatternThread.start()
 
-        self.stop_icon = PyIconButton(
+        self.testPatternThread = workThread(self.main_namespace)
+        self.testPatternThread.trigger.connect(self.testPatternInitWork)
+        self.testPatternThread.start()
+
+
+
+        self.main_namespace.stop_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("stop-button-extralarge.svg"),
-                parent = self,
-                app_parent = self.ui.central_widget,
+                parent = self.main_namespace,
+                app_parent = self.main_namespace.ui.central_widget,
                 tooltip_text = "停止中",
                 width = 60,
                 height = 60,
                 radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
+                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
+                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
                 bg_color = "#1e2229",
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["dark_three"],
+                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
+                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
             )
-        self.ui.load_pages.Layout_Status_STOP.addWidget(self.stop_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self.main_namespace.ui.load_pages.Layout_Status_STOP.addWidget(self.main_namespace.stop_icon, Qt.AlignCenter, Qt.AlignCenter)
 
         # rererherherher
 
-        self.heating_icon = PyIconButton(
+        self.main_namespace.heating_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("heater-extralarge.svg"),
-                parent = self,
-                app_parent = self.ui.central_widget,
+                parent = self.main_namespace,
+                app_parent = self.main_namespace.ui.central_widget,
                 tooltip_text = "昇温中",
                 width = 60,
                 height = 60,
                 radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_color"],
-                icon_color_pressed = self.themes["app_color"]["icon_color"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
+                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
                 bg_color = "#1e2229",
                 bg_color_hover = "#1e2229",
                 bg_color_pressed = "#1e2229",
             )
-        self.ui.load_pages.Layout_Status_Heating.addWidget(self.heating_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self.main_namespace.ui.load_pages.Layout_Status_Heating.addWidget(self.main_namespace.heating_icon, Qt.AlignCenter, Qt.AlignCenter)
 
 
-        self.keepTemp_icon = PyIconButton(
+        self.main_namespace.keepTemp_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("reuse-extralarge.svg"),
-                parent = self,
-                app_parent = self.ui.central_widget,
+                parent = self.main_namespace,
+                app_parent = self.main_namespace.ui.central_widget,
                 tooltip_text = "温度キープ中",
                 width = 60,
                 height = 60,
                 radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
+                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
+                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
                 bg_color = "#1e2229",
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["dark_three"],
+                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
+                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
             )
-        self.ui.load_pages.Layout_Status_KeepTemp.addWidget(self.keepTemp_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self.main_namespace.ui.load_pages.Layout_Status_KeepTemp.addWidget(self.main_namespace.keepTemp_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self.testing_icon = PyIconButton(
+        self.main_namespace.testing_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("oscilloscope-extralarge.svg"),
-                parent = self,
-                app_parent = self.ui.central_widget,
+                parent = self.main_namespace,
+                app_parent = self.main_namespace.ui.central_widget,
                 tooltip_text = "測定中",
                 width = 60,
                 height = 60,
                 radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
+                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
+                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
                 bg_color = "#1e2229",
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["dark_three"],
+                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
+                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
             )
-        self.ui.load_pages.Layout_Status_Testing.addWidget(self.testing_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self.main_namespace.ui.load_pages.Layout_Status_Testing.addWidget(self.main_namespace.testing_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self.testFinishing_icon = PyIconButton(
+        self.main_namespace.testFinishing_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("cold-temperature-extralarge.svg"),
-                parent = self,
-                app_parent = self.ui.central_widget,
+                parent = self.main_namespace,
+                app_parent = self.main_namespace.ui.central_widget,
                 tooltip_text = "測定終了(降温中)",
                 width = 60,
                 height = 60,
                 radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
+                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
+                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
                 bg_color = "#1e2229",
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["dark_three"],
+                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
+                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
             )
-        self.ui.load_pages.Layout_Status_TestFinishing.addWidget(self.testFinishing_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self.main_namespace.ui.load_pages.Layout_Status_TestFinishing.addWidget(self.main_namespace.testFinishing_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self.error_icon = PyIconButton(
+        self.main_namespace.error_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("fi-rr-exclamation-extralarge.svg"),
-                parent = self,
-                app_parent = self.ui.central_widget,
+                parent = self.main_namespace,
+                app_parent = self.main_namespace.ui.central_widget,
                 tooltip_text = "警報発生中",
                 width = 60,
                 height = 60,
                 radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
+                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
                 icon_color = "#ff5869",
                 icon_color_hover = "#ff5869",
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
+                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
                 bg_color = "#1e2229",
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["dark_three"],
+                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
+                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
             )
-        self.ui.load_pages.Layout_Status_Error.addWidget(self.error_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self.main_namespace.ui.load_pages.Layout_Status_Error.addWidget(self.main_namespace.error_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self.ethernetConnecton_icon = PyIconButton(
+        self.main_namespace.ethernetConnecton_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("ethernet-extralarge.svg"),
-                parent = self,
-                app_parent = self.ui.central_widget,
+                parent = self.main_namespace,
+                app_parent = self.main_namespace.ui.central_widget,
                 tooltip_text = "電気炉接続",
                 width = 60,
                 height = 60,
                 radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
+                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
+                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
                 bg_color = "#1e2229",
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["dark_three"],
+                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
+                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
             )
-        self.ui.load_pages.Layout_Status_EthernetConnecton.addWidget(self.ethernetConnecton_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self.main_namespace.ui.load_pages.Layout_Status_EthernetConnecton.addWidget(self.main_namespace.ethernetConnecton_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self.gPIBConnecton_1_icon = PyIconButton(
+        self.main_namespace.gPIBConnecton_1_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("link-2657A-extralarge.svg"),
-                parent = self,
-                app_parent = self.ui.central_widget,
+                parent = self.main_namespace,
+                app_parent = self.main_namespace.ui.central_widget,
                 tooltip_text = "2657A接続",
                 width = 60,
                 height = 60,
                 radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
+                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
+                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
                 bg_color = "#1e2229",
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["dark_three"],
+                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
+                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
             )
-        self.ui.load_pages.Layout_Status_GPIBConnecton_1.addWidget(self.gPIBConnecton_1_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self.main_namespace.ui.load_pages.Layout_Status_GPIBConnecton_1.addWidget(self.main_namespace.gPIBConnecton_1_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self.gPIBConnecton_2_icon = PyIconButton(
+        self.main_namespace.gPIBConnecton_2_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("link-2635B-extralarge.svg"),
-                parent = self,
-                app_parent = self.ui.central_widget,
+                parent = self.main_namespace,
+                app_parent = self.main_namespace.ui.central_widget,
                 tooltip_text = "2635B接続",
                 width = 60,
                 height = 60,
                 radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
+                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
+                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
                 bg_color = "#1e2229",
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["dark_three"],
+                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
+                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
             )
-        self.ui.load_pages.Layout_Status_GPIBConnecton_2.addWidget(self.gPIBConnecton_2_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self.main_namespace.ui.load_pages.Layout_Status_GPIBConnecton_2.addWidget(self.main_namespace.gPIBConnecton_2_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        #self.win = pg.GraphicsLayoutWidget(show=True)
-        #self.win.resize(2000,500)
-        #self.win.setBackground(None)
-        #pg.setConfigOptions(antialias=True)
-        #self.plot = self.win.addPlot(title="昇降温動作パターン")
-        #self.plot.setLabel(axis='bottom', text='STEP', units='')
-        #self.plot.setLabel(axis='left', text='温度', units='℃')
-        
-        #self.plot.showGrid(x=True, y=True)
-        #self.plot.setMouseEnabled(x=True, y=False)
-        #self.plot.addLegend()
-        #self.plot.plot(x=[0,1,2],y=[5,10,10],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
-        #self.plot.plot(x=[0,1],y=[5,10],pen=pg.mkPen((1,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="実際温度")
-        
-        #self.ui.load_pages.gridLayout_29.addWidget(self.win, Qt.AlignCenter, Qt.AlignCenter)
         
         
 
-        self.win =pg.PlotWidget(background=None,title="抵抗測定値")
+        #self.main_namespace.win =pg.PlotWidget(background=None,title="抵抗測定値")
         
-        self.win.setLabel(axis='bottom', text='時間', units='ms')
-        self.win.setLabel(axis='left', text='抵抗値', units='Ω')
+        #self.main_namespace.win.setLabel(axis='bottom', text='時間', units='ms')
+        #self.main_namespace.win.setLabel(axis='left', text='抵抗値', units='Ω')
 
-        self.win.setLimits(xMin=-0.9,xMax=20.9)
-        self.axis = self.win.getAxis('bottom')
-        self.axis.setStyle(autoReduceTextSpace=True)
-        self.axis.setTickSpacing(2,1)
-        self.win.setAxisItems({'bottom':self.axis})
+        #self.main_namespace.win.setLimits(xMin=-0.9,xMax=20.9)
+        #self.main_namespace.axis = self.main_namespace.win.getAxis('bottom')
+        #self.main_namespace.axis.setStyle(autoReduceTextSpace=True)
+        #self.main_namespace.axis.setTickSpacing(2,1)
+        #self.main_namespace.win.setAxisItems({'bottom':self.main_namespace.axis})
         
-        self.win.showGrid(x=True, y=True)
-        self.win.setMouseEnabled(x=True, y=False)
-        self.win.addLegend()
+        #self.main_namespace.win.showGrid(x=True, y=True)
+        #self.main_namespace.win.setMouseEnabled(x=True, y=False)
+        #self.main_namespace.win.addLegend()
 
-        self.win.plot(x=[0,1,2,3,8],y=[5,10,10,0,50],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
+        #self.main_namespace.win.plot(x=[0,1,2,3,8],y=[5,10,10,0,50],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
         
-        self.ui.load_pages.gridLayout_9.addWidget(self.win, Qt.AlignCenter, Qt.AlignCenter)
+        #self.main_namespace.ui.load_pages.gridLayout_9.addWidget(self.main_namespace.win, Qt.AlignCenter, Qt.AlignCenter)
         
 
 
@@ -440,16 +455,19 @@ class SetupMainWindow:
     # ///////////////////////////////////////////////////////////////
     def resize_grips(self):
 
-        self.tempPattern.graphResize()
+        #self.main_namespace.tempPattern.graphResize()
 
-        if self.settings["custom_title_bar"]:
-            self.left_grip.setGeometry(5, 10, 10, self.height())
-            self.right_grip.setGeometry(self.width() - 15, 10, 10, self.height())
-            self.top_grip.setGeometry(5, 5, self.width() - 10, 10)
-            self.bottom_grip.setGeometry(5, self.height() - 15, self.width() - 10, 10)
-            self.top_right_grip.setGeometry(self.width() - 20, 5, 15, 15)
-            self.bottom_left_grip.setGeometry(5, self.height() - 20, 15, 15)
-            self.bottom_right_grip.setGeometry(self.width() - 20, self.height() - 20, 15, 15)
+        if self.main_namespace.settings["custom_title_bar"]:
+            self.main_namespace.left_grip.setGeometry(5, 10, 10, self.main_namespace.height())
+            self.main_namespace.right_grip.setGeometry(self.main_namespace.width() - 15, 10, 10, self.main_namespace.height())
+            self.main_namespace.top_grip.setGeometry(5, 5, self.main_namespace.width() - 10, 10)
+            self.main_namespace.bottom_grip.setGeometry(5, self.main_namespace.height() - 15, self.main_namespace.width() - 10, 10)
+            self.main_namespace.top_right_grip.setGeometry(self.main_namespace.width() - 20, 5, 15, 15)
+            self.main_namespace.bottom_left_grip.setGeometry(5, self.main_namespace.height() - 20, 15, 15)
+            self.main_namespace.bottom_right_grip.setGeometry(self.main_namespace.width() - 20, self.main_namespace.height() - 20, 15, 15)
+
+
+    
 
 
 

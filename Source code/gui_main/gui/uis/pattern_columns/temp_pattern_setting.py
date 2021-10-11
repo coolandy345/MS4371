@@ -18,14 +18,14 @@ import sys
 import numpy as np
 import pyqtgraph as pg
 
+
 class workThread(QThread):
 
     trigger = Signal()
 
     def __int__(self):
         # 初始化函式
-        print("Initial")
-        super(workThread, self).__init__()
+        super().__init__()
 
     def run(self):
         self.trigger.emit()
@@ -173,17 +173,22 @@ class TempPatternWidget(QWidget):
         self.step_widges_list[1].setVisible (True)
         self.step_widges_list[1].pattern.page.setCurrentIndex(False)
 
-        self.updata_step_widgeWorker = workThread()
-        self.updata_step_widgeWorker.trigger.connect(self.updata_step_widge)
-        self.update_graphWorker = workThread(self)
-        self.update_graphWorker.trigger.connect(self.update_graph)
         
-        self.refreshing=False
+        
+
+        
         self.timer=QTimer()
-        self.timer.timeout.connect(self.sayhi)
-        self.timer.start(100)
+        self.timer.timeout.connect(self.timerCallback)
+        self.timer.start(10)
+
+        self.timerCallbackThread=workThread()
+        self.timerCallbackThread.trigger.connect(self.timerCallbackThreadWork)
+
+        
+        
 
         self.test=0
+        self.test1=0
 
     def memory_reader(self):
         mudbusunit=modbus_TcpServer.ModbusPackage()
@@ -471,33 +476,35 @@ class TempPatternWidget(QWidget):
             for _step in range(1,21):
                 self.GraphStepLabelList[_step].setPos(_step+0.1,1.2*maxpos)
         
-        
-
-
 
     def ui_click_callback(self):
         #self.updata_step_widge()
         #print("click")
         pass
 
-    def sayhi(self):
-        
-        
+    def timerCallback(self):
+        self.timerCallbackThread.start()
 
-        if self.refreshing:
-            print("Action overflow")
+    def timerCallbackThreadWork(self):
+        
+        print("self.test1 = ",self.test1)
+        self.test1+=1
 
-        self.refreshing=True
+
+        if time.time()-self.test >0.2:
+            print("lag occur")
+
+        self.test=time.time()
+        
 
         if self.updata_step_request==True:
-            self.updata_step_widgeWorker.start()
+            self.updata_step_widge()
             self.updata_step_request=False
 
         if self.update_graph_request==True:
-            self.update_graphWorker.start()
+            self.update_graph()
             self.update_graph_request=False
 
-        self.refreshing=False
 
 
 
@@ -577,20 +584,16 @@ class TempPatternWidget(QWidget):
         self.update_graph_request=True
 
     def focus_step(self,_step):
-        print("self.test = ",self.test)
-        self.test+=1
         self.step_widges_list[_step].setFocusStyle(True)
         self.GraphRegionList[_step].setFocusStyle(True)
         self.choose_step=_step
 
     def un_focus_step(self,_step):
-        print("self.test = ",self.test)
-        self.test+=1
         self.step_widges_list[_step].setFocusStyle(False)
         self.GraphRegionList[_step].setFocusStyle(False)
-        #if self.choose_step==_step:
-        #    print("...")
-        #    self.choose_step=0
+        
+        if self.choose_step==_step:
+            self.choose_step=0
 
     def close_menu(self):
         for step in range(1,21):

@@ -68,11 +68,12 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.hide_grips = True # Show/Hide resize grips
 
-        SetupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
+        #setupMainWindow=SetupMainWindow()
+        #setupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
+        self.SetupMainWindow=SetupMainWindow(main_namespace=self,memorypool=self.memory_pool)
+        #SetupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
-
-        
         self.show()
 
 
@@ -173,7 +174,7 @@ class MainWindow(QMainWindow):
     # RESIZE EVENT
     # ///////////////////////////////////////////////////////////////
     def resizeEvent(self, event):
-        SetupMainWindow.resize_grips(self)
+        self.SetupMainWindow.resize_grips()
 
     # MOUSE CLICK EVENTS
     # ///////////////////////////////////////////////////////////////
@@ -189,12 +190,18 @@ def initial_GUI(memory_pool):
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon("motoyama_icon.ico"))
+    app.setWindowIcon(QIcon("icon.ico"))
     window = MainWindow(memory_pool)
     
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
-    sys.exit(app.exec_())
+    app.exec_()
+
+
+
+    # EXEC System process
+    # ///////////////////////////////////////////////////////////////
+    sys.exit()
 
 
 # SETTINGS WHEN TO START
