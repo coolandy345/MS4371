@@ -76,3 +76,5 @@ from . py_table_widget import PyTableWidget
 from . py_pattern import *
 
 from . py_graph import *
+
+from . py_dialog import *

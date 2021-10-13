@@ -28,35 +28,32 @@ class PyGraphRegionItem(pg.LinearRegionItem):
         self.step=step
         self.setAcceptHoverEvents(True)
 
-        self.enterEventWorker = workThread()
-        self.enterEventWorker.trigger.connect(self.enterEventWork)
-        self.enterEventWorker.setStackSize(1000)
-        self.leaveEventWorker = workThread(self)
-        self.leaveEventWorker.trigger.connect(self.leaveEventWork)
-        self.leaveEventWorker.setStackSize(1000)
+        self.FocusStyleChange=False
+        self.currentBrushFocusStyle=self.brush
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.timerCallback)
+        self.timer.start(100)
 
-        self.test=0
+
+    def timerCallback(self):
+        if self.FocusStyleChange:
+            self.currentBrush = self.currentBrushFocusStyle
+            self.update()
+            self.FocusStyleChange=False
 
         
     def hoverEnterEvent(self, ev):
-        if self.enterEventWorker.isRunning():
-            print("work over flow - enterEvent - graph")
-        self.enterEventWorker.start()
-
-    def enterEventWork(self):
         self._parent.tempPattern.focus_step(self.step)
 
-    def hoverLeaveEvent(self, ev):
-        if self.leaveEventWorker.isRunning():
-            print("work over flow - leaveEvent - graph")
-        self.leaveEventWorker.start()
 
-    def leaveEventWork(self):
+    def hoverLeaveEvent(self, ev):
         self._parent.tempPattern.un_focus_step(self.step)
+
 
     def setFocusStyle(self,enable):
         if enable:
-            self.currentBrush = self.hoverBrush
+            self.currentBrushFocusStyle = self.hoverBrush
+            self.FocusStyleChange=True
         else:
-            self.currentBrush = self.brush
-        self.update()
+            self.currentBrushFocusStyle = self.brush
+            self.FocusStyleChange=True

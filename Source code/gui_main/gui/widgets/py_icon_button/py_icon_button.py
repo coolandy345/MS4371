@@ -41,12 +41,11 @@ class PyIconButton(QPushButton):
         icon_color = "#c3ccdf",
         icon_color_hover = "#dce1ec",
         icon_color_pressed = "#edf0f5",
-        icon_color_active = "#f5f6f9",
+        icon_color_deactive = "#f5f6f9",
         dark_one = "#1b1e23",
         text_foreground = "#8a95aa",
-        context_color = "#568af2",
         top_margin = 40,
-        is_active = False
+        is_active = True
 
     ):
         super().__init__()
@@ -55,7 +54,7 @@ class PyIconButton(QPushButton):
         self.setFixedSize(width, height)
         self.setCursor(Qt.PointingHandCursor)
         self.setObjectName(btn_id)
-
+        
         # PROPERTIES
 
         self._bg_color = bg_color
@@ -64,8 +63,7 @@ class PyIconButton(QPushButton):
         self._icon_color = icon_color
         self._icon_color_hover = icon_color_hover
         self._icon_color_pressed = icon_color_pressed
-        self._icon_color_active = icon_color_active
-        self._context_color = context_color
+        self._icon_color_deactive = icon_color_deactive
         self._top_margin = top_margin
         self._is_active = is_active
         # Set Parameters
@@ -86,11 +84,13 @@ class PyIconButton(QPushButton):
             text_foreground
         )
         self._tooltip.hide()
-
+        self.set_active(self._is_active)
     # SET ACTIVE MENU
     # ///////////////////////////////////////////////////////////////
     def set_active(self, is_active):
         self._is_active = is_active
+        self.change_style(QEvent.Leave)
+        self.setEnabled(is_active)
         self.repaint()
 
     # RETURN IF IS ACTIVE MENU
@@ -107,12 +107,7 @@ class PyIconButton(QPushButton):
         paint.begin(self)
         paint.setRenderHint(QPainter.RenderHint.Antialiasing)
         
-        if self._is_active:
-            # BRUSH
-            brush = QBrush(QColor(self._context_color))
-        else:
-            # BRUSH
-            brush = QBrush(QColor(self._set_bg_color))
+        brush = QBrush(QColor(self._set_bg_color))
 
         # CREATE RECTANGLE
         rect = QRect(0, 0, self.width(), self.height())
@@ -137,20 +132,44 @@ class PyIconButton(QPushButton):
     # ///////////////////////////////////////////////////////////////
     def change_style(self, event):
         if event == QEvent.Enter:
-            self._set_bg_color = self._bg_color_hover
-            self._set_icon_color = self._icon_color_hover
+            
+            if self._is_active:
+                self._set_bg_color = self._bg_color_hover
+                self._set_icon_color = self._icon_color_hover
+            else:
+                self._set_bg_color = self._bg_color
+                self._set_icon_color = self._icon_color_deactive
+
             self.repaint()         
         elif event == QEvent.Leave:
+            
             self._set_bg_color = self._bg_color
-            self._set_icon_color = self._icon_color
+
+            if self._is_active:
+                self._set_icon_color = self._icon_color
+            else:
+                self._set_icon_color = self._icon_color_deactive
+            
             self.repaint()
-        elif event == QEvent.MouseButtonPress:            
-            self._set_bg_color = self._bg_color_pressed
-            self._set_icon_color = self._icon_color_pressed
+        elif event == QEvent.MouseButtonPress:           
+            
+            if self._is_active:
+                self._set_bg_color = self._bg_color_pressed
+                self._set_icon_color = self._icon_color_pressed
+            else:
+                self._set_bg_color = self._bg_color
+                self._set_icon_color = self._icon_color_deactive
+
+
             self.repaint()
         elif event == QEvent.MouseButtonRelease:
-            self._set_bg_color = self._bg_color_hover
-            self._set_icon_color = self._icon_color_hover
+
+            if self._is_active:
+                self._set_bg_color = self._bg_color_hover
+                self._set_icon_color = self._icon_color_hover
+            else:
+                self._set_bg_color = self._bg_color
+                self._set_icon_color = self._icon_color_deactive
             self.repaint()
 
     # MOUSE OVER
@@ -195,10 +214,7 @@ class PyIconButton(QPushButton):
         icon = QPixmap(image)
         painter = QPainter(icon)
         painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
-        if self._is_active:
-            painter.fillRect(icon.rect(), self._icon_color_active)
-        else:
-            painter.fillRect(icon.rect(), self._set_icon_color)
+        painter.fillRect(icon.rect(), self._set_icon_color)
 
         qp.drawPixmap(
             (rect.width() - icon.width()) / 2, 

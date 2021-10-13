@@ -9,10 +9,29 @@
         "bg_one" : "#2c313c",
         "bg_two" : "#343b48",
         "bg_three" : "#3c4454",
-        "icon_color" : "#c3ccdf",
-        "icon_hover" : "#dce1ec",
-        "icon_pressed" : "#6c99f4",
-        "icon_active" : "#f5f6f9",
+
+        "regular_icon":{
+
+            "icon_bg" : "#1e2229",
+            "icon_bg_hover" : "#3c4454",
+            "icon_bg_pressed" : "#343b48",
+            "icon_color" : "#c3ccdf",
+            "icon_hover" : "#dce1ec",
+            "icon_pressed" : "#508dfe",
+            "icon_active" : "#c3ccdf",
+            "icon_deactive" : "#3b4150"
+         },
+        "critical_icon":{
+            "icon_bg" : "#1e2229",
+            "icon_bg_hover" : "#3c4454",
+            "icon_bg_pressed" : "#343b48",
+            "icon_color" : "#ff5869",
+            "icon_hover" : "#ff5869",
+            "icon_pressed" : "#6c99f4",
+            "icon_active" : "#f5f6f9",
+            "icon_deactive" : "#f5f6f9"
+         },
+
         "context_color" : "#568af2",
         "context_hover" : "#6c99f4",
         "context_pressed" : "#3f6fd1",

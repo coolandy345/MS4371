@@ -18,6 +18,33 @@ import sys
 import numpy as np
 import pyqtgraph as pg
 
+class updata_step_widge_Thread(QRunnable):
+    def __init__(self, parent):
+        super().__init__()
+        self.parent = parent
+
+    def run(self):
+        self.parent.updata_step_widge_work()
+
+class update_graph_Thread(QRunnable):
+    def __init__(self, parent):
+        super().__init__()
+        self.parent = parent
+
+    def run(self):
+        self.parent.update_graph_work()
+
+class regular_Thread(QRunnable):
+    def __init__(self, parent):
+        super().__init__()
+        self.parent = parent
+
+    def run(self):
+        for i in range(1,10000):
+            self.parent.regularWork()
+            QThread.msleep(10)
+            print(QThreadPool.globalInstance().activeThreadCount())
+
 
 class workThread(QThread):
 
@@ -84,7 +111,7 @@ class templist():
             if(self.units[step].Step_Type==PyTempStep.Temp_Type):
                 pass
             elif (self.units[step].Step_Type==PyTempStep.Test_Type):
-                if not(step==0):
+                if not(step==0 or step==1):
                     self.units[step].SV=self.units[step-1].SV
                 pass
             elif (self.units[step].Step_Type==PyTempStep.End_Type):
@@ -132,7 +159,7 @@ class templist():
         self.units[step].time_keep=input.time_keep
         self.units[step].time_min=input.time_min
 
-      
+        
 
 
 class TempPatternWidget(QWidget):
@@ -174,18 +201,14 @@ class TempPatternWidget(QWidget):
         self.step_widges_list[1].pattern.page.setCurrentIndex(False)
 
         
-        
-
-        
         self.timer=QTimer()
-        self.timer.timeout.connect(self.timerCallback)
+        self.timer.timeout.connect(self.regularWork)
         self.timer.start(10)
 
-        self.timerCallbackWorker=workThread()
-        self.timerCallbackWorker.trigger.connect(self.timerCallbackWork)
-
+        #self.timerWorker=regular_Thread(self)
+        #QThreadPool.globalInstance().start(self.timerWorker)
         
-        
+        self.stylechangeing=False
 
         self.test=0
         self.test1=0
@@ -232,69 +255,72 @@ class TempPatternWidget(QWidget):
         # ///////////////////////////////////////////////////////////////
         self.themes = Themes().items
 
-        self.icon = PyIconButton(
+        self.delete_IconButton = PyIconButton(
                 icon_path = Functions.set_svg_icon("fi-rr-trash.svg"),
                 parent = self._parent,
                 app_parent = self._app_parent,
+                btn_id = "削除",
                 tooltip_text = "削除",
                 width = 30,
                 height = 30,
                 radius = 10,
                 dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = "#ff5869",
-                icon_color_hover = "#ff5869",
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
-                bg_color = self.themes["app_color"]["dark_one"],
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["green"],
+                icon_color = self.themes["app_color"]["critical_icon"]["icon_color"],
+                icon_color_hover = self.themes["app_color"]["critical_icon"]["icon_hover"],
+                icon_color_pressed = self.themes["app_color"]["critical_icon"]["icon_pressed"],
+                icon_color_deactive = self.themes["app_color"]["critical_icon"]["icon_deactive"],
+                bg_color = self.themes["app_color"]["critical_icon"]["icon_bg"],
+                bg_color_hover = self.themes["app_color"]["critical_icon"]["icon_bg_hover"],
+                bg_color_pressed = self.themes["app_color"]["critical_icon"]["icon_bg_pressed"],
             )
-        self._parent.ui.load_pages.gridLayout_34.addWidget(self.icon, Qt.AlignCenter, Qt.AlignCenter)
-        self.icon.clicked.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.gridLayout_34.addWidget(self.delete_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self.delete_IconButton.clicked.connect(self.ui_click_callback)
 
-        self.icon = PyIconButton(
+        self.add_IconButton = PyIconButton(
                 icon_path = Functions.set_svg_icon("fi-rr-file-add.svg"),
                 parent = self._parent,
                 app_parent = self._app_parent,
+                btn_id = "追加",
                 tooltip_text = "追加",
                 width = 30,
                 height = 30,
                 radius = 10,
                 dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
-                bg_color = self.themes["app_color"]["dark_one"],
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["green"],
+                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
+                bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
+                bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
+                bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
             )
-        self._parent.ui.load_pages.gridLayout_35.addWidget(self.icon, Qt.AlignCenter, Qt.AlignCenter)
-        self.icon.clicked.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.gridLayout_35.addWidget(self.add_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self.add_IconButton.clicked.connect(self.ui_click_callback)
 
-        self.icon = PyIconButton(
+        
+
+        self.save_IconButton = PyIconButton(
                 icon_path = Functions.set_svg_icon("fi-rr-edit.svg"),
                 parent = self._parent,
                 app_parent = self._app_parent,
+                btn_id = "保存",
                 tooltip_text = "保存",
                 width = 30,
                 height = 30,
                 radius = 10,
                 dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
-                bg_color = self.themes["app_color"]["dark_one"],
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["green"],
+                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
+                bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
+                bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
+                bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
             )
-        self._parent.ui.load_pages.gridLayout_36.addWidget(self.icon, Qt.AlignCenter, Qt.AlignCenter)
-        self.icon.clicked.connect(self.ui_click_callback)
-
-        self.RT_MeasurementToggle=PyToggle()
-        self._parent.ui.load_pages.gridLayout_37.addWidget(self.RT_MeasurementToggle, Qt.AlignCenter, Qt.AlignCenter)
-
+        self._parent.ui.load_pages.gridLayout_36.addWidget(self.save_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self.save_IconButton.clicked.connect(self.ui_click_callback)
+        
+        
     def setup_TempPattern(self):
         self.step_widges_list=[None]
         for _step in range(1,21):
@@ -391,6 +417,10 @@ class TempPatternWidget(QWidget):
     # update step widge
     # /////////////////////////////
     def updata_step_widge(self):
+        self.updata_step_widge_Worker=updata_step_widge_Thread(self)
+        QThreadPool.globalInstance().start(self.updata_step_widge_Worker)
+
+    def updata_step_widge_work(self):
         #adjust the Visible of each step
         for _step in range(1,21):
 
@@ -443,7 +473,13 @@ class TempPatternWidget(QWidget):
         errormessage=self.cache_steplist.checkRule()
         self._parent.ui.load_pages.PatternErrorMessagelabel.setText(errormessage)
 
+    # update graph
+    # /////////////////////////////
     def update_graph(self):
+        self.update_graph_Worker=update_graph_Thread(self)
+        QThreadPool.globalInstance().start(self.update_graph_Worker)
+
+    def update_graph_work(self):
         data_array=[{"x":1,"y":0}]
         SV_array=[0]
         for _step in range(1,21):
@@ -476,35 +512,83 @@ class TempPatternWidget(QWidget):
             for _step in range(1,21):
                 self.GraphStepLabelList[_step].setPos(_step+0.1,1.2*maxpos)
         
-
-    def ui_click_callback(self):
-        #self.updata_step_widge()
-        #print("click")
+    def PyDialog_Yes_CallBack(self):
+        print("Yes")
         pass
 
-    def timerCallback(self):
-        self.timerCallbackWorker.start()
+    def PyDialog_No_CallBack(self):
+        print("No")
+        pass
 
-    def timerCallbackWork(self):
+    def PyDialog_Cancel_CallBack(self):
+        print("Cancel")
+        pass
+
+    def lunchDialog(self,message,type):
+
+        '''
+        PyDialog.error_type
+        PyDialog.warning_2_type
+        PyDialog.warning_3_type
+        '''
+
+        diag = PyDialog(type,message)
+        diag.PyYesSignal.connect(self.PyDialog_Yes_CallBack)
+        diag.PyNoSignal.connect(self.PyDialog_No_CallBack)
+        diag.PyCancelSignal.connect(self.PyDialog_Cancel_CallBack)
+        diag.exec()
+
+    def ui_click_callback(self):
+
         
-        print("self.test1 = ",self.test1)
+
+        btn_name=self.sender().objectName()
+        print(btn_name)
+
+        if btn_name=="削除":
+            self.temppatternfile_delete()
+        elif btn_name=="保存":
+            self.temppatternfile_save()
+        elif btn_name=="追加":
+            self.temppatternfile_new()
+
+    def temppatternfile_delete(self):
+        pass
+        
+    def temppatternfile_save(self):
+        pass
+
+    def temppatternfile_new(self):
+
+        #check if we can make new file , max file number is 20
+
+            #if we can make new file
+
+                #lunch text input dialog
+            
+                #make new file
+
+            #if file number is reach 20
+
+                #disable new file icon
+
+            #if we cannot make new file
+
+                #return
+
+        pass
+
+    def regularWork(self):
+        
+        #print("self.test1 = ",self.test1)
         self.test1+=1
 
 
         if time.time()-self.test >0.2:
-            print("lag occur")
+            print("lag occur time = ",time.time()-self.test)
 
         self.test=time.time()
         
-
-        if self.updata_step_request==True:
-            self.updata_step_widge()
-            self.updata_step_request=False
-
-        if self.update_graph_request==True:
-            self.update_graph()
-            self.update_graph_request=False
-
 
 
 

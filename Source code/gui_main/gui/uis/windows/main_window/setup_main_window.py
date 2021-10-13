@@ -122,14 +122,14 @@ class SetupMainWindow:
 
      # ADD TITLE BAR MENUS
     # ///////////////////////////////////////////////////////////////
-    add_title_bar_menus = [
-        {
-            "btn_icon" : "icon_settings.svg",
-            "btn_id" : "btn_top_settings",
-            "btn_tooltip" : "設定",
-            "is_active" : False
-        }
-    ]
+    #add_title_bar_menus = [
+    #    {
+    #        "btn_icon" : "icon_settings.svg",
+    #        "btn_id" : "btn_top_settings",
+    #        "btn_tooltip" : "設定",
+    #        "is_active" : False
+    #    }
+    #]
 
     # SETUP CUSTOM BTNs OF CUSTOM WIDGETS
     # Get sender() function when btn is clicked
@@ -190,7 +190,7 @@ class SetupMainWindow:
         # TITLE BAR / ADD EXTRA BUTTONS
         # ///////////////////////////////////////////////////////////////
         # ADD MENUS
-        self.main_namespace.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
+        #self.main_namespace.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
 
         # SET SIGNALS
         self.main_namespace.ui.title_bar.clicked.connect(self.main_namespace.btn_clicked)
@@ -261,10 +261,10 @@ class SetupMainWindow:
                 height = 60,
                 radius = 10,
                 dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
-                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
+                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = "#1e2229",
                 bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
                 bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
@@ -282,10 +282,10 @@ class SetupMainWindow:
                 height = 60,
                 radius = 10,
                 dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
+                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = "#1e2229",
                 bg_color_hover = "#1e2229",
                 bg_color_pressed = "#1e2229",
@@ -302,10 +302,10 @@ class SetupMainWindow:
                 height = 60,
                 radius = 10,
                 dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
-                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
+                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = "#1e2229",
                 bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
                 bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
@@ -321,10 +321,10 @@ class SetupMainWindow:
                 height = 60,
                 radius = 10,
                 dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
-                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
+                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = "#1e2229",
                 bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
                 bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
@@ -340,10 +340,10 @@ class SetupMainWindow:
                 height = 60,
                 radius = 10,
                 dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
-                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
+                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = "#1e2229",
                 bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
                 bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
@@ -359,10 +359,10 @@ class SetupMainWindow:
                 height = 60,
                 radius = 10,
                 dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = "#ff5869",
-                icon_color_hover = "#ff5869",
-                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
-                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
+                icon_color = self.main_namespace.themes["app_color"]["critical_icon"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["critical_icon"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["critical_icon"]["icon_pressed"],
+                icon_color_deactive = self.main_namespace.themes["app_color"]["critical_icon"]["icon_deactive"],
                 bg_color = "#1e2229",
                 bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
                 bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
@@ -378,10 +378,10 @@ class SetupMainWindow:
                 height = 60,
                 radius = 10,
                 dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
-                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
+                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = "#1e2229",
                 bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
                 bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
@@ -397,10 +397,10 @@ class SetupMainWindow:
                 height = 60,
                 radius = 10,
                 dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
-                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
+                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = "#1e2229",
                 bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
                 bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
@@ -416,10 +416,10 @@ class SetupMainWindow:
                 height = 60,
                 radius = 10,
                 dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["white"],
-                icon_color_active = self.main_namespace.themes["app_color"]["icon_active"],
+                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = "#1e2229",
                 bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
                 bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],

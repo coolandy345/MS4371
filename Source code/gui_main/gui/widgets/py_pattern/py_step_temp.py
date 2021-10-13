@@ -40,16 +40,15 @@ from gui_main.gui.core.functions import *
 
 from .py_pattern_menu import *
 
-import time
-
 class workThread(QThread):
 
     trigger = Signal()
 
-    def __int__(self):
+    def __int__(self,parent):
         # 初始化函式
         print("Initial")
         super().__init__()
+        self.parent=parent
         self.setStackSize(1000)
 
     def run(self):
@@ -129,19 +128,23 @@ class PyTempStep(QWidget):
         self.pattern.setupUi( self.pattern_frame)
         self.pattern.page.setCurrentIndex(self._active)
 
-        self.test=0
 
-        self.enterEventWorker = workThread()
-        self.enterEventWorker.trigger.connect(self.enterEventWork)
+        #self.modifly_callbackWorker = workThread()
+        #self.modifly_callbackWorker.trigger.connect(self.modifly_callbackWork)
+        #self.modifly_callbackWorker.setObjectName("STEP {} modifly_callbackWorker".format(self._step))
 
-        self.leaveEventWorker = workThread()
-        self.leaveEventWorker.trigger.connect(self.leaveEventWork)
+        #self.type_modifly_callbackWorker = workThread()
+        #self.type_modifly_callbackWorker.trigger.connect(self.type_modifly_callbackWork)
+        #self.type_modifly_callbackWorker.setObjectName("STEP {} type_modifly_callbackWorker".format(self._step))
+        
 
-        self.modifly_callbackWorker = workThread()
-        self.modifly_callbackWorker.trigger.connect(self.modifly_callbackWork)
 
-        self.type_modifly_callbackWorker = workThread()
-        self.type_modifly_callbackWorker.trigger.connect(self.type_modifly_callbackWork)
+        self.FocusStyleChange=False
+        self.FocusStyle=self.focus_gray_out_style
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.timerCallback)
+        self.timer.start(100)
+
 
         
         # icon_bottum_ui_setting
@@ -165,6 +168,11 @@ class PyTempStep(QWidget):
         self._menu.menu_frame.hide()
         self.type_modifly_callback()
 
+
+    def timerCallback(self):
+        if self.FocusStyleChange:
+            self.pattern.page.setStyleSheet(self.FocusStyle)
+            self.FocusStyleChange=False
 
 
     def parameter_setting(self):
@@ -194,15 +202,16 @@ class PyTempStep(QWidget):
                 icon_path = Functions.set_svg_icon("fi-rr-plus-large.svg"),
                 parent = self._parent,
                 app_parent = self._app_parent,
+                btn_id = "ステップ {} 追加".format(self._step),
                 tooltip_text = "ステップ追加",
                 width = 80,
                 height = 80,
                 radius = 10,
                 dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = self.themes["app_color"]["dark_one"],
                 bg_color_hover = self.themes["app_color"]["dark_three"],
                 bg_color_pressed = self.themes["app_color"]["green"],
@@ -219,15 +228,16 @@ class PyTempStep(QWidget):
                 icon_path = Functions.set_svg_icon("fi-rr-menu-dots-vertical.svg"),
                 parent = self._parent,
                 app_parent = self._app_parent,
+                btn_id = "ステップ {} menu編集".format(self._step),
                 tooltip_text = "編集",
                 width = 20,
                 height = 30,
                 radius = 2,
                 dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["white"],
-                icon_color_active = self.themes["app_color"]["icon_active"],
+                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = "#2c313c",
                 bg_color_hover = "#2c313c",
                 bg_color_pressed = "#6db6ee",
@@ -246,9 +256,14 @@ class PyTempStep(QWidget):
         self.pattern.PID_muffle_comboBox.currentIndexChanged.connect(self.modifly_callback)
         self.pattern.PID_heater_comboBox.currentIndexChanged.connect(self.modifly_callback)
         
+    #def modifly_callback(self):
+    #    print("modifly_callback")
+    #    #self.modifly_Worker=modifly_Thread(self)
+    #    #QThreadPool.globalInstance().start(self.modifly_Worker)
+    #    self.modifly_callbackWorker.start()
     
     #When infomation is modifly by user , call back to this function
-    def modifly_callbackWork(self):
+    def modifly_callback(self):
         if (self.sender()==None):
             return
         
@@ -275,12 +290,12 @@ class PyTempStep(QWidget):
         #Call upper mother renew information
         self._parent.tempPattern.step_modifly_manager(self._step)
 
-    def modifly_callback(self):
-        self.modifly_callbackWorker.start()
+    
         
+    #def type_modifly_callback(self):
+    #    self.type_modifly_callbackWorker.start()
 
-        
-    def type_modifly_callbackWork(self):
+    def type_modifly_callback(self):
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":
             
             self._type=self.Temp_Type
@@ -388,8 +403,7 @@ class PyTempStep(QWidget):
 
         self.modifly_callback()
 
-    def type_modifly_callback(self):
-        self.type_modifly_callbackWorker.start()
+    
 
     def addStepBtn_presscallback(self):
         self._parent.tempPattern.new_TempPattern()
@@ -405,33 +419,28 @@ class PyTempStep(QWidget):
     def mousePressEvent(self, event):
         self._parent.tempPattern.close_menu()
 
-    def enterEvent(self, event):
-        if self.enterEventWorker.isRunning():
-            print("work over flow - enterEvent - temp")
-        self.enterEventWorker.start()
-        
 
-    def enterEventWork(self):
+    def enterEvent(self, event):
         if self.pattern.page.currentIndex() ==1:
             self._parent.tempPattern.focus_step(self._step)
 
-    def leaveEvent(self, event):
-        if self.leaveEventWorker.isRunning():
-            print("work over flow - leaveEvent - temp")
-        self.leaveEventWorker.start()
         
-
-    def leaveEventWork(self):
+    def leaveEvent(self, event):
         self._parent.tempPattern.un_focus_step(self._step)
         self._parent.tempPattern.close_one_menu(self._step)
 
+    def paintEvent(self, event):
+        pass
+
+
     def setFocusStyle(self,enable):
         if enable:
-            self.pattern.page.setStyleSheet(self.focus_normal_style)
-            pass
+            self.FocusStyle=self.focus_normal_style
+            self.FocusStyleChange=True
         else:
-            self.pattern.page.setStyleSheet(self.focus_gray_out_style)
-            pass
+            self.FocusStyle=self.focus_gray_out_style
+            self.FocusStyleChange=True
+        
 
     def enableEndType(self,enable):
         if enable:

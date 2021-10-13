@@ -68,6 +68,10 @@ class PyStepMenu(QWidget):
         elif self._parent_type=="Test type":
             self._app_parent.testPattern.menu_btn_handler(btn.objectName())
 
+    def paintEvent(self, event):
+        print("paintEvent of menu")
+        pass
+
     
 
 

@@ -94,6 +94,7 @@ class PyLeftMenu(QWidget):
         # ///////////////////////////////////////////////////////////////
         self.toggle_button = PyLeftMenuButton(
             app_parent, 
+            btn_id="メニュー",
             text = toggle_text, 
             tooltip_text = toggle_tooltip,
             dark_one = self._dark_one,
