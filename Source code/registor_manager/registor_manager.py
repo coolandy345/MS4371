@@ -36,7 +36,7 @@ def memoryWriteThread(memoryPool,queuePool):
     print(queuePool)
     while 1:
         getItem=memoryUnit()
-        getItem=queuePool.get()
+        getItem=queuePool["memory_Write_Queue"].get()
         print("getItem = ",getItem)
 
         test="Update  '{}' set  Value={} where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)

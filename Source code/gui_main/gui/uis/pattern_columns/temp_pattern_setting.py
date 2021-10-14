@@ -761,7 +761,7 @@ class TempPatternWidget(QWidget):
 
         sendItem=memoryUnit(Main_memorypool,memory_name)
         print("sendItem = ",sendItem)
-        self.queuePool.put(sendItem)
+        self.queuePool["memory_Write_Queue"].put(sendItem)
 
 
     def regularWork(self):

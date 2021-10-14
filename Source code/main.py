@@ -50,11 +50,9 @@ if __name__ == "__main__":
     
 
     QueuePool={}
-    #QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
-    #QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
-    QueuePool=MemoryPoolManager.Queue()
+    QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
+    QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
 
-    #MemoryPool["QueuePool"]=QueuePool
     
     loadMemoryPool(MemoryPool)
     #memoryWriteThread(MemoryPool,QueuePool)
