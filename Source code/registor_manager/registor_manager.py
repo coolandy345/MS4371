@@ -12,6 +12,27 @@ def get_Abs_path(relative):
     norm_path=os.path.normpath(join_path)
     return norm_path
 
+def memoryWriteThread(memoryPool):
+
+    database_relative_path="Database and Profile/System Registor Structure Database.db"
+    System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
+    cur = System_Registor_Database.cursor()
+
+    while 1:
+        memoryPool["EvevtPool"]["MB_memory_Write_Event"]["Event"].wait()
+        memoryPool["EvevtPool"]["MB_memory_Write_Event"]["Event"].clear()
+
+        registor_name= memoryPool["EvevtPool"]["MB_memory_Write_Event"]["Registor"]
+
+        Table_name="Modbus Registor Pool - Registor"
+
+        test="Update  '{}' set  Value={} where  Registor_Name='{}'".format(Table_name,memoryPool["Modbus Registor Memory"][registor_name].value,registor_name)
+        cur.execute(test)
+
+        System_Registor_Database.commit()
+         
+
+
 def loadMemoryPool(memoryPool):
 
 
@@ -27,7 +48,7 @@ def loadMemoryPool(memoryPool):
 
     pool={}
     for row in cur.execute('SELECT * FROM "Modbus Registor Pool - Coil" '):
-
+        
         register=ModbusRegistorClass.ModbusPackage(number       =row[0],
                                name         =row[1],
                                value        =row[2],
@@ -63,6 +84,11 @@ def loadMemoryPool(memoryPool):
         pool[register.name]=register
 
     memoryPool["Test Pattern Memory"]=pool
+
+    
+    
+    System_Registor_Database.commit()
+    System_Registor_Database.close()
 
     
         

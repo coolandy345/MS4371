@@ -13,7 +13,7 @@ import modbus_TcpServer
 import time
 import sys
 
-
+import copy
 
 import numpy as np
 import pyqtgraph as pg
@@ -70,7 +70,7 @@ class tempUnit():
         PID_heater_No=0,
         time_keep=0,
         test_measure_enable=0,
-        test_measure_PatternNo=0,
+        test_measure_PatternNo=0
         ):
         
         self.Step_Type=Step_Type
@@ -89,21 +89,86 @@ class tempUnit():
 
 
 class templist():
+
+
+
     def __init__(
         self,
         name="",
+        comment="",
+        active=0,
         step_number=0,
         gas_condition=0,
-        RT_measure=False
+        RT_measure=0
         ):
-        
         self.name=name
+        self.up_asciicode=0
+        self.down_asciicode=0
+        self.comment=comment
+        self.active=active
         self.step_number=step_number
         self.gas_condition=gas_condition
         self.RT_measure=RT_measure
         self.units=[]
+        self.units.append(None)
         for _step in range(1,21):
             self.units.append(tempUnit())
+
+    def name_ASC2string(self,Up_ASCcode,Down_ASCcode):
+
+        self.name=""
+        mask=256
+
+
+        while Up_ASCcode:
+
+            asciinum=Up_ASCcode%mask
+            char = chr(asciinum)
+            self.name+=char
+            Up_ASCcode=Up_ASCcode>>8
+
+        while Down_ASCcode:
+
+            asciinum=Down_ASCcode%mask
+            char = chr(asciinum)
+            self.name+=char
+            Down_ASCcode=Down_ASCcode>>8
+
+        return self.name
+        
+
+    def name_string2ASC(self,nameString):
+
+        if len(nameString)<=8:
+
+
+            self.up_asciicode=0
+            self.down_asciicode=0
+
+            
+            letter_position=0
+
+            for letter in nameString:
+                
+                asciinum=ord(letter)
+                
+                #make upper asc
+                if letter_position<=3:
+                    asciinum=asciinum<<(8*letter_position)
+                    self.up_asciicode+=asciinum
+                else:
+                    asciinum=asciinum<<(8*(letter_position-4))
+                    self.down_asciicode+=asciinum
+
+                letter_position+=1
+
+            return self.up_asciicode,self.down_asciicode
+
+        else:
+            print("name is too long")
+            return ""
+
+
 
     def checkData(self):
         for step in range(1,self.step_number+1):
@@ -169,36 +234,38 @@ class TempPatternWidget(QWidget):
             parent = None,
             app_parent = None,
             choose_step=0,
-            choose_pattern=1,
+            choose_patternFile=0,
             memory_pool={}
     ):
         
 
         super().__init__()
 
-        self.step_widges_list=[]
+        
         self._parent=parent
         self._app_parent=app_parent
         self.Step_number=0
         self.memory_pool=memory_pool
-        self.pattern_lists=[]
+        self.step_widges_list=[]
+        self.patternFile_lists=[]
         self.choose_step=choose_step
-        self.choose_pattern=choose_pattern
+        self.choose_patternFile=choose_patternFile
         self.cache_step=tempUnit()
         self.cache_steplist=templist()
-
+        self.availlible_ptn_number=0
         self.paste_ready=False
-
-        self.memory_reader()
+        self.IconButtonUpdate=False
+        self.delete_IconButtonActiveState=False
+        self.add_IconButtonActiveState=False
+        self.save_IconButtonActiveState=False
+        
         self.setup_utility()
         self.setup_TempPattern()
         self.setup_TempGraph()
         self.load_list_From_Memory()
-        self.updata_step_request=True
-        self.update_graph_request=True
-
-        self.step_widges_list[1].setVisible (True)
-        self.step_widges_list[1].pattern.page.setCurrentIndex(False)
+        self.check_isListDiffToMemoryFile()
+        self.updata_step_widge_work()
+        self.update_graph_work()
 
         
         self.timer=QTimer()
@@ -213,18 +280,33 @@ class TempPatternWidget(QWidget):
         self.test=0
         self.test1=0
 
+        self.testDict={"level1": {"level2":0}}
+
+
     def memory_reader(self):
+        #print(self.memory_pool)
         mudbusunit=modbus_TcpServer.ModbusPackage()
         Modbus_Registor_pool=self.memory_pool["Modbus Registor Memory"]
-        _20_pattern_lists=[None]
-        
+        _patternFile_lists=[None]
+
+        #Try to get number of PTN list
+        self.availlible_ptn_number=Modbus_Registor_pool["有効PTN総数"].value
+
         for ptn_no in range(1,21):
+
             pattern=templist(
-                name            =Modbus_Registor_pool["PTNData_{}_名称".format(ptn_no)].value,
+                active          =Modbus_Registor_pool["PTNData_{}_パターン有効".format(ptn_no)].value,
+                comment         =Modbus_Registor_pool["PTNData_{}_註記".format(ptn_no)].value,
                 step_number     =Modbus_Registor_pool["PTNData_{}_実行STEP数".format(ptn_no)].value,
                 gas_condition   =Modbus_Registor_pool["PTNData_{}_測定雰囲気".format(ptn_no)].value,
                 RT_measure      =Modbus_Registor_pool["PTNData_{}_RT計測".format(ptn_no)].value
                 )
+
+            pattern.name_ASC2string(Modbus_Registor_pool["PTNData_{}_名称_Up".format(ptn_no)].value,
+                                    Modbus_Registor_pool["PTNData_{}_名称_Down".format(ptn_no)].value)
+
+            
+            
             units=[None]
             
             for step_no in range(1,21):
@@ -238,23 +320,34 @@ class TempPatternWidget(QWidget):
                     PID_muffle_No           =Modbus_Registor_pool["PTNData_{}_STEP_{}_マッフル_PID_No".format(ptn_no,step_no)].value,
                     PID_heater_No           =Modbus_Registor_pool["PTNData_{}_STEP_{}_ヒーター_PID_No".format(ptn_no,step_no)].value,
                     time_keep               =Modbus_Registor_pool["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].value,
-                    #test_measure_enable     =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
-                    #test_measure_PatternNo  =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定 No.".format(ptn_no,step_no)].value
+                    test_measure_enable     =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
+                    test_measure_PatternNo  =Modbus_Registor_pool["PTNData_{}_STEP_{}_測定パターン".format(ptn_no,step_no)].value
+                
                     )
                 units.append(unit)
             pattern.units=units
-            _20_pattern_lists.append(pattern)
-        self.pattern_lists=_20_pattern_lists
+            _patternFile_lists.append(pattern)
+
+        if self.choose_patternFile==0:
+            if self.availlible_ptn_number:
+                self.choose_patternFile=self.availlible_ptn_number
+        else:
+            if self.choose_patternFile>self.availlible_ptn_number:
+                self.choose_patternFile=self.availlible_ptn_number
+
+        self.patternFile_lists=_patternFile_lists
 
     def setup_utility(self):
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
-        self.settings = Settings().items
+        self.settings = Settings()
 
         # LOAD THEME COLOR
         # ///////////////////////////////////////////////////////////////
         self.themes = Themes().items
 
+        self.choose_patternFile=self.settings.items["App User Interface parameter Setting"]["focus_patternFile_No"]
+        
         self.delete_IconButton = PyIconButton(
                 icon_path = Functions.set_svg_icon("fi-rr-trash.svg"),
                 parent = self._parent,
@@ -320,9 +413,12 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.gridLayout_36.addWidget(self.save_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.save_IconButton.clicked.connect(self.ui_click_callback)
         
+        self._parent.ui.load_pages.commect_lineEdit.setValidator(QRegularExpressionValidator("[a-zA-z0-9]+$"))
+        self._parent.ui.load_pages.commect_lineEdit.setMaxLength(8)
+        
         
     def setup_TempPattern(self):
-        self.step_widges_list=[None]
+        self.step_widges_list.append(None)
         for _step in range(1,21):
             temp_step = PyTempStep(
                 active=False,
@@ -402,17 +498,53 @@ class TempPatternWidget(QWidget):
         self.cache_steplist.units[self.cache_steplist.step_number+1]=tempUnit()
         self.cache_steplist.step_number+=1
 
-        self.updata_step_request=True
-        self.update_graph_request=True
+        self.update()
 
     def load_list_From_Memory(self):
+        self.memory_reader()
         #Reset paste function
         self.paste_ready=False
 
-        if(self.choose_pattern>=1 and self.choose_pattern<=20):
-            self.cache_steplist=self.pattern_lists[self.choose_pattern]
+
+        #Check if we can still create new pattern list
+        if self.patternFile_lists[20].active:
+            self.add_IconButtonActiveState=False
+            self.IconButtonUpdate=True
         else:
-            print("Choose list is out of range , now is choose No.",self.choose_pattern)
+            self.add_IconButtonActiveState=True
+            self.IconButtonUpdate=True
+            
+        
+
+        if(self.choose_patternFile>=1 and self.choose_patternFile<=20):
+
+            self.cache_steplist=copy.deepcopy(self.patternFile_lists[self.choose_patternFile])
+            self.enableEditor(True)
+        else:
+            self.enableEditor(False)
+
+
+    def scan_patternInSQLiteDB(self):
+        namelist=[]
+
+        #Modbus_Registor_pool=self.memory_pool["Modbus Registor Memory"]
+
+        ##Try to get number of PTN list
+        #self.availlible_ptn_number=Modbus_Registor_pool["有効PTN総数"].value
+
+        
+        #for ptn_no in range(1,21):
+
+
+        #    pattern=templist(
+        #        active          =Modbus_Registor_pool["PTNData_{}_パターン有効".format(ptn_no)].value,
+
+
+
+
+        return namelist
+
+
         
     # update step widge
     # /////////////////////////////
@@ -421,15 +553,20 @@ class TempPatternWidget(QWidget):
         QThreadPool.globalInstance().start(self.updata_step_widge_Worker)
 
     def updata_step_widge_work(self):
+
+        #Scan Avilible pattern import to patternfile_comboBox
+
+
+
+
         #adjust the Visible of each step
+        
         for _step in range(1,21):
-
-
             if _step<=self.cache_steplist.step_number :
                 self.step_widges_list[_step].setVisible (True)
                 self.step_widges_list[_step].pattern.page.setCurrentIndex(True)
             else:
-                if _step==self.cache_steplist.step_number+1:
+                if _step==self.cache_steplist.step_number+1 and self.editorEnable:
                     self.step_widges_list[_step].setVisible (True)
                     self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
                 else:
@@ -445,6 +582,7 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step]._menu.menu.pattern_menu_paste_pushButton.setEnabled(True)
             else:
                 self.step_widges_list[_step]._menu.menu.pattern_menu_paste_pushButton.setEnabled(False)
+
 
             unit=tempUnit()
             unit=self.cache_steplist.units[_step]
@@ -500,7 +638,7 @@ class TempPatternWidget(QWidget):
                 self.GraphRegionList[_step].hide()
                 #load Label
                 self.GraphStepLabelList[_step].hide()
-                  
+        
         self.curve.setData(data_array)
         maxpos=max(SV_array)
         if(maxpos<1):
@@ -538,12 +676,15 @@ class TempPatternWidget(QWidget):
         diag.PyCancelSignal.connect(self.PyDialog_Cancel_CallBack)
         diag.exec()
 
+    def lunchMessageDialog(self,title,message):
+        diag = PyMessageDialog(title,message)
+        return(str(diag.exec()))
+
+
+
     def ui_click_callback(self):
 
-        
-
         btn_name=self.sender().objectName()
-        print(btn_name)
 
         if btn_name=="削除":
             self.temppatternfile_delete()
@@ -558,25 +699,71 @@ class TempPatternWidget(QWidget):
     def temppatternfile_save(self):
         pass
 
+    def temppatternfile_accept(self):
+        print("wefwefwefwe")
+
+    def set_memorypool_register(self,index_A,index_B,value):
+        
+        dict=self.memory_pool[index_A]
+        dict[index_B].setValue(value)
+        self.memory_pool[index_A]=dict
+
+        #inform memory change
+        if self.memory_pool["EvevtPool"]["MB_memory_Write_Event"]["Event"].is_set():
+            #Writer is not finish yet
+            print("Error MB_memory_Write_Event Writer is not finish yet")
+
+
+        A_Level=self.memory_pool["EvevtPool"]
+        B_Level=A_Level["MB_memory_Write_Event"]
+        B_Level["Registor"]=dict[index_B].name
+
+        A_Level["MB_memory_Write_Event"]=B_Level
+        self.memory_pool["EvevtPool"]=A_Level
+
+
+        self.memory_pool["EvevtPool"]["MB_memory_Write_Event"]["Event"].set()
+
     def temppatternfile_new(self):
+        getNameString=""
+        getNameString=self.lunchMessageDialog("Create new pattern","New Pattern Name :")
 
-        #check if we can make new file , max file number is 20
+        
+        if not getNameString=="":
 
-            #if we can make new file
+            #Get last availlible PTN
+            PTN_number=self.memory_pool["Modbus Registor Memory"]["有効PTN総数"].value
+            PTN_number+=1
 
-                #lunch text input dialog
+            #write new PTN_number to memory
+            self.set_memorypool_register("Modbus Registor Memory","有効PTN総数",PTN_number)
+
+            list=templist()
+            list.name_string2ASC(getNameString)
+
+            ##write new PTN_name_up to memory
+            self.set_memorypool_register("Modbus Registor Memory","PTNData_{}_名称_Up".format(PTN_number),list.up_asciicode)
+            ##write new PTN_name_down to memory
+            self.set_memorypool_register("Modbus Registor Memory","PTNData_{}_名称_Down".format(PTN_number),list.down_asciicode)
+
+
+
+
+
+
+
+
+            #lunch text input dialog
             
-                #make new file
+            #Write Modbus_Registor_pool["有効PTN総数"].value
+            #Write Modbus_Registor_pool["PTNData_1_パターン有効"].value
+            #Write Modbus_Registor_pool["PTNData_1_名称"].value
+            #self.choose_patternFile change
+            #load_list_From_Memory
 
-            #if file number is reach 20
+                 
 
-                #disable new file icon
 
-            #if we cannot make new file
-
-                #return
-
-        pass
 
     def regularWork(self):
         
@@ -584,10 +771,16 @@ class TempPatternWidget(QWidget):
         self.test1+=1
 
 
-        if time.time()-self.test >0.2:
+        if time.time()-self.test >0.2 and time.time()-self.test <1000:
             print("lag occur time = ",time.time()-self.test)
 
         self.test=time.time()
+
+        if self.IconButtonUpdate:
+            self.delete_IconButton.set_active(self.delete_IconButtonActiveState)
+            self.add_IconButton.set_active(self.add_IconButtonActiveState)
+            self.save_IconButton.set_active(self.save_IconButtonActiveState)
+            self.IconButtonUpdate=False
         
 
 
@@ -664,8 +857,7 @@ class TempPatternWidget(QWidget):
 
 
         self.close_menu()
-        self.updata_step_request=True
-        self.update_graph_request=True
+        self.update()
 
     def focus_step(self,_step):
         self.step_widges_list[_step].setFocusStyle(True)
@@ -704,11 +896,97 @@ class TempPatternWidget(QWidget):
         self.cache_steplist.units[step].time_keep=self.step_widges_list[step]._keep_seccond
         self.cache_steplist.units[step].test_measure_PatternNo=self.step_widges_list[step]._test_pattern
         
+
         self.cache_steplist.checkData()
+
+        self.update()
+
+    def print_unit(self,unit):
+
+        print("Step_Type = ",unit.Step_Type)
+        print("time_hour = ",unit.time_hour)
+        print("time_min = ",unit.time_min)
+        print("SV = ",unit.SV)
+        print("N2_flowRate = ",unit.N2_flowRate)
+        print("PID_muffle_No = ",unit.PID_muffle_No)
+        print("PID_heater_No = ",unit.PID_heater_No)
+        print("time_keep = ",unit.time_keep)
+        print("test_measure_PatternNo = ",unit.test_measure_PatternNo)
+
+    def print_list(self,list):
+        print("name = ",list.name)
+        print("comment = ",list.comment)
+        print("active = ",list.active)
+        print("step_number = ",list.step_number)
+        print("gas_condition = ",list.gas_condition)
+        print("RT_measure = ",list.RT_measure)
+
+
+
+    def check_isListDiffToMemoryFile(self):
+
+        step_changed=False
+        pattern_changed=False
         
-        self.updata_step_request=True
-        self.update_graph_request=True
+
+        if self.choose_patternFile:
+            for _step in range(1,21):
+
+                cacheStepUnit=self.cache_steplist.units[_step]
+                memoryStepUnit=self.patternFile_lists[self.choose_patternFile].units[_step]
+
+            
+                if(
+                    cacheStepUnit.Step_Type != memoryStepUnit.Step_Type or
+                    cacheStepUnit.time_hour != memoryStepUnit.time_hour or
+                    cacheStepUnit.time_min != memoryStepUnit.time_min or
+                    cacheStepUnit.SV != memoryStepUnit.SV or
+                    cacheStepUnit.N2_flowRate != memoryStepUnit.N2_flowRate or
+                    cacheStepUnit.PID_muffle_No != memoryStepUnit.PID_muffle_No or
+                    cacheStepUnit.PID_heater_No != memoryStepUnit.PID_heater_No or
+                    cacheStepUnit.time_keep != memoryStepUnit.time_keep or
+                    cacheStepUnit.test_measure_enable != memoryStepUnit.test_measure_enable or
+                    cacheStepUnit.test_measure_PatternNo != memoryStepUnit.test_measure_PatternNo
+                ):
+                    step_changed=True
+
+            if(
+                step_changed or 
+                self.cache_steplist.name != self.patternFile_lists[self.choose_patternFile].name or
+                self.cache_steplist.comment != self.patternFile_lists[self.choose_patternFile].comment or
+                self.cache_steplist.active != self.patternFile_lists[self.choose_patternFile].active or
+                self.cache_steplist.step_number != self.patternFile_lists[self.choose_patternFile].step_number or
+                self.cache_steplist.gas_condition != self.patternFile_lists[self.choose_patternFile].gas_condition or
+                self.cache_steplist.RT_measure != self.patternFile_lists[self.choose_patternFile].RT_measure 
+            ):
+                pattern_changed=True
+
+
+        if pattern_changed:
+            self.save_IconButtonActiveState=True
+            self.IconButtonUpdate=True
+        else:
+            self.save_IconButtonActiveState=False
+            self.IconButtonUpdate=True
+
+    def update(self):
+        self.check_isListDiffToMemoryFile()
+        self.updata_step_widge()
+        self.update_graph()
+
+
+    def enableEditor(self,enable):
+
+        self._parent.ui.load_pages.patternfile_comboBox.setEnabled(enable)
+        self._parent.ui.load_pages.commect_lineEdit.setEnabled(enable)
+        self._parent.ui.load_pages.gas_Combobox.setEnabled(enable)
+        self._parent.ui.load_pages.RT_combobox.setEnabled(enable)
+
+        self.editorEnable=enable
         
+        self.update()
+        
+
     def graphResize(self):
         addwidth=self._parent.width()-1470
         self.graph.setMinimumSize(QSize(1100+addwidth, 300))

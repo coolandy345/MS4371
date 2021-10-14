@@ -60,17 +60,6 @@ import pyqtgraph as pg
 
 #from gui.uis.control_column import *
 
-class workThread(QThread):
-
-    trigger = Signal()
-
-    #def __int__(self):
-    #    # 初始化函式
-    #    print("Initial")
-    #    super(workThread, self).__init__()
-
-    def run(self):
-        self.trigger.emit()
 
 
 # PY WINDOW
@@ -145,13 +134,6 @@ class SetupMainWindow:
             return self.sender()
 
 
-    def tempPatternInitWork(self):
-        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memory_pool=self.memorypool)
-        
-
-    def testPatternInitWork(self):
-        self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memory_pool=self.memorypool)
-        
 
 
     # SETUP MAIN WINDOW WITH CUSTOM PARAMETERS
@@ -242,13 +224,10 @@ class SetupMainWindow:
         self.main_namespace.Tester_ConnectionToggle=PyToggle()
         self.main_namespace.ui.load_pages.gridLayout_28.addWidget(self.main_namespace.Tester_ConnectionToggle)
         
-        self.tempPatternThread = workThread(self.main_namespace)
-        self.tempPatternThread.trigger.connect(self.tempPatternInitWork)
-        self.tempPatternThread.start()
+        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memory_pool=self.memorypool)
+        self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memory_pool=self.memorypool)
+        
 
-        self.testPatternThread = workThread(self.main_namespace)
-        self.testPatternThread.trigger.connect(self.testPatternInitWork)
-        self.testPatternThread.start()
 
 
 

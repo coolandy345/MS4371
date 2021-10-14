@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patternoRohwV.ui'
+## Form generated from reading UI file 'temp_patternwgBxDH.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import *  # type: ignore
+from PySide6.QtGui import *  # type: ignore
+from PySide6.QtWidgets import *  # type: ignore
 
 
 class Ui_temp_pattern(object):
@@ -148,6 +148,7 @@ class Ui_temp_pattern(object):
         self.gridLayout_4.addWidget(self.frame_3, 0, 2, 1, 1)
 
         self.TestPattern_comboBox = QComboBox(self.page2)
+        self.TestPattern_comboBox.addItem("")
         self.TestPattern_comboBox.setObjectName(u"TestPattern_comboBox")
         self.TestPattern_comboBox.setMinimumSize(QSize(80, 20))
         self.TestPattern_comboBox.setMaximumSize(QSize(16777215, 20))
@@ -402,7 +403,7 @@ class Ui_temp_pattern(object):
 
         self.page.setCurrentIndex(1)
         self.PID_muffle_comboBox.setCurrentIndex(0)
-        self.TestPattern_comboBox.setCurrentIndex(-1)
+        self.TestPattern_comboBox.setCurrentIndex(0)
         self.PID_heater_comboBox.setCurrentIndex(0)
 
 
@@ -420,6 +421,8 @@ class Ui_temp_pattern(object):
         self.PID_muffle_comboBox.setItemText(3, QCoreApplication.translate("temp_pattern", u"No.4", None))
 
         self.SV_label.setText(QCoreApplication.translate("temp_pattern", u"\u4e3b\u7089(\u2103)", None))
+        self.TestPattern_comboBox.setItemText(0, QCoreApplication.translate("temp_pattern", u"\u65b0\u3057\u3044\u30a2\u30a4\u30c6\u30e0", None))
+
         self.Type_comboBox.setItemText(0, QCoreApplication.translate("temp_pattern", u"\u6607\u964d\u6e29", None))
         self.Type_comboBox.setItemText(1, QCoreApplication.translate("temp_pattern", u"\u6e2c\u5b9a", None))
         self.Type_comboBox.setItemText(2, QCoreApplication.translate("temp_pattern", u"END", None))

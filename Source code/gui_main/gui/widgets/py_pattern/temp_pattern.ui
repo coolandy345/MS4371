@@ -358,11 +358,16 @@ border-style: solid;
 border-radius: 4px;</string>
          </property>
          <property name="currentIndex">
-          <number>-1</number>
+          <number>0</number>
          </property>
          <property name="maxVisibleItems">
           <number>5</number>
          </property>
+         <item>
+          <property name="text">
+           <string>新しいアイテム</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="2" column="0" colspan="3">

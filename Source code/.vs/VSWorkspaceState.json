@@ -3,14 +3,15 @@
     "",
     "\\gui_main",
     "\\gui_main\\gui",
-    "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\uis\\pattern_columns",
+    "\\gui_main\\gui\\core",
+    "\\gui_main\\gui\\themes",
     "\\gui_main\\gui\\widgets",
-    "\\gui_main\\gui\\widgets\\py_dialog",
-    "\\gui_main\\gui\\widgets\\py_icon_button",
-    "\\gui_main\\gui\\widgets\\py_left_menu",
-    "\\gui_main\\gui\\widgets\\py_pattern"
+    "\\gui_main\\gui\\widgets\\py_graph",
+    "\\gui_main\\user\\profiles",
+    "\\gui_main\\user\\profiles\\temperature profile",
+    "\\modbus_TcpServer",
+    "\\registor_manager"
   ],
-  "SelectedNode": "\\gui_main\\gui\\widgets\\py_dialog\\py_dialog.py",
+  "SelectedNode": "\\main.py",
   "PreviewInSolutionExplorer": false
 }

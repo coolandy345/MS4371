@@ -1,1 +1,1 @@
-from .registor_manager import loadMemoryPool
+from .registor_manager import loadMemoryPool,memoryWriteThread

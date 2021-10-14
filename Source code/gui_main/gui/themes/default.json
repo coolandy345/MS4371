@@ -29,7 +29,7 @@
             "icon_hover" : "#ff5869",
             "icon_pressed" : "#6c99f4",
             "icon_active" : "#f5f6f9",
-            "icon_deactive" : "#f5f6f9"
+            "icon_deactive" : "#3b4150"
          },
 
         "context_color" : "#568af2",

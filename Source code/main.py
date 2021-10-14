@@ -22,12 +22,19 @@ from gui_main.qt_core import *
 
 
 
-def hello():
-    test=0
+def test_A(memoryPool):
+
+    for i in range(10):
+        print("Send signal")
+        memoryPool["EvevtPool"]["MB_memory_Write_Event"][0].set()
+        time.sleep(0.2)
+
+def test_B(memoryPool):
+
     while 1:
-        print(test)
-        time.sleep(0.1)
-        test+=1
+        memoryPool["EvevtPool"]["MB_memory_Write_Event"][0].wait()
+        memoryPool["EvevtPool"]["MB_memory_Write_Event"][0].clear()
+        print("get event")
 
 
 def shotdown_entire_app(future):
@@ -39,8 +46,22 @@ if __name__ == "__main__":
 
     MemoryPoolManager=Manager()
     MemoryPool = MemoryPoolManager.dict()
+
+    EventPool={}
+    EventPool["MB_memory_Write_Event"]={"Event":MemoryPoolManager.Event(),"Registor":0}
+
+
+    MemoryPool["EvevtPool"]=EventPool
+    
     loadMemoryPool(MemoryPool)
-    initial_GUI(MemoryPool)
+    #initial_GUI(MemoryPool)
+
+    with ProcessPoolExecutor(max_workers=10) as executor:
+        #test_A_future = executor.submit(test_A,MemoryPool)
+        #test_B_future = executor.submit(test_B,MemoryPool)
+        executor.submit(memoryWriteThread,MemoryPool)
+        Gui_future = executor.submit(initial_GUI,MemoryPool)
+        Gui_future.add_done_callback(shotdown_entire_app)
 
     #with ProcessPoolExecutor(max_workers=10) as executor:
     #    executor.submit(run_async_server,MemoryPool)

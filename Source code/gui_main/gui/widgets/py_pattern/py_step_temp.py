@@ -40,6 +40,18 @@ from gui_main.gui.core.functions import *
 
 from .py_pattern_menu import *
 
+import time
+
+
+class modifly_callbackThread(QRunnable):
+    def __init__(self, parent,sender):
+        super().__init__()
+        self.parent = parent
+        self.sender=sender
+
+    def run(self):
+        self.parent.modifly_callbackWork(self.sender)
+
 class workThread(QThread):
 
     trigger = Signal()
@@ -256,15 +268,14 @@ class PyTempStep(QWidget):
         self.pattern.PID_muffle_comboBox.currentIndexChanged.connect(self.modifly_callback)
         self.pattern.PID_heater_comboBox.currentIndexChanged.connect(self.modifly_callback)
         
-    #def modifly_callback(self):
-    #    print("modifly_callback")
-    #    #self.modifly_Worker=modifly_Thread(self)
-    #    #QThreadPool.globalInstance().start(self.modifly_Worker)
-    #    self.modifly_callbackWorker.start()
+    def modifly_callback(self):
+        self.modifly_callbackWorker=modifly_callbackThread(self,self.sender())
+        QThreadPool.globalInstance().start(self.modifly_callbackWorker)
+        #self.modifly_callbackWorker.start()
     
     #When infomation is modifly by user , call back to this function
-    def modifly_callback(self):
-        if (self.sender()==None):
+    def modifly_callbackWork(self,sender):
+        if (sender==None):
             return
         
         try:
@@ -289,7 +300,6 @@ class PyTempStep(QWidget):
         
         #Call upper mother renew information
         self._parent.tempPattern.step_modifly_manager(self._step)
-
     
         
     #def type_modifly_callback(self):

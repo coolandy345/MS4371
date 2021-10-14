@@ -77,4 +77,46 @@ class PyDialog(QDialog):
 
 
 
+class PyMessageDialog(QDialog):
 
+    PyOkSignal=Signal()
+    PyCancelSignal=Signal()
+
+
+    def __init__(self,title,message):
+        super().__init__()
+
+        self.setWindowTitle(title)
+        QBtn = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+
+
+        self.buttonBox = QDialogButtonBox(QBtn)
+        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.rejected.connect(self.reject)
+        self.buttonBox.clicked.connect(self.dialogCallback)
+
+
+        self.layout = QVBoxLayout()
+        self.label = QLabel(message)
+        self.message = QLineEdit()
+        self.message.setValidator(QRegularExpressionValidator("[a-zA-z0-9]+$"))
+        self.message.setMaxLength(8)
+
+        self.layout.addWidget(self.label)
+        self.layout.addWidget(self.message)
+        self.layout.addWidget(self.buttonBox)
+        self.setLayout(self.layout)
+
+    def exec(self):
+        super().exec()
+        
+        return self.message.text()
+
+
+    def dialogCallback(self,bottum):
+
+        text=bottum.text()
+        if text =="&Ok":
+            self.PyOkSignal.emit()
+        elif text =="Cancel":
+            self.PyCancelSignal.emit()

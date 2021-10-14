@@ -31,5 +31,8 @@
         "family" : "游ゴシック",
         "title_size" : 10,
         "text_size" : 9
+    },
+    "App User Interface parameter Setting": {
+        "focus_patternFile_No": 0
     }
 }

@@ -3249,7 +3249,7 @@ padding-right:5px;</string>
                </widget>
               </item>
               <item row="3" column="3">
-               <widget class="QComboBox" name="comboBox_7">
+               <widget class="QComboBox" name="gas_Combobox">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -3272,6 +3272,11 @@ border-style: solid;
 border-radius: 0px;
 padding-left:5px;</string>
                 </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
                 <item>
                  <property name="text">
                   <string>大気</string>
@@ -3829,8 +3834,20 @@ padding-right:5px;</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="6" colspan="2">
+              <item row="3" column="6" colspan="2" alignment="Qt::AlignRight">
                <widget class="QLabel" name="PatternErrorMessagelabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>400</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>400</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">font:700 13px &quot;游ゴシック&quot;;
 color: rgb(221, 0, 0);
@@ -3845,7 +3862,7 @@ padding-right:10px;</string>
                </widget>
               </item>
               <item row="3" column="5">
-               <widget class="QComboBox" name="comboBox_8">
+               <widget class="QComboBox" name="RT_combobox">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -3870,6 +3887,11 @@ padding-left:5px;</string>
                 </property>
                 <item>
                  <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
                   <string>有り</string>
                  </property>
                 </item>
@@ -3880,36 +3902,8 @@ padding-left:5px;</string>
                 </item>
                </widget>
               </item>
-              <item row="1" column="3" colspan="3">
-               <widget class="QLineEdit" name="lineEdit_11">
-                <property name="minimumSize">
-                 <size>
-                  <width>400</width>
-                  <height>32</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>400</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgba(0, 0, 0,80);
-color: rgb(225, 230, 241);
-border-width: 1px;
-border-style: solid;
-border-radius: 5px;
-padding-left:5px;
-padding-right:5px;
-font: 12px &quot;游ゴシック&quot;;
-min-height:30;
-max-width:200;</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="3" colspan="3">
-               <widget class="QComboBox" name="comboBox_6">
+               <widget class="QComboBox" name="patternfile_comboBox">
                 <property name="minimumSize">
                  <size>
                   <width>400</width>
@@ -3936,10 +3930,47 @@ border-radius: 0px;
 padding-left:5px;</string>
                 </property>
                 <property name="editable">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="insertPolicy">
                  <enum>QComboBox::InsertAtTop</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3" colspan="4">
+               <widget class="QLineEdit" name="commect_lineEdit">
+                <property name="minimumSize">
+                 <size>
+                  <width>400</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>212</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgba(0, 0, 0,80);
+color: rgb(225, 230, 241);
+border-width: 1px;
+border-style: solid;
+border-radius: 5px;
+padding-left:5px;
+padding-right:5px;
+font: 12px &quot;游ゴシック&quot;;
+min-height:30;
+max-width:200;</string>
+                </property>
+                <property name="inputMask">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="cursorPosition">
+                 <number>0</number>
                 </property>
                </widget>
               </item>
@@ -4738,6 +4769,9 @@ padding-right:5px;
 font: 12px &quot;游ゴシック&quot;;
 min-height:30;
 max-width:200;</string>
+                </property>
+                <property name="inputMask">
+                 <string/>
                 </property>
                </widget>
               </item>

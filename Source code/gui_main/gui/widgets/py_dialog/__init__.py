@@ -1,1 +1,1 @@
-from . py_dialog import PyDialog
+from . py_dialog import PyDialog,PyMessageDialog

@@ -186,7 +186,6 @@ class MainWindow(QMainWindow):
 
 
 def initial_GUI(memory_pool):
-    print("Gui initialing")
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
     app = QApplication(sys.argv)
