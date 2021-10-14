@@ -15,6 +15,8 @@ import sys
 
 import copy
 
+from registor_manager import *
+
 import numpy as np
 import pyqtgraph as pg
 
@@ -235,7 +237,8 @@ class TempPatternWidget(QWidget):
             app_parent = None,
             choose_step=0,
             choose_patternFile=0,
-            memory_pool={}
+            memoryPool={},
+            queuePool={}
     ):
         
 
@@ -245,7 +248,8 @@ class TempPatternWidget(QWidget):
         self._parent=parent
         self._app_parent=app_parent
         self.Step_number=0
-        self.memory_pool=memory_pool
+        self.memoryPool=memoryPool
+        self.queuePool=queuePool
         self.step_widges_list=[]
         self.patternFile_lists=[]
         self.choose_step=choose_step
@@ -284,13 +288,15 @@ class TempPatternWidget(QWidget):
 
 
     def memory_reader(self):
-        #print(self.memory_pool)
+        #print(self.memoryPool)
         mudbusunit=modbus_TcpServer.ModbusPackage()
-        Modbus_Registor_pool=self.memory_pool["Modbus Registor Memory"]
+        Modbus_Registor_pool=self.memoryPool["Modbus Registor Pool - Registor"]
         _patternFile_lists=[None]
 
         #Try to get number of PTN list
         self.availlible_ptn_number=Modbus_Registor_pool["有効PTN総数"].value
+
+        self.pattern_nameList=[]
 
         for ptn_no in range(1,21):
 
@@ -306,6 +312,8 @@ class TempPatternWidget(QWidget):
                                     Modbus_Registor_pool["PTNData_{}_名称_Down".format(ptn_no)].value)
 
             
+            if pattern.active:
+                self.pattern_nameList.append(pattern.name)
             
             units=[None]
             
@@ -327,6 +335,12 @@ class TempPatternWidget(QWidget):
                 units.append(unit)
             pattern.units=units
             _patternFile_lists.append(pattern)
+
+
+
+        self._parent.ui.load_pages.patternfile_comboBox.clear()
+        self._parent.ui.load_pages.patternfile_comboBox.addItems(self.pattern_nameList)
+
 
         if self.choose_patternFile==0:
             if self.availlible_ptn_number:
@@ -527,7 +541,7 @@ class TempPatternWidget(QWidget):
     def scan_patternInSQLiteDB(self):
         namelist=[]
 
-        #Modbus_Registor_pool=self.memory_pool["Modbus Registor Memory"]
+        #Modbus_Registor_pool=self.memoryPool["Modbus Registor Pool - Registor"]
 
         ##Try to get number of PTN list
         #self.availlible_ptn_number=Modbus_Registor_pool["有効PTN総数"].value
@@ -702,27 +716,7 @@ class TempPatternWidget(QWidget):
     def temppatternfile_accept(self):
         print("wefwefwefwe")
 
-    def set_memorypool_register(self,index_A,index_B,value):
-        
-        dict=self.memory_pool[index_A]
-        dict[index_B].setValue(value)
-        self.memory_pool[index_A]=dict
-
-        #inform memory change
-        if self.memory_pool["EvevtPool"]["MB_memory_Write_Event"]["Event"].is_set():
-            #Writer is not finish yet
-            print("Error MB_memory_Write_Event Writer is not finish yet")
-
-
-        A_Level=self.memory_pool["EvevtPool"]
-        B_Level=A_Level["MB_memory_Write_Event"]
-        B_Level["Registor"]=dict[index_B].name
-
-        A_Level["MB_memory_Write_Event"]=B_Level
-        self.memory_pool["EvevtPool"]=A_Level
-
-
-        self.memory_pool["EvevtPool"]["MB_memory_Write_Event"]["Event"].set()
+    
 
     def temppatternfile_new(self):
         getNameString=""
@@ -732,26 +726,22 @@ class TempPatternWidget(QWidget):
         if not getNameString=="":
 
             #Get last availlible PTN
-            PTN_number=self.memory_pool["Modbus Registor Memory"]["有効PTN総数"].value
+            PTN_number=self.memoryPool["Modbus Registor Pool - Registor"]["有効PTN総数"].value
             PTN_number+=1
+            self.choose_patternFile=PTN_number
 
             #write new PTN_number to memory
-            self.set_memorypool_register("Modbus Registor Memory","有効PTN総数",PTN_number)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","有効PTN総数",PTN_number)
+
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_パターン有効".format(PTN_number),1)
 
             list=templist()
             list.name_string2ASC(getNameString)
 
             ##write new PTN_name_up to memory
-            self.set_memorypool_register("Modbus Registor Memory","PTNData_{}_名称_Up".format(PTN_number),list.up_asciicode)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Up".format(PTN_number),list.up_asciicode)
             ##write new PTN_name_down to memory
-            self.set_memorypool_register("Modbus Registor Memory","PTNData_{}_名称_Down".format(PTN_number),list.down_asciicode)
-
-
-
-
-
-
-
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Down".format(PTN_number),list.down_asciicode)
 
             #lunch text input dialog
             
@@ -762,7 +752,16 @@ class TempPatternWidget(QWidget):
             #load_list_From_Memory
 
                  
+    def set_memorypool_register(self,Main_memorypool,memory_name,value):
+        
+        dict=self.memoryPool[Main_memorypool]
+        dict[memory_name].setValue(value)
+        self.memoryPool[Main_memorypool]=dict
 
+
+        sendItem=memoryUnit(Main_memorypool,memory_name)
+        print("sendItem = ",sendItem)
+        self.queuePool.put(sendItem)
 
 
     def regularWork(self):

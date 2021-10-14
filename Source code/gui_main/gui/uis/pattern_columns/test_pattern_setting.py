@@ -64,7 +64,8 @@ class TestPatternWidget(QWidget):
             app_parent = None,
             choose_step=0,
             choose_pattern=1,
-            memory_pool={}
+            memoryPool={},
+            queuePool={}
     ):
         #self.timer=QTimer()
         #self.timer.timeout.connect(self.sayhi)
@@ -75,7 +76,8 @@ class TestPatternWidget(QWidget):
         self._parent=parent
         self._app_parent=app_parent
         self.Step_number=0
-        self.memory_pool=memory_pool
+        self.memoryPool=memoryPool
+        self.queuePool=queuePool
         self.pattern_lists=[]
         self.choose_step=choose_step
         self.choose_pattern=choose_pattern
@@ -93,7 +95,7 @@ class TestPatternWidget(QWidget):
     def memory_reader(self):
 
         mudbusunit=modbus_TcpServer.ModbusPackage()
-        Modbus_Registor_pool=self.memory_pool["Test Pattern Memory"]
+        Modbus_Registor_pool=self.memoryPool["Test Pattern Memory"]
         _20_pattern_lists=[None]
         
         for ptn_no in range(1,21):

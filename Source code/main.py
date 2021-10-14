@@ -3,7 +3,7 @@
 # System module import
 # --------------------------------------------------------------------------- # 
 from concurrent.futures import ProcessPoolExecutor
-from multiprocessing import Manager
+from multiprocessing import Manager,Queue
 
 # --------------------------------------------------------------------------- # 
 # local module import
@@ -47,20 +47,24 @@ if __name__ == "__main__":
     MemoryPoolManager=Manager()
     MemoryPool = MemoryPoolManager.dict()
 
-    EventPool={}
-    EventPool["MB_memory_Write_Event"]={"Event":MemoryPoolManager.Event(),"Registor":0}
+    
 
+    QueuePool={}
+    #QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
+    #QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
+    QueuePool=MemoryPoolManager.Queue()
 
-    MemoryPool["EvevtPool"]=EventPool
+    #MemoryPool["QueuePool"]=QueuePool
     
     loadMemoryPool(MemoryPool)
-    #initial_GUI(MemoryPool)
+    #memoryWriteThread(MemoryPool,QueuePool)
+    #initial_GUI(MemoryPool,QueuePool)
 
     with ProcessPoolExecutor(max_workers=10) as executor:
         #test_A_future = executor.submit(test_A,MemoryPool)
         #test_B_future = executor.submit(test_B,MemoryPool)
-        executor.submit(memoryWriteThread,MemoryPool)
-        Gui_future = executor.submit(initial_GUI,MemoryPool)
+        executor.submit(memoryWriteThread,MemoryPool,QueuePool)
+        Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
         Gui_future.add_done_callback(shotdown_entire_app)
 
     #with ProcessPoolExecutor(max_workers=10) as executor:

@@ -65,12 +65,13 @@ import pyqtgraph as pg
 # PY WINDOW
 # ///////////////////////////////////////////////////////////////
 class SetupMainWindow:
-    def __init__(self,main_namespace,memorypool):
+    def __init__(self,main_namespace,memoryPool,queuePool):
         super().__init__()
 
         self.main_namespace=main_namespace
-        self.memorypool=memorypool
-        self.setup_gui(self.memorypool)
+        self.memoryPool=memoryPool
+        self.queuePool=queuePool
+        self.setup_gui(self.memoryPool)
 
     # ADD LEFT MENUS
     # ///////////////////////////////////////////////////////////////
@@ -224,8 +225,8 @@ class SetupMainWindow:
         self.main_namespace.Tester_ConnectionToggle=PyToggle()
         self.main_namespace.ui.load_pages.gridLayout_28.addWidget(self.main_namespace.Tester_ConnectionToggle)
         
-        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memory_pool=self.memorypool)
-        self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memory_pool=self.memorypool)
+        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
+        self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
         
 
 

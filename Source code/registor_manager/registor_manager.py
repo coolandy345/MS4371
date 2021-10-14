@@ -3,6 +3,8 @@ from modbus_TcpServer import ModbusRegistorClass
 import sys
 import os
 
+import threading
+
 def get_Abs_path(relative):
     if hasattr(sys, '_MEIPASS'):
         join_path=os.path.join(sys._MEIPASS, relative)
@@ -12,21 +14,33 @@ def get_Abs_path(relative):
     norm_path=os.path.normpath(join_path)
     return norm_path
 
-def memoryWriteThread(memoryPool):
+class memoryUnit():
+
+    def __init__(self,
+                 Main_memorypool="",
+                 memory_name=""):
+        self.Main_memorypool=Main_memorypool
+        self.memory_name=memory_name
+
+
+
+def memoryWriteThread(memoryPool,queuePool):
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
 
+    #t = threading.Thread(target = MB_memory_Write_Event_Listener)
+    #t = threading.Thread(target = System_memory_Write_Event_Listener)
+    #t = threading.Thread(target = System_memory_Write_Event_Listener)
+    print(queuePool)
     while 1:
-        memoryPool["EvevtPool"]["MB_memory_Write_Event"]["Event"].wait()
-        memoryPool["EvevtPool"]["MB_memory_Write_Event"]["Event"].clear()
+        getItem=memoryUnit()
+        getItem=queuePool.get()
+        print("getItem = ",getItem)
 
-        registor_name= memoryPool["EvevtPool"]["MB_memory_Write_Event"]["Registor"]
-
-        Table_name="Modbus Registor Pool - Registor"
-
-        test="Update  '{}' set  Value={} where  Registor_Name='{}'".format(Table_name,memoryPool["Modbus Registor Memory"][registor_name].value,registor_name)
+        test="Update  '{}' set  Value={} where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
+        print(test)
         cur.execute(test)
 
         System_Registor_Database.commit()
@@ -43,8 +57,15 @@ def loadMemoryPool(memoryPool):
 
     pool={}
     for row in cur.execute('SELECT * FROM "System Memory Pool" '):
-        pool[row[0]]=row[1]
-    memoryPool["System Memory"]=pool
+
+        register=ModbusRegistorClass.ModbusPackage(
+                               name         =row[0],
+                               value        =row[1],
+                               comment      =row[2]
+                               )
+        pool[register.name]=register
+
+    memoryPool["System Memory Pool"]=pool
 
     pool={}
     for row in cur.execute('SELECT * FROM "Modbus Registor Pool - Coil" '):
@@ -55,7 +76,7 @@ def loadMemoryPool(memoryPool):
                                comment      =row[3]
                                )
         pool[register.name]=register
-    memoryPool["Modbus Coil Memory"]=pool
+    memoryPool["Modbus Registor Pool - Coil"]=pool
 
     pool={}
     for row in cur.execute('SELECT * FROM "Modbus Registor Pool - Registor" '):
@@ -69,7 +90,7 @@ def loadMemoryPool(memoryPool):
                                )
         pool[register.name]=register
 
-    memoryPool["Modbus Registor Memory"]=pool
+    memoryPool["Modbus Registor Pool - Registor"]=pool
 
     pool={}
     for row in cur.execute('SELECT * FROM "Test Pattern" '):
