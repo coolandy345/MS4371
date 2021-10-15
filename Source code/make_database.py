@@ -253,6 +253,9 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, '有効PTN総数',{},{},{},'{}')".format(Table_name,10024,0,0,20,"NULL")
 cur.execute(test)
 
+test="INSERT INTO '{}' values({}, 'フォーカスPTN番号',{},{},{},'{}')".format(Table_name,10025,0,0,20,"NULL")
+cur.execute(test)
+
 
 System_Registor_Database.commit()
 

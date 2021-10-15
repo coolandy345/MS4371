@@ -2,7 +2,7 @@ import sqlite3
 from modbus_TcpServer import ModbusRegistorClass
 import sys
 import os
-
+import time
 import threading
 
 def get_Abs_path(relative):
@@ -24,30 +24,37 @@ class memoryUnit():
 
 
 
-def memoryWriteThread(memoryPool,queuePool):
+def databaseWriteThread(memoryPool,queuePool):
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
 
-    #t = threading.Thread(target = MB_memory_Write_Event_Listener)
-    #t = threading.Thread(target = System_memory_Write_Event_Listener)
-    #t = threading.Thread(target = System_memory_Write_Event_Listener)
     print(queuePool)
     while 1:
         getItem=memoryUnit()
         getItem=queuePool["memory_Write_Queue"].get()
-        print("getItem = ",getItem)
 
+        time.sleep(0.5)
+        
         test="Update  '{}' set  Value={} where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
-        print(test)
         cur.execute(test)
+        #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
+            
+        while not queuePool["memory_Write_Queue"].empty():
+            getItem=queuePool["memory_Write_Queue"].get()
+            
+            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
+            cur.execute(test)
+
+            #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
+         
 
         System_Registor_Database.commit()
          
 
 
-def loadMemoryPool(memoryPool):
+def databaseLoadThread(memoryPool):
 
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"

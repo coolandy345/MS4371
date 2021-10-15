@@ -227,7 +227,10 @@ class PyTestStep(QWidget):
         self.modifly_callback()
 
     def show_menu(self):
-        self._parent.testPattern.show_one_menu(self._step)
+        if self._menu.menu_frame.isVisible():
+            self._menu.menu_frame.hide()
+        else:
+            self._menu.menu_frame.show()
 
     def close_menu(self):
         self._parent.testPattern.close_menu()

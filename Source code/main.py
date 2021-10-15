@@ -53,15 +53,16 @@ if __name__ == "__main__":
     QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
     QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
 
-    
-    loadMemoryPool(MemoryPool)
+    test_time=time.time()
+    databaseLoadThread(MemoryPool)
+    print("databaseLoadThread ",time.time()-test_time)
     #memoryWriteThread(MemoryPool,QueuePool)
     #initial_GUI(MemoryPool,QueuePool)
 
     with ProcessPoolExecutor(max_workers=10) as executor:
         #test_A_future = executor.submit(test_A,MemoryPool)
         #test_B_future = executor.submit(test_B,MemoryPool)
-        executor.submit(memoryWriteThread,MemoryPool,QueuePool)
+        executor.submit(databaseWriteThread,MemoryPool,QueuePool)
         Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
         Gui_future.add_done_callback(shotdown_entire_app)
 

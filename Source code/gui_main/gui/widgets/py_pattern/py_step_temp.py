@@ -424,7 +424,14 @@ class PyTempStep(QWidget):
         pass
 
     def show_menu(self):
-        self._parent.tempPattern.show_one_menu(self._step)
+
+        if self._menu.menu_frame.isVisible():
+            self._menu.menu_frame.hide()
+        else:
+            self._menu.paste_SetEnable(self._parent.tempPattern.paste_ready,self._parent.tempPattern.activeStep_noFull)
+            self._menu.menu_frame.show()
+
+
 
     def mousePressEvent(self, event):
         self._parent.tempPattern.close_menu()

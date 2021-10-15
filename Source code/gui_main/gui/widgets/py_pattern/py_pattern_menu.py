@@ -29,6 +29,10 @@ from gui_main.gui.core.functions import *
 
 class PyStepMenu(QWidget):
 
+    Active_style="QPushButton{color: rgb(225, 230, 241);font: 13px  \"游ゴシック\";border:none;Text-align:left;}QPushButton:hover {background-color: rgb(29, 33, 40);}QPushButton:pressed {background-color: rgb(69, 140, 207);}"
+
+    Deactive_style="QPushButton{color: rgb(99, 99, 99);font: 13px  \"游ゴシック\";border:none;Text-align:left;}QPushButton:hover {background-color: rgb(29, 33, 40);}QPushButton:pressed {background-color: rgb(69, 140, 207);}"
+
 
     def __init__(
         self , 
@@ -61,6 +65,9 @@ class PyStepMenu(QWidget):
         self.menu.pattern_menu_leftinsertblank_pushButton.clicked.connect(self.function_callback)
         self.menu.pattern_menu_delete_pushButton.clicked.connect(self.function_callback)
 
+
+
+
     def function_callback(self):
         btn = self.sender()
         if self._parent_type=="Temp type":
@@ -72,6 +79,66 @@ class PyStepMenu(QWidget):
         print("paintEvent of menu")
         pass
 
-    
+    def paste_SetEnable(self, paste_enable,add_enable):
+
+        print(paste_enable,add_enable)
+
+        pattern_menu_paste_pushButton=False
+        pattern_menu_rightinsert_pushButton=False
+        pattern_menu_leftinsert_pushButton=False
+        pattern_menu_rightinsertblank_pushButton=False
+        pattern_menu_leftinsertblank_pushButton=False
+
+        if paste_enable :
+            pattern_menu_paste_pushButton=True
+
+        if paste_enable and add_enable:
+            pattern_menu_rightinsert_pushButton=True
+            pattern_menu_leftinsert_pushButton=True
+
+        if add_enable :
+            pattern_menu_rightinsertblank_pushButton=True
+            pattern_menu_leftinsertblank_pushButton=True
+
+        #-------pattern_menu_paste_pushButton-----------------------------------
+        if pattern_menu_paste_pushButton  :
+            self.menu.pattern_menu_paste_pushButton.setEnabled(True)
+            self.menu.pattern_menu_paste_pushButton.setStyleSheet(self.Active_style)
+        else:
+            self.menu.pattern_menu_paste_pushButton.setEnabled(False)
+            self.menu.pattern_menu_paste_pushButton.setStyleSheet(self.Deactive_style)
+        #-------pattern_menu_rightinsert_pushButton-----------------------------------
+        if pattern_menu_rightinsert_pushButton  :
+            self.menu.pattern_menu_rightinsert_pushButton.setEnabled(True)
+            self.menu.pattern_menu_rightinsert_pushButton.setStyleSheet(self.Active_style)
+        else:
+            self.menu.pattern_menu_rightinsert_pushButton.setEnabled(False)
+            self.menu.pattern_menu_rightinsert_pushButton.setStyleSheet(self.Deactive_style)
+        #-------pattern_menu_leftinsert_pushButton-----------------------------------
+        if pattern_menu_leftinsert_pushButton  :
+            self.menu.pattern_menu_leftinsert_pushButton.setEnabled(True)
+            self.menu.pattern_menu_leftinsert_pushButton.setStyleSheet(self.Active_style)
+        else:
+            self.menu.pattern_menu_leftinsert_pushButton.setEnabled(False)
+            self.menu.pattern_menu_leftinsert_pushButton.setStyleSheet(self.Deactive_style)
+        #-------pattern_menu_rightinsertblank_pushButton-----------------------------------
+        if pattern_menu_rightinsertblank_pushButton  :
+            self.menu.pattern_menu_rightinsertblank_pushButton.setEnabled(True)
+            self.menu.pattern_menu_rightinsertblank_pushButton.setStyleSheet(self.Active_style)
+        else:
+            self.menu.pattern_menu_rightinsertblank_pushButton.setEnabled(False)
+            self.menu.pattern_menu_rightinsertblank_pushButton.setStyleSheet(self.Deactive_style)
+        #-------pattern_menu_leftinsertblank_pushButton-----------------------------------
+        if pattern_menu_leftinsertblank_pushButton  :
+            
+            self.menu.pattern_menu_leftinsertblank_pushButton.setEnabled(True)
+            self.menu.pattern_menu_leftinsertblank_pushButton.setStyleSheet(self.Active_style)
+        else:
+            
+            self.menu.pattern_menu_leftinsertblank_pushButton.setEnabled(False)
+            self.menu.pattern_menu_leftinsertblank_pushButton.setStyleSheet(self.Deactive_style)
 
 
+
+    def add_paste_SetEnable(self):
+        pass

@@ -109,9 +109,16 @@ class PyMessageDialog(QDialog):
 
     def exec(self):
         super().exec()
-        
-        return self.message.text()
+        return self.returnMessage
 
+
+    def accept(self):
+        self.returnMessage=self.message.text()
+        super().accept()
+
+    def reject(self):
+        self.returnMessage="Dialog reject"
+        super().reject()
 
     def dialogCallback(self,bottum):
 
