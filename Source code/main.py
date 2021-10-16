@@ -47,15 +47,11 @@ if __name__ == "__main__":
     MemoryPoolManager=Manager()
     MemoryPool = MemoryPoolManager.dict()
 
-    
-
     QueuePool={}
     QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
     QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
 
-    test_time=time.time()
     databaseLoadThread(MemoryPool)
-    print("databaseLoadThread ",time.time()-test_time)
     #memoryWriteThread(MemoryPool,QueuePool)
     #initial_GUI(MemoryPool,QueuePool)
 

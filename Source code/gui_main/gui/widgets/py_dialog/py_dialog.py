@@ -52,8 +52,6 @@ class PyDialog(QDialog):
 
 
         self.buttonBox = QDialogButtonBox(QBtn)
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
         self.buttonBox.clicked.connect(self.dialogCallback)
 
 
@@ -63,16 +61,22 @@ class PyDialog(QDialog):
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
 
+    def exec(self):
+        super().exec()
+        return self.returnMessage
 
     def dialogCallback(self,bottum):
 
         text=bottum.text()
+        self.returnMessage=text
         if text =="&Yes":
-            self.PyYesSignal.emit()
+            self.returnMessage="Yes"
         elif text =="&No":
-            self.PyNoSignal.emit()
+            self.returnMessage="No"
         elif text =="Cancel":
-            self.PyCancelSignal.emit()
+            self.returnMessage="Cancel"
+
+        super().accept()
 
 
 
@@ -91,8 +95,6 @@ class PyMessageDialog(QDialog):
 
 
         self.buttonBox = QDialogButtonBox(QBtn)
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
         self.buttonBox.clicked.connect(self.dialogCallback)
 
 
@@ -112,18 +114,21 @@ class PyMessageDialog(QDialog):
         return self.returnMessage
 
 
-    def accept(self):
-        self.returnMessage=self.message.text()
-        super().accept()
+    #def accept(self):
+    #    self.returnMessage=self.message.text()
+    #    super().accept()
 
-    def reject(self):
-        self.returnMessage="Dialog reject"
-        super().reject()
+    #def reject(self):
+    #    self.returnMessage="Dialog reject"
+    #    super().reject()
 
     def dialogCallback(self,bottum):
 
         text=bottum.text()
-        if text =="&Ok":
-            self.PyOkSignal.emit()
+        self.returnMessage=text
+        if text =="OK":
+            self.returnMessage=self.message.text()
         elif text =="Cancel":
-            self.PyCancelSignal.emit()
+            self.returnMessage="Dialog reject"
+
+        super().accept()

@@ -1,4 +1,5 @@
 from gui_main.gui.widgets import *
+import copy
 
 class tempUnit():
 
@@ -33,6 +34,19 @@ class tempUnit():
         self.test_measure_PatternNo=test_measure_PatternNo
         
 
+    def print_unit(self,unit):
+
+        print("Step_Type = ",unit.Step_Type)
+        print("time_hour = ",unit.time_hour)
+        print("time_min = ",unit.time_min)
+        print("SV = ",unit.SV)
+        print("N2_flowRate = ",unit.N2_flowRate)
+        print("PID_muffle_No = ",unit.PID_muffle_No)
+        print("PID_heater_No = ",unit.PID_heater_No)
+        print("time_keep = ",unit.time_keep)
+        print("test_measure_enable = ",unit.test_measure_enable)
+        print("test_measure_PatternNo = ",unit.test_measure_PatternNo)
+
 class templist():
 
     def __init__(
@@ -51,13 +65,11 @@ class templist():
         self.up_asciicode=up_asciicode
         self.down_asciicode=down_asciicode
 
-        if name:
+        if name!="":
             self.name_string2ASC(self.name)
-        elif up_asciicode and down_asciicode:
+        elif up_asciicode!="" or down_asciicode!="":
             self.name_ASC2string(self.up_asciicode,self.down_asciicode)
 
-
-        
         self.comment=comment
         self.active=active
         self.step_number=step_number   ####
@@ -69,7 +81,12 @@ class templist():
         for _step in range(1,21):
             self.units.append(tempUnit())
 
+        self.check_and_adjust()
 
+
+    def check_and_adjust(self):
+        self.checkData()
+        self.checkRule()
 
     #
     #    Function
@@ -88,77 +105,88 @@ class templist():
 
         pass
 
-    def content_Change_reset(self):
-        self.content_Change=False
+
+    
 
     def checkRule(self):
-        hasEndStep=False
         errorRule=""
-        for step in range(1,self.step_number+1):
-            if(self.units[step].Step_Type==PyTempStep.End_Type):
-                hasEndStep=True
-            
-        if not hasEndStep:
-            errorRule+="無効入力"
+
+        if self.step_number:
+            if(self.units[self.step_number].Step_Type!=PyTempStep.End_Type):
+                errorRule+="Endステップ未設定"
+
+            if not self.RT_measure:
+                if errorRule:
+                    errorRule+=" | "
+                errorRule+="RT測定未選択"
+
+            if not self.gas_condition:
+                if errorRule:
+                    errorRule+=" | "
+                errorRule+="雰囲気未選択"
+
 
         return errorRule
-
-    def gas_condition_Set(self,gas_condition):
+    
+    def set_gas_condition(self,gas_condition):
         if self.gas_condition!=gas_condition:
             self.gas_condition=gas_condition
-            self.content_Change=True
-
-    def RT_measure_Set(self,RT_measure):
+        self.check_and_adjust()
+        
+    def set_RT_measure(self,RT_measure):
         if self.RT_measure!=RT_measure:
             self.RT_measure=RT_measure
-            self.content_Change=True
+        self.check_and_adjust()
 
-    def comment_Set(self,comment):
+    def set_Comment(self,comment):
         if self.comment!=comment:
             self.comment=comment
-            self.content_Change=True
 
-    def active_Set(self,active):
+        self.check_and_adjust()
+
+    def set_Active(self,active):
         if self.active!=active:
             self.active=active
-            self.content_Change=True
+        self.check_and_adjust()
     
     #
     #    NAME ASCii code modifly
     #     
     def ASCcode_Set(self,up_asciicode,down_asciicode):
         if self.up_asciicode!=up_asciicode or self.down_asciicode!=down_asciicode:
-            self.content_Change=True
             self.up_asciicode=up_asciicode
             self.down_asciicode=down_asciicode
             self.name_ASC2string(self.up_asciicode,self.down_asciicode)
+        self.check_and_adjust()
 
     def name_ASC2string(self,up_asciicode,down_asciicode):
 
         self.name=""
         mask=256
 
+        if up_asciicode!="None":
+            while up_asciicode:
+                asciinum=up_asciicode%mask
+                char = chr(asciinum)
+                self.name+=char
+                up_asciicode=up_asciicode>>8
 
-        while up_asciicode:
+        if down_asciicode!="None":
+            while down_asciicode:
 
-            asciinum=up_asciicode%mask
-            char = chr(asciinum)
-            self.name+=char
-            up_asciicode=up_asciicode>>8
-
-        while down_asciicode:
-
-            asciinum=down_asciicode%mask
-            char = chr(asciinum)
-            self.name+=char
-            down_asciicode=down_asciicode>>8
+                asciinum=down_asciicode%mask
+                char = chr(asciinum)
+                self.name+=char
+                down_asciicode=down_asciicode>>8
 
         return self.name
     def name_Set(self,nameString):
         if self.name!=nameString:
-            self.content_Change=True
             self.name=nameString
             self.name_string2ASC(self.name)
+        self.check_and_adjust()
+
+
     def name_string2ASC(self,nameString):
 
         if len(nameString)<=8:
@@ -193,19 +221,19 @@ class templist():
     #  
     def setStep(self,step,input):
 
-        if(
-        self.units[step].Step_Type!=input.Step_Type or
-        self.units[step].SV!=input.SV or
-        self.units[step].N2_flowRate!=input.N2_flowRate or
-        self.units[step].PID_muffle_No!=input.PID_muffle_No or
-        self.units[step].PID_heater_No!=input.PID_heater_No or
-        self.units[step].test_measure_enable!=input.test_measure_enable or
-        self.units[step].test_measure_PatternNo!=input.test_measure_PatternNo or
-        self.units[step].time_hour!=input.time_hour or
-        self.units[step].time_keep!=input.time_keep or
-        self.units[step].time_min!=input.time_min
-        ):
-            self.content_Change=True
+        #if(
+        #self.units[step].Step_Type!=input.Step_Type or
+        #self.units[step].SV!=input.SV or
+        #self.units[step].N2_flowRate!=input.N2_flowRate or
+        #self.units[step].PID_muffle_No!=input.PID_muffle_No or
+        #self.units[step].PID_heater_No!=input.PID_heater_No or
+        #self.units[step].test_measure_enable!=input.test_measure_enable or
+        #self.units[step].test_measure_PatternNo!=input.test_measure_PatternNo or
+        #self.units[step].time_hour!=input.time_hour or
+        #self.units[step].time_keep!=input.time_keep or
+        #self.units[step].time_min!=input.time_min
+        #):
+        #    self.content_Change=True
 
 
         self.units[step].Step_Type=input.Step_Type
@@ -218,9 +246,20 @@ class templist():
         self.units[step].time_hour=input.time_hour
         self.units[step].time_keep=input.time_keep
         self.units[step].time_min=input.time_min
+
+        self.check_and_adjust()
+
     def getStep(self,step):
 
-        return self.units[step]
+        return copy.deepcopy(self.units[step])
+
+    def print_list(self,list):
+        print("name = ",list.name)
+        print("comment = ",list.comment)
+        print("active = ",list.active)
+        print("step_number = ",list.step_number)
+        print("gas_condition = ",list.gas_condition)
+        print("RT_measure = ",list.RT_measure)
 
     
 

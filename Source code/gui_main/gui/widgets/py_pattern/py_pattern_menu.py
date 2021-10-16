@@ -81,8 +81,6 @@ class PyStepMenu(QWidget):
 
     def paste_SetEnable(self, paste_enable,add_enable):
 
-        print(paste_enable,add_enable)
-
         pattern_menu_paste_pushButton=False
         pattern_menu_rightinsert_pushButton=False
         pattern_menu_leftinsert_pushButton=False

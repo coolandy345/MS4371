@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesdXwckK.ui'
+## Form generated from reading UI file 'main_pagesGpEeDu.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -1740,6 +1740,7 @@ class Ui_MainPages(object):
         self.gridLayout_6.addWidget(self.RT_combobox, 3, 5, 1, 1)
 
         self.patternfile_comboBox = QComboBox(self.frame_20)
+        self.patternfile_comboBox.addItem("")
         self.patternfile_comboBox.setObjectName(u"patternfile_comboBox")
         self.patternfile_comboBox.setMinimumSize(QSize(400, 32))
         self.patternfile_comboBox.setMaximumSize(QSize(400, 16777215))
@@ -2781,6 +2782,8 @@ class Ui_MainPages(object):
         self.RT_combobox.setItemText(0, "")
         self.RT_combobox.setItemText(1, QCoreApplication.translate("MainPages", u"\u6709\u308a", None))
         self.RT_combobox.setItemText(2, QCoreApplication.translate("MainPages", u"\u306a\u3044", None))
+
+        self.patternfile_comboBox.setItemText(0, "")
 
         self.commect_lineEdit.setInputMask("")
         self.commect_lineEdit.setText("")

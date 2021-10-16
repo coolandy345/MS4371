@@ -90,7 +90,7 @@ class TempPatternWidget(QWidget):
         self.memoryPool={}
         self.queuePool=queuePool
         self.step_widges_list=[]
-        self.patternFile_lists=[]
+        self.patternFiles=[]
         self.focus_step_number=focus_step_number
         self.availlible_patternFile_count=0
         self.focus_patternFile_number=0
@@ -98,18 +98,18 @@ class TempPatternWidget(QWidget):
         self.cache_steplist=templist()
         self.paste_ready=False
         self.activeStep_noFull=False
+        self.update_Request=False
         self.IconButtonUpdate=False
-        self.delete_IconButtonActiveState=False
+        self.delete_IconButtonActiveState=True
         self.add_IconButtonActiveState=False
         self.save_IconButtonActiveState=False
         
-        self.setup_utility()
+        self.utility_setup()
         self.setup_TempPattern()
         self.setup_TempGraph()
-        self.load_list_From_Memory()
-        self.updata_step_widge_work()
-        self.update_graph_work()
-        #self.update()
+        self.memory_reader()
+        self.patternFile_Load()
+        self.update_Request=True
         
         self.timer=QTimer()
         self.timer.timeout.connect(self.regularWork)
@@ -118,162 +118,14 @@ class TempPatternWidget(QWidget):
         #self.timerWorker=regular_Thread(self)
         #QThreadPool.globalInstance().start(self.timerWorker)
         
-        self.stylechangeing=False
 
         self.test=0
         self.test1=0
 
-        self.testDict={"level1": {"level2":0}}
 
-    def reload_MainMemoryFromDatabase(self):
-        databaseLoadThread(self.main_memoryPool)
+    
 
-    def memory_reader(self):
-        #Reload Memory from Database
-        self.reload_MainMemoryFromDatabase()
-
-        for key in self.main_memoryPool.keys():
-            self.memoryPool[key]=self.main_memoryPool[key]
-
-        _patternFile_lists=[None]
-
-        #Try to get number of PTN list
-        self.availlible_patternFile_count=self.memoryPool["Modbus Registor Pool - Registor"]["有効PTN総数"].value
-        self.focus_patternFile_number=self.memoryPool["Modbus Registor Pool - Registor"]["フォーカスPTN番号"].value
-        self.patternFile_nameList=[]
-
-        for ptn_no in range(1,21):
-
-            pattern=templist(
-                active          =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_パターン有効".format(ptn_no)].value,
-                comment         =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_註記".format(ptn_no)].value,
-                step_number     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(ptn_no)].value,
-                gas_condition   =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_測定雰囲気".format(ptn_no)].value,
-                RT_measure      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_RT計測".format(ptn_no)].value
-                )
-
-            pattern.ASCcode_Set(self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_Up".format(ptn_no)].value,
-                                    self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_Down".format(ptn_no)].value)
-
-            
-            if pattern.active:
-                self.patternFile_nameList.append(pattern.name)
-            
-            units=[None]
-            
-            for step_no in range(1,21):
-
-                unit=tempUnit(
-                    Step_Type               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].value,
-                    time_hour               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].value,
-                    time_min                =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].value,
-                    SV                      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].value,
-                    N2_flowRate             =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_N2流量".format(ptn_no,step_no)].value,
-                    PID_muffle_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_マッフル_PID_No".format(ptn_no,step_no)].value,
-                    PID_heater_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ヒーター_PID_No".format(ptn_no,step_no)].value,
-                    time_keep               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].value,
-                    test_measure_enable     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
-                    test_measure_PatternNo  =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定パターン".format(ptn_no,step_no)].value
-                
-                    )
-                units.append(unit)
-            pattern.units=units
-            _patternFile_lists.append(pattern)
-
-
-
-        self._parent.ui.load_pages.patternfile_comboBox.clear()
-        self._parent.ui.load_pages.patternfile_comboBox.addItems(self.patternFile_nameList)
-
-
-        if self.focus_patternFile_number==0:
-            if self.availlible_patternFile_count:
-                self.focus_patternFile_number=self.availlible_patternFile_count
-        else:
-            if self.focus_patternFile_number>self.availlible_patternFile_count:
-                self.focus_patternFile_number=self.availlible_patternFile_count
-
-        self.patternFile_lists=_patternFile_lists
-
-    def setup_utility(self):
-        # LOAD SETTINGS
-        # ///////////////////////////////////////////////////////////////
-        self.settings = Settings()
-
-        # LOAD THEME COLOR
-        # ///////////////////////////////////////////////////////////////
-        self.themes = Themes().items
-
-        self.focus_patternFile_number=self.settings.items["App User Interface parameter Setting"]["focus_patternFile_No"]
-        
-        self.delete_IconButton = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-trash.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
-                btn_id = "削除",
-                tooltip_text = "削除",
-                width = 30,
-                height = 30,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["critical_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["critical_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["critical_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["critical_icon"]["icon_deactive"],
-                bg_color = self.themes["app_color"]["critical_icon"]["icon_bg"],
-                bg_color_hover = self.themes["app_color"]["critical_icon"]["icon_bg_hover"],
-                bg_color_pressed = self.themes["app_color"]["critical_icon"]["icon_bg_pressed"],
-            )
-        self._parent.ui.load_pages.gridLayout_34.addWidget(self.delete_IconButton, Qt.AlignCenter, Qt.AlignCenter)
-        self.delete_IconButton.clicked.connect(self.ui_click_callback)
-
-        self.add_IconButton = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-file-add.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
-                btn_id = "追加",
-                tooltip_text = "追加",
-                width = 30,
-                height = 30,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
-                bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
-                bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
-            )
-        self._parent.ui.load_pages.gridLayout_35.addWidget(self.add_IconButton, Qt.AlignCenter, Qt.AlignCenter)
-        self.add_IconButton.clicked.connect(self.ui_click_callback)
-
-        
-
-        self.save_IconButton = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-edit.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
-                btn_id = "保存",
-                tooltip_text = "保存",
-                width = 30,
-                height = 30,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
-                bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
-                bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
-            )
-        self._parent.ui.load_pages.gridLayout_36.addWidget(self.save_IconButton, Qt.AlignCenter, Qt.AlignCenter)
-        self.save_IconButton.clicked.connect(self.ui_click_callback)
-        
-        self._parent.ui.load_pages.commect_lineEdit.setValidator(QRegularExpressionValidator("[a-zA-z0-9]+$"))
-        self._parent.ui.load_pages.commect_lineEdit.setMaxLength(8)
-        
+    
         
     def setup_TempPattern(self):
         self.step_widges_list.append(None)
@@ -353,56 +205,236 @@ class TempPatternWidget(QWidget):
             
      
     def new_TempPattern(self):
-        self.cache_steplist.units[self.cache_steplist.step_number+1]=tempUnit()
+        self.cache_steplist.setStep(self.cache_steplist.step_number+1,tempUnit())
         self.cache_steplist.step_number+=1
 
-        self.update()
-
-    def load_list_From_Memory(self):
-        self.memory_reader()
-        #Reset paste function
-        self.paste_ready=False
+        self.update_Request=True
 
 
+    def reload_MainMemoryFromDatabase(self):
+        databaseLoadThread(self.main_memoryPool)
+
+    def memory_reader(self):
+        #Reload Memory from Database
+        #self.reload_MainMemoryFromDatabase()
+
+        for key in self.main_memoryPool.keys():
+            self.memoryPool[key]=self.main_memoryPool[key]
+
+        _patternFile_lists=[None]
+
+        #Try to get number of PTN list
+        self.availlible_patternFile_count=self.memoryPool["Modbus Registor Pool - Registor"]["有効PTN総数"].value
+        self.focus_patternFile_number=self.memoryPool["Modbus Registor Pool - Registor"]["フォーカスPTN番号"].value
+        #Auto load last pattern
+        if self.focus_patternFile_number==0:
+            if self.availlible_patternFile_count:
+                self.focus_patternFile_number=self.availlible_patternFile_count
+        else:
+            if self.focus_patternFile_number>self.availlible_patternFile_count:
+                self.focus_patternFile_number=self.availlible_patternFile_count
+        
+        
+        self.patternFile_nameList=[""]
+
+        for ptn_no in range(1,21):
+
+            pattern=templist(
+                active          =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_パターン有効".format(ptn_no)].value,
+                comment         =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_註記".format(ptn_no)].value,
+                step_number     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(ptn_no)].value,
+                gas_condition   =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_測定雰囲気".format(ptn_no)].value,
+                RT_measure      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_RT計測".format(ptn_no)].value,
+                up_asciicode    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_Up".format(ptn_no)].value,
+                down_asciicode  =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_Down".format(ptn_no)].value
+                )
+            
+            if pattern.active:
+                self.patternFile_nameList.append(pattern.name)
+            
+            units=[None]
+            
+            for step_no in range(1,21):
+
+                unit=tempUnit(
+                    Step_Type               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].value,
+                    time_hour               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].value,
+                    time_min                =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].value,
+                    SV                      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].value,
+                    N2_flowRate             =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_N2流量".format(ptn_no,step_no)].value,
+                    PID_muffle_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_マッフル_PID_No".format(ptn_no,step_no)].value,
+                    PID_heater_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ヒーター_PID_No".format(ptn_no,step_no)].value,
+                    time_keep               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].value,
+                    test_measure_enable     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
+                    test_measure_PatternNo  =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定パターン".format(ptn_no,step_no)].value
+                
+                    )
+                units.append(unit)
+            pattern.units=units
+            _patternFile_lists.append(pattern)
+        
+        self.patternFiles=_patternFile_lists
+
+
+    def memory_writer(self):
+
+        for file_number in range(1,21):
+
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Up".format(file_number),self.patternFiles[file_number].up_asciicode)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Down".format(file_number),self.patternFiles[file_number].down_asciicode)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_註記".format(file_number),self.patternFiles[file_number].comment)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_パターン有効".format(file_number),self.patternFiles[file_number].active)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_実行STEP数".format(file_number),self.patternFiles[file_number].step_number)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_測定雰囲気".format(file_number),self.patternFiles[file_number].gas_condition)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_RT計測".format(file_number),self.patternFiles[file_number].RT_measure)
+
+            for step in range(1,21):
+                step_unit=self.patternFiles[file_number].getStep(step)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_SV値".format(file_number,step),step_unit.SV)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_時".format(file_number,step),step_unit.time_hour)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_分".format(file_number,step),step_unit.time_min)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_キープ時間".format(file_number,step),step_unit.time_keep)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_N2流量".format(file_number,step),step_unit.N2_flowRate)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_マッフル_PID_No".format(file_number,step),step_unit.PID_muffle_No)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_ヒーター_PID_No".format(file_number,step),step_unit.PID_heater_No)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_測定有".format(file_number,step),step_unit.test_measure_enable)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_測定パターン".format(file_number,step),step_unit.test_measure_PatternNo)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_STEP情報".format(file_number,step),step_unit.Step_Type)
+
+
+
+    def utility_update(self):
         #Check if we can still create new pattern list
-        if self.patternFile_lists[20].active:
+        if self.patternFiles[20].active:
             self.add_IconButtonActiveState=False
             self.IconButtonUpdate=True
         else:
             self.add_IconButtonActiveState=True
             self.IconButtonUpdate=True
-            
-        
-
-        if(self.focus_patternFile_number>=1 and self.focus_patternFile_number<=20):
-
-            self.cache_steplist=copy.deepcopy(self.patternFile_lists[self.focus_patternFile_number])
-            self.enableEditor(True)
-        else:
-            self.enableEditor(False)
 
 
-    def scan_patternInSQLiteDB(self):
-        namelist=[]
-
-        #Modbus_Registor_pool=self.main_memoryPool["Modbus Registor Pool - Registor"]
-
-        ##Try to get number of PTN list
-        #self.availlible_patternFile_count=Modbus_Registor_pool["有効PTN総数"].value
+        #Scan Avilible pattern import to patternfile_comboBox
+        self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.patternfile_comboBox.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.patternfile_comboBox.clear()
+        self._parent.ui.load_pages.patternfile_comboBox.addItems(self.patternFile_nameList)
+        self._parent.ui.load_pages.patternfile_comboBox.setCurrentIndex(self.focus_patternFile_number)
+        self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         
-        #for ptn_no in range(1,21):
+        self._parent.ui.load_pages.commect_lineEdit.textEdited.disconnect()
+        self._parent.ui.load_pages.commect_lineEdit.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.commect_lineEdit.setText(self.cache_steplist.comment)
+        self._parent.ui.load_pages.commect_lineEdit.textEdited.connect(self.ui_click_callback)
 
 
-        #    pattern=templist(
-        #        active          =Modbus_Registor_pool["PTNData_{}_パターン有効".format(ptn_no)].value,
+        self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.gas_Combobox.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.gas_Combobox.setCurrentIndex(self.cache_steplist.gas_condition)
+        self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.connect(self.ui_click_callback)
+
+        self._parent.ui.load_pages.RT_combobox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.RT_combobox.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.RT_combobox.setCurrentIndex(self.cache_steplist.RT_measure)
+        self._parent.ui.load_pages.RT_combobox.currentIndexChanged.connect(self.ui_click_callback)
+
+        
+
+        self.save_IconButtonActiveState=self.cache_steplist.content_Change
+        self.delete_IconButtonActiveState=self.editorEnable
+
+        self.IconButtonUpdate=True
+        
 
 
 
+        errormessage=self.cache_steplist.checkRule()
+        
+        self._parent.ui.load_pages.PatternErrorMessagelabel.setText(errormessage)
 
-        return namelist
 
+    def utility_setup(self):
+        # LOAD SETTINGS
+        # ///////////////////////////////////////////////////////////////
+        self.settings = Settings()
 
+        # LOAD THEME COLOR
+        # ///////////////////////////////////////////////////////////////
+        self.themes = Themes().items
+
+        self.focus_patternFile_number=self.settings.items["App User Interface parameter Setting"]["focus_patternFile_No"]
+        
+        self.delete_IconButton = PyIconButton(
+                icon_path = Functions.set_svg_icon("fi-rr-trash.svg"),
+                parent = self._parent,
+                app_parent = self._app_parent,
+                btn_id = "削除",
+                tooltip_text = "削除",
+                width = 30,
+                height = 30,
+                radius = 10,
+                dark_one = self.themes["app_color"]["dark_one"],
+                icon_color = self.themes["app_color"]["critical_icon"]["icon_color"],
+                icon_color_hover = self.themes["app_color"]["critical_icon"]["icon_hover"],
+                icon_color_pressed = self.themes["app_color"]["critical_icon"]["icon_pressed"],
+                icon_color_deactive = self.themes["app_color"]["critical_icon"]["icon_deactive"],
+                bg_color = self.themes["app_color"]["critical_icon"]["icon_bg"],
+                bg_color_hover = self.themes["app_color"]["critical_icon"]["icon_bg_hover"],
+                bg_color_pressed = self.themes["app_color"]["critical_icon"]["icon_bg_pressed"],
+            )
+        self._parent.ui.load_pages.gridLayout_34.addWidget(self.delete_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self.delete_IconButton.clicked.connect(self.ui_click_callback)
+
+        self.add_IconButton = PyIconButton(
+                icon_path = Functions.set_svg_icon("fi-rr-file-add.svg"),
+                parent = self._parent,
+                app_parent = self._app_parent,
+                btn_id = "追加",
+                tooltip_text = "追加",
+                width = 30,
+                height = 30,
+                radius = 10,
+                dark_one = self.themes["app_color"]["dark_one"],
+                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
+                bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
+                bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
+                bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
+            )
+        self._parent.ui.load_pages.gridLayout_35.addWidget(self.add_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self.add_IconButton.clicked.connect(self.ui_click_callback)
+
+        
+
+        self.save_IconButton = PyIconButton(
+                icon_path = Functions.set_svg_icon("fi-rr-edit.svg"),
+                parent = self._parent,
+                app_parent = self._app_parent,
+                btn_id = "保存",
+                tooltip_text = "保存",
+                width = 30,
+                height = 30,
+                radius = 10,
+                dark_one = self.themes["app_color"]["dark_one"],
+                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
+                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
+                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
+                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
+                bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
+                bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
+                bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
+            )
+        self._parent.ui.load_pages.gridLayout_36.addWidget(self.save_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self.save_IconButton.clicked.connect(self.ui_click_callback)
+        
+
+        self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.commect_lineEdit.textEdited.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.RT_combobox.currentIndexChanged.connect(self.ui_click_callback)
+        
         
     # update step widge
     # /////////////////////////////
@@ -411,15 +443,9 @@ class TempPatternWidget(QWidget):
         QThreadPool.globalInstance().start(self.updata_step_widge_Worker)
 
     def updata_step_widge_work(self):
-
-        #Scan Avilible pattern import to patternfile_comboBox
-
-
-
-
         #adjust the Visible of each step
-        
         for _step in range(1,21):
+            
             if _step<=self.cache_steplist.step_number :
                 self.step_widges_list[_step].setVisible (True)
                 self.step_widges_list[_step].pattern.page.setCurrentIndex(True)
@@ -445,7 +471,8 @@ class TempPatternWidget(QWidget):
             unit=tempUnit()
             unit=self.cache_steplist.getStep(_step)
             
-            self.step_widges_list[_step].pattern.Type_comboBox.setCurrentIndex(index)
+            self.step_widges_list[_step].pattern.Type_comboBox.setCurrentIndex(unit.Step_Type)
+
             if unit.Step_Type==tempUnit.temp_unit_type:    #temp unit
                 self.step_widges_list[_step].pattern.Hour_lineEdit.setValue(unit.time_hour)
                 self.step_widges_list[_step].pattern.Min_lineEdit.setValue(unit.time_min)
@@ -465,12 +492,9 @@ class TempPatternWidget(QWidget):
                 pass
             elif unit.Step_Type==tempUnit.End_unit_type:  #End unit
                 pass
-
-        self.save_IconButton.set_active(self.cache_steplist.content_Change)
-
-        errormessage=self.cache_steplist.checkRule()
-        self._parent.ui.load_pages.PatternErrorMessagelabel.setText(errormessage)
-
+        
+        
+        
     # update graph
     # /////////////////////////////
     def update_graph(self):
@@ -484,7 +508,7 @@ class TempPatternWidget(QWidget):
             if _step<=self.cache_steplist.step_number:
                 #load Graph data
                 xy_dot={}
-                unit=self.cache_steplist.units[_step]
+                unit=self.cache_steplist.getStep(_step)
                 xy_dot["x"]=_step+1
                 xy_dot["y"]=unit.SV
                 data_array.append(xy_dot)
@@ -509,20 +533,9 @@ class TempPatternWidget(QWidget):
             self.graph.setYRange(0, 1.2*maxpos)
             for _step in range(1,21):
                 self.GraphStepLabelList[_step].setPos(_step+0.1,1.2*maxpos)
-        
-    def PyDialog_Yes_CallBack(self):
-        print("Yes")
-        pass
+    
 
-    def PyDialog_No_CallBack(self):
-        print("No")
-        pass
-
-    def PyDialog_Cancel_CallBack(self):
-        print("Cancel")
-        pass
-
-    def lunchDialog(self,message,type):
+    def lunchOptionDialog(self,message,type):
 
         '''
         PyDialog.error_type
@@ -531,10 +544,7 @@ class TempPatternWidget(QWidget):
         '''
 
         diag = PyDialog(type,message)
-        diag.PyYesSignal.connect(self.PyDialog_Yes_CallBack)
-        diag.PyNoSignal.connect(self.PyDialog_No_CallBack)
-        diag.PyCancelSignal.connect(self.PyDialog_Cancel_CallBack)
-        diag.exec()
+        return(str(diag.exec()))
 
     def lunchMessageDialog(self,title,message):
         diag = PyMessageDialog(title,message)
@@ -546,46 +556,112 @@ class TempPatternWidget(QWidget):
 
         btn_name=self.sender().objectName()
 
+        print("btn_name = ",btn_name)
+
         if btn_name=="削除":
             self.patternFile_Delete()
         elif btn_name=="保存":
             self.patternFile_Save()
         elif btn_name=="追加":
             self.patternFile_New()
+        elif btn_name=="patternfile_comboBox":
+            self.focus_patternFile_number=self._parent.ui.load_pages.patternfile_comboBox.currentIndex()
+            #maybe confirm if we still not save
+            self.patternFile_Load()
+
+        elif btn_name=="commect_lineEdit":
+            self.cache_steplist.set_Comment(self._parent.ui.load_pages.commect_lineEdit.text())
+            self.update_Request=True
+
+        elif btn_name=="gas_Combobox":
+            self.cache_steplist.set_gas_condition(self._parent.ui.load_pages.gas_Combobox.currentIndex())
+            self.update_Request=True
+
+        elif btn_name=="RT_combobox":
+            self.cache_steplist.set_RT_measure(self._parent.ui.load_pages.RT_combobox.currentIndex())
+            self.update_Request=True
+        
+
 
 
 
     def patternFile_Load(self):
 
+        self.set_memorypool_register("Modbus Registor Pool - Registor","フォーカスPTN番号",self.focus_patternFile_number)
+
+        self.memory_reader()
+
+        #Reset paste function
+        self.paste_ready=False
+
+        if(self.focus_patternFile_number>=1 and self.focus_patternFile_number<=20):
+            self.cache_steplist=copy.deepcopy(self.patternFiles[self.focus_patternFile_number])
+            self.editorEnable=True
+        else:
+            self.editorEnable=False
+
+        self.update_Request=True
+
+    
 
 
-        self.cache_steplist=self.patternFile_lists[self.focus_patternFile_number]
-        #load st
 
     def patternFile_Delete(self):
-        pass
+
+        delete=False
+
+        if self.content_Change:
+            result=self.lunchOptionDialog("変更内容は未保存です。削除しますか？",PyDialog.warning_2_type)
+
+            if result=="Yes":
+                delete=True
+                
+            elif result=="No":
+                #User is not want Delete file
+                return
+        else:
+            delete=True
+
+        if delete:
+            self.availlible_patternFile_count-=1
+            self.set_memorypool_register("Modbus Registor Pool - Registor","有効PTN総数",self.availlible_patternFile_count)
+
+            self.patternFiles.append(templist())
+            self.patternFiles.pop(self.focus_patternFile_number)
+
+            if self.focus_patternFile_number>0:
+                self.focus_patternFile_number-=1
+
+            if self.focus_patternFile_number:
+                self.cache_steplist=self.patternFiles[self.focus_patternFile_number]
+            else:
+                self.cache_steplist=templist()
+
+
+            print("self.availlible_patternFile_count =",self.availlible_patternFile_count)
+            print("self.focus_patternFile_number =",self.focus_patternFile_number)
+
+            self.memory_writer()
+
+            self.patternFile_Load()
+
         
     def patternFile_Save(self):
         self.patternFile_Save_Worker=patternFile_Save_Thread(self)
         QThreadPool.globalInstance().start(self.patternFile_Save_Worker)
 
     def patternFile_Save_work(self):
-
-        #Refresh patternFile_lists
-        self.patternFile_lists[self.focus_patternFile_number]=self.cache_steplist
+        print("B")
+        #Refresh patternFiles
+        self.patternFiles[self.focus_patternFile_number]=copy.deepcopy(self.cache_steplist)
         
-        #check the name is on self.patternFile_lists or not
-        if not self.patternFile_lists[self.focus_patternFile_number].active:
-
-            #write new availlible_patternFile_count to memory
-            self.set_memorypool_register("Modbus Registor Pool - Registor","有効PTN総数",self.availlible_patternFile_count)
-
+        
         list=self.cache_steplist
 
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Up".format(self.focus_patternFile_number),list.up_asciicode)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Down".format(self.focus_patternFile_number),list.down_asciicode)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_註記".format(self.focus_patternFile_number),list.comment)
-        self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_パターン有効".format(self.focus_patternFile_number),1)
+        self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_パターン有効".format(self.focus_patternFile_number),list.active)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_実行STEP数".format(self.focus_patternFile_number),list.step_number)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_測定雰囲気".format(self.focus_patternFile_number),list.gas_condition)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_RT計測".format(self.focus_patternFile_number),list.RT_measure)
@@ -602,7 +678,7 @@ class TempPatternWidget(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_測定パターン".format(self.focus_patternFile_number,step),list.units[step].test_measure_PatternNo)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_STEP情報".format(self.focus_patternFile_number,step),list.units[step].Step_Type)
             
-        self.cache_steplist.content_Change_reset()
+        
 
         #Reload cache_list from memory
         self.patternFile_Load()
@@ -616,23 +692,24 @@ class TempPatternWidget(QWidget):
 
         #if we got availible name string
         if NameString_fromDialog!="Dialog reject" and NameString_fromDialog!="":
+            
             #Create new cache_steplist
             self.availlible_patternFile_count+=1
             self.focus_patternFile_number=self.availlible_patternFile_count
             self.cache_steplist=templist(name=NameString_fromDialog)
-            
+            self.cache_steplist.set_Active(True)
+            #write new availlible_patternFile_count to memory
+            self.set_memorypool_register("Modbus Registor Pool - Registor","有効PTN総数",self.availlible_patternFile_count)
 
             #Save it to database
             self.patternFile_Save()
 
                  
     def set_memorypool_register(self,Main_memorypool,memory_name,value):
-
-        if self.memoryPool[Main_memorypool][memory_name].getValue()!=value:
         
+        if self.memoryPool[Main_memorypool][memory_name].getValue()!=value:
             self.memoryPool[Main_memorypool][memory_name].setValue(value)
             self.main_memoryPool[Main_memorypool]=self.memoryPool[Main_memorypool]
-
             sendItem=memoryUnit(Main_memorypool,memory_name)
             self.queuePool["memory_Write_Queue"].put(sendItem)
 
@@ -653,7 +730,9 @@ class TempPatternWidget(QWidget):
             self.save_IconButton.set_active(self.save_IconButtonActiveState)
             self.IconButtonUpdate=False
         
-
+        if self.update_Request:
+            self.update_Request=False
+            self.update()
 
 
     def scroll_adjust_TempPattern(self):
@@ -728,7 +807,7 @@ class TempPatternWidget(QWidget):
 
 
         self.close_menu()
-        self.update()
+        self.update_Request=True
 
     def focus_step(self,_step):
         self.step_widges_list[_step].setFocusStyle(True)
@@ -749,77 +828,76 @@ class TempPatternWidget(QWidget):
     def close_one_menu(self,step):
         self.step_widges_list[step]._menu.menu_frame.hide()
 
+    def content_change_check(self):
+
+        if (self.cache_steplist!=None and
+            self.patternFiles[self.focus_patternFile_number]!=None
+            ):
+            self.content_Change=False
+
+            if(
+                self.cache_steplist.name            != self.patternFiles[self.focus_patternFile_number].name or
+                self.cache_steplist.up_asciicode    != self.patternFiles[self.focus_patternFile_number].up_asciicode or
+                self.cache_steplist.down_asciicode  != self.patternFiles[self.focus_patternFile_number].down_asciicode or
+                self.cache_steplist.comment         != self.patternFiles[self.focus_patternFile_number].comment or
+                self.cache_steplist.active          != self.patternFiles[self.focus_patternFile_number].active or
+                self.cache_steplist.step_number     != self.patternFiles[self.focus_patternFile_number].step_number or
+                self.cache_steplist.gas_condition   != self.patternFiles[self.focus_patternFile_number].gas_condition or
+                self.cache_steplist.RT_measure      != self.patternFiles[self.focus_patternFile_number].RT_measure 
+                ):
+                self.content_Change=True
+
         
+            for step in range(1,21):
+
+                cache_stepUnit=self.cache_steplist.getStep(step)
+                memory_stepUnit=self.patternFiles[self.focus_patternFile_number].getStep(step)
+
+                if(
+                cache_stepUnit.Step_Type                !=memory_stepUnit.Step_Type or
+                cache_stepUnit.SV                       !=memory_stepUnit.SV or
+                cache_stepUnit.N2_flowRate              !=memory_stepUnit.N2_flowRate or
+                cache_stepUnit.PID_muffle_No            !=memory_stepUnit.PID_muffle_No or
+                cache_stepUnit.PID_heater_No            !=memory_stepUnit.PID_heater_No or
+                cache_stepUnit.test_measure_enable      !=memory_stepUnit.test_measure_enable or
+                cache_stepUnit.test_measure_PatternNo   !=memory_stepUnit.test_measure_PatternNo or
+                cache_stepUnit.time_hour                !=memory_stepUnit.time_hour or
+                cache_stepUnit.time_keep                !=memory_stepUnit.time_keep or
+                cache_stepUnit.time_min                 !=memory_stepUnit.time_min
+                ):
+                    self.content_Change=True
+
+
+            self.cache_steplist.content_Change=self.content_Change
 
     def step_modifly_manager(self,step):
-        self.cache_steplist.units[step].Step_Type=self.step_widges_list[step]._type
-        self.cache_steplist.units[step].time_hour=self.step_widges_list[step]._hour
-        self.cache_steplist.units[step].time_min=self.step_widges_list[step]._minute
-        self.cache_steplist.units[step].SV=self.step_widges_list[step]._temperature
-        self.cache_steplist.units[step].N2_flowRate=self.step_widges_list[step]._n2_flowrate
-        self.cache_steplist.units[step].PID_muffle_No=self.step_widges_list[step]._PID_muffle_no
-        self.cache_steplist.units[step].PID_heater_No=self.step_widges_list[step]._PID_heater_no
-        self.cache_steplist.units[step].time_keep=self.step_widges_list[step]._keep_seccond
-        self.cache_steplist.units[step].test_measure_PatternNo=self.step_widges_list[step]._test_pattern
-        
+        stepUnit=self.cache_steplist.getStep(step)
 
-        self.cache_steplist.checkData()
+        stepUnit.Step_Type              =self.step_widges_list[step]._type
+        stepUnit.time_hour              =self.step_widges_list[step]._hour
+        stepUnit.time_min               =self.step_widges_list[step]._minute
+        stepUnit.SV                     =self.step_widges_list[step]._temperature
+        stepUnit.N2_flowRate            =self.step_widges_list[step]._n2_flowrate
+        stepUnit.PID_muffle_No          =self.step_widges_list[step]._PID_muffle_no
+        stepUnit.PID_heater_No          =self.step_widges_list[step]._PID_heater_no
+        stepUnit.time_keep              =self.step_widges_list[step]._keep_seccond
+        stepUnit.test_measure_PatternNo =self.step_widges_list[step]._test_pattern
 
-        self.update()
+        self.cache_steplist.setStep(step,stepUnit)
 
-    def print_unit(self,unit):
-
-        print("Step_Type = ",unit.Step_Type)
-        print("time_hour = ",unit.time_hour)
-        print("time_min = ",unit.time_min)
-        print("SV = ",unit.SV)
-        print("N2_flowRate = ",unit.N2_flowRate)
-        print("PID_muffle_No = ",unit.PID_muffle_No)
-        print("PID_heater_No = ",unit.PID_heater_No)
-        print("time_keep = ",unit.time_keep)
-        print("test_measure_PatternNo = ",unit.test_measure_PatternNo)
-
-    def print_list(self,list):
-        print("name = ",list.name)
-        print("comment = ",list.comment)
-        print("active = ",list.active)
-        print("step_number = ",list.step_number)
-        print("gas_condition = ",list.gas_condition)
-        print("RT_measure = ",list.RT_measure)
-
-
+        self.update_Request=True
 
 
     def update(self):
+        self.content_change_check()
         self.updata_step_widge()
         self.update_graph()
-
-
-    def enableEditor(self,enable):
-
-        self._parent.ui.load_pages.patternfile_comboBox.setEnabled(enable)
-        self._parent.ui.load_pages.commect_lineEdit.setEnabled(enable)
-        self._parent.ui.load_pages.gas_Combobox.setEnabled(enable)
-        self._parent.ui.load_pages.RT_combobox.setEnabled(enable)
-
-        self.editorEnable=enable
-        
-        self.update()
-        
+        self.utility_update()
 
     def graphResize(self):
         addwidth=self._parent.width()-1470
         self.graph.setMinimumSize(QSize(1100+addwidth, 300))
-        pass
 
-
-
-        if btn_name=="削除":
-            self.patternFile_Delete()
-        elif btn_name=="保存":
-            self.patternFile_Save()
-        elif btn_name=="追加":
-            self.patternFile_New()
 
 
 class patternFile_Save_Thread(QRunnable):

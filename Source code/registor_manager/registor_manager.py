@@ -37,7 +37,7 @@ def databaseWriteThread(memoryPool,queuePool):
 
         time.sleep(0.5)
         
-        test="Update  '{}' set  Value={} where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
+        test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
         cur.execute(test)
         #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
             

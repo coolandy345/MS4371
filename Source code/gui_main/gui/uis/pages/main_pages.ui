@@ -3935,6 +3935,11 @@ padding-left:5px;</string>
                 <property name="insertPolicy">
                  <enum>QComboBox::InsertAtTop</enum>
                 </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
                </widget>
               </item>
               <item row="1" column="3" colspan="4">
