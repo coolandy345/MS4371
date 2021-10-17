@@ -152,7 +152,6 @@ class MainWindow(QMainWindow):
         
         #self.SetupMainWindow.
         self.tempPattern.close_menu()
-        self.testPattern.close_menu()
 
         # DEBUG 
         #print(f"Button {btn.objectName()}, clicked!")

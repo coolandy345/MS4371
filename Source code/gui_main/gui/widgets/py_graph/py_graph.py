@@ -16,7 +16,7 @@ class workThread(QThread):
 
 class PyGraphRegionItem(pg.LinearRegionItem):
 
-    def __init__(self, parent = None,step=0,values=(0, 1), orientation='vertical', brush=None, pen=None,
+    def __init__(self, parent,app_parent = None,step=0,values=(0, 1), orientation='vertical', brush=None, pen=None,
                  hoverBrush=None, hoverPen=None, movable=True, bounds=None, 
                  span=(0, 1), swapMode='sort'):
 
@@ -24,7 +24,8 @@ class PyGraphRegionItem(pg.LinearRegionItem):
                  hoverBrush=hoverBrush, hoverPen=hoverPen, movable=movable, bounds=bounds, 
                  span=span, swapMode=swapMode)
         
-        self._parent=parent
+        self.parent=parent
+        self.app_parent=app_parent
         self.step=step
         self.setAcceptHoverEvents(True)
 
@@ -43,11 +44,15 @@ class PyGraphRegionItem(pg.LinearRegionItem):
 
         
     def hoverEnterEvent(self, ev):
-        self._parent.tempPattern.focus_step(self.step)
+        if self.step!=0 and self.step!=9:
+            self.parent.focus_step(self.step)
+        #self.app_parent.tempPattern.focus_step(self.step)
 
 
     def hoverLeaveEvent(self, ev):
-        self._parent.tempPattern.un_focus_step(self.step)
+        if self.step!=0 and self.step!=9:
+            self.parent.un_focus_step(self.step)
+        #self.app_parent.tempPattern.un_focus_step(self.step)
 
 
     def setFocusStyle(self,enable):

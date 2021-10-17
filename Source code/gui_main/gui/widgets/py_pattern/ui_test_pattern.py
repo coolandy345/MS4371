@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'test_patternrgbmlt.ui'
+## Form generated from reading UI file 'test_patterngDFUEx.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import *  # type: ignore
+from PySide6.QtGui import *  # type: ignore
+from PySide6.QtWidgets import *  # type: ignore
 
 
 class Ui_test_pattern(object):
@@ -30,6 +30,7 @@ class Ui_test_pattern(object):
         self.page1 = QWidget()
         self.page1.setObjectName(u"page1")
         self.page1.setEnabled(True)
+        self.page1.setStyleSheet(u"border:none;")
         self.gridLayout = QGridLayout(self.page1)
         self.gridLayout.setObjectName(u"gridLayout")
         self.frame = QFrame(self.page1)
@@ -47,6 +48,7 @@ class Ui_test_pattern(object):
         self.page.addWidget(self.page1)
         self.page2 = QWidget()
         self.page2.setObjectName(u"page2")
+        self.page2.setStyleSheet(u"border:none;")
         self.gridLayout_4 = QGridLayout(self.page2)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.Step_label = QLabel(self.page2)
@@ -56,11 +58,19 @@ class Ui_test_pattern(object):
         self.Step_label.setStyleSheet(u"font:17px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(0, 0, 0);\n"
 "padding-left:5px;\n"
-"\n"
 "background-color: rgb(73, 73, 220);\n"
 "border:none;")
 
         self.gridLayout_4.addWidget(self.Step_label, 0, 0, 1, 2)
+
+        self.Valtage_label = QLabel(self.page2)
+        self.Valtage_label.setObjectName(u"Valtage_label")
+        self.Valtage_label.setMaximumSize(QSize(16777215, 16777215))
+        self.Valtage_label.setStyleSheet(u"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"border:none;")
+
+        self.gridLayout_4.addWidget(self.Valtage_label, 3, 0, 1, 1)
 
         self.frame_3 = QFrame(self.page2)
         self.frame_3.setObjectName(u"frame_3")
@@ -82,38 +92,14 @@ class Ui_test_pattern(object):
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
 
-        self.gridLayout_4.addWidget(self.frame_2, 2, 0, 1, 3)
+        self.gridLayout_4.addWidget(self.frame_2, 1, 0, 1, 3)
 
-        self.SV_label = QLabel(self.page2)
-        self.SV_label.setObjectName(u"SV_label")
-        self.SV_label.setMaximumSize(QSize(16777215, 16777215))
-        self.SV_label.setStyleSheet(u"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"border:none;")
-
-        self.gridLayout_4.addWidget(self.SV_label, 4, 0, 1, 1)
-
-        self.Type_comboBox = QComboBox(self.page2)
-        self.Type_comboBox.addItem("")
-        self.Type_comboBox.addItem("")
-        self.Type_comboBox.addItem("")
-        self.Type_comboBox.setObjectName(u"Type_comboBox")
-        self.Type_comboBox.setStyleSheet(u"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-left:5px;\n"
-"padding-right:5px;\n"
-"border-width: 1px;\n"
-"border-style: solid;\n"
-"border-radius: 4px;")
-
-        self.gridLayout_4.addWidget(self.Type_comboBox, 1, 0, 1, 3)
-
-        self.SV_lineEdit = QSpinBox(self.page2)
-        self.SV_lineEdit.setObjectName(u"SV_lineEdit")
-        self.SV_lineEdit.setMinimumSize(QSize(50, 20))
-        self.SV_lineEdit.setMaximumSize(QSize(16777215, 16777215))
-        self.SV_lineEdit.setMouseTracking(False)
-        self.SV_lineEdit.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
+        self.Valtage_lineEdit = QSpinBox(self.page2)
+        self.Valtage_lineEdit.setObjectName(u"Valtage_lineEdit")
+        self.Valtage_lineEdit.setMinimumSize(QSize(50, 20))
+        self.Valtage_lineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.Valtage_lineEdit.setMouseTracking(False)
+        self.Valtage_lineEdit.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
 "color: rgb(225, 230, 241);\n"
 "border-width: 1px;\n"
 "border-style: solid;\n"
@@ -121,16 +107,16 @@ class Ui_test_pattern(object):
 "padding-left:5px;\n"
 "padding-right:5px;\n"
 "font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";")
-        self.SV_lineEdit.setFrame(True)
-        self.SV_lineEdit.setAlignment(Qt.AlignCenter)
-        self.SV_lineEdit.setButtonSymbols(QAbstractSpinBox.NoButtons)
-        self.SV_lineEdit.setMinimum(-2000)
-        self.SV_lineEdit.setMaximum(2000)
-        self.SV_lineEdit.setSingleStep(1)
-        self.SV_lineEdit.setStepType(QAbstractSpinBox.DefaultStepType)
-        self.SV_lineEdit.setValue(500)
+        self.Valtage_lineEdit.setFrame(True)
+        self.Valtage_lineEdit.setAlignment(Qt.AlignCenter)
+        self.Valtage_lineEdit.setButtonSymbols(QAbstractSpinBox.NoButtons)
+        self.Valtage_lineEdit.setMinimum(-2000)
+        self.Valtage_lineEdit.setMaximum(2000)
+        self.Valtage_lineEdit.setSingleStep(1)
+        self.Valtage_lineEdit.setStepType(QAbstractSpinBox.DefaultStepType)
+        self.Valtage_lineEdit.setValue(500)
 
-        self.gridLayout_4.addWidget(self.SV_lineEdit, 4, 1, 1, 2)
+        self.gridLayout_4.addWidget(self.Valtage_lineEdit, 3, 1, 1, 2)
 
         self.page.addWidget(self.page2)
 
@@ -148,10 +134,6 @@ class Ui_test_pattern(object):
     def retranslateUi(self, test_pattern):
         test_pattern.setWindowTitle(QCoreApplication.translate("test_pattern", u"Form", None))
         self.Step_label.setText(QCoreApplication.translate("test_pattern", u"STEP 1", None))
-        self.SV_label.setText(QCoreApplication.translate("test_pattern", u"\u6e2c\u5b9a\u96fb\u5727 V", None))
-        self.Type_comboBox.setItemText(0, QCoreApplication.translate("test_pattern", u"BG", None))
-        self.Type_comboBox.setItemText(1, QCoreApplication.translate("test_pattern", u"\u6e2c\u5b9a+BG", None))
-        self.Type_comboBox.setItemText(2, QCoreApplication.translate("test_pattern", u"END", None))
-
+        self.Valtage_label.setText(QCoreApplication.translate("test_pattern", u"\u6e2c\u5b9a\u96fb\u5727 V", None))
     # retranslateUi
 

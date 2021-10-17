@@ -19,6 +19,10 @@
 # -*- coding: utf-8 -*-
 
 from gui_main.gui.widgets.py_table_widget.py_table_widget import PyTableWidget
+
+from . testprofile_function import testfile_manager
+
+
 from . functions_main_window import *
 import sys
 import os
@@ -225,12 +229,11 @@ class SetupMainWindow:
         self.main_namespace.Tester_ConnectionToggle=PyToggle()
         self.main_namespace.ui.load_pages.gridLayout_28.addWidget(self.main_namespace.Tester_ConnectionToggle)
         
-        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
         self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
+        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
         
 
-
-
+        self.main_namespace.testfile_manager=testfile_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
 
         self.main_namespace.stop_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("stop-button-extralarge.svg"),

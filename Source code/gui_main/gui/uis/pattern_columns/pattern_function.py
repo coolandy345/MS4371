@@ -34,18 +34,18 @@ class tempUnit():
         self.test_measure_PatternNo=test_measure_PatternNo
         
 
-    def print_unit(self,unit):
+    def print_unit(self):
 
-        print("Step_Type = ",unit.Step_Type)
-        print("time_hour = ",unit.time_hour)
-        print("time_min = ",unit.time_min)
-        print("SV = ",unit.SV)
-        print("N2_flowRate = ",unit.N2_flowRate)
-        print("PID_muffle_No = ",unit.PID_muffle_No)
-        print("PID_heater_No = ",unit.PID_heater_No)
-        print("time_keep = ",unit.time_keep)
-        print("test_measure_enable = ",unit.test_measure_enable)
-        print("test_measure_PatternNo = ",unit.test_measure_PatternNo)
+        print("Step_Type = ",self.Step_Type)
+        print("time_hour = ",self.time_hour)
+        print("time_min = ",self.time_min)
+        print("SV = ",self.SV)
+        print("N2_flowRate = ",self.N2_flowRate)
+        print("PID_muffle_No = ",self.PID_muffle_No)
+        print("PID_heater_No = ",self.PID_heater_No)
+        print("time_keep = ",self.time_keep)
+        print("test_measure_enable = ",self.test_measure_enable)
+        print("test_measure_PatternNo = ",self.test_measure_PatternNo)
 
 class templist():
 
@@ -75,7 +75,6 @@ class templist():
         self.step_number=step_number   ####
         self.gas_condition=gas_condition
         self.RT_measure=RT_measure
-        self.content_Change=False
         self.units=[]
         self.units.append(None)
         for _step in range(1,21):
@@ -221,20 +220,6 @@ class templist():
     #  
     def setStep(self,step,input):
 
-        #if(
-        #self.units[step].Step_Type!=input.Step_Type or
-        #self.units[step].SV!=input.SV or
-        #self.units[step].N2_flowRate!=input.N2_flowRate or
-        #self.units[step].PID_muffle_No!=input.PID_muffle_No or
-        #self.units[step].PID_heater_No!=input.PID_heater_No or
-        #self.units[step].test_measure_enable!=input.test_measure_enable or
-        #self.units[step].test_measure_PatternNo!=input.test_measure_PatternNo or
-        #self.units[step].time_hour!=input.time_hour or
-        #self.units[step].time_keep!=input.time_keep or
-        #self.units[step].time_min!=input.time_min
-        #):
-        #    self.content_Change=True
-
 
         self.units[step].Step_Type=input.Step_Type
         self.units[step].SV=input.SV
@@ -253,15 +238,146 @@ class templist():
 
         return copy.deepcopy(self.units[step])
 
-    def print_list(self,list):
-        print("name = ",list.name)
-        print("comment = ",list.comment)
-        print("active = ",list.active)
-        print("step_number = ",list.step_number)
-        print("gas_condition = ",list.gas_condition)
-        print("RT_measure = ",list.RT_measure)
+    def print_list(self):
+        print("name = ",self.name)
+        print("comment = ",self.comment)
+        print("active = ",self.active)
+        print("step_number = ",self.step_number)
+        print("gas_condition = ",self.gas_condition)
+        print("RT_measure = ",self.RT_measure)
 
     
 
+class testUnit():
 
-    
+    def __init__(
+        self,
+        voltage=0,
+        ):
+        self.voltage=voltage
+
+    def print_unit(self):
+
+        print("Step_Type = ",self.Step_Type)
+        print("voltage = ",self.voltage)
+
+        
+class testlist():
+    def __init__(
+        self,
+        name="",
+        comment="",
+        active=0,
+        step_number=0,
+        test_time=0,
+        test_sampletime=0,
+        BG0_test_time=0,
+        BG_test_time=0,
+        BG_sampletime=0,
+
+        ):
+        
+        self.name=name
+        self.comment=comment
+        self.active=active
+        self.step_number=step_number
+        self.test_time=test_time
+        self.test_sampletime=test_sampletime
+        self.BG0_test_time=BG0_test_time
+        self.BG_test_time=BG_test_time
+        self.BG_sampletime=BG_sampletime
+        self.units=[]
+        self.units.append(None)
+        for _step in range(1,9):
+            self.units.append(testUnit())
+
+        self.check_and_adjust()
+
+    def check_and_adjust(self):
+        self.checkData()
+        self.checkRule()
+
+    def checkData(self):
+        pass
+
+    def checkRule(self):
+        errorRule=""
+
+        return errorRule
+
+
+    def set_Name(self,name):
+        if self.name!=name:
+            self.name=name
+
+        self.check_and_adjust()
+
+    def set_Comment(self,comment):
+        if self.comment!=comment:
+            self.comment=comment
+
+        self.check_and_adjust()
+
+    def set_Active(self,active):
+        if self.active!=active:
+            self.active=active
+
+        self.check_and_adjust()
+
+    def set_Step_number(self,step_number):
+        if self.step_number!=step_number:
+            self.step_number=step_number
+
+        self.check_and_adjust()
+
+    def set_Test_time(self,test_time):
+        if self.test_time!=test_time:
+            self.test_time=test_time
+
+        self.check_and_adjust()
+
+    def set_Test_sampletime(self,test_sampletime):
+        if self.test_sampletime!=test_sampletime:
+            self.test_sampletime=test_sampletime
+
+        self.check_and_adjust()
+
+    def set_BG0_test_time(self,BG0_test_time):
+        if self.BG0_test_time!=BG0_test_time:
+            self.BG0_test_time=BG0_test_time
+
+        self.check_and_adjust()
+
+    def set_BG_test_time(self,BG_test_time):
+        if self.BG_test_time!=BG_test_time:
+            self.BG_test_time=BG_test_time
+
+        self.check_and_adjust()
+
+    def set_BG_sampletime(self,BG_sampletime):
+        if self.BG_sampletime!=BG_sampletime:
+            self.BG_sampletime=BG_sampletime
+
+        self.check_and_adjust()
+
+
+    def setStep(self,step,input):
+
+        self.units[step].voltage=input.voltage
+
+        self.check_and_adjust()
+
+    def getStep(self,step):
+
+        return copy.deepcopy(self.units[step])
+
+    def print_list(self):
+        print("name = ",self.name)
+        print("comment = ",self.comment)
+        print("active = ",self.active)
+        print("step_number = ",self.step_number)
+        print("test_time = ",self.test_time)
+        print("test_sampletime = ",self.test_sampletime)
+        print("BG0_test_time = ",self.BG0_test_time)
+        print("BG_test_time = ",self.BG_test_time)
+        print("BG_sampletime = ",self.BG_sampletime)

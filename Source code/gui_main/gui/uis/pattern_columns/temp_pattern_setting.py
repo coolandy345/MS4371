@@ -1,4 +1,3 @@
-
 from gui_main.qt_core import *
 from gui_main.gui.uis.windows.main_window import *
 from gui_main.gui.uis.pattern_columns.pattern_function import templist,tempUnit
@@ -21,8 +20,6 @@ from registor_manager import *
 import numpy as np
 import pyqtgraph as pg
 
-
-
 class updata_step_widge_Thread(QRunnable):
     def __init__(self, parent):
         super().__init__()
@@ -39,33 +36,13 @@ class update_graph_Thread(QRunnable):
     def run(self):
         self.parent.update_graph_work()
 
-class regular_Thread(QRunnable):
+class patternFile_Save_Thread(QRunnable):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
 
     def run(self):
-        for i in range(1,10000):
-            self.parent.regularWork()
-            QThread.msleep(10)
-            print(QThreadPool.globalInstance().activeThreadCount())
-
-
-class workThread(QThread):
-
-    trigger = Signal()
-
-    def __int__(self):
-        # 初始化函式
-        super().__init__()
-
-    def run(self):
-        self.trigger.emit()
-
-
-
-
-        
+        self.parent.patternFile_Save_work()
 
 
 class TempPatternWidget(QWidget):
@@ -74,15 +51,11 @@ class TempPatternWidget(QWidget):
             self, 
             parent = None,
             app_parent = None,
-            focus_step_number=0,
             memoryPool={},
             queuePool={}
     ):
-        
-
         super().__init__()
 
-        
         self._parent=parent
         self._app_parent=app_parent
         self.Step_number=0
@@ -91,12 +64,13 @@ class TempPatternWidget(QWidget):
         self.queuePool=queuePool
         self.step_widges_list=[]
         self.patternFiles=[]
-        self.focus_step_number=focus_step_number
         self.availlible_patternFile_count=0
         self.focus_patternFile_number=0
+        self.focus_step_number=0
         self.cache_step=tempUnit()
         self.cache_steplist=templist()
         self.paste_ready=False
+        self.content_Change=False
         self.activeStep_noFull=False
         self.update_Request=False
         self.IconButtonUpdate=False
@@ -115,8 +89,6 @@ class TempPatternWidget(QWidget):
         self.timer.timeout.connect(self.regularWork)
         self.timer.start(10)
 
-        #self.timerWorker=regular_Thread(self)
-        #QThreadPool.globalInstance().start(self.timerWorker)
         
 
         self.test=0
@@ -128,7 +100,7 @@ class TempPatternWidget(QWidget):
     
         
     def setup_TempPattern(self):
-        self.step_widges_list.append(None)
+        self.step_widges_list=[None]
         for _step in range(1,21):
             temp_step = PyTempStep(
                 active=False,
@@ -144,7 +116,7 @@ class TempPatternWidget(QWidget):
         
         
     def setup_TempGraph(self):
-        self.graph =pg.PlotWidget(background=None,title="予定パターン")
+        self.graph =pg.PlotWidget(background=None,title="温度パターン")
         
         self.graph.setLabel(axis='left', text='温度', units='℃')
 
@@ -182,7 +154,8 @@ class TempPatternWidget(QWidget):
         for _step in range(1,21):
 
             region = PyGraphRegionItem(
-                    parent = self._parent,
+                    parent  =self,
+                    app_parent = self._parent,
                     brush = QBrush(QColor(0, 0, 0, 0)),
                     hoverBrush=QBrush(QColor(0, 10, 10, 100)),
                     pen=pg.mkPen(50,50,50),
@@ -210,13 +183,8 @@ class TempPatternWidget(QWidget):
 
         self.update_Request=True
 
-
-    def reload_MainMemoryFromDatabase(self):
-        databaseLoadThread(self.main_memoryPool)
-
     def memory_reader(self):
         #Reload Memory from Database
-        #self.reload_MainMemoryFromDatabase()
 
         for key in self.main_memoryPool.keys():
             self.memoryPool[key]=self.main_memoryPool[key]
@@ -267,14 +235,12 @@ class TempPatternWidget(QWidget):
                     time_keep               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].value,
                     test_measure_enable     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
                     test_measure_PatternNo  =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定パターン".format(ptn_no,step_no)].value
-                
                     )
                 units.append(unit)
+
             pattern.units=units
             _patternFile_lists.append(pattern)
-        
         self.patternFiles=_patternFile_lists
-
 
     def memory_writer(self):
 
@@ -340,7 +306,7 @@ class TempPatternWidget(QWidget):
 
         
 
-        self.save_IconButtonActiveState=self.cache_steplist.content_Change
+        self.save_IconButtonActiveState=self.content_Change
         self.delete_IconButtonActiveState=self.editorEnable
 
         self.IconButtonUpdate=True
@@ -362,8 +328,6 @@ class TempPatternWidget(QWidget):
         # ///////////////////////////////////////////////////////////////
         self.themes = Themes().items
 
-        self.focus_patternFile_number=self.settings.items["App User Interface parameter Setting"]["focus_patternFile_No"]
-        
         self.delete_IconButton = PyIconButton(
                 icon_path = Functions.set_svg_icon("fi-rr-trash.svg"),
                 parent = self._parent,
@@ -488,7 +452,8 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
                 self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
                 self.step_widges_list[_step].pattern.KeepTime_lineEdit.setValue(unit.time_keep)
-                self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
+                self.step_widges_list[_step].update_testFileCombobox(unit.test_measure_PatternNo)
+                #self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
                 pass
             elif unit.Step_Type==tempUnit.End_unit_type:  #End unit
                 pass
@@ -534,7 +499,6 @@ class TempPatternWidget(QWidget):
             for _step in range(1,21):
                 self.GraphStepLabelList[_step].setPos(_step+0.1,1.2*maxpos)
     
-
     def lunchOptionDialog(self,message,type):
 
         '''
@@ -550,13 +514,10 @@ class TempPatternWidget(QWidget):
         diag = PyMessageDialog(title,message)
         return(str(diag.exec()))
 
-
-
     def ui_click_callback(self):
 
         btn_name=self.sender().objectName()
 
-        print("btn_name = ",btn_name)
 
         if btn_name=="削除":
             self.patternFile_Delete()
@@ -564,9 +525,29 @@ class TempPatternWidget(QWidget):
             self.patternFile_Save()
         elif btn_name=="追加":
             self.patternFile_New()
+
         elif btn_name=="patternfile_comboBox":
+
+            if self.content_Change:
+                result=self.lunchOptionDialog("変更内容は未保存です。内容を保存しますか",PyDialog.warning_3_type)
+
+                if result=="Yes":
+                    #User is want to save file
+                    self.patternFile_Save_work()
+                
+                elif result=="No":
+                    #User is do not want to save file
+                    pass
+
+                elif result=="Cancel":
+                    #User is not want Delete file
+                    self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.disconnect()
+                    self._parent.ui.load_pages.patternfile_comboBox.setCurrentIndex(self.focus_patternFile_number)
+                    self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+                    return
+
+
             self.focus_patternFile_number=self._parent.ui.load_pages.patternfile_comboBox.currentIndex()
-            #maybe confirm if we still not save
             self.patternFile_Load()
 
         elif btn_name=="commect_lineEdit":
@@ -581,10 +562,6 @@ class TempPatternWidget(QWidget):
             self.cache_steplist.set_RT_measure(self._parent.ui.load_pages.RT_combobox.currentIndex())
             self.update_Request=True
         
-
-
-
-
     def patternFile_Load(self):
 
         self.set_memorypool_register("Modbus Registor Pool - Registor","フォーカスPTN番号",self.focus_patternFile_number)
@@ -602,48 +579,29 @@ class TempPatternWidget(QWidget):
 
         self.update_Request=True
 
-    
-
-
-
     def patternFile_Delete(self):
 
-        delete=False
+        result=self.lunchOptionDialog("温度パターン \"{}\" 削除しますか？".format(self.patternFile_nameList[self.focus_patternFile_number]),PyDialog.warning_2_type)
 
-        if self.content_Change:
-            result=self.lunchOptionDialog("変更内容は未保存です。削除しますか？",PyDialog.warning_2_type)
+        if result=="No":
+            return
 
-            if result=="Yes":
-                delete=True
-                
-            elif result=="No":
-                #User is not want Delete file
-                return
+        self.availlible_patternFile_count-=1
+        self.set_memorypool_register("Modbus Registor Pool - Registor","有効PTN総数",self.availlible_patternFile_count)
+
+        self.patternFiles.append(templist())
+        self.patternFiles.pop(self.focus_patternFile_number)
+
+        if self.focus_patternFile_number>self.availlible_patternFile_count:
+            self.focus_patternFile_number=self.availlible_patternFile_count
+
+        if self.focus_patternFile_number:
+            self.cache_steplist=self.patternFiles[self.focus_patternFile_number]
         else:
-            delete=True
+            self.cache_steplist=templist()
 
-        if delete:
-            self.availlible_patternFile_count-=1
-            self.set_memorypool_register("Modbus Registor Pool - Registor","有効PTN総数",self.availlible_patternFile_count)
-
-            self.patternFiles.append(templist())
-            self.patternFiles.pop(self.focus_patternFile_number)
-
-            if self.focus_patternFile_number>0:
-                self.focus_patternFile_number-=1
-
-            if self.focus_patternFile_number:
-                self.cache_steplist=self.patternFiles[self.focus_patternFile_number]
-            else:
-                self.cache_steplist=templist()
-
-
-            print("self.availlible_patternFile_count =",self.availlible_patternFile_count)
-            print("self.focus_patternFile_number =",self.focus_patternFile_number)
-
-            self.memory_writer()
-
-            self.patternFile_Load()
+        self.memory_writer()
+        self.patternFile_Load()
 
         
     def patternFile_Save(self):
@@ -651,7 +609,6 @@ class TempPatternWidget(QWidget):
         QThreadPool.globalInstance().start(self.patternFile_Save_Worker)
 
     def patternFile_Save_work(self):
-        print("B")
         #Refresh patternFiles
         self.patternFiles[self.focus_patternFile_number]=copy.deepcopy(self.cache_steplist)
         
@@ -685,10 +642,25 @@ class TempPatternWidget(QWidget):
 
     def patternFile_New(self):
         NameString_fromDialog=""
-        #if self.cache_steplist is not change
-        NameString_fromDialog=self.lunchMessageDialog("Create new pattern","New Pattern Name :")
-        #if self.cache_steplist is  changed
-        #NameString_fromDialog=self.lunchMessageDialog("Create new pattern","未保存のパターンは破棄されます。宜しでしょうか?")
+
+        if self.content_Change:
+            result=self.lunchOptionDialog("変更内容は未保存です。保存してから新規作成しますか？",PyDialog.warning_3_type)
+
+            if result=="Yes":
+                #User is not want Delete file
+                self.patternFile_Save_work()
+                NameString_fromDialog=self.lunchMessageDialog("新規パターン作成","新規ファイル名称入力 :")
+                
+            elif result=="No":
+                #User is not want Delete file
+                NameString_fromDialog=self.lunchMessageDialog("新規パターン作成","新規ファイル名称入力 :")
+
+            elif result=="Cancel":
+                #User is not want Delete file
+                return
+
+        else:
+            NameString_fromDialog=self.lunchMessageDialog("新規パターン作成","新規ファイル名称入力 :")
 
         #if we got availible name string
         if NameString_fromDialog!="Dialog reject" and NameString_fromDialog!="":
@@ -704,7 +676,6 @@ class TempPatternWidget(QWidget):
             #Save it to database
             self.patternFile_Save()
 
-                 
     def set_memorypool_register(self,Main_memorypool,memory_name,value):
         
         if self.memoryPool[Main_memorypool][memory_name].getValue()!=value:
@@ -733,7 +704,6 @@ class TempPatternWidget(QWidget):
         if self.update_Request:
             self.update_Request=False
             self.update()
-
 
     def scroll_adjust_TempPattern(self):
         self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().maximum())
@@ -868,7 +838,6 @@ class TempPatternWidget(QWidget):
                     self.content_Change=True
 
 
-            self.cache_steplist.content_Change=self.content_Change
 
     def step_modifly_manager(self,step):
         stepUnit=self.cache_steplist.getStep(step)
@@ -884,7 +853,7 @@ class TempPatternWidget(QWidget):
         stepUnit.test_measure_PatternNo =self.step_widges_list[step]._test_pattern
 
         self.cache_steplist.setStep(step,stepUnit)
-
+        
         self.update_Request=True
 
 
@@ -900,12 +869,6 @@ class TempPatternWidget(QWidget):
 
 
 
-class patternFile_Save_Thread(QRunnable):
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
 
-    def run(self):
-        self.parent.patternFile_Save_work()
 
     

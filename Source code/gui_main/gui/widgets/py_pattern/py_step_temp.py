@@ -52,20 +52,6 @@ class modifly_callbackThread(QRunnable):
     def run(self):
         self.parent.modifly_callbackWork(self.sender)
 
-class workThread(QThread):
-
-    trigger = Signal()
-
-    def __int__(self,parent):
-        # 初始化函式
-        print("Initial")
-        super().__init__()
-        self.parent=parent
-        self.setStackSize(1000)
-
-    def run(self):
-        self.trigger.emit()
-
 class PyTempStep(QWidget):
 
     #clicked = Signal(object)
@@ -140,32 +126,23 @@ class PyTempStep(QWidget):
         self.pattern.setupUi( self.pattern_frame)
         self.pattern.page.setCurrentIndex(self._active)
 
-
-        #self.modifly_callbackWorker = workThread()
-        #self.modifly_callbackWorker.trigger.connect(self.modifly_callbackWork)
-        #self.modifly_callbackWorker.setObjectName("STEP {} modifly_callbackWorker".format(self._step))
-
-        #self.type_modifly_callbackWorker = workThread()
-        #self.type_modifly_callbackWorker.trigger.connect(self.type_modifly_callbackWork)
-        #self.type_modifly_callbackWorker.setObjectName("STEP {} type_modifly_callbackWorker".format(self._step))
-        
-
-
         self.FocusStyleChange=False
         self.FocusStyle=self.focus_gray_out_style
         self.timer=QTimer()
         self.timer.timeout.connect(self.timerCallback)
         self.timer.start(100)
 
-
-        
-        # icon_bottum_ui_setting
-        # ///////////////////////////////////////////////////////////////
-        self.icon_bottum_ui_setting()
         
         # Parameter_setting
         # ///////////////////////////////////////////////////////////////
         self.parameter_setting()
+        
+        # icon_bottum_ui_setting
+        # ///////////////////////////////////////////////////////////////
+        self.icon_bottum_ui_setting()
+
+        self.update_testFileCombobox(self._test_pattern)
+        
         # Menu_setting
         # ///////////////////////////////////////////////////////////////
         self._menu=PyStepMenu(
@@ -179,6 +156,10 @@ class PyTempStep(QWidget):
 
         self._menu.menu_frame.hide()
         self.type_modifly_callback()
+
+
+
+
 
 
     def timerCallback(self):
@@ -200,6 +181,7 @@ class PyTempStep(QWidget):
 
         self.pattern.KeepTime_lineEdit.setValue(self._keep_seccond)
         self.pattern.TestPattern_comboBox.setCurrentIndex(self._test_pattern)
+
 
     def icon_bottum_ui_setting(self):
         # LOAD SETTINGS
@@ -302,8 +284,6 @@ class PyTempStep(QWidget):
         self._parent.tempPattern.step_modifly_manager(self._step)
     
         
-    #def type_modifly_callback(self):
-    #    self.type_modifly_callbackWorker.start()
 
     def type_modifly_callback(self):
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":
@@ -337,6 +317,7 @@ class PyTempStep(QWidget):
             self.pattern.TestPattern_comboBox.setDisabled(True)
             self.pattern.TestPattern_comboBox.setStyleSheet(self.line_gray_out_style)
             self.pattern.TestPattern_label.setStyleSheet(self.label_gray_out_style)
+            self.update_testFileCombobox(0)
             
         elif (self.pattern.Type_comboBox.currentText()) == "測定":
 
@@ -351,7 +332,7 @@ class PyTempStep(QWidget):
             self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
             self.pattern.label_4.setStyleSheet(self.time_normal_style)
             self.pattern.SV_lineEdit.setEnabled(False)
-            self.pattern.SV_lineEdit.setStyleSheet(self.line_normal_style)
+            self.pattern.SV_lineEdit.setStyleSheet(self.label_normal_style)
             self.pattern.SV_label.setStyleSheet(self.label_normal_style)
             
             self.pattern.N2_lineEdit.setEnabled(True)
@@ -368,9 +349,10 @@ class PyTempStep(QWidget):
             self.pattern.KeepTime_lineEdit.setEnabled(True)
             self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_normal_style)
             self.pattern.KeepTime_label.setStyleSheet(self.label_normal_style)
-            self.pattern.TestPattern_comboBox.setDisabled(True)
+            self.pattern.TestPattern_comboBox.setEnabled(True)
             self.pattern.TestPattern_comboBox.setStyleSheet(self.line_normal_style)
             self.pattern.TestPattern_label.setStyleSheet(self.label_normal_style)
+            self.update_testFileCombobox()
 
         elif (self.pattern.Type_comboBox.currentText()) == "END":
 
@@ -410,18 +392,36 @@ class PyTempStep(QWidget):
             self.pattern.TestPattern_comboBox.setDisabled(False)
             self.pattern.TestPattern_comboBox.setStyleSheet(self.line_gray_out_style)
             self.pattern.TestPattern_label.setStyleSheet(self.label_gray_out_style) 
+            self.update_testFileCombobox(0)
 
         self.modifly_callback()
 
-    
+
+    def update_testFileCombobox(self,number=None):
+        
+        testFile_count=len(self._parent.testPattern.patternFile_nameList)
+        if number==None:
+            if self._test_pattern>testFile_count:
+                self._test_pattern=testFile_count-1
+            else:
+                pass
+        else:
+            if number>testFile_count:
+                self._test_pattern=testFile_count-1
+            else:
+                self._test_pattern=number
+
+        self.pattern.TestPattern_comboBox.currentIndexChanged.disconnect()
+        self.pattern.TestPattern_comboBox.clear()
+        self.pattern.TestPattern_comboBox.addItems(self._parent.testPattern.patternFile_nameList)
+        self.pattern.TestPattern_comboBox.setCurrentIndex(self._test_pattern)
+        self.pattern.TestPattern_comboBox.currentIndexChanged.connect(self.modifly_callback)
 
     def addStepBtn_presscallback(self):
         self._parent.tempPattern.new_TempPattern()
-        pass
 
     def addStepBtn_releasecallback(self):
         self._parent.tempPattern.scroll_adjust_TempPattern()
-        pass
 
     def show_menu(self):
 
@@ -443,8 +443,9 @@ class PyTempStep(QWidget):
 
         
     def leaveEvent(self, event):
-        self._parent.tempPattern.un_focus_step(self._step)
-        self._parent.tempPattern.close_one_menu(self._step)
+        if self.pattern.page.currentIndex() ==1:
+            self._parent.tempPattern.un_focus_step(self._step)
+            self._parent.tempPattern.close_one_menu(self._step)
 
     def paintEvent(self, event):
         pass

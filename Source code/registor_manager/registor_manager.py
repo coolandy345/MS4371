@@ -62,17 +62,7 @@ def databaseLoadThread(memoryPool):
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
 
-    pool={}
-    for row in cur.execute('SELECT * FROM "System Memory Pool" '):
-
-        register=ModbusRegistorClass.ModbusPackage(
-                               name         =row[0],
-                               value        =row[1],
-                               comment      =row[2]
-                               )
-        pool[register.name]=register
-
-    memoryPool["System Memory Pool"]=pool
+    
 
     pool={}
     for row in cur.execute('SELECT * FROM "Modbus Registor Pool - Coil" '):
@@ -100,7 +90,7 @@ def databaseLoadThread(memoryPool):
     memoryPool["Modbus Registor Pool - Registor"]=pool
 
     pool={}
-    for row in cur.execute('SELECT * FROM "Test Pattern" '):
+    for row in cur.execute('SELECT * FROM "Measurement Pattern" '):
 
         register=ModbusRegistorClass.ModbusPackage(number       =row[0],
                                name         =row[1],
@@ -111,7 +101,19 @@ def databaseLoadThread(memoryPool):
                                )
         pool[register.name]=register
 
-    memoryPool["Test Pattern Memory"]=pool
+    memoryPool["Measurement Pattern"]=pool
+
+    pool={}
+    for row in cur.execute('SELECT * FROM "Measurement Profile" '):
+
+        register=ModbusRegistorClass.ModbusPackage(
+                               name         =row[0],
+                               value        =row[1],
+                               comment      =row[2]
+                               )
+        pool[register.name]=register
+
+    memoryPool["Measurement Profile"]=pool
 
     
     

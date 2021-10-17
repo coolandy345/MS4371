@@ -132,19 +132,19 @@ STEP情報_min=0
 STEP情報_comment="0:測定外 1:END 2:測定有　END時測定無"
 
 PID_P=0
-PID_P_default="NULL"
+PID_P_default=0.1
 PID_P_max=3200
 PID_P_min=0.1
 PID_P_comment="NULL"
 
 PID_I=1
-PID_I_default="NULL"
+PID_I_default=0
 PID_I_max=32000
 PID_I_min=0
 PID_I_comment="NULL"
 
 PID_D=2
-PID_D_default="NULL"
+PID_D_default=0
 PID_D_max=32000
 PID_D_min=0
 PID_D_comment="NULL"
