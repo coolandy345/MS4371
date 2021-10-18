@@ -48,6 +48,15 @@ class CustomDataBlock(ModbusSparseDataBlock):
     """ A datablock that stores the new value in memory
     and performs a custom action after it has been stored.
     """
+    def __init__(self,memorypool):
+        super().__init__()
+        self.memorypool=memorypool
+        self.register_dict={}
+        #get dict
+        super().__init__(self.register_dict)
+
+    def get_register_dict(self):
+        pass
 
     def setValues(self, address, value):
         """ Sets the requested values of the datastore
@@ -91,6 +100,7 @@ def run_async_server(memorypool,queuePool):
     
 
     block  = CustomDataBlock([0]*400)
+
     store  = ModbusSlaveContext(di=block, co=block, hr=block, ir=block)
     context = ModbusServerContext(slaves=store, single=True)
 

@@ -30,18 +30,20 @@ class Gpib_manager():
         mydll.ibrd(Dev,send_text, 80)
         cntl=mydll.ThreadIbcntl()
         Ret=mydll.ThreadIbsta()
+
         err=mydll.ThreadIberr()
         print(cntl,Ret,err,"= ",send_text.value," end")
 
+        for tim in range(1,4):
         
-        send_text = ctypes.create_string_buffer(b"beeper.beep(0.5, 2400)",100)
-        send_text.value
-        mydll.ibwrt(Dev,send_text,len(send_text))
-        Ret=mydll.ThreadIbsta()
-        err=mydll.ThreadIberr()
-        print(Ret,err)
+            send_text = ctypes.create_string_buffer(b"beeper.beep(0.1, 2400)",100)
+            send_text.value
+            mydll.ibwrt(Dev,send_text,len(send_text))
+            Ret=mydll.ThreadIbsta()
+            err=mydll.ThreadIberr()
+            print(Ret,err)
 
-
+            time.sleep(0.2)
 
         
 
