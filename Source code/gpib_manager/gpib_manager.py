@@ -34,6 +34,15 @@ class Gpib_manager():
         print(cntl,Ret,err,"= ",send_text.value," end")
 
         
+        send_text = ctypes.create_string_buffer(b"beeper.beep(0.5, 2400)",100)
+        send_text.value
+        mydll.ibwrt(Dev,send_text,len(send_text))
+        Ret=mydll.ThreadIbsta()
+        err=mydll.ThreadIberr()
+        print(Ret,err)
+
+
+
         
 
         #print("get message =",message,cnt)
