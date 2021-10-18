@@ -1,1 +1,1 @@
-from .gpib_manager import Gpib_manager
+from .gpib_manager import GPIB_device,check_GPIB_device_insert
