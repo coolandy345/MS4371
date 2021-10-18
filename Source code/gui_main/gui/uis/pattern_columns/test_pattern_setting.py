@@ -173,7 +173,7 @@ class TestPatternWidget(QWidget):
 
             elif _step ==9:
 
-                label=pg.TextItem(text="END")
+                label=pg.TextItem(text="")
                 label.setPos(17.1, 20)
 
             else:

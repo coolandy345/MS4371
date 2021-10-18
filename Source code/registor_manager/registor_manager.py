@@ -30,7 +30,6 @@ def databaseWriteThread(memoryPool,queuePool):
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
 
-    print(queuePool)
     while 1:
         getItem=memoryUnit()
         getItem=queuePool["memory_Write_Queue"].get()
