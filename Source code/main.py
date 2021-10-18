@@ -47,31 +47,31 @@ def shotdown_entire_app(future):
 
 if __name__ == "__main__":
 
-    MemoryPoolManager=Manager()
-    MemoryPool = MemoryPoolManager.dict()
+    #MemoryPoolManager=Manager()
+    #MemoryPool = MemoryPoolManager.dict()
 
-    QueuePool={}
-    QueuePool["modbus_Write_Queue"]=MemoryPoolManager.Queue()
-    QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
-    QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
+    #QueuePool={}
+    #QueuePool["modbus_Write_Queue"]=MemoryPoolManager.Queue()
+    #QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
+    #QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
 
     gpib_manager=Gpib_manager()
-    databaseLoadThread(MemoryPool)
-    #memoryWriteThread(MemoryPool,QueuePool)
-    #initial_GUI(MemoryPool,QueuePool)
+    #databaseLoadThread(MemoryPool)
+    ##memoryWriteThread(MemoryPool,QueuePool)
+    ##initial_GUI(MemoryPool,QueuePool)
+
+    ##with ProcessPoolExecutor(max_workers=10) as executor:
+    ##    #test_A_future = executor.submit(test_A,MemoryPool)
+    ##    #test_B_future = executor.submit(test_B,MemoryPool)
+    ##    executor.submit(databaseWriteThread,MemoryPool,QueuePool)
+    ##    Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
+    ##    Gui_future.add_done_callback(shotdown_entire_app)
 
     #with ProcessPoolExecutor(max_workers=10) as executor:
-    #    #test_A_future = executor.submit(test_A,MemoryPool)
-    #    #test_B_future = executor.submit(test_B,MemoryPool)
+    #    executor.submit(run_async_server,MemoryPool,QueuePool)
     #    executor.submit(databaseWriteThread,MemoryPool,QueuePool)
     #    Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
     #    Gui_future.add_done_callback(shotdown_entire_app)
-
-    with ProcessPoolExecutor(max_workers=10) as executor:
-        executor.submit(run_async_server,MemoryPool,QueuePool)
-        executor.submit(databaseWriteThread,MemoryPool,QueuePool)
-        Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
-        Gui_future.add_done_callback(shotdown_entire_app)
 
 
 
