@@ -3,10 +3,42 @@ import sys
 import time
 import ctypes
 
+import usb.core
 
-class Gpib_manager():
 
-    def __init__(self):
+
+def check_GPIB_device_insert():
+
+    # find our device
+    dev = usb.core.find(idVendor=0x0403, idProduct=0x6001)
+
+    # was it found?
+    if dev is None:
+        raise ValueError('Device not found')
+        return False
+    else:
+        return True
+
+
+
+class Gpib_device():
+
+    def __init__(self,
+                 address
+                 
+                 
+                 
+                 
+                 ):
+
+
+
+
+
+
+
+
+
 
         mydll = ctypes.cdll.LoadLibrary('GPIB-32.dll')
 
@@ -43,7 +75,7 @@ class Gpib_manager():
 
 
 
-        
+        ibrsp
 
         #print("get message =",message,cnt)
         #print(Dev,Ret)
