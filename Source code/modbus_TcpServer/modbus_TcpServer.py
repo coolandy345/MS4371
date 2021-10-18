@@ -86,7 +86,7 @@ def database_update_threadJob(modbus_context,memorypool,queuePool):
 def run_async_server(memorypool,queuePool):
     
 
-    block  = CustomDataBlock([0]*100)
+    block  = CustomDataBlock([0]*400)
     store  = ModbusSlaveContext(di=block, co=block, hr=block, ir=block)
     context = ModbusServerContext(slaves=store, single=True)
 

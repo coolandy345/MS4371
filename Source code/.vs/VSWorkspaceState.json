@@ -7,11 +7,10 @@
     "\\gui_main\\gui\\uis\\windows",
     "\\gui_main\\gui\\uis\\windows\\main_window",
     "\\gui_main\\gui\\widgets",
-    "\\gui_main\\gui\\widgets\\py_dialog",
-    "\\gui_main\\gui\\widgets\\py_pattern",
+    "\\gui_main\\gui\\widgets\\py_graph",
     "\\modbus_TcpServer",
     "\\registor_manager"
   ],
-  "SelectedNode": "\\gui_main\\gui\\widgets\\py_pattern\\pattern_menu.ui",
+  "SelectedNode": "\\main.py",
   "PreviewInSolutionExplorer": false
 }
