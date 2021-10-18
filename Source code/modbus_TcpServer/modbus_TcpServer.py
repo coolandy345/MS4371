@@ -20,8 +20,10 @@ from pymodbus.transaction import (ModbusRtuFramer,
                                   ModbusAsciiFramer,
                                   ModbusBinaryFramer)
 from pymodbus.datastore import ModbusSparseDataBlock
-
+from registor_manager import *
 from twisted.internet.task import LoopingCall
+
+#from ..registor_manager import databaseLoadThread,databaseWriteThread,MemoryUnit
 
 import random
 
@@ -30,13 +32,15 @@ import threading
 # configure the service logging
 # --------------------------------------------------------------------------- # 
 import logging
-FORMAT = ('%(asctime)-15s %(threadName)-15s'
-          ' %(levelname)-8s %(module)-15s:%(lineno)-8s %(message)s')
-logging.basicConfig(format=FORMAT)
-log = logging.getLogger()
-log.setLevel(logging.DEBUG)
 import time
 import socket
+
+
+#FORMAT = ('%(asctime)-15s %(threadName)-15s'
+#          ' %(levelname)-8s %(module)-15s:%(lineno)-8s %(message)s')
+#logging.basicConfig(format=FORMAT)
+#log = logging.getLogger()
+#log.setLevel(logging.DEBUG)
 
 
 
@@ -65,9 +69,9 @@ class CustomDataBlock(ModbusSparseDataBlock):
     #    print("getValues",address,count)
 
 def database_update_threadJob(modbus_context,memorypool,queuePool):
-
+    
     while 1:
-        getItem=memoryUnit()
+        getItem=MemoryUnit()
         getItem=queuePool["modbus_Write_Queue"].get()
 
         context  = a
@@ -110,7 +114,7 @@ def run_async_server(memorypool,queuePool):
     # ----------------------------------------------------------------------- # 
 
     #t = threading.Thread(target = database_update_threadJob,args = (i,))
-    t = threading.Thread(target = database_update_threadJob,args = (context,))
+    t = threading.Thread(target = database_update_threadJob,args = (context,memorypool,queuePool))
     t.start()
 
     # TCP Server

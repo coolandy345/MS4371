@@ -14,7 +14,7 @@ def get_Abs_path(relative):
     norm_path=os.path.normpath(join_path)
     return norm_path
 
-class memoryUnit():
+class MemoryUnit():
 
     def __init__(self,
                  Main_memorypool="",
@@ -31,7 +31,7 @@ def databaseWriteThread(memoryPool,queuePool):
     cur = System_Registor_Database.cursor()
 
     while 1:
-        getItem=memoryUnit()
+        getItem=MemoryUnit()
         getItem=queuePool["memory_Write_Queue"].get()
 
         time.sleep(0.5)

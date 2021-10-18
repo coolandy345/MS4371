@@ -8,17 +8,20 @@ from multiprocessing import Manager,Queue
 # --------------------------------------------------------------------------- # 
 # local module import
 # --------------------------------------------------------------------------- # 
-from registor_manager import *
+
 
 import sys
 import os
 import time
 
 from modbus_TcpServer import *
+from registor_manager import *
 from gui_main import*
 
 from gui_main.qt_core import *
 
+
+from gpib_manager import Gpib_manager
 
 
 
@@ -52,7 +55,7 @@ if __name__ == "__main__":
     QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
     QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
 
-
+    gpib_manager=Gpib_manager()
     databaseLoadThread(MemoryPool)
     #memoryWriteThread(MemoryPool,QueuePool)
     #initial_GUI(MemoryPool,QueuePool)

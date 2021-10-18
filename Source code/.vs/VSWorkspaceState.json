@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\gui_main",
-    "\\gui_main\\gui",
+    "\\GPIB_manager",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\uis\\windows",
+    "\\gui_main\\gui\\uis\\pattern_columns",
     "\\gui_main\\gui\\uis\\windows\\main_window",
     "\\gui_main\\gui\\widgets",
-    "\\gui_main\\gui\\widgets\\py_graph",
+    "\\gui_main\\gui\\widgets\\py_dialog",
+    "\\gui_main\\gui\\widgets\\py_pattern",
     "\\modbus_TcpServer",
     "\\registor_manager"
   ],
-  "SelectedNode": "\\main.py",
+  "SelectedNode": "\\GPIB_manager\\gpib_manager.py",
   "PreviewInSolutionExplorer": false
 }

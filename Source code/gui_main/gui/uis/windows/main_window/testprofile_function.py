@@ -116,7 +116,7 @@ class testfile_manager(QWidget):
         if self.memoryPool[Main_memorypool][memory_name].getValue()!=value:
             self.memoryPool[Main_memorypool][memory_name].setValue(value)
             self.main_memoryPool[Main_memorypool]=self.memoryPool[Main_memorypool]
-            sendItem=memoryUnit(Main_memorypool,memory_name)
+            sendItem=MemoryUnit(Main_memorypool,memory_name)
             self.queuePool["memory_Write_Queue"].put(sendItem)
 
     def set_parameter(self):
