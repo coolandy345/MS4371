@@ -2,23 +2,9 @@
 import sys
 import time
 import ctypes
-import usb.core
-
-
-
-
-
-def check_GPIB_device_insert():
-    # find our device
-    dev = usb.core.find(idVendor=0x0483, idProduct=0x374B)
-
-    # was it found?
-    if dev is None:
-        return False
-    else:
-        return True
-
-
+import threading
+import time
+from registor_manager import *
 
 class GPIB_device():
 
@@ -27,7 +13,7 @@ class GPIB_device():
     TIMO    =0x4000     # Timeout occured
     END     =0x2000     # EOI or EOS detected
     SRQI    =0x1000     # SRQ detected by CIC
-    RQS     =0x0800     # Device requested any service
+    RQS     =0x0800     # self.gpib_device requested any service
     CMPL    =0x0100     # I/O completed
     LOK     =0x0080     # Local lockout state
     REM     =0x0040     # Remote enable state
@@ -35,8 +21,8 @@ class GPIB_device():
     ATN     =0x0010     # Attention line asserted
     TACS    =0x0008     # Talker active state
     LACS    =0x0004     # Listener active state
-    DTAS    =0x0002     # Device trigger state
-    DCAS    =0x0001     # Device clear state
+    DTAS    =0x0002     # self.gpib_device trigger state
+    DCAS    =0x0001     # self.gpib_device clear state
 
 
     # Error messages in iberr
@@ -58,7 +44,6 @@ class GPIB_device():
     ETAB    =20         # The return buffer is fullS
     ELCK    =21         # Address or board is locked
 
-    S
     # Timeout values and meanings
     T10us   =1          # Timeout of 10 uSec
     T30us   =2          # Timeout of 30 uSec
@@ -79,56 +64,131 @@ class GPIB_device():
     T1000s  =17         # Timeout of 1000 Sec
 
     def __init__(self,address):
+        
         self.address=address
-        self.GPIBdll = ctypes.cdll.LoadLibrary('GPIB-32.dll')
+        self.gpib_dll = ctypes.cdll.LoadLibrary('GPIB-32.dll')
+        self.connection = False
+
+        
+        if self.initiail_GPIB_device():
+            self.send_Command("beeper.beep(0.1, 2400)")
 
 
     def initiail_GPIB_device(self):
-        Dev=GPIBdll.ibdev(0,self.address,0,8, 1, 0)
-        Ret=GPIBdll.ThreadIbsta()
-        err=GPIBdll.ThreadIberr()
-        print(Ret,err)
 
+        self.gpib_dev=self.gpib_dll.ibdev(0,self.address,0,self.T100ms, 1, 0)
+        Ret=self.gpib_dll.ThreadIbsta()
+        err=self.gpib_dll.ThreadIberr()
+        if ((Ret & self.ERR) != 0):
+            #print("initiail fail with numer {} device".format(self.address))
+            self.connection = False
+            return False
+        else:
+            self.connection = True
+            return True
 
+    def request_Command(self,command):
+        if self.send_Command(command):
+            result = self.get_Value()
+            self.connection = True
+        else:
+            result = False
+            self.connection = False
+        return result
 
+    def send_Command(self,command):
+        if not self.connection:
+            if self.initiail_GPIB_device():
+                return False
 
+        byte_string=command.encode("utf8")
+        send_buffer= ctypes.create_string_buffer(byte_string)
+        self.gpib_dll.ibwrt(self.gpib_dev,send_buffer,send_buffer._length_)
+        Ret=self.gpib_dll.ThreadIbsta()
+        err=self.gpib_dll.ThreadIberr()
+        if ((Ret & self.ERR) != 0):
+            #print("fail send data to numer {} device".format(self.address))
+            self.connection = False
+            return False
+        else:
+            self.connection = True
+            return True
 
+    def get_Value(self):
+                
+        read_buffer= ctypes.create_string_buffer(100)   
 
+        self.gpib_dll.ibrd(self.gpib_dev,read_buffer,read_buffer._length_)
 
+        #cntl=self.gpib_dll.ThreadIbcntl()
+        Ret=self.gpib_dll.ThreadIbsta()
+        err=self.gpib_dll.ThreadIberr()
+        if ((Ret & self.ERR) != 0):
+            #print("fail retrive result from numer {} device".format(self.address))
+            self.connection = False
+            return False
+        else:
+            result=read_buffer.value.decode("utf8")
+            self.connection = True
+            return result
 
+class GPIB_device_2635B(GPIB_device):
+    def __init__(self,memoryPool,queuePool):
+        super().__init__(self.memoryPool["System memory"]["2635B GPIB address"].getValue())
+
+        self.memoryPool=memoryPool
+        self.queuePool=queuePool
+
+        connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
+        connnection_check_Thread.start()
+
+    def set_memorypool_register(self,memorypool_name,registor_name,value):
         
+        if self.memoryPool[memorypool_name][registor_name].getValue()!=value:
 
-        send_text = ctypes.create_string_buffer(b"*IDN?",100)
-        send_text.value
-        GPIBdll.ibwrt(Dev,send_text,len(send_text))
-        Ret=GPIBdll.ThreadIbsta()
-        err=GPIBdll.ThreadIberr()
-        print(Ret,err)
+            sub_memorypool=copy.deepcopy(self.memoryPool[memorypool_name])
+            sub_memorypool[registor_name].setValue(value)
 
+            self.memoryPool[memorypool_name]=sub_memorypool
+            sendItem=MemoryUnit(memorypool_name,registor_name)
+            self.queuePool["memory_Write_Queue"].put(sendItem)
+
+
+    def connnection_check_Work(self):
         
-        #send_text="Keithley Instruments Inc., Model 2635B, 4490039, 3.3.5                                "
-        #print(len(send_text))
-        ##GPIBdll.ibrd(int ud, StringBuilder buf, int cnt)
-                     
-        GPIBdll.ibrd(Dev,send_text, 80)
-        cntl=GPIBdll.ThreadIbcntl()
-        Ret=GPIBdll.ThreadIbsta()
+        while 1:
+            self.set_memorypool_register("System memory","2635B connection",self.request_Command("*IDN?"))
+            time.sleep(1)
 
-        err=GPIBdll.ThreadIberr()
-        print(cntl,Ret,err,"= ",send_text.value," end")
+class GPIB_device_2657A(GPIB_device):
+    def __init__(self,memoryPool,queuePool):
+        super().__init__(self.memoryPool["System memory"]["2657A GPIB address"].getValue())
 
-        for tim in range(1,4):
+        self.memoryPool=memoryPool
+        self.queuePool=queuePool
+
+        connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
+        connnection_check_Thread.start()
+
+    def initial_device(self):
+        self.initiail_GPIB_device()
+        self.send_Command("smua.reset()")
+
+    def connnection_check_Work(self):
+        while 1:
+            self.set_memorypool_register("System memory","2657A connection",self.request_Command("*IDN?"))
+            print(self.connection)
+            time.sleep(1)
+
+    def set_memorypool_register(self,memorypool_name,registor_name,value):
         
-            send_text = ctypes.create_string_buffer(b"beeper.beep(0.1, 2400)",100)
-            send_text.value
-            GPIBdll.ibwrt(Dev,send_text,len(send_text))
-            Ret=GPIBdll.ThreadIbsta()
-            err=GPIBdll.ThreadIberr()
-            print(Ret,err)
+        if self.memoryPool[memorypool_name][registor_name].getValue()!=value:
 
-            time.sleep(0.2)
+            sub_memorypool=copy.deepcopy(self.memoryPool[memorypool_name])
+            sub_memorypool[registor_name].setValue(value)
 
-        ibrsp
+            self.memoryPool[memorypool_name]=sub_memorypool
+            sendItem=MemoryUnit(memorypool_name,registor_name)
+            self.queuePool["memory_Write_Queue"].put(sendItem)
 
-        #print("get message =",message,cnt)
-        #print(Dev,Ret)
+

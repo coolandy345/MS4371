@@ -88,17 +88,17 @@ class testfile_manager(QWidget):
             self.memoryPool[key]=self.main_memoryPool[key]
 
 
-        self._year=self.memoryPool["Measurement Profile"]["年度"].getValue()
-        self._QC_Test=self.memoryPool["Measurement Profile"]["評価試験"].getValue()
-        self._Costom_Test=self.memoryPool["Measurement Profile"]["依頼試験"].getValue()
-        self._testNumber=self.memoryPool["Measurement Profile"]["依頼測定番号"].getValue()
-        self._costomer=self.memoryPool["Measurement Profile"]["依頼元"].getValue()
-        self._costomerName=self.memoryPool["Measurement Profile"]["依頼者"].getValue()
-        self._testMeterialName=self.memoryPool["Measurement Profile"]["試料名称"].getValue()
-        self._testMeterial=self.memoryPool["Measurement Profile"]["材料"].getValue()
-        self._MeterialMainDie=self.memoryPool["Measurement Profile"]["主電極径(mm)"].getValue()
-        self._MeterialinnerDie=self.memoryPool["Measurement Profile"]["ガード電極の内径(mm)"].getValue()
-        self._thinkness=self.memoryPool["Measurement Profile"]["試料の厚さ(mm)"].getValue()
+        self._year=self.memoryPool["System memory"]["年度"].getValue()
+        self._QC_Test=self.memoryPool["System memory"]["評価試験"].getValue()
+        self._Costom_Test=self.memoryPool["System memory"]["依頼試験"].getValue()
+        self._testNumber=self.memoryPool["System memory"]["依頼測定番号"].getValue()
+        self._costomer=self.memoryPool["System memory"]["依頼元"].getValue()
+        self._costomerName=self.memoryPool["System memory"]["依頼者"].getValue()
+        self._testMeterialName=self.memoryPool["System memory"]["試料名称"].getValue()
+        self._testMeterial=self.memoryPool["System memory"]["材料"].getValue()
+        self._MeterialMainDie=self.memoryPool["System memory"]["主電極径(mm)"].getValue()
+        self._MeterialinnerDie=self.memoryPool["System memory"]["ガード電極の内径(mm)"].getValue()
+        self._thinkness=self.memoryPool["System memory"]["試料の厚さ(mm)"].getValue()
 
         
         self.pid_parameter_list=[]
@@ -186,52 +186,52 @@ class testfile_manager(QWidget):
         if btn=="QC_Test_RadioButton":
             self._QC_Test=1
             self._Costom_Test=0
-            self.set_memorypool_register("Measurement Profile","評価試験",self._QC_Test)
-            self.set_memorypool_register("Measurement Profile","依頼試験",self._Costom_Test)
+            self.set_memorypool_register("System memory","評価試験",self._QC_Test)
+            self.set_memorypool_register("System memory","依頼試験",self._Costom_Test)
             
 
         elif btn=="Costom_Test_RadioButton":
             self._QC_Test=0
             self._Costom_Test=1
-            self.set_memorypool_register("Measurement Profile","評価試験",self._QC_Test)
-            self.set_memorypool_register("Measurement Profile","依頼試験",self._Costom_Test)
+            self.set_memorypool_register("System memory","評価試験",self._QC_Test)
+            self.set_memorypool_register("System memory","依頼試験",self._Costom_Test)
             self.prepare_folder()
 
         elif btn=="lineEdit_year":
             self._year=self._parent.ui.load_pages.lineEdit_year.text()
-            self.set_memorypool_register("Measurement Profile","年度",self._year)
+            self.set_memorypool_register("System memory","年度",self._year)
 
         elif btn=="lineEdit_testNumber":
             self._testNumber=self._parent.ui.load_pages.lineEdit_year.text()
-            self.set_memorypool_register("Measurement Profile","依頼測定番号",self._testNumber)
+            self.set_memorypool_register("System memory","依頼測定番号",self._testNumber)
 
         elif btn=="lineEdit_costomer":
             self._costomer=self._parent.ui.load_pages.lineEdit_year.text()
-            self.set_memorypool_register("Measurement Profile","依頼元",self._costomer)
+            self.set_memorypool_register("System memory","依頼元",self._costomer)
 
         elif btn=="lineEdit_costomerName":
             self._costomerName=self._parent.ui.load_pages.lineEdit_year.text()
-            self.set_memorypool_register("Measurement Profile","依頼者",self._costomerName)
+            self.set_memorypool_register("System memory","依頼者",self._costomerName)
 
         elif btn=="lineEdit_testMeterialName":
             self._testMeterialName=self._parent.ui.load_pages.lineEdit_year.text()
-            self.set_memorypool_register("Measurement Profile","試料名称",self._testMeterialName)
+            self.set_memorypool_register("System memory","試料名称",self._testMeterialName)
 
         elif btn=="lineEdit_testMeterial":
             self._testMeterial=self._parent.ui.load_pages.lineEdit_year.text()
-            self.set_memorypool_register("Measurement Profile","材料",self._testMeterial)
+            self.set_memorypool_register("System memory","材料",self._testMeterial)
 
         elif btn=="lineEdit_MeterialMainDie":
             self._MeterialMainDie=self._parent.ui.load_pages.lineEdit_year.text()
-            self.set_memorypool_register("Measurement Profile","主電極径(mm)",self._MeterialMainDie)
+            self.set_memorypool_register("System memory","主電極径(mm)",self._MeterialMainDie)
 
         elif btn=="lineEdit_MeterialinnerDie":
             self._MeterialinnerDie=self._parent.ui.load_pages.lineEdit_year.text()
-            self.set_memorypool_register("Measurement Profile","ガード電極の内径(mm)",self._MeterialinnerDie)
+            self.set_memorypool_register("System memory","ガード電極の内径(mm)",self._MeterialinnerDie)
 
         elif btn=="lineEdit_thinkness":
             self._thinkness=self._parent.ui.load_pages.lineEdit_year.text()
-            self.set_memorypool_register("Measurement Profile","試料の厚さ(mm)",self._thinkness)
+            self.set_memorypool_register("System memory","試料の厚さ(mm)",self._thinkness)
 
     def make_CSV_file(self):
         pass

@@ -77,6 +77,7 @@ class SetupMainWindow:
         self.queuePool=queuePool
         self.setup_gui(self.memoryPool)
 
+
     # ADD LEFT MENUS
     # ///////////////////////////////////////////////////////////////
     add_left_menus = [

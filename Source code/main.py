@@ -21,8 +21,9 @@ from gui_main import*
 from gui_main.qt_core import *
 
 
-from gpib_manager import GPIB_device,check_GPIB_device_insert
+from gpib_manager import *
 
+import ctypes
 
 
 def shotdown_entire_app(future):
@@ -40,20 +41,20 @@ if __name__ == "__main__":
     QueuePool["modbus_Write_Queue"]=MemoryPoolManager.Queue()
     QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
     QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
+
     
-    check_GPIB_device_insert()
+    databaseLoadThread(MemoryPool)
 
-    ##gpib_manager=Gpib_manager()
-    #databaseLoadThread(MemoryPool)
-    ###memoryWriteThread(MemoryPool,QueuePool)
-    ##initial_GUI(MemoryPool,QueuePool)
+    ##memoryWriteThread(MemoryPool,QueuePool)
+    #initial_GUI(MemoryPool,QueuePool)
 
 
-    #with ProcessPoolExecutor(max_workers=10) as executor:
-    #    executor.submit(run_async_server,MemoryPool,QueuePool)
-    #    executor.submit(databaseWriteThread,MemoryPool,QueuePool)
-    #    Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
-    #    Gui_future.add_done_callback(shotdown_entire_app)
+    with ProcessPoolExecutor(max_workers=10) as executor:
+        executor.submit(gpib_Thread,MemoryPool,QueuePool)
+        executor.submit(run_async_server,MemoryPool,QueuePool)
+        executor.submit(databaseWriteThread,MemoryPool,QueuePool)
+        Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
+        Gui_future.add_done_callback(shotdown_entire_app)
 
 
   

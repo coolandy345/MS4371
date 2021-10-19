@@ -33,20 +33,25 @@ def databaseWriteThread(memoryPool,queuePool):
     while 1:
         getItem=MemoryUnit()
         getItem=queuePool["memory_Write_Queue"].get()
-
+        queuePool["modbus_Write_Queue"].put(getItem)
         time.sleep(0.5)
         
-        test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
-        cur.execute(test)
-        #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
+        if not memoryPool[getItem.Main_memorypool][getItem.memory_name].volatile_type:
+            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].getValue(),getItem.memory_name)
+            #print(test)
+            cur.execute(test)
+            #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
             
         while not queuePool["memory_Write_Queue"].empty():
             getItem=queuePool["memory_Write_Queue"].get()
-            
-            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
-            cur.execute(test)
+            queuePool["modbus_Write_Queue"].put(getItem)
 
-            #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
+            if not memoryPool[getItem.Main_memorypool][getItem.memory_name].volatile_type:
+                test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].getValue(),getItem.memory_name)
+                #print(test)
+                cur.execute(test)
+
+                #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
          
 
         System_Registor_Database.commit()
@@ -64,25 +69,16 @@ def databaseLoadThread(memoryPool):
     
 
     pool={}
-    for row in cur.execute('SELECT * FROM "Modbus Registor Pool - Coil" '):
-        
-        register=ModbusRegistorClass.ModbusPackage(number       =row[0],
-                               name         =row[1],
-                               value        =row[2],
-                               comment      =row[3]
-                               )
-        pool[register.name]=register
-    memoryPool["Modbus Registor Pool - Coil"]=pool
-
-    pool={}
     for row in cur.execute('SELECT * FROM "Modbus Registor Pool - Registor" '):
 
         register=ModbusRegistorClass.ModbusPackage(number       =row[0],
                                name         =row[1],
-                               min          =row[2],
-                               value        =row[3],
-                               max          =row[4],
-                               comment      =row[5]
+                               min              =row[2],
+                               value            =row[3],
+                               max              =row[4],
+                               default          =row[5],
+                               volatile_type   =row[6],
+                               comment      =row[7]
                                )
         pool[register.name]=register
 
@@ -103,7 +99,7 @@ def databaseLoadThread(memoryPool):
     memoryPool["Measurement Pattern"]=pool
 
     pool={}
-    for row in cur.execute('SELECT * FROM "Measurement Profile" '):
+    for row in cur.execute('SELECT * FROM "System memory" '):
 
         register=ModbusRegistorClass.ModbusPackage(
                                name         =row[0],
@@ -112,7 +108,7 @@ def databaseLoadThread(memoryPool):
                                )
         pool[register.name]=register
 
-    memoryPool["Measurement Profile"]=pool
+    memoryPool["System memory"]=pool
 
     
     

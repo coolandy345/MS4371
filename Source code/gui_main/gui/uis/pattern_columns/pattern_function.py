@@ -52,8 +52,10 @@ class templist():
     def __init__(
         self,
         name="",
-        up_asciicode=0,
-        down_asciicode=0,
+        asciicode_0=0,
+        asciicode_1=0,
+        asciicode_2=0,
+        asciicode_3=0,
         comment="",
         active=0,
         step_number=0,
@@ -62,13 +64,19 @@ class templist():
         ):
 
         self.name=name
-        self.up_asciicode=up_asciicode
-        self.down_asciicode=down_asciicode
+        
+        self.asciicode_0=asciicode_0
+        self.asciicode_1=asciicode_1
+        self.asciicode_2=asciicode_2
+        self.asciicode_3=asciicode_3
 
         if name!="":
             self.name_string2ASC(self.name)
-        elif up_asciicode!="" or down_asciicode!="":
-            self.name_ASC2string(self.up_asciicode,self.down_asciicode)
+        elif  (asciicode_0!="" or 
+                asciicode_1!="" or
+                asciicode_2!="" or
+                asciicode_3!=""):
+            self.name_ASC2string(self.asciicode_0,self.asciicode_1,self.asciicode_2,self.asciicode_3)
 
         self.comment=comment
         self.active=active
@@ -151,65 +159,95 @@ class templist():
     #
     #    NAME ASCii code modifly
     #     
-    def ASCcode_Set(self,up_asciicode,down_asciicode):
-        if self.up_asciicode!=up_asciicode or self.down_asciicode!=down_asciicode:
-            self.up_asciicode=up_asciicode
-            self.down_asciicode=down_asciicode
-            self.name_ASC2string(self.up_asciicode,self.down_asciicode)
+    def ASCcode_Set(self,asciicode_0,asciicode_1,asciicode_2,asciicode_3):
+        if (self.asciicode_0!=asciicode_0 or 
+            self.asciicode_1!=asciicode_1 or 
+            self.asciicode_2!=asciicode_2 or 
+            self.asciicode_3!=asciicode_3
+            ):
+            self.asciicode_0=asciicode_0
+            self.asciicode_1=asciicode_1
+            self.asciicode_2=asciicode_2
+            self.asciicode_3=asciicode_3
+            self.name_ASC2string(self.asciicode_0,self.asciicode_1,self.asciicode_2,self.asciicode_3)
         self.check_and_adjust()
 
-    def name_ASC2string(self,up_asciicode,down_asciicode):
+
+    def name_ASC2string(self,asciicode_0,asciicode_1,asciicode_2,asciicode_3):
 
         self.name=""
         mask=256
 
-        if up_asciicode!="None":
-            while up_asciicode:
-                asciinum=up_asciicode%mask
+        if asciicode_0!="None":
+            while asciicode_0:
+                asciinum=asciicode_0%mask
                 char = chr(asciinum)
                 self.name+=char
-                up_asciicode=up_asciicode>>8
+                asciicode_0=asciicode_0>>8
 
-        if down_asciicode!="None":
-            while down_asciicode:
-
-                asciinum=down_asciicode%mask
+        if asciicode_1!="None":
+            while asciicode_1:
+                asciinum=asciicode_1%mask
                 char = chr(asciinum)
                 self.name+=char
-                down_asciicode=down_asciicode>>8
+                asciicode_1=asciicode_1>>8
 
+        if asciicode_2!="None":
+            while asciicode_2:
+                asciinum=asciicode_2%mask
+                char = chr(asciinum)
+                self.name+=char
+                asciicode_2=asciicode_2>>8
+
+        if asciicode_3!="None":
+            while asciicode_3:
+                asciinum=asciicode_3%mask
+                char = chr(asciinum)
+                self.name+=char
+                asciicode_3=asciicode_3>>8
+        
         return self.name
+
     def name_Set(self,nameString):
         if self.name!=nameString:
             self.name=nameString
             self.name_string2ASC(self.name)
         self.check_and_adjust()
 
-
+        
     def name_string2ASC(self,nameString):
 
         if len(nameString)<=8:
 
-
-
-            
             letter_position=0
+            self.asciicode_0=0
+            self.asciicode_1=0
+            self.asciicode_2=0
+            self.asciicode_3=0
+
+
 
             for letter in nameString:
                 
                 asciinum=ord(letter)
                 
                 #make upper asc
-                if letter_position<=3:
+                if letter_position==0 or letter_position==1:
                     asciinum=asciinum<<(8*letter_position)
-                    self.up_asciicode+=asciinum
-                else:
+                    self.asciicode_0+=asciinum
+                elif letter_position==2 or letter_position==3:
+                    asciinum=asciinum<<(8*(letter_position-2))
+                    self.asciicode_1+=asciinum
+                elif letter_position==4 or letter_position==5:
                     asciinum=asciinum<<(8*(letter_position-4))
-                    self.down_asciicode+=asciinum
+                    self.asciicode_2+=asciinum
+                elif letter_position==6 or letter_position==7:
+                    asciinum=asciinum<<(8*(letter_position-6))
+                    self.asciicode_3+=asciinum
 
                 letter_position+=1
 
-            return self.up_asciicode,self.down_asciicode
+            return self.asciicode_0,self.asciicode_1,self.asciicode_2,self.asciicode_3
 
         else:
             print("name is too long")

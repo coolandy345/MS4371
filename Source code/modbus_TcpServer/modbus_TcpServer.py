@@ -34,6 +34,7 @@ import threading
 import logging
 import time
 import socket
+import copy
 
 
 #FORMAT = ('%(asctime)-15s %(threadName)-15s'
@@ -48,15 +49,29 @@ class CustomDataBlock(ModbusSparseDataBlock):
     """ A datablock that stores the new value in memory
     and performs a custom action after it has been stored.
     """
-    def __init__(self,memorypool):
-        super().__init__()
+    def __init__(self,memorypool,queuepool):
+        #super().__init__()
+        
         self.memorypool=memorypool
+        self.queuepool=queuepool
+        self.register_namedict={}
         self.register_dict={}
+        self.register_shift=1
         #get dict
+        self.get_register_dict()
+
         super().__init__(self.register_dict)
 
+        database_update_thread = threading.Thread(target = self.database_update_Work)
+        database_update_thread.start()
+
+
     def get_register_dict(self):
-        pass
+        self.register_dict={}
+
+        for unit in self.memorypool["Modbus Registor Pool - Registor"].values():
+            self.register_namedict[unit.registor_number+self.register_shift]=unit.name
+            self.register_dict[unit.registor_number+self.register_shift]=unit.getValue()
 
     def setValues(self, address, value):
         """ Sets the requested values of the datastore
@@ -70,21 +85,49 @@ class CustomDataBlock(ModbusSparseDataBlock):
         # however make sure not to do too much work here or it will
         # block the server, espectially if the server is being written
         # to very quickly
-        print("wrote {} to {}".format(value, address))
+
+        if isinstance(value, list):
+            address_temp=address
+            for val in value:
+                registor_name=self.register_namedict[address_temp]
+                self.set_memorypool_register(registor_name,val)
+                address_temp+=1
+        else:
+            registor_name=self.register_namedict[address]
+            self.set_memorypool_register(registor_name,value)
+
+
+    def set_memorypool_register(self,registor_name,value):
+
+        if self.memorypool["Modbus Registor Pool - Registor"][registor_name].getValue()!=value:
+
+            sub_memorypool=copy.deepcopy(self.memorypool["Modbus Registor Pool - Registor"])
+            sub_memorypool[registor_name].setValue(value)
+
+            self.memorypool["Modbus Registor Pool - Registor"]=sub_memorypool
+            sendItem=MemoryUnit("Modbus Registor Pool - Registor",registor_name)
+            self.queuepool["memory_Write_Queue"].put(sendItem)
+
+    def database_update_Work(self):
+    
+        while 1:
+            getItem=MemoryUnit()
+            getItem=self.queuepool["modbus_Write_Queue"].get()
+
+            if getItem.Main_memorypool=="Modbus Registor Pool - Registor":
+                unit=self.memorypool["Modbus Registor Pool - Registor"][getItem.memory_name]
+                self.register_dict[unit.registor_number+self.register_shift]=unit.getValue()
+
+
+
+        
 
     #def getValues(self, address, count=1):
 
     #    super(CustomDataBlock, self).getValues(address, count)
     #    print("getValues",address,count)
 
-def database_update_threadJob(modbus_context,memorypool,queuePool):
-    
-    while 1:
-        getItem=MemoryUnit()
-        getItem=queuePool["modbus_Write_Queue"].get()
 
-        context  = a
-        context[0x01].setValues(0x03,1,[5])
 
 #def database_update_threadJob(a):
 
@@ -98,9 +141,10 @@ def database_update_threadJob(modbus_context,memorypool,queuePool):
 
 def run_async_server(memorypool,queuePool):
     
+    block  = CustomDataBlock(memorypool,queuePool)
+    #print(block.getValues(10, count=10))
 
-    block  = CustomDataBlock([0]*400)
-
+    #block  = ModbusSequentialDataBlock(0, [17]*100)
     store  = ModbusSlaveContext(di=block, co=block, hr=block, ir=block)
     context = ModbusServerContext(slaves=store, single=True)
 
@@ -122,15 +166,9 @@ def run_async_server(memorypool,queuePool):
     # ----------------------------------------------------------------------- # 
     # run the server you want
     # ----------------------------------------------------------------------- # 
-
-    #t = threading.Thread(target = database_update_threadJob,args = (i,))
-    t = threading.Thread(target = database_update_threadJob,args = (context,memorypool,queuePool))
-    t.start()
-
     # TCP Server
     local_IP_address=socket.gethostbyname(socket.gethostname())
     StartTcpServer(context, identity=identity, address=(local_IP_address, 502))
-
     
     # TCP Server with deferred reactor run
 
@@ -157,6 +195,8 @@ def run_async_server(memorypool,queuePool):
     # Binary Server
     # StartSerialServer(context, identity=identity,
     #                   port='/dev/ttyp0', framer=ModbusBinaryFramer)
+
+
 
 
 if __name__ == "__main__":

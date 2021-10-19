@@ -202,8 +202,8 @@ class TestPatternWidget(QWidget):
         _20_pattern_lists=[None]
 
         #Try to get number of PTN list
-        self.availlible_patternFile_count=self.memoryPool["Measurement Pattern"]["有効PTN総数"].value
-        self.focus_patternFile_number=self.memoryPool["Measurement Pattern"]["フォーカスPTN番号"].value
+        self.availlible_patternFile_count=self.memoryPool["Measurement Pattern"]["有効PTN総数"].getValue()
+        self.focus_patternFile_number=self.memoryPool["Measurement Pattern"]["フォーカスPTN番号"].getValue()
         #Auto load last pattern
         if self.focus_patternFile_number==0:
             if self.availlible_patternFile_count:
@@ -218,15 +218,15 @@ class TestPatternWidget(QWidget):
         
         for file_number in range(1,21):
             pattern=testlist(
-                name            =self.memoryPool["Measurement Pattern"]["PTNData_{}_名称".format(file_number)].value,
-                step_number     =self.memoryPool["Measurement Pattern"]["PTNData_{}_実行STEP数".format(file_number)].value,
-                active          =self.memoryPool["Measurement Pattern"]["PTNData_{}_パターン有効".format(file_number)].value,
+                name            =self.memoryPool["Measurement Pattern"]["PTNData_{}_名称".format(file_number)].getValue(),
+                step_number     =self.memoryPool["Measurement Pattern"]["PTNData_{}_実行STEP数".format(file_number)].getValue(),
+                active          =self.memoryPool["Measurement Pattern"]["PTNData_{}_パターン有効".format(file_number)].getValue(),
                 comment         =self.memoryPool["Measurement Pattern"]["PTNData_{}_註記".format(file_number)].value,
-                test_time       =self.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(file_number)].value,
-                test_sampletime =self.memoryPool["Measurement Pattern"]["PTNData_{}_測定sampletime".format(file_number)].value,
-                BG0_test_time   =self.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(file_number)].value,
-                BG_test_time    =self.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(file_number)].value,
-                BG_sampletime   =self.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定sampletime".format(file_number)].value
+                test_time       =self.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(file_number)].getValue(),
+                test_sampletime =self.memoryPool["Measurement Pattern"]["PTNData_{}_測定sampletime".format(file_number)].getValue(),
+                BG0_test_time   =self.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(file_number)].getValue(),
+                BG_test_time    =self.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(file_number)].getValue(),
+                BG_sampletime   =self.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定sampletime".format(file_number)].getValue()
                 )
 
             if pattern.active:
@@ -237,7 +237,7 @@ class TestPatternWidget(QWidget):
             for step_number in range(1,9):
 
                 unit=testUnit(
-                    voltage     =self.memoryPool["Measurement Pattern"]["PTNData_{}_STEP_{}_電圧".format(file_number,step_number)].value,
+                    voltage     =self.memoryPool["Measurement Pattern"]["PTNData_{}_STEP_{}_電圧".format(file_number,step_number)].getValue(),
                     )
                 units.append(unit)
             

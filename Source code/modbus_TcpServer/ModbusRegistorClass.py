@@ -5,7 +5,8 @@ class ModbusPackage():
                  min=0,
                  value=0,
                  max=1,
-                 access_type=0,
+                 default=0,
+                 volatile_type=0,
                  comment=""
                  ):
         self.registor_number=number
@@ -16,8 +17,12 @@ class ModbusPackage():
         else:
             self.value=self.min
         self.max=max
-        self.access_type=access_type
+        self.default=default
+        self.volatile_type=volatile_type
         self.comment=comment
+
+        if self.volatile_type:
+            self.value=self.default
 
     def print_Package_Contant(self):
         print("self.registor_number =",self.registor_number)
@@ -29,7 +34,11 @@ class ModbusPackage():
         print("self.comment =",self.comment)
 
     def getValue(self):
-        return self.value
+        if not self.value :
+            return 0
+        else:
+            return self.value
+
 
     def setValue(self,value):
         

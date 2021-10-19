@@ -94,7 +94,6 @@ class TempPatternWidget(QWidget):
         self.test=0
         self.test1=0
 
-
     
 
     
@@ -192,8 +191,8 @@ class TempPatternWidget(QWidget):
         _patternFile_lists=[None]
 
         #Try to get number of PTN list
-        self.availlible_patternFile_count=self.memoryPool["Modbus Registor Pool - Registor"]["有効PTN総数"].value
-        self.focus_patternFile_number=self.memoryPool["Modbus Registor Pool - Registor"]["フォーカスPTN番号"].value
+        self.availlible_patternFile_count=self.memoryPool["Modbus Registor Pool - Registor"]["有効PTN総数"].getValue()
+        self.focus_patternFile_number=self.memoryPool["Modbus Registor Pool - Registor"]["フォーカスPTN番号"].getValue()
         #Auto load last pattern
         if self.focus_patternFile_number==0:
             if self.availlible_patternFile_count:
@@ -208,13 +207,15 @@ class TempPatternWidget(QWidget):
         for ptn_no in range(1,21):
 
             pattern=templist(
-                active          =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_パターン有効".format(ptn_no)].value,
+                active          =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_パターン有効".format(ptn_no)].getValue(),
                 comment         =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_註記".format(ptn_no)].value,
-                step_number     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(ptn_no)].value,
-                gas_condition   =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_測定雰囲気".format(ptn_no)].value,
-                RT_measure      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_RT計測".format(ptn_no)].value,
-                up_asciicode    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_Up".format(ptn_no)].value,
-                down_asciicode  =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_Down".format(ptn_no)].value
+                step_number     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(ptn_no)].getValue(),
+                gas_condition   =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_測定雰囲気".format(ptn_no)].getValue(),
+                RT_measure      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_RT計測".format(ptn_no)].getValue(),
+                asciicode_0    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_0".format(ptn_no)].getValue(),
+                asciicode_1    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_1".format(ptn_no)].getValue(),
+                asciicode_2    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_2".format(ptn_no)].getValue(),
+                asciicode_3    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_3".format(ptn_no)].getValue()
                 )
             
             if pattern.active:
@@ -225,16 +226,16 @@ class TempPatternWidget(QWidget):
             for step_no in range(1,21):
 
                 unit=tempUnit(
-                    Step_Type               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].value,
-                    time_hour               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].value,
-                    time_min                =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].value,
-                    SV                      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].value,
-                    N2_flowRate             =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_N2流量".format(ptn_no,step_no)].value,
-                    PID_muffle_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_マッフル_PID_No".format(ptn_no,step_no)].value,
-                    PID_heater_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ヒーター_PID_No".format(ptn_no,step_no)].value,
-                    time_keep               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].value,
-                    test_measure_enable     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].value,
-                    test_measure_PatternNo  =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定パターン".format(ptn_no,step_no)].value
+                    Step_Type               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].getValue(),
+                    time_hour               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].getValue(),
+                    time_min                =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].getValue(),
+                    SV                      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].getValue(),
+                    N2_flowRate             =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_N2流量".format(ptn_no,step_no)].getValue(),
+                    PID_muffle_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_マッフル_PID_No".format(ptn_no,step_no)].getValue(),
+                    PID_heater_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ヒーター_PID_No".format(ptn_no,step_no)].getValue(),
+                    time_keep               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].getValue(),
+                    test_measure_enable     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].getValue(),
+                    test_measure_PatternNo  =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定パターン".format(ptn_no,step_no)].getValue()
                     )
                 units.append(unit)
 
@@ -246,8 +247,11 @@ class TempPatternWidget(QWidget):
 
         for file_number in range(1,21):
 
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Up".format(file_number),self.patternFiles[file_number].up_asciicode)
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Down".format(file_number),self.patternFiles[file_number].down_asciicode)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_0".format(file_number),self.patternFiles[file_number].asciicode_0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_1".format(file_number),self.patternFiles[file_number].asciicode_1)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_2".format(file_number),self.patternFiles[file_number].asciicode_2)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_3".format(file_number),self.patternFiles[file_number].asciicode_3)
+
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_註記".format(file_number),self.patternFiles[file_number].comment)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_パターン有効".format(file_number),self.patternFiles[file_number].active)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_実行STEP数".format(file_number),self.patternFiles[file_number].step_number)
@@ -288,6 +292,7 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         
+        print(self.cache_steplist.comment)
         self._parent.ui.load_pages.commect_lineEdit.textEdited.disconnect()
         self._parent.ui.load_pages.commect_lineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.commect_lineEdit.setText(self.cache_steplist.comment)
@@ -615,8 +620,12 @@ class TempPatternWidget(QWidget):
         
         list=self.cache_steplist
 
-        self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Up".format(self.focus_patternFile_number),list.up_asciicode)
-        self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_Down".format(self.focus_patternFile_number),list.down_asciicode)
+        self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_0".format(self.focus_patternFile_number),list.asciicode_0)
+        self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_1".format(self.focus_patternFile_number),list.asciicode_1)
+        self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_2".format(self.focus_patternFile_number),list.asciicode_2)
+        self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_3".format(self.focus_patternFile_number),list.asciicode_3)
+
+
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_註記".format(self.focus_patternFile_number),list.comment)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_パターン有効".format(self.focus_patternFile_number),list.active)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_実行STEP数".format(self.focus_patternFile_number),list.step_number)
@@ -807,8 +816,11 @@ class TempPatternWidget(QWidget):
 
             if(
                 self.cache_steplist.name            != self.patternFiles[self.focus_patternFile_number].name or
-                self.cache_steplist.up_asciicode    != self.patternFiles[self.focus_patternFile_number].up_asciicode or
-                self.cache_steplist.down_asciicode  != self.patternFiles[self.focus_patternFile_number].down_asciicode or
+                self.cache_steplist.asciicode_0    != self.patternFiles[self.focus_patternFile_number].asciicode_0 or
+                self.cache_steplist.asciicode_1    != self.patternFiles[self.focus_patternFile_number].asciicode_1 or
+                self.cache_steplist.asciicode_2    != self.patternFiles[self.focus_patternFile_number].asciicode_2 or
+                self.cache_steplist.asciicode_3    != self.patternFiles[self.focus_patternFile_number].asciicode_3 or
+
                 self.cache_steplist.comment         != self.patternFiles[self.focus_patternFile_number].comment or
                 self.cache_steplist.active          != self.patternFiles[self.focus_patternFile_number].active or
                 self.cache_steplist.step_number     != self.patternFiles[self.focus_patternFile_number].step_number or

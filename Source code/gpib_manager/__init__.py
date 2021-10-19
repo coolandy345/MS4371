@@ -1,1 +1,2 @@
-from .gpib_manager import GPIB_device,check_GPIB_device_insert
+from .gpib_manager import GPIB_device_2635B,GPIB_device_2657A
+from .gpib_device_manager import gpib_Thread
