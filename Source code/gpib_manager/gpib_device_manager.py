@@ -27,19 +27,17 @@ def GPIB_connnection_Work(memorypool,queuePool):
     connection=False
     while 1:
         # find our device
-        dev = usb.core.find(idVendor=0x0483, idProduct=0x374B)
+        dev = usb.core.find(idVendor=0x06CE, idProduct=0x8314)
 
         # was it found?
         if dev is None:
             if connection!=False:
                 connection = False
                 set_memorypool_register(memorypool,queuePool,"System memory","GPIB USB conneciton",0)
-                print("GPIB USB disconneciton")
         else:
             if connection!=True:
                 connection = True
                 set_memorypool_register(memorypool,queuePool,"System memory","GPIB USB conneciton",1)
-                print("GPIB USB conneciton")
 
         time.sleep(1)
 

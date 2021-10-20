@@ -48,7 +48,10 @@ from gui_main.qt_core import *
 
 from registor_manager import *
 
-class testfile_manager(QWidget):
+import csv
+import datetime
+
+class Testfile_manager(QWidget):
     
     def __init__(
             self,
@@ -77,7 +80,10 @@ class testfile_manager(QWidget):
         self._MeterialinnerDie=""
         self._thinkness=""
 
-        self.final_folder=""
+        self.pid_parameter_list=[]
+
+
+        self.folder_path=""
 
         self.memory_reader()
         self.set_parameter()
@@ -102,7 +108,7 @@ class testfile_manager(QWidget):
 
         
         self.pid_parameter_list=[]
-        for pid_number in range(1,5):
+        for pid_number in range(0,4):
             pid=["P","I","D"]
             pid_parameter=[]
             for K in pid:
@@ -133,6 +139,24 @@ class testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_MeterialinnerDie.setText(str(self._MeterialinnerDie))
         self._parent.ui.load_pages.lineEdit_thinkness.setText(str(self._thinkness))
 
+        self._parent.ui.load_pages.lineEdit_PID_1_P.setText(str(self.pid_parameter_list[0][0]))
+        self._parent.ui.load_pages.lineEdit_PID_1_I.setText(str(self.pid_parameter_list[0][1]))
+        self._parent.ui.load_pages.lineEdit_PID_1_D.setText(str(self.pid_parameter_list[0][2]))
+
+        self._parent.ui.load_pages.lineEdit_PID_2_P.setText(str(self.pid_parameter_list[1][0]))
+        self._parent.ui.load_pages.lineEdit_PID_2_I.setText(str(self.pid_parameter_list[1][1]))
+        self._parent.ui.load_pages.lineEdit_PID_2_D.setText(str(self.pid_parameter_list[1][2]))
+
+        self._parent.ui.load_pages.lineEdit_PID_3_P.setText(str(self.pid_parameter_list[2][0]))
+        self._parent.ui.load_pages.lineEdit_PID_3_I.setText(str(self.pid_parameter_list[2][1]))
+        self._parent.ui.load_pages.lineEdit_PID_3_D.setText(str(self.pid_parameter_list[2][2]))
+
+        self._parent.ui.load_pages.lineEdit_PID_4_P.setText(str(self.pid_parameter_list[3][0]))
+        self._parent.ui.load_pages.lineEdit_PID_4_I.setText(str(self.pid_parameter_list[3][1]))
+        self._parent.ui.load_pages.lineEdit_PID_4_D.setText(str(self.pid_parameter_list[3][2]))
+
+
+
     def utility_setup(self):
         self._parent.ui.load_pages.QC_Test_RadioButton.clicked.connect(self.button_callback)
         self._parent.ui.load_pages.Costom_Test_RadioButton.clicked.connect(self.button_callback)
@@ -146,6 +170,42 @@ class testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_MeterialMainDie.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_MeterialinnerDie.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_thinkness.editingFinished.connect(self.button_callback)
+
+
+        #self._parent.ui.load_pages.lineEdit_PID_1_P
+        #self._parent.ui.load_pages.lineEdit_PID_1_I
+        #self._parent.ui.load_pages.lineEdit_PID_1_D
+
+        #self._parent.ui.load_pages.lineEdit_PID_2_P
+        #self._parent.ui.load_pages.lineEdit_PID_2_I
+        #self._parent.ui.load_pages.lineEdit_PID_2_D
+
+        #self._parent.ui.load_pages.lineEdit_PID_3_P
+        #self._parent.ui.load_pages.lineEdit_PID_3_I
+        #self._parent.ui.load_pages.lineEdit_PID_3_D
+
+        #self._parent.ui.load_pages.lineEdit_PID_4_P
+        #self._parent.ui.load_pages.lineEdit_PID_4_I
+        #self._parent.ui.load_pages.lineEdit_PID_4_D
+
+        self._parent.ui.load_pages.lineEdit_PID_1_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_1_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_1_D.editingFinished.connect(self.button_callback)
+
+        self._parent.ui.load_pages.lineEdit_PID_2_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_2_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_2_D.editingFinished.connect(self.button_callback)
+
+        self._parent.ui.load_pages.lineEdit_PID_3_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_3_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_3_D.editingFinished.connect(self.button_callback)
+
+        self._parent.ui.load_pages.lineEdit_PID_4_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_4_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_4_D.editingFinished.connect(self.button_callback)
+
+
+
 
     def set_content_Editeable(self,enable):
 
@@ -161,6 +221,22 @@ class testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_MeterialMainDie.setEnabled(enable)
         self._parent.ui.load_pages.lineEdit_MeterialinnerDie.setEnabled(enable)
         self._parent.ui.load_pages.lineEdit_thinkness.setEnabled(enable)
+
+        self._parent.ui.load_pages.lineEdit_PID_1_P.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_1_I.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_1_D.setEnabled(enable)
+
+        self._parent.ui.load_pages.lineEdit_PID_2_P.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_2_I.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_2_D.setEnabled(enable)
+
+        self._parent.ui.load_pages.lineEdit_PID_3_P.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_3_I.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_3_D.setEnabled(enable)
+
+        self._parent.ui.load_pages.lineEdit_PID_4_P.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_4_I.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_4_D.setEnabled(enable)
 
 
     def lunchOptionDialog(self,message,type):
@@ -180,8 +256,6 @@ class testfile_manager(QWidget):
 
     def button_callback(self):
         btn=self.sender().objectName()
-
-        
 
         if btn=="QC_Test_RadioButton":
             self._QC_Test=1
@@ -233,11 +307,73 @@ class testfile_manager(QWidget):
             self._thinkness=self._parent.ui.load_pages.lineEdit_year.text()
             self.set_memorypool_register("System memory","試料の厚さ(mm)",self._thinkness)
 
+        elif btn=="lineEdit_PID_1_P":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_1_P.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_P",self._thinkness)
+
+        elif btn=="lineEdit_PID_1_I":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_1_I.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_I",self._thinkness)
+
+        elif btn=="lineEdit_PID_1_D":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_1_D.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_D",self._thinkness)
+
+        elif btn=="lineEdit_PID_2_P":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_2_P.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_P",self._thinkness)
+
+        elif btn=="lineEdit_PID_2_I":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_2_I.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_I",self._thinkness)
+
+        elif btn=="lineEdit_PID_2_D":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_2_D.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_D",self._thinkness)
+
+        elif btn=="lineEdit_PID_3_P":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_3_P.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_P",self._thinkness)
+
+        elif btn=="lineEdit_PID_3_I":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_3_I.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_I",self._thinkness)
+
+        elif btn=="lineEdit_PID_3_D":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_3_D.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_D",self._thinkness)
+
+        elif btn=="lineEdit_PID_4_P":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_4_P.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_P",self._thinkness)
+
+        elif btn=="lineEdit_PID_4_I":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_4_I.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_I",self._thinkness)
+
+        elif btn=="lineEdit_PID_4_D":
+            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_4_D.text()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_D",self._thinkness)
+
+
+
+
+
+
+
     def make_CSV_file(self):
-        pass
+
+        with open('data/temp/sample_writer_row.csv', 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow([0, 1, 2])
+
+
+
+
 
     def prepare_folder(self):
-        print("A")
+        print("start prepare_folder")
+
         path = "C:/高温抵抗測定結果"
         directory = "{}".format(str(self._year))
         
@@ -247,7 +383,6 @@ class testfile_manager(QWidget):
         except FileExistsError:
             pass
         
-        print("B")
         # Create target Year Directory
         try:
             path = os.path.join(path, directory)
@@ -255,7 +390,6 @@ class testfile_manager(QWidget):
         except FileExistsError:
             pass
         
-        print("C")
         # Create target Directory
         try:
             os.mkdir(os.path.join(path, "評価試験"))
@@ -263,39 +397,34 @@ class testfile_manager(QWidget):
         except FileExistsError:
             pass
         
-        print("D")
         if self._QC_Test:
             
-            print("E")
-            try:
-                path=os.path.join(path, "依頼測定")
-            except FileExistsError:
-                pass
+            path=os.path.join(path, "依頼測定")
+
+            timeNow=datetime.datetime.now()
+            path = os.path.join(path,"{}_{}_{}_{}_{}_{}_result".format(timeNow.year,timeNow.month,timeNow.date,timeNow.hour,timeNow.minute,timeNow.second))
+            os.mkdir(path)
 
         else:
             
-            print("F")
             try:
                 path_temp=os.path.join(path, "評価試験/{}".format(self._testNumber))
                 os.mkdir(path_temp)
 
             except FileExistsError:
                 
-                print("G")
                 result=self.lunchOptionDialog("依頼番号 \"{}\" フォルダーが存在しています。上書きますか？".format(self._testNumber),PyDialog.warning_2_type)
                 if result=="Yes":
                     
-                    print("H")
                     path=path_temp
                     os.rmdir(path)
                     os.mkdir(path)
 
                 elif result=="No":
-                    print("I")
                     NameString_fromDialog=self.lunchMessageDialog("依頼番号編集","新規依頼番号入力 :")
                     path=os.path.join(path, "評価試験/{}".format(NameString_fromDialog))
                     os.mkdir(path)
 
             
 
-        self.final_folder=path
+        self.folder_path=path

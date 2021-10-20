@@ -62,6 +62,9 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
         super().__init__(self.register_dict)
 
+        ethernet_connection_thread = threading.Thread(target = self.ethernet_connection_Work)
+        ethernet_connection_thread.start()
+
         database_update_thread = threading.Thread(target = self.database_update_Work)
         database_update_thread.start()
 
@@ -73,7 +76,41 @@ class CustomDataBlock(ModbusSparseDataBlock):
             self.register_namedict[unit.registor_number+self.register_shift]=unit.name
             self.register_dict[unit.registor_number+self.register_shift]=unit.getValue()
 
+    def getValues(self, address, count=1):
+        super(CustomDataBlock, self).getValues(address, count)
+        self.set_Ethernet_Connection()
+
+    def ethernet_connection_Work(self):
+        while 1:
+
+            if self.memorypool["System memory"]["Ethernet conneciton check pool"].getValue():
+                sub_memorypool=copy.deepcopy(self.memorypool["System memory"])
+                sub_memorypool["Ethernet conneciton check pool"].setValue(0)
+                self.memorypool["System memory"]=sub_memorypool
+
+                sub_memorypool=copy.deepcopy(self.memorypool["System memory"])
+                sub_memorypool["Ethernet conneciton"].setValue(1)
+                self.memorypool["System memory"]=sub_memorypool
+
+            else:
+                sub_memorypool=copy.deepcopy(self.memorypool["System memory"])
+                sub_memorypool["Ethernet conneciton"].setValue(0)
+                self.memorypool["System memory"]=sub_memorypool
+
+            time.sleep(1)
+        
+
+    def set_Ethernet_Connection(self):
+
+        sub_memorypool=copy.deepcopy(self.memorypool["System memory"])
+        sub_memorypool["Ethernet conneciton check pool"].setValue(1)
+        self.memorypool["System memory"]=sub_memorypool
+
+
+        
     def setValues(self, address, value):
+        
+        self.set_Ethernet_Connection()
         """ Sets the requested values of the datastore
 
         :param address: The starting address
@@ -148,8 +185,6 @@ def run_async_server(memorypool,queuePool):
     store  = ModbusSlaveContext(di=block, co=block, hr=block, ir=block)
     context = ModbusServerContext(slaves=store, single=True)
 
-
-    
     # ----------------------------------------------------------------------- # 
     # initialize the server information
     # ----------------------------------------------------------------------- # 
@@ -170,34 +205,6 @@ def run_async_server(memorypool,queuePool):
     local_IP_address=socket.gethostbyname(socket.gethostname())
     StartTcpServer(context, identity=identity, address=(local_IP_address, 502))
     
-    # TCP Server with deferred reactor run
-
-    # from twisted.internet import reactor
-    # StartTcpServer(context, identity=identity, address=("localhost", 5020),
-    #                defer_reactor_run=True)
-    # reactor.run()
-
-    # Server with RTU framer
-    # StartTcpServer(context, identity=identity, address=("localhost", 5020),
-    #                framer=ModbusRtuFramer)
-
-    # UDP Server
-    # StartUdpServer(context, identity=identity, address=("127.0.0.1", 5020))
-
-    # RTU Server
-    # StartSerialServer(context, identity=identity,
-    #                   port='/dev/ttyp0', framer=ModbusRtuFramer)
-
-    # ASCII Server
-    # StartSerialServer(context, identity=identity,
-    #                   port='/dev/ttyp0', framer=ModbusAsciiFramer)
-
-    # Binary Server
-    # StartSerialServer(context, identity=identity,
-    #                   port='/dev/ttyp0', framer=ModbusBinaryFramer)
-
-
-
 
 if __name__ == "__main__":
 

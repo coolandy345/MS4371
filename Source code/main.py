@@ -44,10 +44,8 @@ if __name__ == "__main__":
 
     
     databaseLoadThread(MemoryPool)
-
     ##memoryWriteThread(MemoryPool,QueuePool)
     #initial_GUI(MemoryPool,QueuePool)
-
 
     with ProcessPoolExecutor(max_workers=10) as executor:
         executor.submit(gpib_Thread,MemoryPool,QueuePool)

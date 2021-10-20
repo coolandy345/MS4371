@@ -79,7 +79,6 @@ class TestPatternWidget(QWidget):
         self.add_IconButtonActiveState=False
         self.save_IconButtonActiveState=False
 
-        
         self.utility_setup()
         self.setup_TempPattern()
         self.setup_TempGraph()
@@ -615,9 +614,7 @@ class TestPatternWidget(QWidget):
             self.update_Request=True
 
     def patternFile_Load(self):
-        print(self.focus_patternFile_number)
         self.set_memorypool_register("Measurement Pattern","フォーカスPTN番号",self.focus_patternFile_number)
-
         self.memory_reader()
 
         #Reset paste function

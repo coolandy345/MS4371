@@ -20,7 +20,7 @@
 
 from gui_main.gui.widgets.py_table_widget.py_table_widget import PyTableWidget
 
-from . testprofile_function import testfile_manager
+from . testprofile_function import Testfile_manager
 
 
 from . functions_main_window import *
@@ -42,6 +42,7 @@ from gui_main.gui.core.json_themes import Themes
 # IMPORT PY ONE DARK WIDGETS
 # ///////////////////////////////////////////////////////////////
 from gui_main.gui.widgets import *
+
 
 # LOAD UI MAIN
 # ///////////////////////////////////////////////////////////////
@@ -76,7 +77,7 @@ class SetupMainWindow:
         self.memoryPool=memoryPool
         self.queuePool=queuePool
         self.setup_gui(self.memoryPool)
-
+        
 
     # ADD LEFT MENUS
     # ///////////////////////////////////////////////////////////////
@@ -221,195 +222,15 @@ class SetupMainWindow:
 
         self.main_namespace.ui.load_pages.stackedWidget.setCurrentWidget(self.main_namespace.ui.load_pages.page_AutoOperate)
 
-        self.main_namespace.ui.load_pages.btn_AutoMode.clicked.connect(self.main_namespace.btn_clicked)
-        self.main_namespace.ui.load_pages.btn_ManaualMode.clicked.connect(self.main_namespace.btn_clicked)
-
-        self.main_namespace.MS_ConnectionToggle=PyToggle()
-        self.main_namespace.ui.load_pages.gridLayout_27.addWidget(self.main_namespace.MS_ConnectionToggle)
         
-        self.main_namespace.Tester_ConnectionToggle=PyToggle()
-        self.main_namespace.ui.load_pages.gridLayout_28.addWidget(self.main_namespace.Tester_ConnectionToggle)
+
         
         self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
         self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
+        self.main_namespace.main_utility_manager= Main_utility_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
+        self.main_namespace.testfile_manager=Testfile_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
+
         
-
-        self.main_namespace.testfile_manager=testfile_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
-
-        self.main_namespace.stop_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("stop-button-extralarge.svg"),
-                parent = self.main_namespace,
-                app_parent = self.main_namespace.ui.central_widget,
-                tooltip_text = "停止中",
-                width = 60,
-                height = 60,
-                radius = 10,
-                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
-            )
-        self.main_namespace.ui.load_pages.Layout_Status_STOP.addWidget(self.main_namespace.stop_icon, Qt.AlignCenter, Qt.AlignCenter)
-
-        # rererherherher
-
-        self.main_namespace.heating_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("heater-extralarge.svg"),
-                parent = self.main_namespace,
-                app_parent = self.main_namespace.ui.central_widget,
-                tooltip_text = "昇温中",
-                width = 60,
-                height = 60,
-                radius = 10,
-                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = "#1e2229",
-                bg_color_pressed = "#1e2229",
-            )
-        self.main_namespace.ui.load_pages.Layout_Status_Heating.addWidget(self.main_namespace.heating_icon, Qt.AlignCenter, Qt.AlignCenter)
-
-
-        self.main_namespace.keepTemp_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("reuse-extralarge.svg"),
-                parent = self.main_namespace,
-                app_parent = self.main_namespace.ui.central_widget,
-                tooltip_text = "温度キープ中",
-                width = 60,
-                height = 60,
-                radius = 10,
-                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
-            )
-        self.main_namespace.ui.load_pages.Layout_Status_KeepTemp.addWidget(self.main_namespace.keepTemp_icon, Qt.AlignCenter, Qt.AlignCenter)
-
-        self.main_namespace.testing_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("oscilloscope-extralarge.svg"),
-                parent = self.main_namespace,
-                app_parent = self.main_namespace.ui.central_widget,
-                tooltip_text = "測定中",
-                width = 60,
-                height = 60,
-                radius = 10,
-                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
-            )
-        self.main_namespace.ui.load_pages.Layout_Status_Testing.addWidget(self.main_namespace.testing_icon, Qt.AlignCenter, Qt.AlignCenter)
-
-        self.main_namespace.testFinishing_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("cold-temperature-extralarge.svg"),
-                parent = self.main_namespace,
-                app_parent = self.main_namespace.ui.central_widget,
-                tooltip_text = "測定終了(降温中)",
-                width = 60,
-                height = 60,
-                radius = 10,
-                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
-            )
-        self.main_namespace.ui.load_pages.Layout_Status_TestFinishing.addWidget(self.main_namespace.testFinishing_icon, Qt.AlignCenter, Qt.AlignCenter)
-
-        self.main_namespace.error_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-exclamation-extralarge.svg"),
-                parent = self.main_namespace,
-                app_parent = self.main_namespace.ui.central_widget,
-                tooltip_text = "警報発生中",
-                width = 60,
-                height = 60,
-                radius = 10,
-                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["critical_icon"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["critical_icon"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["critical_icon"]["icon_pressed"],
-                icon_color_deactive = self.main_namespace.themes["app_color"]["critical_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
-            )
-        self.main_namespace.ui.load_pages.Layout_Status_Error.addWidget(self.main_namespace.error_icon, Qt.AlignCenter, Qt.AlignCenter)
-
-        self.main_namespace.ethernetConnecton_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("ethernet-extralarge.svg"),
-                parent = self.main_namespace,
-                app_parent = self.main_namespace.ui.central_widget,
-                tooltip_text = "電気炉接続",
-                width = 60,
-                height = 60,
-                radius = 10,
-                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
-            )
-        self.main_namespace.ui.load_pages.Layout_Status_EthernetConnecton.addWidget(self.main_namespace.ethernetConnecton_icon, Qt.AlignCenter, Qt.AlignCenter)
-
-        self.main_namespace.gPIBConnecton_1_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("link-2657A-extralarge.svg"),
-                parent = self.main_namespace,
-                app_parent = self.main_namespace.ui.central_widget,
-                tooltip_text = "2657A接続",
-                width = 60,
-                height = 60,
-                radius = 10,
-                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
-            )
-        self.main_namespace.ui.load_pages.Layout_Status_GPIBConnecton_1.addWidget(self.main_namespace.gPIBConnecton_1_icon, Qt.AlignCenter, Qt.AlignCenter)
-
-        self.main_namespace.gPIBConnecton_2_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("link-2635B-extralarge.svg"),
-                parent = self.main_namespace,
-                app_parent = self.main_namespace.ui.central_widget,
-                tooltip_text = "2635B接続",
-                width = 60,
-                height = 60,
-                radius = 10,
-                dark_one = self.main_namespace.themes["app_color"]["dark_one"],
-                icon_color = self.main_namespace.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.main_namespace.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.main_namespace.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.main_namespace.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self.main_namespace.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.main_namespace.themes["app_color"]["dark_three"],
-            )
-        self.main_namespace.ui.load_pages.Layout_Status_GPIBConnecton_2.addWidget(self.main_namespace.gPIBConnecton_2_icon, Qt.AlignCenter, Qt.AlignCenter)
-
         
         
 

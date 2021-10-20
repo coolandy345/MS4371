@@ -296,7 +296,7 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, '運転終了',{},{},{},{},{},'{}')".format(Table_name,10107,0,0,1,0,1,"NULL")
 cur.execute(test)
 
-test="INSERT INTO '{}' values({}, '警報',{},{},{},{},{},'{}')".format(Table_name,10108,0,0,1,0,1,"NULL")
+test="INSERT INTO '{}' values({}, 'PLC警報',{},{},{},{},{},'{}')".format(Table_name,10108,0,0,1,0,1,"NULL")
 cur.execute(test)
 
 test="INSERT INTO '{}' values({}, '測定可',{},{},{},{},{},'{}')".format(Table_name,10109,0,0,1,0,1,"放電による測定禁止エリアがあるため")
@@ -311,7 +311,7 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, 'リモート',{},{},{},{},{},'{}')".format(Table_name,10151,0,0,1,0,1,"NULL")
 cur.execute(test)
 
-test="INSERT INTO '{}' values({}, '警報',{},{},{},{},{},'{}')".format(Table_name,10152,0,0,1,0,1,"NULL")
+test="INSERT INTO '{}' values({}, 'PC警報',{},{},{},{},{},'{}')".format(Table_name,10152,0,0,1,0,1,"NULL")
 cur.execute(test)
 
 test="INSERT INTO '{}' values({}, '運転開始',{},{},{},{},{},'{}')".format(Table_name,10170,0,0,1,0,1,"エッジ(PLC側でRST)")

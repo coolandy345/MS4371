@@ -37,7 +37,7 @@ def databaseWriteThread(memoryPool,queuePool):
         time.sleep(0.5)
         
         if not memoryPool[getItem.Main_memorypool][getItem.memory_name].volatile_type:
-            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].getValue(),getItem.memory_name)
+            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
             #print(test)
             cur.execute(test)
             #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
@@ -47,7 +47,7 @@ def databaseWriteThread(memoryPool,queuePool):
             queuePool["modbus_Write_Queue"].put(getItem)
 
             if not memoryPool[getItem.Main_memorypool][getItem.memory_name].volatile_type:
-                test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].getValue(),getItem.memory_name)
+                test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
                 #print(test)
                 cur.execute(test)
 

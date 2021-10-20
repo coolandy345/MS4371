@@ -292,7 +292,6 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         
-        print(self.cache_steplist.comment)
         self._parent.ui.load_pages.commect_lineEdit.textEdited.disconnect()
         self._parent.ui.load_pages.commect_lineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.commect_lineEdit.setText(self.cache_steplist.comment)

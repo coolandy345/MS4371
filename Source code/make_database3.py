@@ -41,11 +41,18 @@ cur.execute(test)
 test="INSERT INTO '{}' values('試料の厚さ(mm)','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(test)
 
+test="INSERT INTO '{}' values('Ethernet conneciton check pool','{}','{}')".format(Table_name,0,"NULL")
+cur.execute(test)
+
+test="INSERT INTO '{}' values('Ethernet conneciton','{}','{}')".format(Table_name,0,"NULL")
+cur.execute(test)
+
 test="INSERT INTO '{}' values('GPIB USB conneciton','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(test)
 
 test="INSERT INTO '{}' values('2635B GPIB address','{}','{}')".format(Table_name,24,"NULL")
 cur.execute(test)
+
 test="INSERT INTO '{}' values('2635B connection','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(test)
 

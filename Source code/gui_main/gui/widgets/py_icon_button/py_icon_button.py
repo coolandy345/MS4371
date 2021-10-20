@@ -85,6 +85,9 @@ class PyIconButton(QPushButton):
         )
         self._tooltip.hide()
         self.set_active(self._is_active)
+        
+
+
     # SET ACTIVE MENU
     # ///////////////////////////////////////////////////////////////
     def set_active(self, is_active):
@@ -102,6 +105,7 @@ class PyIconButton(QPushButton):
     # painting the button and the icon
     # ///////////////////////////////////////////////////////////////
     def paintEvent(self, event):
+        
         # PAINTER
         paint = QPainter()
         paint.begin(self)
@@ -127,6 +131,9 @@ class PyIconButton(QPushButton):
         # END PAINTER
         paint.end()
 
+
+
+
     # CHANGE STYLES
     # Functions with custom styles
     # ///////////////////////////////////////////////////////////////
@@ -140,6 +147,7 @@ class PyIconButton(QPushButton):
                 self._set_bg_color = self._bg_color
                 self._set_icon_color = self._icon_color_deactive
 
+            
             self.repaint()         
         elif event == QEvent.Leave:
             
@@ -149,6 +157,7 @@ class PyIconButton(QPushButton):
                 self._set_icon_color = self._icon_color
             else:
                 self._set_icon_color = self._icon_color_deactive
+            
             
             self.repaint()
         elif event == QEvent.MouseButtonPress:           
@@ -161,6 +170,7 @@ class PyIconButton(QPushButton):
                 self._set_icon_color = self._icon_color_deactive
 
 
+            
             self.repaint()
         elif event == QEvent.MouseButtonRelease:
 
@@ -170,6 +180,7 @@ class PyIconButton(QPushButton):
             else:
                 self._set_bg_color = self._bg_color
                 self._set_icon_color = self._icon_color_deactive
+            
             self.repaint()
 
     # MOUSE OVER

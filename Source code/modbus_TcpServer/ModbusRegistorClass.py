@@ -34,11 +34,10 @@ class ModbusPackage():
         print("self.comment =",self.comment)
 
     def getValue(self):
-        if not self.value :
-            return 0
-        else:
+        if isinstance(self.value, int):
             return self.value
-
+        else:
+            return 0
 
     def setValue(self,value):
         

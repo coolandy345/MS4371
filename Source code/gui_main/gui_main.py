@@ -77,7 +77,6 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.show()
 
-
         self.ui.left_menu.toggle_animation()
 
 
@@ -138,11 +137,7 @@ class MainWindow(QMainWindow):
                 # Show / Hide
                 MainFunctions.toggle_right_column(self)
 
-        if btn.objectName() == "btn_AutoMode":
-            self.ui.load_pages.stackedWidget.setCurrentWidget(self.ui.load_pages.page_AutoOperate)
-
-        if btn.objectName() == "btn_ManaualMode":
-            self.ui.load_pages.stackedWidget.setCurrentWidget(self.ui.load_pages.page_ManaulOperate)
+        
         
         if btn.objectName() == "new_temp_Step_Buttom":
             self.tempPattern.new_TempPattern()

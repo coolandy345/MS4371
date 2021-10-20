@@ -66,19 +66,22 @@ class GPIB_device():
     def __init__(self,address):
         
         self.address=address
-        self.gpib_dll = ctypes.cdll.LoadLibrary('GPIB-32.dll')
+        self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
         self.connection = False
-
+        self.dev_descriptor=0
         
         if self.initiail_GPIB_device():
             self.send_Command("beeper.beep(0.1, 2400)")
 
+        connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
+        connnection_check_Thread.start()
+
 
     def initiail_GPIB_device(self):
 
-        self.gpib_dev=self.gpib_dll.ibdev(0,self.address,0,self.T100ms, 1, 0)
-        Ret=self.gpib_dll.ThreadIbsta()
-        err=self.gpib_dll.ThreadIberr()
+        self.dev_descriptor=self.GPIB.ibdev(0,self.address,0,self.T100ms, 1, 0)
+        Ret=self.GPIB.ThreadIbsta()
+        err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
             #print("initiail fail with numer {} device".format(self.address))
             self.connection = False
@@ -103,9 +106,9 @@ class GPIB_device():
 
         byte_string=command.encode("utf8")
         send_buffer= ctypes.create_string_buffer(byte_string)
-        self.gpib_dll.ibwrt(self.gpib_dev,send_buffer,send_buffer._length_)
-        Ret=self.gpib_dll.ThreadIbsta()
-        err=self.gpib_dll.ThreadIberr()
+        self.GPIB.ibwrt(self.dev_descriptor,send_buffer,send_buffer._length_)
+        Ret=self.GPIB.ThreadIbsta()
+        err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
             #print("fail send data to numer {} device".format(self.address))
             self.connection = False
@@ -115,14 +118,14 @@ class GPIB_device():
             return True
 
     def get_Value(self):
-                
-        read_buffer= ctypes.create_string_buffer(100)   
 
-        self.gpib_dll.ibrd(self.gpib_dev,read_buffer,read_buffer._length_)
+        read_buffer= ctypes.create_string_buffer(100)
 
-        #cntl=self.gpib_dll.ThreadIbcntl()
-        Ret=self.gpib_dll.ThreadIbsta()
-        err=self.gpib_dll.ThreadIberr()
+        self.GPIB.ibrd(self.dev_descriptor,read_buffer,read_buffer._length_)
+
+        #cntl=self.GPIB.ThreadIbcntl()
+        Ret=self.GPIB.ThreadIbsta()
+        err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
             #print("fail retrive result from numer {} device".format(self.address))
             self.connection = False
@@ -132,6 +135,20 @@ class GPIB_device():
             self.connection = True
             return result
 
+
+    def connnection_check_Work(self):
+        
+        while 1:
+            #int ibln (int ud, int pad, int sad, short *listen)
+            read_buffer= ctypes.create_string_buffer(100)
+            self.GPIB.ibln(self.dev_descriptor,self.address,self.GPIB.NO_SAD,read_buffer)
+            result=read_buffer.value.decode("utf8")
+            print(result)
+            #self.set_memorypool_register("System memory","2635B connection",self.request_Command("*IDN?"))
+            time.sleep(0.5)
+
+        
+
 class GPIB_device_2635B(GPIB_device):
     def __init__(self,memoryPool,queuePool):
         super().__init__(self.memoryPool["System memory"]["2635B GPIB address"].getValue())
@@ -139,8 +156,7 @@ class GPIB_device_2635B(GPIB_device):
         self.memoryPool=memoryPool
         self.queuePool=queuePool
 
-        connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
-        connnection_check_Thread.start()
+        
 
     def set_memorypool_register(self,memorypool_name,registor_name,value):
         
@@ -154,11 +170,7 @@ class GPIB_device_2635B(GPIB_device):
             self.queuePool["memory_Write_Queue"].put(sendItem)
 
 
-    def connnection_check_Work(self):
-        
-        while 1:
-            self.set_memorypool_register("System memory","2635B connection",self.request_Command("*IDN?"))
-            time.sleep(1)
+    
 
 class GPIB_device_2657A(GPIB_device):
     def __init__(self,memoryPool,queuePool):
@@ -167,18 +179,10 @@ class GPIB_device_2657A(GPIB_device):
         self.memoryPool=memoryPool
         self.queuePool=queuePool
 
-        connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
-        connnection_check_Thread.start()
-
     def initial_device(self):
         self.initiail_GPIB_device()
         self.send_Command("smua.reset()")
 
-    def connnection_check_Work(self):
-        while 1:
-            self.set_memorypool_register("System memory","2657A connection",self.request_Command("*IDN?"))
-            print(self.connection)
-            time.sleep(1)
 
     def set_memorypool_register(self,memorypool_name,registor_name,value):
         
