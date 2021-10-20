@@ -7,7 +7,32 @@ import time
 from registor_manager import *
 import copy
 
-class GPIB_device():
+QueuePool["GPIB_send_queue"]=MemoryPoolManager.Queue()
+QueuePool["2635B_queue"]=MemoryPoolManager.Queue()
+QueuePool["2657A_queue"]=MemoryPoolManager.Queue()
+
+
+
+
+
+class GPIB_package():
+
+    init_type=0
+    send_type=1
+    read_type=2
+
+
+    def __init__(self,
+                 type=0,
+                 command="",
+                 device_name=""
+                 ):
+        self.type=type
+        self.command=command
+        self.name=name
+        self.address=address
+
+class GPIB_Driver():
 
     #  Status bit mask in ibsta
     ERR     =0x8000     # Error detected
@@ -64,30 +89,35 @@ class GPIB_device():
     T300s   =16         # Timeout of 300 Sec
     T1000s  =17         # Timeout of 1000 Sec
 
-    def __init__(self,address,device_registor_name):
-        
-        self.address=address
+    def __init__(self,memoryPool,queuePool):
         self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
-        self.connection = False
-        self.dev_descriptor=0
-        self.device_IDN=""
-        self.device_registor_name=device_registor_name
+        self.memoryPool=memoryPool
+        self.queuePool=queuePool
+        
+        self.dev_descriptor={}
 
-        if self.initiail_GPIB_device():
-            self.device_IDN=self.request_Command("*IDN?")
-            if self.device_IDN:
-                print("Connect to GPIB device : address at {} , device idn is {}".format(self.address,self.device_IDN))
-                self.send_Command("beeper.beep(0.1, 2400)")
-            else:
-                print("Fail to connect to GPIB device : address at {}".format(self.address))
+        queue_Thread = threading.Thread(target = self.queue_Work)
+        queue_Thread.start()
 
-        connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
-        connnection_check_Thread.start()
+    def queue_Work(self):
+        while 1:
+            self.getItem=self.queuePool["GPIB_send_queue"].get()
+            self.getItem=GPIB_package()
 
 
+
+            if getItem.type==GPIB_package.init_type:
+                self.initiail_GPIB_device()
+            elif  getItem.type==GPIB_package.send_type:
+
+                pass
+            elif  getItem.type==GPIB_package.read_type:
+                pass
+
+            
     def initiail_GPIB_device(self):
+        self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T10ms, 1, 0)
 
-        self.dev_descriptor=self.GPIB.ibdev(0,self.address,0,self.T10ms, 1, 0)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
@@ -142,6 +172,36 @@ class GPIB_device():
             result=read_buffer.value.decode("utf8")
             self.connection = True
             return result
+
+
+class GPIB_device():
+
+    
+
+    def __init__(self,address,device_registor_name):
+        
+        self.address=address
+        self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
+        self.connection = False
+        self.dev_descriptor=0
+        self.device_IDN=""
+        self.device_registor_name=device_registor_name
+
+        if self.initiail_GPIB_device():
+            self.device_IDN=self.request_Command("*IDN?")
+            if self.device_IDN:
+                print("Connect to GPIB device : address at {} , device idn is {}".format(self.address,self.device_IDN))
+                self.send_Command("beeper.beep(0.1, 2400)")
+            else:
+                print("Fail to connect to GPIB device : address at {}".format(self.address))
+
+        connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
+        connnection_check_Thread.start()
+
+
+
+
+    
 
 
     def connnection_check_Work(self):

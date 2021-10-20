@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\gpib_manager",
     "\\gui_main",
     "\\gui_main\\gui",
-    "\\gui_main\\gui\\core",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\widgets",
-    "\\gui_main\\gui\\widgets\\py_icon_button",
-    "\\gui_main\\gui\\widgets\\py_pattern",
-    "\\gui_main\\gui\\widgets\\py_push_button",
-    "\\modbus_TcpServer"
+    "\\gui_main\\gui\\uis\\pages",
+    "\\gui_main\\gui\\uis\\pattern_columns",
+    "\\gui_main\\gui\\uis\\windows",
+    "\\gui_main\\gui\\uis\\windows\\main_window",
+    "\\registor_manager"
   ],
-  "SelectedNode": "\\gui_main\\gui\\uis\\windows\\main_window\\testprofile_function.py",
+  "SelectedNode": "\\gpib_manager\\gpib_manager.py",
   "PreviewInSolutionExplorer": false
 }

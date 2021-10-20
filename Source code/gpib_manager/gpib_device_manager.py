@@ -4,7 +4,7 @@ import copy
 import threading
 import time
 import usb.core
-
+import ctypes
 
 
 def set_memorypool_register(Main_memorypool,
