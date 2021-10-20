@@ -24,12 +24,14 @@ def set_memorypool_register(Main_memorypool,
 
 def GPIB_connnection_Work(memorypool,queuePool):
     
+    # find our device
+    
+    
     connection=False
+    set_memorypool_register(memorypool,queuePool,"System memory","GPIB USB conneciton",0)
     while 1:
-        # find our device
-        dev = usb.core.find(idVendor=0x06CE, idProduct=0x8314)
-
         # was it found?
+        dev = usb.core.find(idVendor=0x06CE, idProduct=0x8314)
         if dev is None:
             if connection!=False:
                 connection = False
@@ -50,7 +52,7 @@ def gpib_Thread(memoryPool,queuePool):
 
     #GPIB device class create 
     gpib_2635B_manager=GPIB_device_2635B(memoryPool,queuePool)
-    gpib_2657A_manager=GPIB_device_2657A(memoryPool,queuePool)
+    #gpib_2657A_manager=GPIB_device_2657A(memoryPool,queuePool)
 
 
 

@@ -348,8 +348,8 @@ class Main_utility_manager(QWidget):
             self.error_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
             self.ethernetConnecton_icon_active=self.memoryPool["System memory"]["Ethernet conneciton"].getValue()
             self.usbConnecton_icon_active=self.memoryPool["System memory"]["GPIB USB conneciton"].getValue()
-            self.gPIBConnecton_1_icon_active=self.memoryPool["System memory"]["2635B connection"].getValue()
-            self.gPIBConnecton_2_icon_active=self.memoryPool["System memory"]["2657A connection"].getValue()
+            self.gPIBConnecton_2635B_icon_active=self.memoryPool["System memory"]["2635B connection"].getValue()
+            self.gPIBConnecton_2657A_icon_active=self.memoryPool["System memory"]["2657A connection"].getValue()
 
             time.sleep(0.1)
 

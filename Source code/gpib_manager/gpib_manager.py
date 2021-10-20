@@ -5,6 +5,7 @@ import ctypes
 import threading
 import time
 from registor_manager import *
+import copy
 
 class GPIB_device():
 
@@ -63,15 +64,22 @@ class GPIB_device():
     T300s   =16         # Timeout of 300 Sec
     T1000s  =17         # Timeout of 1000 Sec
 
-    def __init__(self,address):
+    def __init__(self,address,device_registor_name):
         
         self.address=address
         self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
         self.connection = False
         self.dev_descriptor=0
-        
+        self.device_IDN=""
+        self.device_registor_name=device_registor_name
+
         if self.initiail_GPIB_device():
-            self.send_Command("beeper.beep(0.1, 2400)")
+            self.device_IDN=self.request_Command("*IDN?")
+            if self.device_IDN:
+                print("Connect to GPIB device : address at {} , device idn is {}".format(self.address,self.device_IDN))
+                self.send_Command("beeper.beep(0.1, 2400)")
+            else:
+                print("Fail to connect to GPIB device : address at {}".format(self.address))
 
         connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
         connnection_check_Thread.start()
@@ -79,7 +87,7 @@ class GPIB_device():
 
     def initiail_GPIB_device(self):
 
-        self.dev_descriptor=self.GPIB.ibdev(0,self.address,0,self.T100ms, 1, 0)
+        self.dev_descriptor=self.GPIB.ibdev(0,self.address,0,self.T10ms, 1, 0)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
@@ -137,24 +145,37 @@ class GPIB_device():
 
 
     def connnection_check_Work(self):
+        print("{} connection".format(self.device_registor_name))
         
         while 1:
             #int ibln (int ud, int pad, int sad, short *listen)
-            read_buffer= ctypes.create_string_buffer(100)
-            self.GPIB.ibln(self.dev_descriptor,self.address,self.GPIB.NO_SAD,read_buffer)
-            result=read_buffer.value.decode("utf8")
-            print(result)
-            #self.set_memorypool_register("System memory","2635B connection",self.request_Command("*IDN?"))
-            time.sleep(0.5)
+            #read_buffer= ctypes.create_string_buffer(100)
+            #self.GPIB.ibln(self.dev_descriptor,self.address,0,read_buffer)
+            #print(read_buffer.value)
+            #result=read_buffer.value.decode("utf8")
+
+            self.device_IDN=self.request_Command("*IDN?")
+            self.send_Command("beeper.beep(0.1, 2400)")
+            if self.device_IDN:
+                self.set_memorypool_register("System memory","{} connection".format(self.device_registor_name),1)
+                print("connect {}",self.address)
+            else:
+                self.set_memorypool_register("System memory","{} connection".format(self.device_registor_name),0)
+                
+                print("lost {}",self.address)
+            time.sleep(0.03)
 
         
 
 class GPIB_device_2635B(GPIB_device):
     def __init__(self,memoryPool,queuePool):
-        super().__init__(self.memoryPool["System memory"]["2635B GPIB address"].getValue())
-
+        
         self.memoryPool=memoryPool
         self.queuePool=queuePool
+        
+
+        super().__init__(self.memoryPool["System memory"]["2635B GPIB address"].getValue(),device_registor_name="2635B")
+
 
         
 
@@ -174,10 +195,13 @@ class GPIB_device_2635B(GPIB_device):
 
 class GPIB_device_2657A(GPIB_device):
     def __init__(self,memoryPool,queuePool):
-        super().__init__(self.memoryPool["System memory"]["2657A GPIB address"].getValue())
-
         self.memoryPool=memoryPool
         self.queuePool=queuePool
+        
+        self.device_registor_name="2657A"
+
+        super().__init__(self.memoryPool["System memory"]["2657A GPIB address"].getValue(),device_registor_name="2657A")
+
 
     def initial_device(self):
         self.initiail_GPIB_device()
