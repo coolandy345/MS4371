@@ -44,7 +44,7 @@
       <string notr="true">background-color: rgb(44, 49, 60);</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -76,8 +76,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1187</width>
-            <height>653</height>
+            <width>779</width>
+            <height>510</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -169,7 +169,7 @@ padding-right:5px;</string>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>60</width>
+                        <width>112</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -290,7 +290,7 @@ padding-right:5px;</string>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>200</width>
+                        <width>212</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -348,7 +348,7 @@ padding-right:5px;</string>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>200</width>
+                        <width>212</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -412,7 +412,7 @@ padding-right:5px;</string>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>200</width>
+                        <width>212</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -2821,23 +2821,149 @@ font: 12px bold italic large &quot;游ゴシック&quot;;
              <property name="bottomMargin">
               <number>6</number>
              </property>
-             <item row="0" column="0">
-              <widget class="QComboBox" name="comboBox">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
+             <item row="0" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
+              <widget class="QFrame" name="frame_65">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
                </property>
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QLabel" name="label_44">
+                  <property name="styleSheet">
+                   <string notr="true">font: 12px &quot;游ゴシック&quot;;
+color: rgb(202, 206, 216);
+padding-right:5px;</string>
+                  </property>
+                  <property name="text">
+                   <string>表示項目</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="graphItem_combobox">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(44, 49, 60);
+font: 14px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+border-color: rgb(22, 25, 30);
+border-width: 1px;
+border-style: solid;
+border-radius: 0px;
+padding-left:5px;</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>抵抗値</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>運転パターン</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_66">
+                  <property name="minimumSize">
+                   <size>
+                    <width>3</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>3</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(44, 49, 60);
+border:none;</string>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="timeUnit_Label">
+                  <property name="styleSheet">
+                   <string notr="true">font: 12px &quot;游ゴシック&quot;;
+color: rgb(202, 206, 216);
+padding-right:5px;</string>
+                  </property>
+                  <property name="text">
+                   <string>時間単位</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="timeUnit_comboBox">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(44, 49, 60);
+font: 14px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+border-color: rgb(22, 25, 30);
+border-width: 1px;
+border-style: solid;
+border-radius: 0px;
+padding-left:5px;</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>1s/div</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>1min/div</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>1h/div</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item row="1" column="0">
@@ -2854,7 +2980,11 @@ font: 12px bold italic large &quot;游ゴシック&quot;;
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <layout class="QGridLayout" name="gridLayout_9"/>
+               <layout class="QGridLayout" name="realtime_grapgLayout">
+                <property name="rightMargin">
+                 <number>25</number>
+                </property>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -2921,7 +3051,7 @@ font: 12px bold italic large &quot;游ゴシック&quot;;
              <property name="spacing">
               <number>0</number>
              </property>
-             <item alignment="Qt::AlignTop">
+             <item>
               <widget class="QFrame" name="frame_15">
                <property name="minimumSize">
                 <size>
@@ -2957,7 +3087,7 @@ font: 12px bold italic large &quot;游ゴシック&quot;;
                </layout>
               </widget>
              </item>
-             <item alignment="Qt::AlignTop">
+             <item>
               <widget class="QFrame" name="frame_45">
                <property name="minimumSize">
                 <size>
@@ -3370,7 +3500,7 @@ border:none;
                         </widget>
                        </item>
                        <item alignment="Qt::AlignBottom">
-                        <widget class="QComboBox" name="comboBox_3">
+                        <widget class="QComboBox" name="AutoMode_pattern_comboBox">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -3395,7 +3525,7 @@ font: 14px &quot;游ゴシック&quot;;
 color: rgb(225, 230, 241);
 border-width: 1px;
 border-style: solid;
-border-radius: 0px;</string>
+border-radius: 5px;</string>
                          </property>
                          <property name="currentIndex">
                           <number>0</number>
@@ -3417,7 +3547,8 @@ border-radius: 0px;</string>
                          <property name="styleSheet">
                           <string notr="true">font: 18px &quot;游ゴシック&quot;;
 color: rgb(225, 230, 241);
-padding-right:5px;</string>
+padding-right:5px;
+border:None</string>
                          </property>
                          <property name="text">
                           <string>雰囲気モード：大気</string>
@@ -3490,7 +3621,7 @@ border:none;</string>
                         <number>10</number>
                        </property>
                        <item alignment="Qt::AlignHCenter">
-                        <widget class="QPushButton" name="pushButton_2">
+                        <widget class="QPushButton" name="gasFreeflow_pushButton">
                          <property name="minimumSize">
                           <size>
                            <width>210</width>
@@ -3614,7 +3745,7 @@ QPushButton:pressed {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QPushButton" name="pushButton_4">
+                        <widget class="QPushButton" name="eMSstop_pushButton">
                          <property name="minimumSize">
                           <size>
                            <width>210</width>
@@ -3753,7 +3884,7 @@ QPushButton:pressed {
                         <number>30</number>
                        </property>
                        <item row="0" column="0" alignment="Qt::AlignBottom">
-                        <widget class="QPushButton" name="pushButton_7">
+                        <widget class="QPushButton" name="voltageOutput_pushButton">
                          <property name="minimumSize">
                           <size>
                            <width>210</width>
@@ -3795,7 +3926,7 @@ QPushButton:pressed {
                         </widget>
                        </item>
                        <item row="1" column="0" alignment="Qt::AlignBottom">
-                        <widget class="QPushButton" name="pushButton_6">
+                        <widget class="QPushButton" name="manualMeasurement_pushButton">
                          <property name="minimumSize">
                           <size>
                            <width>210</width>
@@ -3837,7 +3968,7 @@ QPushButton:pressed {
                         </widget>
                        </item>
                        <item row="3" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
-                        <widget class="QPushButton" name="pushButton_5">
+                        <widget class="QPushButton" name="outputStop_pushButton">
                          <property name="minimumSize">
                           <size>
                            <width>210</width>
@@ -3972,7 +4103,8 @@ border-radius: 10px;</string>
                          <property name="styleSheet">
                           <string notr="true">font: 12px &quot;游ゴシック&quot;;
 color: rgb(225, 230, 241);
-padding-right:5px;</string>
+padding-right:5px;
+border:None</string>
                          </property>
                          <property name="text">
                           <string>測定モード</string>
@@ -3983,7 +4115,7 @@ padding-right:5px;</string>
                         </widget>
                        </item>
                        <item row="1" column="1">
-                        <widget class="QComboBox" name="comboBox_5">
+                        <widget class="QComboBox" name="measurement_comboBox">
                          <property name="styleSheet">
                           <string notr="true">background-color: rgba(0, 0, 0,80);
 color: rgb(225, 230, 241);
@@ -4008,7 +4140,7 @@ min-height:30;</string>
                         </widget>
                        </item>
                        <item row="0" column="1">
-                        <widget class="QLineEdit" name="lineEdit_8">
+                        <widget class="QLineEdit" name="voltage_lineEdit">
                          <property name="styleSheet">
                           <string notr="true">background-color: rgba(0, 0, 0,80);
 color: rgb(225, 230, 241);
@@ -4045,7 +4177,8 @@ min-height:30;</string>
                          <property name="styleSheet">
                           <string notr="true">font: 12px &quot;游ゴシック&quot;;
 color: rgb(225, 230, 241);
-padding-right:5px;</string>
+padding-right:5px;
+border:None</string>
                          </property>
                          <property name="text">
                           <string>測定電圧(V)</string>
@@ -4092,7 +4225,7 @@ padding-right:5px;</string>
             <x>0</x>
             <y>0</y>
             <width>1170</width>
-            <height>834</height>
+            <height>1410</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -4525,24 +4658,17 @@ padding-right:5px;</string>
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_29">
-                 <item row="0" column="0">
+                <layout class="QVBoxLayout" name="verticalLayout_10">
+                 <item>
                   <widget class="QFrame" name="frame_43">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>0</height>
+                     <height>300</height>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">
-border:none;</string>
+                    <string notr="true">border:None</string>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -4550,26 +4676,10 @@ border:none;</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_4">
-                    <property name="spacing">
-                     <number>5</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>6</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>6</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>6</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>6</number>
-                    </property>
-                   </layout>
+                   <layout class="QGridLayout" name="gridLayout_9"/>
                   </widget>
                  </item>
-                 <item row="1" column="0">
+                 <item>
                   <widget class="QScrollArea" name="scrollArea_3">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -5566,21 +5676,14 @@ padding-left:5px;</string>
                 <layout class="QVBoxLayout" name="verticalLayout_2">
                  <item>
                   <widget class="QFrame" name="frame_46">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>0</height>
+                     <height>300</height>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">
-border:none;</string>
+                    <string notr="true">border:None</string>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -5588,23 +5691,7 @@ border:none;</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_5">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>6</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>6</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>6</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>6</number>
-                    </property>
-                   </layout>
+                   <layout class="QGridLayout" name="gridLayout_11"/>
                   </widget>
                  </item>
                  <item>

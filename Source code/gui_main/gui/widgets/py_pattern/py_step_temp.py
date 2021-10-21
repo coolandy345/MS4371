@@ -448,7 +448,7 @@ class PyTempStep(QWidget):
             self._parent.tempPattern.close_one_menu(self._step)
 
     def paintEvent(self, event):
-        pass
+        return
 
 
     def setFocusStyle(self,enable):

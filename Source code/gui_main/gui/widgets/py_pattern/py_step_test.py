@@ -234,7 +234,7 @@ class PyTestStep(QWidget):
             self._parent.testPattern.un_focus_step(self._step)
 
     def paintEvent(self, event):
-        pass
+        return
 
 
     def setFocusStyle(self,enable):

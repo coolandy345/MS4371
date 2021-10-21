@@ -134,7 +134,7 @@ class TestPatternWidget(QWidget):
                                    symbolSize=5, 
                                    name="測定パターン")
         
-        self._parent.ui.load_pages.horizontalLayout_5.addWidget(self.graph, Qt.AlignCenter, Qt.AlignCenter)
+        self._parent.ui.load_pages.gridLayout_11.addWidget(self.graph, Qt.AlignCenter, Qt.AlignCenter)
         
         
 
@@ -879,12 +879,4 @@ class TestPatternWidget(QWidget):
         self.update_graph()
         self.utility_update()
 
-    def graphResize(self):
-        addwidth=self._parent.width()-1470
-        self.graph.setMinimumSize(QSize(1100+addwidth, 300))
-
-
-
-
-
-    
+  

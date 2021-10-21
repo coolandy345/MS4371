@@ -110,7 +110,21 @@ def databaseLoadThread(memoryPool):
 
     memoryPool["System memory"]=pool
 
-    
+    datalist=[]
+    for row in cur.execute('SELECT * FROM "Read Measurement Data" '):
+
+        register=ModbusRegistorClass.MeasurePackage(
+                                time                =row[0],
+                                valtage         =row[1],
+                                current         =row[2],
+                                resistor         =row[3],
+                                duration               =row[4],
+                                temperature           =row[5]
+                               )
+        datalist.append(register)
+
+    memoryPool["Read Measurement Data"]=datalist
+
     
     System_Registor_Database.commit()
     System_Registor_Database.close()

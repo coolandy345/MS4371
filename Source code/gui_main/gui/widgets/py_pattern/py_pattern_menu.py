@@ -77,7 +77,6 @@ class PyStepMenu(QWidget):
 
     def paintEvent(self, event):
         print("paintEvent of menu")
-        pass
 
     def paste_SetEnable(self, paste_enable,add_enable):
 

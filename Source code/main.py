@@ -49,14 +49,15 @@ if __name__ == "__main__":
     
     databaseLoadThread(MemoryPool)
     ##memoryWriteThread(MemoryPool,QueuePool)
-    #initial_GUI(MemoryPool,QueuePool)
+    initial_GUI(MemoryPool,QueuePool)
+    #gpib_Thread(MemoryPool,QueuePool)
 
-    with ProcessPoolExecutor(max_workers=10) as executor:
-        executor.submit(gpib_Thread,MemoryPool,QueuePool)
-        executor.submit(run_async_server,MemoryPool,QueuePool)
-        executor.submit(databaseWriteThread,MemoryPool,QueuePool)
-        Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
-        Gui_future.add_done_callback(shotdown_entire_app)
+    #with ProcessPoolExecutor(max_workers=10) as executor:
+    #    executor.submit(gpib_Thread,MemoryPool,QueuePool)
+    #    executor.submit(run_async_server,MemoryPool,QueuePool)
+    #    executor.submit(databaseWriteThread,MemoryPool,QueuePool)
+    #    Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
+    #    Gui_future.add_done_callback(shotdown_entire_app)
 
 
   

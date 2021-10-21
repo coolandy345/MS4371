@@ -70,6 +70,7 @@ class PyCircularProgress(QWidget):
 
     # PAINT EVENT (DESIGN YOUR CIRCULAR PROGRESS HERE)
     def paintEvent(self, e):
+
         # SET PROGRESS PARAMETERS
         width = self.width() - self.progress_width
         height = self.height() - self.progress_width

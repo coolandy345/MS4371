@@ -37,7 +37,10 @@ class ModbusPackage():
         if isinstance(self.value, int):
             return self.value
         else:
-            return 0
+            if self.value:
+                return 1
+            else:
+                return 0
 
     def setValue(self,value):
         
@@ -59,8 +62,23 @@ class ModbusPackage():
     def getNumber(self):
         return self.number
 
+class MeasurePackage():
 
-
+    def __init__(self,
+                 time=0,
+                 valtage=0,
+                 current=0,
+                 resistor=0,
+                 duration=1,
+                 temperature=0
+                 ):
+        self.time=time
+        self.valtage=valtage
+        self.current=current
+        self.resistor=resistor
+        self.duration=duration
+        self.temperature=temperature
+        
 
 
 

@@ -87,7 +87,6 @@ class PyIconButton(QPushButton):
         self.set_active(self._is_active)
         
 
-
     # SET ACTIVE MENU
     # ///////////////////////////////////////////////////////////////
     def set_active(self, is_active):
@@ -127,7 +126,6 @@ class PyIconButton(QPushButton):
 
         # DRAW ICONS
         self.icon_paint(paint, self._set_icon_path, rect)
-
         # END PAINTER
         paint.end()
 

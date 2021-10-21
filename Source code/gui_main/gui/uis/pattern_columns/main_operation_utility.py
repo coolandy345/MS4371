@@ -3,6 +3,8 @@ import time
 from gui_main.qt_core import *
 from gui_main.gui.widgets import *
 from gui_main.gui.core.functions import *
+import random
+from modbus_TcpServer import MeasurePackage
 
 class Main_utility_manager(QWidget):
     def __init__( 
@@ -19,14 +21,7 @@ class Main_utility_manager(QWidget):
         self.memoryPool=memoryPool
         self.queuePool=queuePool
 
-        self.Main_utility_setup()
-
-        connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
-        connnection_check_Thread.start()
-
-        status_Lamp_Thread = threading.Thread(target = self.status_Lamp_Work)
-        status_Lamp_Thread.start()
-
+        
 
         self.ready_icon_active=False
         self.stop_icon_active=False
@@ -41,14 +36,21 @@ class Main_utility_manager(QWidget):
         self.gPIBConnecton_2657A_icon_active=False
         self.gPIBConnecton_2635B_icon_active=False
 
+        self.choose_pattern=0
 
+        self.graph_Item="Resistor"
+
+        self.timeUnit=1
+        self.timeLabel="s"
+        self.timeMaxRange=10
+        self.timeMinRange=1
+
+        self.utility_setup()
+        self.graph_setup()
         
         self.timer=QTimer()
         self.timer.timeout.connect(self.regularWork)
         self.timer.start(10)
-
-
-        
 
 
     def btn_callback(self):
@@ -60,17 +62,96 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
         elif btn_name == "autostart_pushButton":
             self._parent.testfile_manager.prepare_folder()
+        elif btn_name == "manualMeasurement_pushButton":
+            pass
+        elif btn_name == "voltageOutput_pushButton":
+            pass
+        elif btn_name == "outputStop_pushButton":
+            pass
+        elif btn_name == "gasFreeflow_pushButton":
+            pass
+        elif btn_name == "eMSstop_pushButton":
+            pass
+        elif btn_name == "measurement_comboBox":
+            pass
+        elif btn_name == "voltage_lineEdit":
+            pass
+        elif btn_name == "AutoMode_pattern_comboBox":
+            pass
 
+        elif btn_name == "graphItem_combobox":
+            index=self._parent.ui.load_pages.graphItem_combobox.currentText()
+            if index=="抵抗値":
+                self.graph_Item="Resistor"
+                self._parent.ui.load_pages.timeUnit_Label.setVisible (True)
+                self._parent.ui.load_pages.timeUnit_comboBox.setVisible (True)
+                self._parent.ui.load_pages.frame_66.setVisible (True)
+            elif index=="運転パターン":
+                self.graph_Item="Pattern"
+                self._parent.ui.load_pages.timeUnit_Label.setVisible (False)
+                self._parent.ui.load_pages.timeUnit_comboBox.setVisible (False)
+                self._parent.ui.load_pages.frame_66.setVisible (False)
 
-    def Main_utility_setup(self):
+                
+                self.timeUnit=3600
+                self.timeLabel="hr"
+                self.timeMaxRange=10
+                self.timeMinRange=1
+                
+            
+        elif btn_name == "timeUnit_comboBox":
+
+            index=self._parent.ui.load_pages.timeUnit_comboBox.currentText()
+            if index=="1s/div":
+                self.timeUnit=1
+                self.timeLabel="s"
+                self.timeMaxRange=10
+                self.timeMinRange=1
+            elif index=="1min/div":
+                self.timeUnit=60
+                self.timeLabel="min"
+                self.timeMaxRange=10
+                self.timeMinRange=1
+            elif index=="1h/div":
+                self.timeUnit=3600
+                self.timeLabel="hour"
+                self.timeMaxRange=10
+                self.timeMinRange=1
+
+            self.graph_update()
+
+        
+    def utility_update(self):
+        self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.AutoMode_pattern_comboBox.clear()
+        self._parent.ui.load_pages.AutoMode_pattern_comboBox.addItems(self._parent.tempPattern.patternFile_nameList)
+        self._parent.ui.load_pages.AutoMode_pattern_comboBox.setCurrentIndex(self.choose_pattern)
+        self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.connect(self.btn_callback)
+
+    def utility_setup(self):
+
+        self.graph_setup()
 
         self._parent.ui.load_pages.btn_AutoMode.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.btn_ManaualMode.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.autostart_pushButton.clicked.connect(self.btn_callback)
 
-        
+        self._parent.ui.load_pages.manualMeasurement_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.voltageOutput_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.outputStop_pushButton.clicked.connect(self.btn_callback)
 
+        self._parent.ui.load_pages.gasFreeflow_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.autostart_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.eMSstop_pushButton.clicked.connect(self.btn_callback)
+
+        self._parent.ui.load_pages.voltage_lineEdit.editingFinished.connect(self.btn_callback)
+        self._parent.ui.load_pages.measurement_comboBox.currentIndexChanged.connect(self.btn_callback)
+
+        self._parent.ui.load_pages.graphItem_combobox.currentIndexChanged.connect(self.btn_callback)
+        self._parent.ui.load_pages.timeUnit_comboBox.currentIndexChanged.connect(self.btn_callback)
         
+        self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.connect(self.btn_callback)
+
         self._parent.ready_icon = PyIconButton(
                 icon_path = Functions.set_svg_icon("fi-rr-play-extralarge.svg"),
                 parent = self._parent,
@@ -305,10 +386,80 @@ class Main_utility_manager(QWidget):
             )
         self._parent.ui.load_pages.Layout_Status_2635B_GPIBConnecton.addWidget(self._parent.gPIBConnecton_2635B_icon, Qt.AlignCenter, Qt.AlignCenter)
         
+    def graph_update(self):
+        self.data_array=[]
+
+        if self.graph_Item=="Resistor":
+            for data in self.memoryPool["Read Measurement Data"]:
+                XYdata={}
+                XYdata["x"]=data.time/self.timeUnit
+                XYdata["y"]=data.resistor
+                self.data_array.append(XYdata)
+            self._parent.curve.setData(self.data_array)
+        else:
+            self.choose_pattern=self.memoryPool["System memory"]["choose_Pattern"].getValue()
+            if choose_pattern:
+                pattern_availible_number=self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(choose_pattern)].getValue()
+            
+                self.data_array.append({"x":0,"y":0})
+                for step in (1,pattern_availible_number+1):
+                    XYdata={}
+                    XYdata["x"]=self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(choose_pattern,step)].getValue()
+                    XYdata["y"]=self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(choose_pattern,step)].getValue()
+                    self.data_array.append(XYdata)
+            #not choose_pattern yet 
+            else:
+                self.data_array=[]
+            self._parent.curve.setData(self.data_array)
+
+        self._parent.realTimeData_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
+        self._parent.realTimeData_Graph.setLimits(minXRange=self.timeMinRange,maxXRange=self.timeMaxRange)
+
+    def graph_setup(self):
+        self._parent.realTimeData_Graph =pg.PlotWidget(background=None,title="測定抵抗値")
+        self._parent.realTimeData_Graph.setLabel(axis='left', text='抵抗値', units='Ω')
+        self._parent.realTimeData_Graph.setLabel(axis='bottom', text='時間', units='s')
+
+        self._parent.Xaxis = self._parent.realTimeData_Graph.getAxis('bottom')
+        self._parent.realTimeData_Graph.setAxisItems({'bottom':self._parent.Xaxis})
+        
+        self._parent.Yaxis = self._parent.realTimeData_Graph.getAxis('left')
+        self._parent.Yaxis.enableAutoSIPrefix(True)
+
+        self._parent.realTimeData_Graph.showGrid(x=True, y=True)
+        self._parent.realTimeData_Graph.setMouseEnabled(x=True, y=False)
+        self._parent.realTimeData_Graph.setLimits(minXRange=1,maxXRange=10)
+        self._parent.realTimeData_Graph.setLimits(xMin=0,yMin=0)
+
+        self._parent.curve=self._parent.realTimeData_Graph.plot(pen=pg.mkPen((225, 230, 241),width=5), 
+                                   symbolBrush=(0,0,0),
+                                   symbolPen='w', 
+                                   #symbol='o', 
+                                   symbolSize=5, 
+                                   name="予定パターン")
+        
+        self.data_array=[]
+        self.time=0
+        self._parent.curve.setData(self.data_array)
+        self._parent.ui.load_pages.realtime_grapgLayout.addWidget(self._parent.realTimeData_Graph, Qt.AlignCenter, Qt.AlignCenter)
+
         
     def regularWork(self):
 
+        self.ready_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
+        self.stop_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
+        self.vacuum_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
+        self.heating_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
+        self.keepTemp_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["温度ｷｰﾌﾟ中"].getValue()
+        self.testing_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
+        self.testFinishing_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
+        self.error_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
+        self.ethernetConnecton_icon_active=self.memoryPool["System memory"]["Ethernet conneciton"].getValue()
+        self.usbConnecton_icon_active=self.memoryPool["System memory"]["GPIB USB conneciton"].getValue()
+        self.gPIBConnecton_2635B_icon_active=self.memoryPool["System memory"]["2635B connection"].getValue()
+        self.gPIBConnecton_2657A_icon_active=self.memoryPool["System memory"]["2657A connection"].getValue()
 
+        
         if self.ready_icon_active != self._parent.ready_icon._is_active:
             self._parent.ready_icon.set_active(self.ready_icon_active)
         if self.stop_icon_active != self._parent.stop_icon._is_active:
@@ -334,32 +485,5 @@ class Main_utility_manager(QWidget):
         if self.gPIBConnecton_2635B_icon_active != self._parent.gPIBConnecton_2635B_icon._is_active:
             self._parent.gPIBConnecton_2635B_icon.set_active(self.gPIBConnecton_2635B_icon_active)
 
+ 
 
-    def status_Lamp_Work(self):
-
-        while 1:
-            self.ready_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
-            self.stop_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
-            self.vacuum_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
-            self.heating_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
-            self.keepTemp_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["温度ｷｰﾌﾟ中"].getValue()
-            self.testing_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
-            self.testFinishing_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
-            self.error_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
-            self.ethernetConnecton_icon_active=self.memoryPool["System memory"]["Ethernet conneciton"].getValue()
-            self.usbConnecton_icon_active=self.memoryPool["System memory"]["GPIB USB conneciton"].getValue()
-            self.gPIBConnecton_2635B_icon_active=self.memoryPool["System memory"]["2635B connection"].getValue()
-            self.gPIBConnecton_2657A_icon_active=self.memoryPool["System memory"]["2657A connection"].getValue()
-
-            time.sleep(0.1)
-
-    def connnection_check_Work(self):
-        
-        while 1:
-            if self.memoryPool["System memory"]["GPIB USB conneciton"].getValue():
-                pass
-                #self._parent.ui.load_pages.label_47.setVisible(True)
-            else:
-                pass
-                #self._parent.ui.load_pages.label_47.setVisible(False)
-        time.sleep(0.5)

@@ -45,13 +45,13 @@ def GPIB_USB_interface_connnection_Work(memorypool,queuePool):
 
 
 def gpib_Thread(memoryPool,queuePool):
-
+    
     gPIB_Driver=GPIB_Driver(memoryPool,queuePool)
     
     #GPIB connnection Thread create 
-    gPIB_USB_interface_connnection_Thread = threading.Thread(target = GPIB_USB_interface_connnection_Work,args = (memoryPool,queuePool))
+    gPIB_USB_interface_connnection_Thread = threading.Thread(target = GPIB_USB_interface_connnection_Work,daemon=True,args = (memoryPool,queuePool))
     gPIB_USB_interface_connnection_Thread.start()
-
+    
     #GPIB device class create 
     gpib_2635B_manager=GPIB_device_2635B(memoryPool,queuePool)
     gpib_2657A_manager=GPIB_device_2657A(memoryPool,queuePool)

@@ -62,6 +62,11 @@ cur.execute(test)
 test="INSERT INTO '{}' values('2657A connection','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(test)
 
+test="INSERT INTO '{}' values('choose_Pattern','{}','{}')".format(Table_name,0,"NULL")
+cur.execute(test)
+
+
+
 #pid=["P","I","D"]
 #pidname=["ヒーター","マッフル"]
 

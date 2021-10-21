@@ -73,6 +73,13 @@ RT計測_comment="0/1"
 註記_min="NULL"
 註記_comment="NULL"
 
+運転総時間=11
+運転総時間_name="運転総時間"
+運転総時間_default=0
+運転総時間_max="NULL"
+運転総時間_min="NULL"
+運転総時間_comment="Hour"
+
 SV値=100
 SV値_name="SV値"
 SV値_default=0
@@ -135,6 +142,22 @@ N2流量_comment="真空時0"
 測定パターン_max=20
 測定パターン_min=0
 測定パターン_comment="NULL"
+
+ステップ所要時間=114
+ステップ所要時間_name="ステップ所要時間"
+ステップ所要時間_default=0
+ステップ所要時間_max="NULL"
+ステップ所要時間_min="NULL"
+ステップ所要時間_comment="Hour"
+
+ステップ累計時間=115
+ステップ累計時間_name="ステップ累計時間"
+ステップ累計時間_default=0
+ステップ累計時間_max="NULL"
+ステップ累計時間_min="NULL"
+ステップ累計時間_comment="Hour"
+
+
 
 STEP情報=119
 STEP情報_name="STEP情報"
@@ -199,6 +222,9 @@ for pattern_no in range(1,21):
     test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+註記,pattern_no,註記_name,註記_min,註記_default,註記_max,註記_default,0,註記_comment)
     cur.execute(test)
 
+    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+運転総時間,pattern_no,運転総時間_name,運転総時間_min,運転総時間_default,運転総時間_max,運転総時間_default,0,運転総時間_comment)
+    cur.execute(test)
+
     sub_base=0
     for step in range(1,21):
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+SV値,pattern_no,step,SV値_name,SV値_min,SV値_default,SV値_max,SV値_default,0,SV値_comment)
@@ -227,6 +253,15 @@ for pattern_no in range(1,21):
 
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+測定パターン,pattern_no,step,測定パターン_name,測定パターン_min,測定パターン_default,測定パターン_max,測定パターン_default,0,測定パターン_comment)
         cur.execute(test)
+
+        test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+ステップ所要時間,pattern_no,step,ステップ所要時間_name,ステップ所要時間_min,ステップ所要時間_default,ステップ所要時間_max,ステップ所要時間_default,0,ステップ所要時間_comment)
+        cur.execute(test)
+
+        test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+ステップ累計時間,pattern_no,step,ステップ累計時間_name,ステップ累計時間_min,ステップ累計時間_default,ステップ累計時間_max,ステップ累計時間_default,0,ステップ累計時間_comment)
+        cur.execute(test)
+
+
+
 
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+STEP情報,pattern_no,step,STEP情報_name,STEP情報_min,STEP情報_default,STEP情報_max,STEP情報_default,0,STEP情報_comment)
         cur.execute(test)

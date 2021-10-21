@@ -62,10 +62,10 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
         super().__init__(self.register_dict)
 
-        ethernet_connection_thread = threading.Thread(target = self.ethernet_connection_Work)
+        ethernet_connection_thread = threading.Thread(target = self.ethernet_connection_Work,daemon=True)
         ethernet_connection_thread.start()
 
-        database_update_thread = threading.Thread(target = self.database_update_Work)
+        database_update_thread = threading.Thread(target = self.database_update_Work,daemon=True)
         database_update_thread.start()
 
 

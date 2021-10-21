@@ -132,7 +132,7 @@ class TempPatternWidget(QWidget):
         self.graph.showGrid(x=True, y=True)
         self.graph.setMouseEnabled(x=True, y=False)
         self.graph.setLimits(minXRange=9,maxXRange=20)
-        self.graph.setMinimumSize(QSize(1100, 300))
+        #self.graph.setMinimumSize(QSize(1100, 300))
 
         self.curve=self.graph.plot(pen=pg.mkPen((225, 230, 241),width=5), 
                                    symbolBrush=(0,0,0),
@@ -141,7 +141,7 @@ class TempPatternWidget(QWidget):
                                    symbolSize=5, 
                                    name="予定パターン")
         
-        self._parent.ui.load_pages.horizontalLayout_4.addWidget(self.graph, Qt.AlignCenter, Qt.AlignCenter)
+        self._parent.ui.load_pages.gridLayout_9.addWidget(self.graph, Qt.AlignCenter, Qt.AlignCenter)
         
         
 
@@ -873,12 +873,6 @@ class TempPatternWidget(QWidget):
         self.updata_step_widge()
         self.update_graph()
         self.utility_update()
-
-    def graphResize(self):
-        addwidth=self._parent.width()-1470
-        self.graph.setMinimumSize(QSize(1100+addwidth, 300))
-
-
 
 
 
