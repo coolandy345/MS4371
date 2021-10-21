@@ -43,8 +43,8 @@ if __name__ == "__main__":
     QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
 
     QueuePool["GPIB_send_queue"]=MemoryPoolManager.Queue()
-    QueuePool["2635B_queue"]=MemoryPoolManager.Queue()
-    QueuePool["2657A_queue"]=MemoryPoolManager.Queue()
+    QueuePool["GPIB_2635B_queue"]=MemoryPoolManager.Queue()
+    QueuePool["GPIB_2657A_queue"]=MemoryPoolManager.Queue()
 
     
     databaseLoadThread(MemoryPool)

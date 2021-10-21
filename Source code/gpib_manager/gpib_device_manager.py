@@ -1,4 +1,4 @@
-from .gpib_manager import GPIB_device_2635B,GPIB_device_2657A
+from .gpib_manager import GPIB_device_2635B,GPIB_device_2657A,GPIB_Driver,GPIB_package
 from registor_manager import *
 import copy
 import threading
@@ -22,7 +22,7 @@ def set_memorypool_register(Main_memorypool,
             sendItem=MemoryUnit(memorypool_name,registor_name)
             QueuePool["memory_Write_Queue"].put(sendItem)
 
-def GPIB_connnection_Work(memorypool,queuePool):
+def GPIB_USB_interface_connnection_Work(memorypool,queuePool):
     
     # find our device
     
@@ -45,14 +45,16 @@ def GPIB_connnection_Work(memorypool,queuePool):
 
 
 def gpib_Thread(memoryPool,queuePool):
+
+    gPIB_Driver=GPIB_Driver(memoryPool,queuePool)
     
     #GPIB connnection Thread create 
-    GPIB_connnection_Thread = threading.Thread(target = GPIB_connnection_Work,args = (memoryPool,queuePool))
-    GPIB_connnection_Thread.start()
+    gPIB_USB_interface_connnection_Thread = threading.Thread(target = GPIB_USB_interface_connnection_Work,args = (memoryPool,queuePool))
+    gPIB_USB_interface_connnection_Thread.start()
 
     #GPIB device class create 
     gpib_2635B_manager=GPIB_device_2635B(memoryPool,queuePool)
-    #gpib_2657A_manager=GPIB_device_2657A(memoryPool,queuePool)
+    gpib_2657A_manager=GPIB_device_2657A(memoryPool,queuePool)
 
 
 

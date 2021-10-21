@@ -7,9 +7,6 @@ import time
 from registor_manager import *
 import copy
 
-QueuePool["GPIB_send_queue"]=MemoryPoolManager.Queue()
-QueuePool["2635B_queue"]=MemoryPoolManager.Queue()
-QueuePool["2657A_queue"]=MemoryPoolManager.Queue()
 
 
 
@@ -25,15 +22,19 @@ class GPIB_package():
     def __init__(self,
                  type=0,
                  command="",
-                 device_name=""
+                 name="",
+                 address=0,
+                 result="",
+                 error_message=[]
                  ):
         self.type=type
         self.command=command
         self.name=name
         self.address=address
+        self.result=result
+        self.error_message=error_message
 
 class GPIB_Driver():
-
     #  Status bit mask in ibsta
     ERR     =0x8000     # Error detected
     TIMO    =0x4000     # Timeout occured
@@ -50,6 +51,26 @@ class GPIB_Driver():
     DTAS    =0x0002     # self.gpib_device trigger state
     DCAS    =0x0001     # self.gpib_device clear state
 
+
+    ERR_dict={
+        0:"System error",
+        1:"Function requires GPIB board to be CIC",
+        2:"Write function detected no Listeners",
+        3:"Interface board not addressed correctly",
+        4:"Invalid argument to function call",
+        5:"Function requires GPIB board to be SAC",
+        6:"I/O operation aborted",
+        7:"Non-existent interface board",
+        8:"Error performing DMA",
+        10:"I/O operation started before previous operation completed",
+        11:"No capability for intended operation",
+        12:"File system operation error",
+        14:"Command error during device call",
+        15:"Serial poll status byte lost",
+        16:"SRQ remains asserted",
+        20:"The return buffer is fullS",
+        21:"Address or board is locked"
+        }
 
     # Error messages in iberr
     EDVR    =0          # System error
@@ -89,11 +110,11 @@ class GPIB_Driver():
     T300s   =16         # Timeout of 300 Sec
     T1000s  =17         # Timeout of 1000 Sec
 
+
     def __init__(self,memoryPool,queuePool):
         self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
         self.memoryPool=memoryPool
         self.queuePool=queuePool
-        
         self.dev_descriptor={}
 
         queue_Thread = threading.Thread(target = self.queue_Work)
@@ -102,142 +123,194 @@ class GPIB_Driver():
     def queue_Work(self):
         while 1:
             self.getItem=self.queuePool["GPIB_send_queue"].get()
-            self.getItem=GPIB_package()
+
+            error_code=0
+            getMessage=None
+
+            if self.getItem.type==GPIB_package.init_type:
+                error_code=self.initiail_GPIB_device()
+            elif  self.getItem.type==GPIB_package.send_type:
+                error_code=self.send_Command(self.getItem.command)
+            elif  self.getItem.type==GPIB_package.read_type:
+                error_code,getMessage=self.request_Command(self.getItem.command)
+
+            error_message=self.err_check(error_code)
+
+            self.senditem=GPIB_package(     type=self.getItem.type,
+                                                                 command=self.getItem.command,
+                                                                 device_name=self.getItem.name,
+                                                                 result=getMessage,
+                                                                 error_message=error_message)
+
+            self.queuePool["GPIB_{}_queue".format(self.getItem.name)].put(self.senditem)
 
 
-
-            if getItem.type==GPIB_package.init_type:
-                self.initiail_GPIB_device()
-            elif  getItem.type==GPIB_package.send_type:
-
-                pass
-            elif  getItem.type==GPIB_package.read_type:
-                pass
-
-            
+    
     def initiail_GPIB_device(self):
+
         self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T10ms, 1, 0)
 
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
-            #print("initiail fail with numer {} device".format(self.address))
-            self.connection = False
-            return False
+            return err
         else:
-            self.connection = True
-            return True
+            return 0
 
     def request_Command(self,command):
-        if self.send_Command(command):
-            result = self.get_Value()
-            self.connection = True
-        else:
-            result = False
-            self.connection = False
-        return result
+
+        error=0
+
+        error=self.send_Command(command)
+        if error:
+            return error,None
+
+        error,result=self.get_Value(command)
+        
+        return error,result
+
+    def err_check(self,error_code):
+        list=[]
+        for bit in self.ERR_dict.keys():
+
+            if ((error_code & 1<<bit) != 0):
+                list.append(self.ERR_dict[bit])
+
+        return list
+
 
     def send_Command(self,command):
-        if not self.connection:
-            if self.initiail_GPIB_device():
-                return False
 
         byte_string=command.encode("utf8")
         send_buffer= ctypes.create_string_buffer(byte_string)
-        self.GPIB.ibwrt(self.dev_descriptor,send_buffer,send_buffer._length_)
+        self.GPIB.ibwrt(self.dev_descriptor[self.getItem.name],send_buffer,send_buffer._length_)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
-            #print("fail send data to numer {} device".format(self.address))
-            self.connection = False
-            return False
+            return err
         else:
-            self.connection = True
-            return True
+            return 0
 
     def get_Value(self):
 
         read_buffer= ctypes.create_string_buffer(100)
-
-        self.GPIB.ibrd(self.dev_descriptor,read_buffer,read_buffer._length_)
-
-        #cntl=self.GPIB.ThreadIbcntl()
+        self.GPIB.ibrd(self.dev_descriptor[self.getItem.name],read_buffer,read_buffer._length_)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
-            #print("fail retrive result from numer {} device".format(self.address))
-            self.connection = False
-            return False
+            return err,None
         else:
             result=read_buffer.value.decode("utf8")
-            self.connection = True
-            return result
-
+            return 0,result
 
 class GPIB_device():
-
-    
-
-    def __init__(self,address,device_registor_name):
+    def __init__(self,memoryPool,queuePool,address,name):
         
         self.address=address
         self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
         self.connection = False
         self.dev_descriptor=0
         self.device_IDN=""
-        self.device_registor_name=device_registor_name
-
-        if self.initiail_GPIB_device():
-            self.device_IDN=self.request_Command("*IDN?")
-            if self.device_IDN:
-                print("Connect to GPIB device : address at {} , device idn is {}".format(self.address,self.device_IDN))
-                self.send_Command("beeper.beep(0.1, 2400)")
-            else:
-                print("Fail to connect to GPIB device : address at {}".format(self.address))
+        self.device_name=device_name
+        self.memoryPool=memoryPool
+        self.queuePool=queuePool
+        
+        self.initiail_GPIB_device()
 
         connnection_check_Thread = threading.Thread(target = self.connnection_check_Work)
         connnection_check_Thread.start()
 
+    def initiail_GPIB_device(self):
 
+        sendItem=GPIB_package(
+                type=GPIB_package.init_type,
+                command="",
+                device_name=self.device_name,
+                address=self.address
+            )
+        
+        self.queuePool["GPIB_send_queue"].put(self.senditem)
+        getItem=self.queuePool["GPIB_{}_queue".format(self.name)].get()
 
+        #If we have any error code
+        if getItem.error_message.count():
+            self.connect_action(False)
+            print("Fail init device at adress {} Error is {}".format(self.address,getItem.error_message))
+            return getItem.error_message
+        else:
+            self.connect_action(True)
+            self.send_Command("smua.reset()")
+            self.send_Command("beeper.beep(0.1, 2400)")
+            return None
 
     
+    def connect_action(self,connect):
+        
+         self.connection=connect
 
+         if self.connection:
+            self.set_memorypool_register("System memory","{} connection".format(self.device_name),1)
+         else:
+            self.set_memorypool_register("System memory","{} connection".format(self.device_name),0)
 
     def connnection_check_Work(self):
-        print("{} connection".format(self.device_registor_name))
-        
         while 1:
-            #int ibln (int ud, int pad, int sad, short *listen)
-            #read_buffer= ctypes.create_string_buffer(100)
-            #self.GPIB.ibln(self.dev_descriptor,self.address,0,read_buffer)
-            #print(read_buffer.value)
-            #result=read_buffer.value.decode("utf8")
-
-            self.device_IDN=self.request_Command("*IDN?")
-            self.send_Command("beeper.beep(0.1, 2400)")
-            if self.device_IDN:
-                self.set_memorypool_register("System memory","{} connection".format(self.device_registor_name),1)
-                print("connect {}",self.address)
+            sendItem=GPIB_package(
+                    type=GPIB_package.read_type,
+                    command="*IDN?",
+                    device_name=self.device_name,
+                    address=self.address
+                )
+            self.queuePool["GPIB_send_queue"].put(self.senditem)
+            getItem=self.queuePool["GPIB_{}_queue".format(self.name)].get()
+            #If we have any error code
+            if getItem.error_message.count():
+                self.connect_action(False)
             else:
-                self.set_memorypool_register("System memory","{} connection".format(self.device_registor_name),0)
-                
-                print("lost {}",self.address)
-            time.sleep(0.03)
+                self.device_IDN=getItem.result
+                self.connect_action(True)
 
+            time.sleep(1)
+
+    def  send_Command(self,messgae):
+        sendItem=GPIB_package(
+                type=GPIB_package.send_type,
+                command=messgae,
+                device_name=self.device_name,
+                address=self.address
+            )
         
+        self.queuePool["GPIB_send_queue"].put(self.senditem)
+        getItem=self.queuePool["GPIB_{}_queue".format(self.name)].get()
+        #If we have any error code
+        if getItem.error_message.count():
+            self.connect_action(False)
+        else:
+            self.device_IDN=getItem.result
+            self.connect_action(True)
 
-class GPIB_device_2635B(GPIB_device):
-    def __init__(self,memoryPool,queuePool):
+        return getItem.error_message
+
+    def  read_Command(self,messgae):
+        sendItem=GPIB_package(
+                type=GPIB_package.read_type,
+                command=messgae,
+                device_name=self.device_name,
+                address=self.address
+            )
         
-        self.memoryPool=memoryPool
-        self.queuePool=queuePool
-        
+        self.queuePool["GPIB_send_queue"].put(self.senditem)
+        getItem=self.queuePool["GPIB_{}_queue".format(self.name)].get()
+        #If we have any error code
+        if getItem.error_message.count():
+            self.connect_action(False)
+            return getItem.error_message
+        else:
+            self.device_IDN=getItem.result
+            self.connect_action(True)
 
-        super().__init__(self.memoryPool["System memory"]["2635B GPIB address"].getValue(),device_registor_name="2635B")
+        return sendItem.result , sendItem.error_message
 
-
-        
 
     def set_memorypool_register(self,memorypool_name,registor_name,value):
         
@@ -249,6 +322,17 @@ class GPIB_device_2635B(GPIB_device):
             self.memoryPool[memorypool_name]=sub_memorypool
             sendItem=MemoryUnit(memorypool_name,registor_name)
             self.queuePool["memory_Write_Queue"].put(sendItem)
+
+        
+
+class GPIB_device_2635B(GPIB_device):
+    def __init__(self,memoryPool,queuePool):
+        
+        self.memoryPool=memoryPool
+        self.queuePool=queuePool
+        
+
+        super().__init__(memoryPool,queuePool,self.memoryPool["System memory"]["2635B GPIB address"].getValue(),device_registor_name="2635B")
 
 
     
@@ -260,23 +344,7 @@ class GPIB_device_2657A(GPIB_device):
         
         self.device_registor_name="2657A"
 
-        super().__init__(self.memoryPool["System memory"]["2657A GPIB address"].getValue(),device_registor_name="2657A")
+        super().__init__(memoryPool,queuePool,self.memoryPool["System memory"]["2657A GPIB address"].getValue(),device_registor_name="2657A")
 
-
-    def initial_device(self):
-        self.initiail_GPIB_device()
-        self.send_Command("smua.reset()")
-
-
-    def set_memorypool_register(self,memorypool_name,registor_name,value):
-        
-        if self.memoryPool[memorypool_name][registor_name].getValue()!=value:
-
-            sub_memorypool=copy.deepcopy(self.memoryPool[memorypool_name])
-            sub_memorypool[registor_name].setValue(value)
-
-            self.memoryPool[memorypool_name]=sub_memorypool
-            sendItem=MemoryUnit(memorypool_name,registor_name)
-            self.queuePool["memory_Write_Queue"].put(sendItem)
 
 
