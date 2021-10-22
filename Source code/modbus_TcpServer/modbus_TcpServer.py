@@ -23,7 +23,6 @@ from pymodbus.datastore import ModbusSparseDataBlock
 from registor_manager import *
 from twisted.internet.task import LoopingCall
 
-#from ..registor_manager import databaseLoadThread,databaseWriteThread,MemoryUnit
 
 import random
 
@@ -143,7 +142,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
             self.memorypool["Modbus Registor Pool - Registor"]=sub_memorypool
             sendItem=MemoryUnit("Modbus Registor Pool - Registor",registor_name)
-            self.queuepool["memory_Write_Queue"].put(sendItem)
+            self.queuepool["database_Write_Queue"].put(sendItem)
 
     def database_update_Work(self):
     
@@ -151,9 +150,9 @@ class CustomDataBlock(ModbusSparseDataBlock):
             getItem=MemoryUnit()
             getItem=self.queuepool["modbus_Write_Queue"].get()
 
-            if getItem.Main_memorypool=="Modbus Registor Pool - Registor":
-                unit=self.memorypool["Modbus Registor Pool - Registor"][getItem.memory_name]
-                self.register_dict[unit.registor_number+self.register_shift]=unit.getValue()
+            if getItem.pool_name=="Modbus Registor Pool - Registor":
+                unit=self.memorypool["Modbus Registor Pool - Registor"][getItem.registor_name]
+                self.register_dict[unit.registor_number+self.register_shift]=unit.getModbusValue()
 
 
 

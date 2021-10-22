@@ -39,8 +39,9 @@ if __name__ == "__main__":
 
     QueuePool={}
     QueuePool["modbus_Write_Queue"]=MemoryPoolManager.Queue()
-    QueuePool["memory_Write_Queue"]=MemoryPoolManager.Queue()
-    QueuePool["memory_refresh_Queue"]=MemoryPoolManager.Queue()
+    QueuePool["database_Write_Queue"]=MemoryPoolManager.Queue()
+
+    QueuePool["memory_WriteInGUI_Queue"]=MemoryPoolManager.Queue()
 
     QueuePool["GPIB_send_queue"]=MemoryPoolManager.Queue()
     QueuePool["GPIB_2635B_queue"]=MemoryPoolManager.Queue()

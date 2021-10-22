@@ -17,10 +17,10 @@ def get_Abs_path(relative):
 class MemoryUnit():
 
     def __init__(self,
-                 Main_memorypool="",
-                 memory_name=""):
-        self.Main_memorypool=Main_memorypool
-        self.memory_name=memory_name
+                 pool_name="",
+                 registor_name=""):
+        self.pool_name=pool_name
+        self.registor_name=registor_name
 
 
 
@@ -32,26 +32,26 @@ def databaseWriteThread(memoryPool,queuePool):
 
     while 1:
         getItem=MemoryUnit()
-        getItem=queuePool["memory_Write_Queue"].get()
+        getItem=queuePool["database_Write_Queue"].get()
         queuePool["modbus_Write_Queue"].put(getItem)
         time.sleep(0.5)
         
-        if not memoryPool[getItem.Main_memorypool][getItem.memory_name].volatile_type:
-            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
+        if not memoryPool[getItem.pool_name][getItem.registor_name].volatile_type:
+            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
             #print(test)
             cur.execute(test)
-            #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
+            #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
             
-        while not queuePool["memory_Write_Queue"].empty():
-            getItem=queuePool["memory_Write_Queue"].get()
+        while not queuePool["database_Write_Queue"].empty():
+            getItem=queuePool["database_Write_Queue"].get()
             queuePool["modbus_Write_Queue"].put(getItem)
 
-            if not memoryPool[getItem.Main_memorypool][getItem.memory_name].volatile_type:
-                test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.Main_memorypool,memoryPool[getItem.Main_memorypool][getItem.memory_name].value,getItem.memory_name)
+            if not memoryPool[getItem.pool_name][getItem.registor_name].volatile_type:
+                test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
                 #print(test)
                 cur.execute(test)
 
-                #memoryPool[getItem.Main_memorypool][getItem.memory_name].print_Package_Contant()
+                #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
          
 
         System_Registor_Database.commit()

@@ -24,6 +24,127 @@ from gui_main.gui.core.functions import *
 
 # PY TITLE BUTTON
 # ///////////////////////////////////////////////////////////////
+
+class PyIconButton_simple(QPushButton):
+        def __init__(
+        self,
+        icon = None,
+        icon_hover = None,
+        icon_active = None,
+        icon_deactive = None,
+
+        tooltip_text = "",
+        btn_id = None,
+
+        width = 30,
+        height = 30,
+        border_radius=5,
+
+        bg_color = "#343b48",
+        bg_color_hover = "#3c4454",
+        bg_color_pressed = "#2c313c",
+
+        is_active = True
+    ):
+            super().__init__()
+
+             # SET DEFAULT PARAMETERS
+            self.setFixedSize(width, height)
+            #self.setCursor(Qt.PointingHandCursor)
+            self.setObjectName(btn_id)
+            self.setMinimumSize(QSize(width, height))
+            self.setMaximumSize(QSize(width, height))
+
+
+
+            self.btn_id=btn_id
+
+            font = QFont()
+            font.setItalic(False)
+            self.setFont(font)
+            
+
+            self.setStyleSheet("QPushButton {{ border-radius: {}px;background-color: {} }} QPushButton:hover {{ background-color: {} }} QPushButton:pressed {{ background-color: {} }}".format(border_radius,bg_color,bg_color_hover,bg_color_pressed))
+
+            
+            self.icon_deactive = QIcon()
+            self.icon_deactive.addFile( Functions.set_svg_icon(icon_deactive), QSize(), QIcon.Normal, QIcon.Off)
+            self.icon = QIcon()
+            self.icon.addFile( Functions.set_svg_icon(icon), QSize(), QIcon.Normal, QIcon.Off)
+            self.icon_active = QIcon()
+            self.icon_active.addFile( Functions.set_svg_icon(icon_active), QSize(), QIcon.Normal, QIcon.Off)
+            self.icon_hover = QIcon()
+            self.icon_hover.addFile( Functions.set_svg_icon(icon_hover), QSize(), QIcon.Normal, QIcon.Off)
+
+            
+            self._is_inside=False
+
+            self._is_active = -1
+            self.style=-1
+            
+            self.setIconSize(QSize(width-9, height-9))
+
+            self.set_active(is_active)
+            self.change_style(self._is_active)
+
+            
+
+        def change_style(self,style):
+            if self.style!=style:
+                self.style=style
+                if self.style==0:
+                    self.setIcon(self.icon_deactive)
+                elif self.style==1:
+                    self.setIcon(self.icon)
+                elif self.style==2:
+                    self.setIcon(self.icon_hover)
+                elif self.style==3:
+                    self.setIcon(self.icon_active)
+
+
+        def mousePressEvent(self, event):
+            if event.button() == Qt.LeftButton:
+                # EMIT SIGNAL
+                if self._is_active and self._is_inside:
+                    self.change_style(3)
+                    return self.clicked.emit()
+
+        # MOUSE RELEASED
+        # Event triggered after the mouse button is released
+        # ///////////////////////////////////////////////////////////////
+        def mouseReleaseEvent(self, event):
+            if event.button() == Qt.LeftButton:
+                # EMIT SIGNAL
+                if self._is_active:
+                    if self._is_inside:
+                        self.change_style(2)
+                    else:
+                        self.change_style(1)
+                    return self.released.emit()
+
+        # MOUSE OVER
+        # Event triggered when the mouse is over the BTN
+        # ///////////////////////////////////////////////////////////////
+        def enterEvent(self, event):
+            if self._is_active:
+                self._is_inside=True
+                self.change_style(2)
+
+        # MOUSE LEAVE
+        # Event fired when the mouse leaves the BTN
+        # ///////////////////////////////////////////////////////////////
+        def leaveEvent(self, event):
+            if self._is_active:
+                self._is_inside=False
+                self.change_style(1)
+
+        def set_active(self, enable):
+            if self._is_active != enable:
+                self._is_active=enable
+                self.change_style(self._is_active)
+                self.setEnabled(enable)
+
+
 class PyIconButton(QPushButton):
     def __init__(
         self,

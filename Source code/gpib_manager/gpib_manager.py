@@ -324,7 +324,7 @@ class GPIB_device():
 
             self.memoryPool[memorypool_name]=sub_memorypool
             sendItem=MemoryUnit(memorypool_name,registor_name)
-            self.queuePool["memory_Write_Queue"].put(sendItem)
+            self.queuePool["database_Write_Queue"].put(sendItem)
 
         
 

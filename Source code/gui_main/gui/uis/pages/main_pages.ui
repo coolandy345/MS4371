@@ -44,7 +44,7 @@
       <string notr="true">background-color: rgb(44, 49, 60);</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -4223,7 +4223,7 @@ border:None</string>
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-452</y>
             <width>1170</width>
             <height>1410</height>
            </rect>
@@ -4893,7 +4893,10 @@ border-color: rgb(44, 49, 60);</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QGridLayout" name="gridLayout_34">
+                   <layout class="QVBoxLayout" name="verticalLayout_11">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -4906,9 +4909,18 @@ border-color: rgb(44, 49, 60);</string>
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_3">
+                      <property name="styleSheet">
+                       <string notr="true">font: 13px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;</string>
+                      </property>
+                      <property name="text">
+                       <string>削除</string>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -4932,7 +4944,10 @@ border-color: rgb(44, 49, 60);</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QGridLayout" name="gridLayout_36">
+                   <layout class="QVBoxLayout" name="verticalLayout_13">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -4945,9 +4960,18 @@ border-color: rgb(44, 49, 60);</string>
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_7">
+                      <property name="styleSheet">
+                       <string notr="true">font: 13px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;</string>
+                      </property>
+                      <property name="text">
+                       <string>保存</string>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -4971,7 +4995,10 @@ border-color: rgb(44, 49, 60);</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QGridLayout" name="gridLayout_35">
+                   <layout class="QVBoxLayout" name="verticalLayout_12">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -4984,9 +5011,18 @@ border-color: rgb(44, 49, 60);</string>
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_6">
+                      <property name="styleSheet">
+                       <string notr="true">font: 13px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;</string>
+                      </property>
+                      <property name="text">
+                       <string>追加</string>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -5879,7 +5915,10 @@ padding-right:5px;</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QGridLayout" name="gridLayout_45">
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -5892,9 +5931,18 @@ padding-right:5px;</string>
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_46">
+                      <property name="styleSheet">
+                       <string notr="true">font: 13px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;</string>
+                      </property>
+                      <property name="text">
+                       <string>追加</string>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -5918,7 +5966,10 @@ padding-right:5px;</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QGridLayout" name="gridLayout_44">
+                   <layout class="QVBoxLayout" name="verticalLayout_14">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -5931,9 +5982,18 @@ padding-right:5px;</string>
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_15">
+                      <property name="styleSheet">
+                       <string notr="true">font: 13px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;</string>
+                      </property>
+                      <property name="text">
+                       <string>削除</string>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -5957,7 +6017,10 @@ padding-right:5px;</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QGridLayout" name="gridLayout_43">
+                   <layout class="QVBoxLayout" name="verticalLayout_16">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -5970,9 +6033,18 @@ padding-right:5px;</string>
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_47">
+                      <property name="styleSheet">
+                       <string notr="true">font: 13px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;</string>
+                      </property>
+                      <property name="text">
+                       <string>保存</string>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </item>

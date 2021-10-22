@@ -48,7 +48,7 @@ os.environ["QT_FONT_DPI"] = "96"
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
 class MainWindow(QMainWindow):
-    def __init__(self,memoryPool,queuePool):
+    def __init__(self,Master_memoryPool,queuePool):
         super().__init__()
 
 
@@ -58,7 +58,7 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.ui = UI_MainWindow()
         self.ui.setup_ui(self)
-        self.memoryPool=memoryPool
+        self.Master_memoryPool=Master_memoryPool
         self.queuePool=queuePool
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
@@ -71,7 +71,7 @@ class MainWindow(QMainWindow):
 
         #setupMainWindow=SetupMainWindow()
         #setupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
-        self.SetupMainWindow=SetupMainWindow(main_namespace=self,memoryPool=self.memoryPool,queuePool=self.queuePool)
+        self.SetupMainWindow=SetupMainWindow(main_namespace=self,Master_memoryPool=self.Master_memoryPool,queuePool=self.queuePool)
         #SetupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
@@ -139,7 +139,7 @@ class MainWindow(QMainWindow):
 
         
         
-        if btn.objectName() == "new_temp_Step_Buttom":
+        if btn.objectName() == "addPattern_pushButton":
             self.tempPattern.new_TempPattern()
 
         if btn.objectName() == "new_test_Step_Buttom":
@@ -180,12 +180,12 @@ class MainWindow(QMainWindow):
 
 
 
-def initial_GUI(memoryPool,queuePool):
+def initial_GUI(Master_memoryPool,queuePool):
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon("icon.ico"))
-    window = MainWindow(memoryPool,queuePool)
+    window = MainWindow(Master_memoryPool,queuePool)
     
     QThreadPool.globalInstance().setStackSize(10000)
     QThreadPool.globalInstance().setMaxThreadCount(1000)

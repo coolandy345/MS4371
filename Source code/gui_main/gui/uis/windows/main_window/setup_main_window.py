@@ -70,13 +70,13 @@ import pyqtgraph as pg
 # PY WINDOW
 # ///////////////////////////////////////////////////////////////
 class SetupMainWindow:
-    def __init__(self,main_namespace,memoryPool,queuePool):
+    def __init__(self,main_namespace,Master_memoryPool,queuePool):
         super().__init__()
 
         self.main_namespace=main_namespace
-        self.memoryPool=memoryPool
+        self.Master_memoryPool=Master_memoryPool
         self.queuePool=queuePool
-        self.setup_gui(self.memoryPool)
+        self.setup_gui()
         
 
     # ADD LEFT MENUS
@@ -145,7 +145,7 @@ class SetupMainWindow:
 
     # SETUP MAIN WINDOW WITH CUSTOM PARAMETERS
     # ///////////////////////////////////////////////////////////////
-    def setup_gui(self,memory_pool):
+    def setup_gui(self):
         # APP TITLE
         # ///////////////////////////////////////////////////////////////
         self.main_namespace.setWindowTitle(self.main_namespace.settings["app_name"])
@@ -222,13 +222,13 @@ class SetupMainWindow:
 
         self.main_namespace.ui.load_pages.stackedWidget.setCurrentWidget(self.main_namespace.ui.load_pages.page_AutoOperate)
 
-        
 
-        
-        self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
-        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
-        self.main_namespace.main_utility_manager= Main_utility_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
-        self.main_namespace.testfile_manager=Testfile_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,memoryPool=self.memoryPool,queuePool=self.queuePool)
+        self.main_namespace.MMG=Memory_Manager(Master_memoryPool=self.Master_memoryPool,queuePool=self.queuePool)
+
+        self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,queuePool=self.queuePool)
+        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,queuePool=self.queuePool)
+        self.main_namespace.main_utility_manager= Main_utility_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,queuePool=self.queuePool)
+        self.main_namespace.testfile_manager=Testfile_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,queuePool=self.queuePool)
 
         
         

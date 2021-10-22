@@ -33,7 +33,7 @@ class ModbusPackage():
         print("self.access_type =",self.access_type)
         print("self.comment =",self.comment)
 
-    def getValue(self):
+    def getModbusValue(self):
         if isinstance(self.value, int):
             return self.value
         else:
@@ -42,19 +42,24 @@ class ModbusPackage():
             else:
                 return 0
 
+    def getValue(self):
+        return self.value
+
     def setValue(self,value):
-        
-        if type(self.max)=="NoneType" and type(self.min)=="NoneType":
-            if value >self.max:
-                value=self.max
-                print("Set too large value to this registor ,Register number = ",self.registor_number)
-                return
-            elif value<self.min:
-                value=self.min
-                print("Set too small value to this registor ,Register number = ",self.registor_number)
-                return
-        
         self.value=value
+
+        
+        #if type(self.max)!="NoneType" and type(self.min)!="NoneType":
+        #    if value >self.max:
+        #        value=self.max
+        #        print("Set too large value to this registor ,Register number = ",self.registor_number)
+        #        return
+        #    elif value<self.min:
+        #        value=self.min
+        #        print("Set too small value to this registor ,Register number = ",self.registor_number)
+        #        return
+        
+        #self.value=value
 
     def getName(self):
         return self.name

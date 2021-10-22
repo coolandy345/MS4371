@@ -192,25 +192,20 @@ class PyTempStep(QWidget):
         # ///////////////////////////////////////////////////////////////
         self.themes = Themes().items
         
-        self.icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-plus-large.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
+        self.icon = PyIconButton_simple(
+                icon = "fi-rr-plus-large.svg",
+                icon_active = "fi-rr-plus-large.svg",
+                icon_hover = "fi-rr-plus-large.svg",
+                icon_deactive = "fi-rr-plus-large.svg",
                 btn_id = "ステップ {} 追加".format(self._step),
                 tooltip_text = "ステップ追加",
                 width = 80,
                 height = 80,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = self.themes["app_color"]["dark_one"],
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["green"],
+                bg_color = "rgb(44, 49, 60)",
+                bg_color_hover = "rgb(63, 70, 86)",
+                bg_color_pressed = "rgb(112, 125, 153)"
             )
-        self.grayout_color="#606267"
+
         self.pattern.gridLayout_2.addWidget(self.icon, Qt.AlignCenter, Qt.AlignCenter)
 
         self.icon.clicked.connect(self.addStepBtn_presscallback)
@@ -218,27 +213,23 @@ class PyTempStep(QWidget):
 
         self.icon.setObjectName("new_temp_Step_Buttom")
 
-        self.menu_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-menu-dots-vertical.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
+        self.menu_icon = PyIconButton_simple(
+                icon = "fi-rr-menu-dots-vertical.svg",
+                icon_active = "fi-rr-menu-dots-vertical.svg",
+                icon_hover = "fi-rr-menu-dots-vertical.svg",
+                icon_deactive = "fi-rr-menu-dots-vertical.svg",
                 btn_id = "ステップ {} menu編集".format(self._step),
                 tooltip_text = "編集",
-                width = 20,
+                width = 30,
                 height = 30,
-                radius = 2,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#2c313c",
-                bg_color_hover = "#2c313c",
-                bg_color_pressed = "#6db6ee",
+                bg_color = "rgb(44, 49, 60)",
+                bg_color_hover = "rgb(63, 70, 86)",
+                bg_color_pressed = "rgb(112, 125, 153)"
+
             )
         self.pattern.gridLayout_6.addWidget(self.menu_icon, Qt.AlignCenter, Qt.AlignCenter)
-        
         self.menu_icon.clicked.connect(self.show_menu)
+
         self.pattern.Type_comboBox.currentIndexChanged.connect(self.type_modifly_callback)
         self.pattern.Hour_lineEdit.valueChanged.connect(self.modifly_callback)
         self.pattern.Min_lineEdit.valueChanged.connect(self.modifly_callback)
@@ -424,7 +415,6 @@ class PyTempStep(QWidget):
         self._parent.tempPattern.scroll_adjust_TempPattern()
 
     def show_menu(self):
-
         if self._menu.menu_frame.isVisible():
             self._menu.menu_frame.hide()
         else:

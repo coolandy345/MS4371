@@ -5,20 +5,84 @@ from gui_main.gui.widgets import *
 from gui_main.gui.core.functions import *
 import random
 from modbus_TcpServer import MeasurePackage
+from registor_manager import *
+
+class Memory_Manager():
+    def __init__( 
+            self, 
+            Master_memoryPool={},
+            queuePool={}
+    ):
+        self.Master_memoryPool=Master_memoryPool
+        self.queuePool=queuePool
+        self.memoryPool={}
+
+        self.memory_Reload()
+
+        main_MemoryPoolWrite_Thread = threading.Thread(target = self.main_MemoryPoolWrite_Work,daemon=True)
+        main_MemoryPoolWrite_Thread.start()
+
+
+
+    def memory_Reload(self):
+        """
+        Reload local GUI memoryPool fom Master_memoryPool 
+        """
+
+        for key in self.Master_memoryPool.keys():
+            self.memoryPool[key]=self.Master_memoryPool[key]
+
+            
+
+
+    def main_MemoryPoolWrite_Work(self):
+        """
+        Update the local GUI memoryPool to Master_memoryPool
+        When request is got , this thread will delay 0.1s for any other request and do it  at one time
+        """
+
+        while 1:
+            #Wait for any Master memoryPool update request
+            getItem_list=[]
+            getItem_list.append(self.queuePool["memory_WriteInGUI_Queue"].get())
+            #Wait for 0.1s for any others request
+            time.sleep(0.1)
+            #Collected al  item in this 0.1s
+            while not self.queuePool["memory_WriteInGUI_Queue"].empty():
+                getItem_list.append(self.queuePool["memory_WriteInGUI_Queue"].get())
+
+            
+            #Check the pools has been changed
+            poolNameList=[]
+            for item in getItem_list:
+                poolNameList.append(item.pool_name)
+                item.registor_name
+
+            #Remove Duplicates From poolNameList
+            poolNameList = list(dict.fromkeys(poolNameList))
+
+            #Update the local GUI memoryPool to Master_memoryPool
+            for pool_name in poolNameList:
+                self.Master_memoryPool[pool_name]=self.memoryPool[pool_name]
+
+            #Send database update request
+            for item in getItem_list:
+                sendItem=MemoryUnit(item.pool_name,item.registor_name)
+                self.queuePool["database_Write_Queue"].put(sendItem)
+
+
 
 class Main_utility_manager(QWidget):
     def __init__( 
             self, 
             parent = None,
             app_parent = None,
-            memoryPool={},
             queuePool={}
     ):
         super().__init__()
 
         self._parent=parent
         self._app_parent=app_parent
-        self.memoryPool=memoryPool
         self.queuePool=queuePool
 
         
@@ -61,7 +125,8 @@ class Main_utility_manager(QWidget):
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
         elif btn_name == "autostart_pushButton":
-            self._parent.testfile_manager.prepare_folder()
+            pass
+            #self._parent.testfile_manager.prepare_folder()
         elif btn_name == "manualMeasurement_pushButton":
             pass
         elif btn_name == "voltageOutput_pushButton":
@@ -152,22 +217,18 @@ class Main_utility_manager(QWidget):
         
         self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.connect(self.btn_callback)
 
-        self._parent.ready_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-play-extralarge.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.ready_icon = PyIconButton_simple(
+                icon = "fi-rr-play-extralarge.svg",
+                icon_active = "fi-rr-play-extralarge.svg",
+                icon_hover = "fi-rr-play-extralarge.svg",
+                icon_deactive = "fi-rr-play-extralarge-deactive.svg",
+                btn_id = "運転可",
                 tooltip_text = "運転可",
                 width = 60,
                 height = 60,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
         self._parent.ui.load_pages.Layout_Status_RunReady.addWidget(self._parent.ready_icon, Qt.AlignCenter, Qt.AlignCenter)
 
@@ -390,22 +451,22 @@ class Main_utility_manager(QWidget):
         self.data_array=[]
 
         if self.graph_Item=="Resistor":
-            for data in self.memoryPool["Read Measurement Data"]:
+            for data in self._parent.MMG.memoryPool["Read Measurement Data"]:
                 XYdata={}
                 XYdata["x"]=data.time/self.timeUnit
                 XYdata["y"]=data.resistor
                 self.data_array.append(XYdata)
             self._parent.curve.setData(self.data_array)
         else:
-            self.choose_pattern=self.memoryPool["System memory"]["choose_Pattern"].getValue()
+            self.choose_pattern=self._parent.MMG.memoryPool["System memory"]["choose_Pattern"].getValue()
             if choose_pattern:
-                pattern_availible_number=self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(choose_pattern)].getValue()
+                pattern_availible_number=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(choose_pattern)].getValue()
             
                 self.data_array.append({"x":0,"y":0})
                 for step in (1,pattern_availible_number+1):
                     XYdata={}
-                    XYdata["x"]=self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(choose_pattern,step)].getValue()
-                    XYdata["y"]=self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(choose_pattern,step)].getValue()
+                    XYdata["x"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(choose_pattern,step)].getValue()
+                    XYdata["y"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(choose_pattern,step)].getValue()
                     self.data_array.append(XYdata)
             #not choose_pattern yet 
             else:
@@ -446,18 +507,18 @@ class Main_utility_manager(QWidget):
         
     def regularWork(self):
 
-        self.ready_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
-        self.stop_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
-        self.vacuum_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
-        self.heating_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
-        self.keepTemp_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["温度ｷｰﾌﾟ中"].getValue()
-        self.testing_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
-        self.testFinishing_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
-        self.error_icon_active=self.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
-        self.ethernetConnecton_icon_active=self.memoryPool["System memory"]["Ethernet conneciton"].getValue()
-        self.usbConnecton_icon_active=self.memoryPool["System memory"]["GPIB USB conneciton"].getValue()
-        self.gPIBConnecton_2635B_icon_active=self.memoryPool["System memory"]["2635B connection"].getValue()
-        self.gPIBConnecton_2657A_icon_active=self.memoryPool["System memory"]["2657A connection"].getValue()
+        self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
+        self.stop_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
+        self.vacuum_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
+        self.heating_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
+        self.keepTemp_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度ｷｰﾌﾟ中"].getValue()
+        self.testing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
+        self.testFinishing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
+        self.error_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
+        self.ethernetConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue()
+        self.usbConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["GPIB USB conneciton"].getValue()
+        self.gPIBConnecton_2635B_icon_active=self._parent.MMG.memoryPool["System memory"]["2635B connection"].getValue()
+        self.gPIBConnecton_2657A_icon_active=self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue()
 
         
         if self.ready_icon_active != self._parent.ready_icon._is_active:

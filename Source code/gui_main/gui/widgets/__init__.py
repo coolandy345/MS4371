@@ -60,7 +60,7 @@ from . py_circular_progress import PyCircularProgress
 
 # PY ICON BUTTON
 # ///////////////////////////////////////////////////////////////
-from . py_icon_button import PyIconButton
+from . py_icon_button import PyIconButton,PyIconButton_simple
 
 
 # PY LINE EDIT

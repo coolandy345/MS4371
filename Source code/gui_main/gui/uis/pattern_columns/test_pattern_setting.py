@@ -51,7 +51,6 @@ class TestPatternWidget(QWidget):
             self,
             parent = None,
             app_parent = None,
-            memoryPool={},
             queuePool={}
     ):
         super().__init__()
@@ -60,8 +59,6 @@ class TestPatternWidget(QWidget):
         self._parent=parent
         self._app_parent=app_parent
         self.Step_number=0
-        self.main_memoryPool=memoryPool
-        self.memoryPool={}
         self.queuePool=queuePool
         self.step_widges_list=[]
         self.patternFiles=[]
@@ -191,18 +188,11 @@ class TestPatternWidget(QWidget):
 
 
     def memory_reader(self):
-        #Reload Memory from Database
-        
-        for key in self.main_memoryPool.keys():
-            self.memoryPool[key]=self.main_memoryPool[key]
-
-        #mudbusunit=modbus_TcpServer.ModbusPackage()
-        #Modbus_Registor_pool=self.memoryPool["Test Pattern Memory"]
         _20_pattern_lists=[None]
 
         #Try to get number of PTN list
-        self.availlible_patternFile_count=self.memoryPool["Measurement Pattern"]["有効PTN総数"].getValue()
-        self.focus_patternFile_number=self.memoryPool["Measurement Pattern"]["フォーカスPTN番号"].getValue()
+        self.availlible_patternFile_count=self._parent.MMG.memoryPool["Measurement Pattern"]["有効PTN総数"].getValue()
+        self.focus_patternFile_number=self._parent.MMG.memoryPool["Measurement Pattern"]["フォーカスPTN番号"].getValue()
         #Auto load last pattern
         if self.focus_patternFile_number==0:
             if self.availlible_patternFile_count:
@@ -217,15 +207,15 @@ class TestPatternWidget(QWidget):
         
         for file_number in range(1,21):
             pattern=testlist(
-                name            =self.memoryPool["Measurement Pattern"]["PTNData_{}_名称".format(file_number)].getValue(),
-                step_number     =self.memoryPool["Measurement Pattern"]["PTNData_{}_実行STEP数".format(file_number)].getValue(),
-                active          =self.memoryPool["Measurement Pattern"]["PTNData_{}_パターン有効".format(file_number)].getValue(),
-                comment         =self.memoryPool["Measurement Pattern"]["PTNData_{}_註記".format(file_number)].value,
-                test_time       =self.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(file_number)].getValue(),
-                test_sampletime =self.memoryPool["Measurement Pattern"]["PTNData_{}_測定sampletime".format(file_number)].getValue(),
-                BG0_test_time   =self.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(file_number)].getValue(),
-                BG_test_time    =self.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(file_number)].getValue(),
-                BG_sampletime   =self.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定sampletime".format(file_number)].getValue()
+                name            =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_名称".format(file_number)].getValue(),
+                step_number     =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_実行STEP数".format(file_number)].getValue(),
+                active          =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_パターン有効".format(file_number)].getValue(),
+                comment         =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_註記".format(file_number)].value,
+                test_time       =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(file_number)].getValue(),
+                test_sampletime =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定sampletime".format(file_number)].getValue(),
+                BG0_test_time   =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(file_number)].getValue(),
+                BG_test_time    =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(file_number)].getValue(),
+                BG_sampletime   =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定sampletime".format(file_number)].getValue()
                 )
 
             if pattern.active:
@@ -236,7 +226,7 @@ class TestPatternWidget(QWidget):
             for step_number in range(1,9):
 
                 unit=testUnit(
-                    voltage     =self.memoryPool["Measurement Pattern"]["PTNData_{}_STEP_{}_電圧".format(file_number,step_number)].getValue(),
+                    voltage     =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_STEP_{}_電圧".format(file_number,step_number)].getValue(),
                     )
                 units.append(unit)
             
@@ -336,67 +326,112 @@ class TestPatternWidget(QWidget):
         # ///////////////////////////////////////////////////////////////
         self.themes = Themes().items
 
-        self.delete_IconButton = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-trash.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
+        #self.delete_IconButton = PyIconButton(
+        #        icon_path = Functions.set_svg_icon("fi-rr-trash.svg"),
+        #        parent = self._parent,
+        #        app_parent = self._app_parent,
+        #        btn_id = "削除",
+        #        tooltip_text = "削除",
+        #        width = 30,
+        #        height = 30,
+        #        radius = 10,
+        #        dark_one = self.themes["app_color"]["dark_one"],
+        #        icon_color = self.themes["app_color"]["critical_icon"]["icon_color"],
+        #        icon_color_hover = self.themes["app_color"]["critical_icon"]["icon_hover"],
+        #        icon_color_pressed = self.themes["app_color"]["critical_icon"]["icon_pressed"],
+        #        icon_color_deactive = self.themes["app_color"]["critical_icon"]["icon_deactive"],
+        #        bg_color = self.themes["app_color"]["critical_icon"]["icon_bg"],
+        #        bg_color_hover = self.themes["app_color"]["critical_icon"]["icon_bg_hover"],
+        #        bg_color_pressed = self.themes["app_color"]["critical_icon"]["icon_bg_pressed"],
+        #    )
+        self.delete_IconButton = PyIconButton_simple(
+                icon = "fi-rr-trash.svg",
+                icon_active = "fi-rr-trash.svg",
+                icon_hover = "fi-rr-trash.svg",
+                icon_deactive = "fi-rr-trash-deactive.svg",
                 btn_id = "削除",
                 tooltip_text = "削除",
                 width = 30,
                 height = 30,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["critical_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["critical_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["critical_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["critical_icon"]["icon_deactive"],
-                bg_color = self.themes["app_color"]["critical_icon"]["icon_bg"],
-                bg_color_hover = self.themes["app_color"]["critical_icon"]["icon_bg_hover"],
-                bg_color_pressed = self.themes["app_color"]["critical_icon"]["icon_bg_pressed"],
+                bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
+                bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
+                bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
+
             )
-        self._parent.ui.load_pages.gridLayout_44.addWidget(self.delete_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self._parent.ui.load_pages.verticalLayout_14.addWidget(self.delete_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.delete_IconButton.clicked.connect(self.ui_click_callback)
 
-        self.add_IconButton = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-file-add.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
+        #self.add_IconButton = PyIconButton(
+        #        icon_path = Functions.set_svg_icon("fi-rr-file-add.svg"),
+        #        parent = self._parent,
+        #        app_parent = self._app_parent,
+        #        btn_id = "追加",
+        #        tooltip_text = "追加",
+        #        width = 30,
+        #        height = 30,
+        #        radius = 10,
+        #        dark_one = self.themes["app_color"]["dark_one"],
+        #        icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
+        #        icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
+        #        icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
+        #        icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
+        #        bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
+        #        bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
+        #        bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
+        #    )
+        self.add_IconButton = PyIconButton_simple(
+                icon = "fi-rr-file-add.svg",
+                icon_active = "fi-rr-file-add.svg",
+                icon_hover = "fi-rr-file-add.svg",
+                icon_deactive = "fi-rr-file-add-deactive.svg",
                 btn_id = "追加",
                 tooltip_text = "追加",
                 width = 30,
                 height = 30,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
                 bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
                 bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
+
             )
-        self._parent.ui.load_pages.gridLayout_45.addWidget(self.add_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self._parent.ui.load_pages.verticalLayout_15.addWidget(self.add_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.add_IconButton.clicked.connect(self.ui_click_callback)
 
-        self.save_IconButton = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-edit.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
+        #self.save_IconButton = PyIconButton(
+        #        icon_path = Functions.set_svg_icon("fi-rr-edit.svg"),
+        #        parent = self._parent,
+        #        app_parent = self._app_parent,
+        #        btn_id = "保存",
+        #        tooltip_text = "保存",
+        #        width = 30,
+        #        height = 30,
+        #        radius = 10,
+        #        dark_one = self.themes["app_color"]["dark_one"],
+        #        icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
+        #        icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
+        #        icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
+        #        icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
+        #        bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
+        #        bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
+        #        bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
+        #    )
+
+        self.save_IconButton = PyIconButton_simple(
+                icon = "fi-rr-edit.svg",
+                icon_active = "fi-rr-edit.svg",
+                icon_hover = "fi-rr-edit.svg",
+                icon_deactive = "fi-rr-edit-deactive.svg",
                 btn_id = "保存",
-                tooltip_text = "保存",
+                tooltip_text = "編集",
                 width = 30,
                 height = 30,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
                 bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
                 bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
+
             )
-        self._parent.ui.load_pages.gridLayout_43.addWidget(self.save_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+
+
+        self._parent.ui.load_pages.verticalLayout_16.addWidget(self.save_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.save_IconButton.clicked.connect(self.ui_click_callback)
 
         self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
@@ -715,23 +750,22 @@ class TestPatternWidget(QWidget):
             #Save it to database
             self.patternFile_Save()
 
-    def set_memorypool_register(self,Main_memorypool,memory_name,value):
+    def set_memorypool_register(self,pool_name,registor_name,value):
         
-        if self.memoryPool[Main_memorypool][memory_name].getValue()!=value:
-            self.memoryPool[Main_memorypool][memory_name].setValue(value)
-            self.main_memoryPool[Main_memorypool]=self.memoryPool[Main_memorypool]
-            sendItem=MemoryUnit(Main_memorypool,memory_name)
-            self.queuePool["memory_Write_Queue"].put(sendItem)
+        if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
+            self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
+            sendItem=MemoryUnit(pool_name,registor_name)
+            self.queuePool["memory_WriteInGUI_Queue"].put(sendItem)
 
     def regularWork(self):
         #print("self.test1 = ",self.test1)
         self.test1+=1
 
 
-        if time.time()-self.test >0.2 and time.time()-self.test <1000:
-            print("lag occur time = ",time.time()-self.test)
+        #if time.time()-self.test >0.2 and time.time()-self.test <1000:
+        #    print("lag occur time = ",time.time()-self.test)
 
-        self.test=time.time()
+        #self.test=time.time()
 
         if self.IconButtonUpdate:
             self.delete_IconButton.set_active(self.delete_IconButtonActiveState)

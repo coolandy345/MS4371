@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesJXYRUa.ui'
+## Form generated from reading UI file 'main_pagesAUNxpH.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -1932,7 +1932,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1170, 1410))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -452, 1170, 1410))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -2214,10 +2214,18 @@ class Ui_MainPages(object):
         self.frame_38.setMaximumSize(QSize(40, 16777215))
         self.frame_38.setFrameShape(QFrame.StyledPanel)
         self.frame_38.setFrameShadow(QFrame.Raised)
-        self.gridLayout_34 = QGridLayout(self.frame_38)
-        self.gridLayout_34.setSpacing(0)
-        self.gridLayout_34.setObjectName(u"gridLayout_34")
-        self.gridLayout_34.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_11 = QVBoxLayout(self.frame_38)
+        self.verticalLayout_11.setSpacing(0)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.label_3 = QLabel(self.frame_38)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+
+        self.verticalLayout_11.addWidget(self.label_3)
+
 
         self.gridLayout_26.addWidget(self.frame_38, 0, 4, 1, 1)
 
@@ -2227,10 +2235,18 @@ class Ui_MainPages(object):
         self.frame_40.setMaximumSize(QSize(40, 16777215))
         self.frame_40.setFrameShape(QFrame.StyledPanel)
         self.frame_40.setFrameShadow(QFrame.Raised)
-        self.gridLayout_36 = QGridLayout(self.frame_40)
-        self.gridLayout_36.setSpacing(0)
-        self.gridLayout_36.setObjectName(u"gridLayout_36")
-        self.gridLayout_36.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_13 = QVBoxLayout(self.frame_40)
+        self.verticalLayout_13.setSpacing(0)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.label_7 = QLabel(self.frame_40)
+        self.label_7.setObjectName(u"label_7")
+        self.label_7.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+
+        self.verticalLayout_13.addWidget(self.label_7)
+
 
         self.gridLayout_26.addWidget(self.frame_40, 0, 1, 1, 1)
 
@@ -2240,10 +2256,18 @@ class Ui_MainPages(object):
         self.frame_39.setMaximumSize(QSize(40, 16777215))
         self.frame_39.setFrameShape(QFrame.StyledPanel)
         self.frame_39.setFrameShadow(QFrame.Raised)
-        self.gridLayout_35 = QGridLayout(self.frame_39)
-        self.gridLayout_35.setSpacing(0)
-        self.gridLayout_35.setObjectName(u"gridLayout_35")
-        self.gridLayout_35.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_12 = QVBoxLayout(self.frame_39)
+        self.verticalLayout_12.setSpacing(0)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.label_6 = QLabel(self.frame_39)
+        self.label_6.setObjectName(u"label_6")
+        self.label_6.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+
+        self.verticalLayout_12.addWidget(self.label_6)
+
 
         self.gridLayout_26.addWidget(self.frame_39, 0, 2, 1, 1)
 
@@ -2641,10 +2665,18 @@ class Ui_MainPages(object):
         self.frame_56.setMaximumSize(QSize(40, 16777215))
         self.frame_56.setFrameShape(QFrame.StyledPanel)
         self.frame_56.setFrameShadow(QFrame.Raised)
-        self.gridLayout_45 = QGridLayout(self.frame_56)
-        self.gridLayout_45.setSpacing(0)
-        self.gridLayout_45.setObjectName(u"gridLayout_45")
-        self.gridLayout_45.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_15 = QVBoxLayout(self.frame_56)
+        self.verticalLayout_15.setSpacing(0)
+        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
+        self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
+        self.label_46 = QLabel(self.frame_56)
+        self.label_46.setObjectName(u"label_46")
+        self.label_46.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+
+        self.verticalLayout_15.addWidget(self.label_46)
+
 
         self.gridLayout_39.addWidget(self.frame_56, 0, 1, 1, 1)
 
@@ -2654,10 +2686,18 @@ class Ui_MainPages(object):
         self.frame_54.setMaximumSize(QSize(40, 16777215))
         self.frame_54.setFrameShape(QFrame.StyledPanel)
         self.frame_54.setFrameShadow(QFrame.Raised)
-        self.gridLayout_44 = QGridLayout(self.frame_54)
-        self.gridLayout_44.setSpacing(0)
-        self.gridLayout_44.setObjectName(u"gridLayout_44")
-        self.gridLayout_44.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_14 = QVBoxLayout(self.frame_54)
+        self.verticalLayout_14.setSpacing(0)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.label_15 = QLabel(self.frame_54)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+
+        self.verticalLayout_14.addWidget(self.label_15)
+
 
         self.gridLayout_39.addWidget(self.frame_54, 0, 3, 1, 1)
 
@@ -2667,10 +2707,18 @@ class Ui_MainPages(object):
         self.frame_52.setMaximumSize(QSize(40, 16777215))
         self.frame_52.setFrameShape(QFrame.StyledPanel)
         self.frame_52.setFrameShadow(QFrame.Raised)
-        self.gridLayout_43 = QGridLayout(self.frame_52)
-        self.gridLayout_43.setSpacing(0)
-        self.gridLayout_43.setObjectName(u"gridLayout_43")
-        self.gridLayout_43.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_16 = QVBoxLayout(self.frame_52)
+        self.verticalLayout_16.setSpacing(0)
+        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
+        self.verticalLayout_16.setContentsMargins(0, 0, 0, 0)
+        self.label_47 = QLabel(self.frame_52)
+        self.label_47.setObjectName(u"label_47")
+        self.label_47.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+
+        self.verticalLayout_16.addWidget(self.label_47)
+
 
         self.gridLayout_39.addWidget(self.frame_52, 0, 0, 1, 1)
 
@@ -3158,7 +3206,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(1)
+        self.pages.setCurrentIndex(2)
         self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 
@@ -3285,6 +3333,9 @@ class Ui_MainPages(object):
 
         self.label_25.setText(QCoreApplication.translate("MainPages", u"\u8a3b\u8a18", None))
         self.PatternErrorMessagelabel.setText(QCoreApplication.translate("MainPages", u"\u7121\u52b9\u5165\u529b:", None))
+        self.label_3.setText(QCoreApplication.translate("MainPages", u"\u524a\u9664", None))
+        self.label_7.setText(QCoreApplication.translate("MainPages", u"\u4fdd\u5b58", None))
+        self.label_6.setText(QCoreApplication.translate("MainPages", u"\u8ffd\u52a0", None))
         self.TestPatternErrorMessagelabel.setText(QCoreApplication.translate("MainPages", u"\u7121\u52b9\u5165\u529b:", None))
         self.label_58.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u6642\u9593(min)", None))
         self.label_59.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u30b5\u30f3\u30d7\u30ea\u30f3\u30b0\u5468\u671f(s)", None))
@@ -3295,6 +3346,9 @@ class Ui_MainPages(object):
         self.label_43.setText(QCoreApplication.translate("MainPages", u"\u30d1\u30bf\u30fc\u30f3\u540d", None))
         self.test_commect_lineEdit.setInputMask("")
         self.label_42.setText(QCoreApplication.translate("MainPages", u"\u8a3b\u8a18", None))
+        self.label_46.setText(QCoreApplication.translate("MainPages", u"\u8ffd\u52a0", None))
+        self.label_15.setText(QCoreApplication.translate("MainPages", u"\u524a\u9664", None))
+        self.label_47.setText(QCoreApplication.translate("MainPages", u"\u4fdd\u5b58", None))
         self.label_yesr_3.setText(QCoreApplication.translate("MainPages", u"192.168.0.105:502", None))
         self.label_yesr_2.setText(QCoreApplication.translate("MainPages", u"IPv4 \u30a2\u30c9\u30ec\u30b9:", None))
         self.label_yesr_24.setText(QCoreApplication.translate("MainPages", u"\u671f\u9593:", None))

@@ -57,15 +57,12 @@ class Testfile_manager(QWidget):
             self,
             parent = None,
             app_parent = None,
-            memoryPool={},
             queuePool={}
     ):
         super().__init__()
 
         self._parent=parent
         self._app_parent=app_parent
-        self.main_memoryPool=memoryPool
-        self.memoryPool={}
         self.queuePool=queuePool
 
         self._year=""
@@ -90,21 +87,19 @@ class Testfile_manager(QWidget):
         self.utility_setup()
 
     def memory_reader(self):
-        for key in self.main_memoryPool.keys():
-            self.memoryPool[key]=self.main_memoryPool[key]
 
 
-        self._year=self.memoryPool["System memory"]["年度"].getValue()
-        self._QC_Test=self.memoryPool["System memory"]["評価試験"].getValue()
-        self._Costom_Test=self.memoryPool["System memory"]["依頼試験"].getValue()
-        self._testNumber=self.memoryPool["System memory"]["依頼測定番号"].getValue()
-        self._costomer=self.memoryPool["System memory"]["依頼元"].getValue()
-        self._costomerName=self.memoryPool["System memory"]["依頼者"].getValue()
-        self._testMeterialName=self.memoryPool["System memory"]["試料名称"].getValue()
-        self._testMeterial=self.memoryPool["System memory"]["材料"].getValue()
-        self._MeterialMainDie=self.memoryPool["System memory"]["主電極径(mm)"].getValue()
-        self._MeterialinnerDie=self.memoryPool["System memory"]["ガード電極の内径(mm)"].getValue()
-        self._thinkness=self.memoryPool["System memory"]["試料の厚さ(mm)"].getValue()
+        self._year=self._parent.MMG.memoryPool["System memory"]["年度"].getValue()
+        self._QC_Test=self._parent.MMG.memoryPool["System memory"]["評価試験"].getValue()
+        self._Costom_Test=self._parent.MMG.memoryPool["System memory"]["依頼試験"].getValue()
+        self._testNumber=self._parent.MMG.memoryPool["System memory"]["依頼測定番号"].getValue()
+        self._costomer=self._parent.MMG.memoryPool["System memory"]["依頼元"].getValue()
+        self._costomerName=self._parent.MMG.memoryPool["System memory"]["依頼者"].getValue()
+        self._testMeterialName=self._parent.MMG.memoryPool["System memory"]["試料名称"].getValue()
+        self._testMeterial=self._parent.MMG.memoryPool["System memory"]["材料"].getValue()
+        self._MeterialMainDie=self._parent.MMG.memoryPool["System memory"]["主電極径(mm)"].getValue()
+        self._MeterialinnerDie=self._parent.MMG.memoryPool["System memory"]["ガード電極の内径(mm)"].getValue()
+        self._thinkness=self._parent.MMG.memoryPool["System memory"]["試料の厚さ(mm)"].getValue()
 
         
         self.pid_parameter_list=[]
@@ -112,18 +107,18 @@ class Testfile_manager(QWidget):
             pid=["P","I","D"]
             pid_parameter=[]
             for K in pid:
-                pid_parameter.append(self.memoryPool["Modbus Registor Pool - Registor"]["PID_No_{}_{}".format(pid_number,K)].getValue())
+                pid_parameter.append(self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PID_No_{}_{}".format(pid_number,K)].getValue())
             self.pid_parameter_list.append(pid_parameter)
 
 
 
-    def set_memorypool_register(self,Main_memorypool,memory_name,value):
+    def set_memorypool_register(self,pool_name,registor_name,value):
+
+        if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
+            self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
+            sendItem=MemoryUnit(pool_name,registor_name)
+            self.queuePool["memory_WriteInGUI_Queue"].put(sendItem)
         
-        if self.memoryPool[Main_memorypool][memory_name].getValue()!=value:
-            self.memoryPool[Main_memorypool][memory_name].setValue(value)
-            self.main_memoryPool[Main_memorypool]=self.memoryPool[Main_memorypool]
-            sendItem=MemoryUnit(Main_memorypool,memory_name)
-            self.queuePool["memory_Write_Queue"].put(sendItem)
 
     def set_parameter(self):
         self._parent.ui.load_pages.QC_Test_RadioButton.setChecked(self._QC_Test)
@@ -241,11 +236,12 @@ class Testfile_manager(QWidget):
 
     def lunchOptionDialog(self,message,type):
 
-        '''
-        PyDialog.error_type
-        PyDialog.warning_2_type
-        PyDialog.warning_3_type
-        '''
+        """
+            variable
+            PyDialog.error_type
+            PyDialog.warning_2_type
+            PyDialog.warning_3_type
+        """
 
         diag = PyDialog(type,message)
         return(str(diag.exec()))

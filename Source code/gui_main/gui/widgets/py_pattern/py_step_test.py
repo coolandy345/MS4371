@@ -146,46 +146,39 @@ class PyTestStep(QWidget):
         # ///////////////////////////////////////////////////////////////
         self.themes = Themes().items
         
-        self.icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-plus-large.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
+        self.icon = PyIconButton_simple(
+                icon = "fi-rr-plus-large.svg",
+                icon_active = "fi-rr-plus-large.svg",
+                icon_hover = "fi-rr-plus-large.svg",
+                icon_deactive = "fi-rr-plus-large.svg",
+                btn_id = "ステップ {} 追加".format(self._step),
                 tooltip_text = "ステップ追加",
                 width = 80,
                 height = 80,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = self.themes["app_color"]["dark_one"],
-                bg_color_hover = self.themes["app_color"]["dark_three"],
-                bg_color_pressed = self.themes["app_color"]["green"],
+                bg_color = "rgb(44, 49, 60)",
+                bg_color_hover = "rgb(63, 70, 86)",
+                bg_color_pressed = "rgb(112, 125, 153)"
             )
-        self.grayout_color="#606267"
+
         self.pattern.gridLayout_2.addWidget(self.icon, Qt.AlignCenter, Qt.AlignCenter)
         self.icon.clicked.connect(self.addStepBtn_presscallback)
         self.icon.released.connect(self.addStepBtn_releasecallback)
         self.icon.setObjectName("new_test_Step_Buttom")
-
+        
          
-        self.menu_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-cross-small.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
-                tooltip_text = "削除",
-                width = 20,
+        self.menu_icon = PyIconButton_simple(
+                icon = "fi-rr-cross-small.svg",
+                icon_active = "fi-rr-cross-small.svg",
+                icon_hover = "fi-rr-cross-small.svg",
+                icon_deactive = "fi-rr-cross-small-deactive.svg",
+                btn_id = "ステップ {} menu編集".format(self._step),
+                tooltip_text = "編集",
+                width = 30,
                 height = 30,
-                radius = 2,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#2c313c",
-                bg_color_hover = "#2c313c",
-                bg_color_pressed = "#6db6ee",
+                bg_color = "rgb(44, 49, 60)",
+                bg_color_hover = "rgb(63, 70, 86)",
+                bg_color_pressed = "rgb(112, 125, 153)"
+
             )
         self.pattern.gridLayout_6.addWidget(self.menu_icon, Qt.AlignCenter, Qt.AlignCenter)
 

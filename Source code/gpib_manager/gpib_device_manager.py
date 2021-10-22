@@ -7,20 +7,20 @@ import usb.core
 import ctypes
 
 
-def set_memorypool_register(Main_memorypool,
-                                                QueuePool,
+def set_memorypool_register(memoryPool,
+                                                queuePool,
                                                 memorypool_name,
                                                 registor_name,
                                                 value):
         
-        if Main_memorypool[memorypool_name][registor_name].getValue()!=value:
+        if memoryPool[memorypool_name][registor_name].getValue()!=value:
 
-            sub_memorypool=copy.deepcopy(Main_memorypool[memorypool_name])
+            sub_memorypool=copy.deepcopy(memoryPool[memorypool_name])
             sub_memorypool[registor_name].setValue(value)
 
-            Main_memorypool[memorypool_name]=sub_memorypool
+            memoryPool[memorypool_name]=sub_memorypool
             sendItem=MemoryUnit(memorypool_name,registor_name)
-            QueuePool["memory_Write_Queue"].put(sendItem)
+            queuePool["database_Write_Queue"].put(sendItem)
 
 def GPIB_USB_interface_connnection_Work(memorypool,queuePool):
     

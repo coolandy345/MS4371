@@ -51,7 +51,6 @@ class TempPatternWidget(QWidget):
             self, 
             parent = None,
             app_parent = None,
-            memoryPool={},
             queuePool={}
     ):
         super().__init__()
@@ -59,8 +58,6 @@ class TempPatternWidget(QWidget):
         self._parent=parent
         self._app_parent=app_parent
         self.Step_number=0
-        self.main_memoryPool=memoryPool
-        self.memoryPool={}
         self.queuePool=queuePool
         self.step_widges_list=[]
         self.patternFiles=[]
@@ -183,16 +180,11 @@ class TempPatternWidget(QWidget):
         self.update_Request=True
 
     def memory_reader(self):
-        #Reload Memory from Database
-
-        for key in self.main_memoryPool.keys():
-            self.memoryPool[key]=self.main_memoryPool[key]
-
         _patternFile_lists=[None]
 
         #Try to get number of PTN list
-        self.availlible_patternFile_count=self.memoryPool["Modbus Registor Pool - Registor"]["有効PTN総数"].getValue()
-        self.focus_patternFile_number=self.memoryPool["Modbus Registor Pool - Registor"]["フォーカスPTN番号"].getValue()
+        self.availlible_patternFile_count=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["有効PTN総数"].getValue()
+        self.focus_patternFile_number=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["フォーカスPTN番号"].getValue()
         #Auto load last pattern
         if self.focus_patternFile_number==0:
             if self.availlible_patternFile_count:
@@ -207,15 +199,15 @@ class TempPatternWidget(QWidget):
         for ptn_no in range(1,21):
 
             pattern=templist(
-                active          =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_パターン有効".format(ptn_no)].getValue(),
-                comment         =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_註記".format(ptn_no)].value,
-                step_number     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(ptn_no)].getValue(),
-                gas_condition   =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_測定雰囲気".format(ptn_no)].getValue(),
-                RT_measure      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_RT計測".format(ptn_no)].getValue(),
-                asciicode_0    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_0".format(ptn_no)].getValue(),
-                asciicode_1    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_1".format(ptn_no)].getValue(),
-                asciicode_2    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_2".format(ptn_no)].getValue(),
-                asciicode_3    =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_3".format(ptn_no)].getValue()
+                active          =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_パターン有効".format(ptn_no)].getValue(),
+                comment         =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_註記".format(ptn_no)].value,
+                step_number     =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(ptn_no)].getValue(),
+                gas_condition   =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_測定雰囲気".format(ptn_no)].getValue(),
+                RT_measure      =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_RT計測".format(ptn_no)].getValue(),
+                asciicode_0    =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_0".format(ptn_no)].getValue(),
+                asciicode_1    =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_1".format(ptn_no)].getValue(),
+                asciicode_2    =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_2".format(ptn_no)].getValue(),
+                asciicode_3    =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_3".format(ptn_no)].getValue()
                 )
             
             if pattern.active:
@@ -226,16 +218,16 @@ class TempPatternWidget(QWidget):
             for step_no in range(1,21):
 
                 unit=tempUnit(
-                    Step_Type               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].getValue(),
-                    time_hour               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].getValue(),
-                    time_min                =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].getValue(),
-                    SV                      =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].getValue(),
-                    N2_flowRate             =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_N2流量".format(ptn_no,step_no)].getValue(),
-                    PID_muffle_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_マッフル_PID_No".format(ptn_no,step_no)].getValue(),
-                    PID_heater_No           =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ヒーター_PID_No".format(ptn_no,step_no)].getValue(),
-                    time_keep               =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].getValue(),
-                    test_measure_enable     =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].getValue(),
-                    test_measure_PatternNo  =self.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定パターン".format(ptn_no,step_no)].getValue()
+                    Step_Type               =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_STEP情報".format(ptn_no,step_no)].getValue(),
+                    time_hour               =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].getValue(),
+                    time_min                =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].getValue(),
+                    SV                      =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].getValue(),
+                    N2_flowRate             =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_N2流量".format(ptn_no,step_no)].getValue(),
+                    PID_muffle_No           =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_マッフル_PID_No".format(ptn_no,step_no)].getValue(),
+                    PID_heater_No           =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ヒーター_PID_No".format(ptn_no,step_no)].getValue(),
+                    time_keep               =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].getValue(),
+                    test_measure_enable     =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].getValue(),
+                    test_measure_PatternNo  =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定パターン".format(ptn_no,step_no)].getValue()
                     )
                 units.append(unit)
 
@@ -332,69 +324,54 @@ class TempPatternWidget(QWidget):
         # ///////////////////////////////////////////////////////////////
         self.themes = Themes().items
 
-        self.delete_IconButton = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-trash.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
+        self.delete_IconButton = PyIconButton_simple(
+                icon = "fi-rr-trash.svg",
+                icon_active = "fi-rr-trash.svg",
+                icon_hover = "fi-rr-trash.svg",
+                icon_deactive = "fi-rr-trash-deactive.svg",
                 btn_id = "削除",
                 tooltip_text = "削除",
                 width = 30,
                 height = 30,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["critical_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["critical_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["critical_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["critical_icon"]["icon_deactive"],
-                bg_color = self.themes["app_color"]["critical_icon"]["icon_bg"],
-                bg_color_hover = self.themes["app_color"]["critical_icon"]["icon_bg_hover"],
-                bg_color_pressed = self.themes["app_color"]["critical_icon"]["icon_bg_pressed"],
+                bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
+                bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
+                bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
+
             )
-        self._parent.ui.load_pages.gridLayout_34.addWidget(self.delete_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self._parent.ui.load_pages.verticalLayout_11.addWidget(self.delete_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.delete_IconButton.clicked.connect(self.ui_click_callback)
 
-        self.add_IconButton = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-file-add.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
+        self.add_IconButton = PyIconButton_simple(
+                icon = "fi-rr-file-add.svg",
+                icon_active = "fi-rr-file-add.svg",
+                icon_hover = "fi-rr-file-add.svg",
+                icon_deactive = "fi-rr-file-add-deactive.svg",
                 btn_id = "追加",
                 tooltip_text = "追加",
                 width = 30,
                 height = 30,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
                 bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
                 bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
+
             )
-        self._parent.ui.load_pages.gridLayout_35.addWidget(self.add_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self._parent.ui.load_pages.verticalLayout_12.addWidget(self.add_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.add_IconButton.clicked.connect(self.ui_click_callback)
 
-        
-
-        self.save_IconButton = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-edit.svg"),
-                parent = self._parent,
-                app_parent = self._app_parent,
+        self.save_IconButton = PyIconButton_simple(
+                icon = "fi-rr-edit.svg",
+                icon_active = "fi-rr-edit.svg",
+                icon_hover = "fi-rr-edit.svg",
+                icon_deactive = "fi-rr-edit-deactive.svg",
                 btn_id = "保存",
-                tooltip_text = "保存",
+                tooltip_text = "編集",
                 width = 30,
                 height = 30,
-                radius = 10,
-                dark_one = self.themes["app_color"]["dark_one"],
-                icon_color = self.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self.themes["app_color"]["regular_icon"]["icon_deactive"],
                 bg_color = self.themes["app_color"]["regular_icon"]["icon_bg"],
                 bg_color_hover = self.themes["app_color"]["regular_icon"]["icon_bg_hover"],
                 bg_color_pressed = self.themes["app_color"]["regular_icon"]["icon_bg_pressed"],
             )
-        self._parent.ui.load_pages.gridLayout_36.addWidget(self.save_IconButton, Qt.AlignCenter, Qt.AlignCenter)
+        self._parent.ui.load_pages.verticalLayout_13.addWidget(self.save_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.save_IconButton.clicked.connect(self.ui_click_callback)
         
 
@@ -471,6 +448,7 @@ class TempPatternWidget(QWidget):
         QThreadPool.globalInstance().start(self.update_graph_Worker)
 
     def update_graph_work(self):
+        
         data_array=[{"x":1,"y":0}]
         SV_array=[0]
         for _step in range(1,21):
@@ -502,6 +480,7 @@ class TempPatternWidget(QWidget):
             self.graph.setYRange(0, 1.2*maxpos)
             for _step in range(1,21):
                 self.GraphStepLabelList[_step].setPos(_step+0.1,1.2*maxpos)
+        
     
     def lunchOptionDialog(self,message,type):
 
@@ -684,22 +663,21 @@ class TempPatternWidget(QWidget):
             #Save it to database
             self.patternFile_Save()
 
-    def set_memorypool_register(self,Main_memorypool,memory_name,value):
+    def set_memorypool_register(self,pool_name,registor_name,value):
         
-        if self.memoryPool[Main_memorypool][memory_name].getValue()!=value:
-            self.memoryPool[Main_memorypool][memory_name].setValue(value)
-            self.main_memoryPool[Main_memorypool]=self.memoryPool[Main_memorypool]
-            sendItem=MemoryUnit(Main_memorypool,memory_name)
-            self.queuePool["memory_Write_Queue"].put(sendItem)
+        if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
+            self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
+            sendItem=MemoryUnit(pool_name,registor_name)
+            self.queuePool["memory_WriteInGUI_Queue"].put(sendItem)
 
     def regularWork(self):
         
         #print("self.test1 = ",self.test1)
-        self.test1+=1
+        #self.test1+=1
 
 
         if time.time()-self.test >0.2 and time.time()-self.test <1000:
-            print("lag occur time = ",time.time()-self.test)
+            print("Temp lag occur time = ",time.time()-self.test)
 
         self.test=time.time()
 
@@ -869,11 +847,12 @@ class TempPatternWidget(QWidget):
 
 
     def update(self):
+
         self.content_change_check()
         self.updata_step_widge()
         self.update_graph()
         self.utility_update()
-
+        
 
 
     
