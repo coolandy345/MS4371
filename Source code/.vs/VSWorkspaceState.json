@@ -1,16 +1,17 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Database and Profile",
+    "\\gpib_manager",
     "\\gui_main",
     "\\gui_main\\gui",
-    "\\gui_main\\gui\\core",
-    "\\gui_main\\gui\\images",
-    "\\gui_main\\gui\\themes",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\widgets\\py_icon_button",
-    "\\modbus_TcpServer"
+    "\\gui_main\\gui\\uis\\windows",
+    "\\gui_main\\gui\\uis\\windows\\main_window",
+    "\\gui_main\\gui\\widgets",
+    "\\gui_main\\gui\\widgets\\py_graph",
+    "\\gui_main\\gui\\widgets\\py_pattern",
+    "\\registor_manager"
   ],
-  "SelectedNode": "\\gui_main\\gui\\uis\\windows\\main_window\\setup_main_window.py",
+  "SelectedNode": "\\gui_main\\gui\\uis\\pattern_columns\\main_operation_utility.py",
   "PreviewInSolutionExplorer": false
 }

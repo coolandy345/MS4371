@@ -111,6 +111,8 @@ class Main_utility_manager(QWidget):
 
         self.utility_setup()
         self.graph_setup()
+
+        self.time=0
         
         self.timer=QTimer()
         self.timer.timeout.connect(self.regularWork)
@@ -451,11 +453,11 @@ class Main_utility_manager(QWidget):
         self.data_array=[]
 
         if self.graph_Item=="Resistor":
-            for data in self._parent.MMG.memoryPool["Read Measurement Data"]:
-                XYdata={}
-                XYdata["x"]=data.time/self.timeUnit
-                XYdata["y"]=data.resistor
-                self.data_array.append(XYdata)
+            #for data in self._parent.MMG.memoryPool["Read Measurement Data"]:
+            #    XYdata={}
+            #    XYdata["x"]=data.time/self.timeUnit
+            #    XYdata["y"]=data.resistor
+            #    self.data_array.append(XYdata)
             self._parent.curve.setData(self.data_array)
         else:
             self.choose_pattern=self._parent.MMG.memoryPool["System memory"]["choose_Pattern"].getValue()
@@ -506,6 +508,15 @@ class Main_utility_manager(QWidget):
 
         
     def regularWork(self):
+
+        
+        XYdata={}
+        XYdata["x"]=self.time/self.timeUnit
+        XYdata["y"]=random.random()*1000
+        self.data_array.append(XYdata)
+        self._parent.curve.setData(self.data_array)
+        self.time+=1
+
 
         self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
         self.stop_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
