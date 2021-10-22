@@ -234,218 +234,179 @@ class Main_utility_manager(QWidget):
             )
         self._parent.ui.load_pages.Layout_Status_RunReady.addWidget(self._parent.ready_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self._parent.stop_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("stop-button-extralarge.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.stop_icon = PyIconButton_simple(
+                icon = "stop-button-extralarge.svg",
+                icon_active = "stop-button-extralarge.svg",
+                icon_hover = "stop-button-extralarge.svg",
+                icon_deactive = "stop-button-extralarge-deactive.svg",
+                btn_id = "停止中",
                 tooltip_text = "停止中",
                 width = 60,
                 height = 60,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
+        
         self._parent.ui.load_pages.Layout_Status_STOP.addWidget(self._parent.stop_icon, Qt.AlignCenter, Qt.AlignCenter)
 
         
-        self._parent.vacuum_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-shuffle-extralarge.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.vacuum_icon = PyIconButton_simple(
+                icon = "fi-rr-shuffle-extralarge.svg",
+                icon_active = "fi-rr-shuffle-extralarge.svg",
+                icon_hover = "fi-rr-shuffle-extralarge.svg",
+                icon_deactive = "fi-rr-shuffle-extralarge-deactive.svg",
+                btn_id = "真空置換中",
                 tooltip_text = "真空置換中",
                 width = 60,
                 height = 60,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = "#1e2229",
-                bg_color_pressed = "#1e2229",
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
+        
         self._parent.ui.load_pages.Layout_Status_Vacuum.addWidget(self._parent.vacuum_icon, Qt.AlignCenter, Qt.AlignCenter)
 
 
-        self._parent.heating_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("heater-extralarge.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.heating_icon = PyIconButton_simple(
+                icon = "heater-extralarge.svg",
+                icon_active = "heater-extralarge.svg",
+                icon_hover = "heater-extralarge.svg",
+                icon_deactive = "heater-extralarge-deactive.svg",
+                btn_id = "昇温中",
                 tooltip_text = "昇温中",
                 width = 60,
                 height = 60,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = "#1e2229",
-                bg_color_pressed = "#1e2229",
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
+        
         self._parent.ui.load_pages.Layout_Status_Heating.addWidget(self._parent.heating_icon, Qt.AlignCenter, Qt.AlignCenter)
 
 
-        self._parent.keepTemp_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("reuse-extralarge.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.keepTemp_icon = PyIconButton_simple(
+                icon = "reuse-extralarge.svg",
+                icon_active = "reuse-extralarge.svg",
+                icon_hover = "reuse-extralarge.svg",
+                icon_deactive = "reuse-extralarge-deactive.svg",
+                btn_id = "温度キープ中",
                 tooltip_text = "温度キープ中",
                 width = 60,
                 height = 60,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
+        
         self._parent.ui.load_pages.Layout_Status_KeepTemp.addWidget(self._parent.keepTemp_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self._parent.testing_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("oscilloscope-extralarge.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.testing_icon = PyIconButton_simple(
+                icon = "oscilloscope-extralarge.svg",
+                icon_active = "oscilloscope-extralarge.svg",
+                icon_hover = "oscilloscope-extralarge.svg",
+                icon_deactive = "oscilloscope-extralarge-deactive.svg",
+                btn_id = "測定中",
                 tooltip_text = "測定中",
                 width = 60,
                 height = 60,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
+        
         self._parent.ui.load_pages.Layout_Status_Testing.addWidget(self._parent.testing_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self._parent.testFinishing_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("cold-temperature-extralarge.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.testFinishing_icon = PyIconButton_simple(
+                icon = "cold-temperature-extralarge.svg",
+                icon_active = "cold-temperature-extralarge.svg",
+                icon_hover = "cold-temperature-extralarge.svg",
+                icon_deactive = "cold-temperature-extralarge-deactive.svg",
+                btn_id = "測定終了(降温中)",
                 tooltip_text = "測定終了(降温中)",
                 width = 60,
                 height = 60,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
         self._parent.ui.load_pages.Layout_Status_TestFinishing.addWidget(self._parent.testFinishing_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self._parent.error_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("fi-rr-exclamation-extralarge.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.error_icon = PyIconButton_simple(
+                icon = "fi-rr-exclamation-extralarge.svg",
+                icon_active = "fi-rr-exclamation-extralarge.svg",
+                icon_hover = "fi-rr-exclamation-extralarge.svg",
+                icon_deactive = "fi-rr-exclamation-extralarge-deactive.svg",
+                btn_id = "電気炉警報",
                 tooltip_text = "電気炉警報",
                 width = 60,
                 height = 60,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["critical_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["critical_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["critical_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["critical_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
         self._parent.ui.load_pages.Layout_Status_Error.addWidget(self._parent.error_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self._parent.ethernetConnecton_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("ethernet.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.ethernetConnecton_icon = PyIconButton_simple(
+                icon = "ethernet.svg",
+                icon_active = "ethernet.svg",
+                icon_hover = "ethernet.svg",
+                icon_deactive = "ethernet-deactive.svg",
+                btn_id = "電気炉接続",
                 tooltip_text = "電気炉接続",
                 width = 45,
                 height = 45,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
         self._parent.ui.load_pages.Layout_Status_EthernetConnecton.addWidget(self._parent.ethernetConnecton_icon, Qt.AlignCenter, Qt.AlignCenter)
 
         
-        self._parent.usbConnecton_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("usb-symbol-svgrepo-com.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.usbConnecton_icon = PyIconButton_simple(
+                icon = "usb-symbol-svgrepo-com.svg",
+                icon_active = "usb-symbol-svgrepo-com.svg",
+                icon_hover = "usb-symbol-svgrepo-com.svg",
+                icon_deactive = "usb-symbol-svgrepo-com-deactive.svg",
+                btn_id = "USB インターフェース",
                 tooltip_text = "USB インターフェース",
                 width = 45,
-                height =45,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                height = 45,
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
         self._parent.ui.load_pages.Layout_Status_USBConnecton.addWidget(self._parent.usbConnecton_icon, Qt.AlignCenter, Qt.AlignCenter)
 
 
 
-        self._parent.gPIBConnecton_2657A_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("link-2657A.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.gPIBConnecton_2657A_icon = PyIconButton_simple(
+                icon = "link-2657A.svg",
+                icon_active = "link-2657A.svg",
+                icon_hover = "link-2657A.svg",
+                icon_deactive = "link-2657A-deactive.svg",
+                btn_id = "2657A接続",
                 tooltip_text = "2657A接続",
                 width = 45,
                 height = 45,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
         self._parent.ui.load_pages.Layout_Status_2657A_GPIBConnecton.addWidget(self._parent.gPIBConnecton_2657A_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self._parent.gPIBConnecton_2635B_icon = PyIconButton(
-                icon_path = Functions.set_svg_icon("link-2635B.svg"),
-                parent = self._parent,
-                app_parent = self._parent.ui.central_widget,
+        self._parent.gPIBConnecton_2635B_icon = PyIconButton_simple(
+                icon = "link-2635B.svg",
+                icon_active = "link-2635B.svg",
+                icon_hover = "link-2635B.svg",
+                icon_deactive = "link-2635B-deactive.svg",
+                btn_id = "2635B接続",
                 tooltip_text = "2635B接続",
                 width = 45,
                 height = 45,
-                radius = 10,
-                dark_one = self._parent.themes["app_color"]["dark_one"],
-                icon_color = self._parent.themes["app_color"]["regular_icon"]["icon_color"],
-                icon_color_hover = self._parent.themes["app_color"]["regular_icon"]["icon_hover"],
-                icon_color_pressed = self._parent.themes["app_color"]["regular_icon"]["icon_pressed"],
-                icon_color_deactive = self._parent.themes["app_color"]["regular_icon"]["icon_deactive"],
-                bg_color = "#1e2229",
-                bg_color_hover = self._parent.themes["app_color"]["dark_three"],
-                bg_color_pressed = self._parent.themes["app_color"]["dark_three"],
+                bg_color =  "#1e2229",
+                bg_color_hover =  "#1e2229",
+                bg_color_pressed =  "#1e2229",
             )
         self._parent.ui.load_pages.Layout_Status_2635B_GPIBConnecton.addWidget(self._parent.gPIBConnecton_2635B_icon, Qt.AlignCenter, Qt.AlignCenter)
         

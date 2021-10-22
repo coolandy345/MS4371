@@ -37,8 +37,6 @@ from gui_main.gui.uis.windows.main_window import *
 # ///////////////////////////////////////////////////////////////
 from gui_main.gui.widgets import *
 
-from main import shotdown_entire_app
-
 
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
@@ -137,19 +135,7 @@ class MainWindow(QMainWindow):
                 # Show / Hide
                 MainFunctions.toggle_right_column(self)
 
-        
-        
-        if btn.objectName() == "addPattern_pushButton":
-            self.tempPattern.new_TempPattern()
 
-        if btn.objectName() == "new_test_Step_Buttom":
-            self.testPattern.new_TestPattern()
-        
-        #self.SetupMainWindow.
-        self.tempPattern.close_menu()
-
-        # DEBUG 
-        #print(f"Button {btn.objectName()}, clicked!")
 
     # LEFT MENU BTN IS RELEASED
     # Run function when btn is released
