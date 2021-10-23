@@ -41,9 +41,6 @@ cur.execute(test)
 test="INSERT INTO '{}' values('試料の厚さ(mm)','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(test)
 
-test="INSERT INTO '{}' values('Ethernet conneciton check pool','{}','{}')".format(Table_name,0,"NULL")
-cur.execute(test)
-
 test="INSERT INTO '{}' values('Ethernet conneciton','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(test)
 

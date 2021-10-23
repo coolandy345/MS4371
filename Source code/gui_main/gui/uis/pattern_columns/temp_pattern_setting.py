@@ -593,11 +593,13 @@ class TempPatternWidget(QWidget):
 
     def patternFile_Save_work(self):
         #Refresh patternFiles
+
         self.patternFiles[self.focus_patternFile_number]=copy.deepcopy(self.cache_steplist)
         
         
         list=self.cache_steplist
-
+        
+        self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更".format(self.focus_patternFile_number),self.focus_patternFile_number)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_0".format(self.focus_patternFile_number),list.asciicode_0)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_1".format(self.focus_patternFile_number),list.asciicode_1)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_名称_2".format(self.focus_patternFile_number),list.asciicode_2)

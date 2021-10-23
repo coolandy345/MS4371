@@ -56,6 +56,12 @@ class CustomDataBlock(ModbusSparseDataBlock):
         self.register_namedict={}
         self.register_dict={}
         self.register_shift=1
+
+        self.ethernet_connection=False
+        self.ethernet_connection_pool=False
+        self.set_memorypool_register("System memory","Ethernet conneciton",False)
+        
+
         #get dict
         self.get_register_dict()
 
@@ -64,7 +70,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
         ethernet_connection_thread = threading.Thread(target = self.ethernet_connection_Work,daemon=True)
         ethernet_connection_thread.start()
 
-        database_update_thread = threading.Thread(target = self.database_update_Work,daemon=True)
+        database_update_thread = threading.Thread(target = self.modbusDatabase_update_Work,daemon=True)
         database_update_thread.start()
 
 
@@ -77,39 +83,26 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
     def getValues(self, address, count=1):
         super(CustomDataBlock, self).getValues(address, count)
-        self.set_Ethernet_Connection()
+        self.ethernet_connection_pool=True
 
     def ethernet_connection_Work(self):
         while 1:
 
-            if self.memorypool["System memory"]["Ethernet conneciton check pool"].getValue():
-                sub_memorypool=copy.deepcopy(self.memorypool["System memory"])
-                sub_memorypool["Ethernet conneciton check pool"].setValue(0)
-                self.memorypool["System memory"]=sub_memorypool
+            if self.ethernet_connection_pool != self.ethernet_connection:
+                
+                self.ethernet_connection=self.ethernet_connection_pool
+                self.set_memorypool_register("System memory","Ethernet conneciton",self.ethernet_connection)
 
-                sub_memorypool=copy.deepcopy(self.memorypool["System memory"])
-                sub_memorypool["Ethernet conneciton"].setValue(1)
-                self.memorypool["System memory"]=sub_memorypool
-
-            else:
-                sub_memorypool=copy.deepcopy(self.memorypool["System memory"])
-                sub_memorypool["Ethernet conneciton"].setValue(0)
-                self.memorypool["System memory"]=sub_memorypool
+            self.ethernet_connection_pool=False
 
             time.sleep(1)
         
 
-    def set_Ethernet_Connection(self):
-
-        sub_memorypool=copy.deepcopy(self.memorypool["System memory"])
-        sub_memorypool["Ethernet conneciton check pool"].setValue(1)
-        self.memorypool["System memory"]=sub_memorypool
 
 
         
     def setValues(self, address, value):
         
-        self.set_Ethernet_Connection()
         """ Sets the requested values of the datastore
 
         :param address: The starting address
@@ -121,34 +114,37 @@ class CustomDataBlock(ModbusSparseDataBlock):
         # however make sure not to do too much work here or it will
         # block the server, espectially if the server is being written
         # to very quickly
-
+        
+        self.ethernet_connection_pool=True
         if isinstance(value, list):
             address_temp=address
             for val in value:
                 registor_name=self.register_namedict[address_temp]
-                self.set_memorypool_register(registor_name,val)
+                self.set_memorypool_register("Modbus Registor Pool - Registor",registor_name,val)
                 address_temp+=1
         else:
             registor_name=self.register_namedict[address]
-            self.set_memorypool_register(registor_name,value)
+            self.set_memorypool_register("Modbus Registor Pool - Registor",registor_name,value)
 
 
-    def set_memorypool_register(self,registor_name,value):
+    def set_memorypool_register(self,pool_name,registor_name,value):
 
-        if self.memorypool["Modbus Registor Pool - Registor"][registor_name].getValue()!=value:
+        if self.memorypool[pool_name][registor_name].getValue()!=value:
 
-            sub_memorypool=copy.deepcopy(self.memorypool["Modbus Registor Pool - Registor"])
+            sub_memorypool=copy.deepcopy(self.memorypool[pool_name])
             sub_memorypool[registor_name].setValue(value)
 
-            self.memorypool["Modbus Registor Pool - Registor"]=sub_memorypool
-            sendItem=MemoryUnit("Modbus Registor Pool - Registor",registor_name)
+            self.memorypool[pool_name]=sub_memorypool
+            sendItem=MemoryUnit(pool_name,registor_name)
             self.queuepool["database_Write_Queue"].put(sendItem)
+            self.queuepool["memory_modiflyInGUI_request_Queue"].put(sendItem)
 
-    def database_update_Work(self):
+    def modbusDatabase_update_Work(self):
     
         while 1:
             getItem=MemoryUnit()
             getItem=self.queuepool["modbus_Write_Queue"].get()
+
 
             if getItem.pool_name=="Modbus Registor Pool - Registor":
                 unit=self.memorypool["Modbus Registor Pool - Registor"][getItem.registor_name]

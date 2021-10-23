@@ -36,22 +36,20 @@ def databaseWriteThread(memoryPool,queuePool):
         queuePool["modbus_Write_Queue"].put(getItem)
         time.sleep(0.5)
         
-        if not memoryPool[getItem.pool_name][getItem.registor_name].volatile_type:
-            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
-            #print(test)
-            cur.execute(test)
-            #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
+        test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
+        #print(test)
+        cur.execute(test)
+        #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
             
         while not queuePool["database_Write_Queue"].empty():
             getItem=queuePool["database_Write_Queue"].get()
             queuePool["modbus_Write_Queue"].put(getItem)
 
-            if not memoryPool[getItem.pool_name][getItem.registor_name].volatile_type:
-                test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
-                #print(test)
-                cur.execute(test)
+            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
+            #print(test)
+            cur.execute(test)
 
-                #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
+            #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
          
 
         System_Registor_Database.commit()

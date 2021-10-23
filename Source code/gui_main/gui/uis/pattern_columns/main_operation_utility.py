@@ -19,25 +19,52 @@ class Memory_Manager():
 
         self.memory_Reload()
 
-        main_MemoryPoolWrite_Thread = threading.Thread(target = self.main_MemoryPoolWrite_Work,daemon=True)
-        main_MemoryPoolWrite_Thread.start()
+        main_MemoryUpLoad_Thread = threading.Thread(target = self.main_MemoryUpLoad_Work,daemon=True)
+        main_MemoryUpLoad_Thread.start()
+
+        main_MemoryDownLoad_Thread = threading.Thread(target = self.main_MemoryDownLoad_Work,daemon=True)
+        main_MemoryDownLoad_Thread.start()
 
 
 
     def memory_Reload(self):
         """
-        Reload local GUI memoryPool fom Master_memoryPool 
+        DownLoad All the Master_memoryPool to local GUI memoryPool
         """
 
         for key in self.Master_memoryPool.keys():
             self.memoryPool[key]=self.Master_memoryPool[key]
 
             
-
-
-    def main_MemoryPoolWrite_Work(self):
+    def main_MemoryDownLoad_Work(self):
         """
-        Update the local GUI memoryPool to Master_memoryPool
+        DownLoad the Master_memoryPool to local GUI memoryPool
+        When request is got , this thread will delay 0.1s for any other request and do it  at one time
+        """
+        while 1:
+            getItem_list=[]
+            getItem_list.append(self.queuePool["memory_modiflyInGUI_request_Queue"].get())
+            
+            #Wait for 0.1s for any others request
+            time.sleep(0.1)
+            while not self.queuePool["memory_modiflyInGUI_request_Queue"].empty():
+                getItem_list.append(self.queuePool["memory_modiflyInGUI_request_Queue"].get())
+
+            
+            #Check the pools has been changed
+            poolNameList=[]
+            for item in getItem_list:
+                poolNameList.append(item.pool_name)
+                item.registor_name
+
+            poolNameList = list(dict.fromkeys(poolNameList))
+            print("getItem",poolNameList)
+            for pool_name in poolNameList:
+                self.memoryPool[pool_name]=self.Master_memoryPool[pool_name]
+
+    def main_MemoryUpLoad_Work(self):
+        """
+        UpLoad the local GUI memoryPool to Master_memoryPool
         When request is got , this thread will delay 0.1s for any other request and do it  at one time
         """
 
@@ -477,22 +504,32 @@ class Main_utility_manager(QWidget):
         #self.data_array.append(XYdata)
         #self._parent.curve.setData(self.data_array)
         #self.time+=1
-
-
-        self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
-        self.stop_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
-        self.vacuum_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
-        self.heating_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
-        self.keepTemp_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度ｷｰﾌﾟ中"].getValue()
-        self.testing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
-        self.testFinishing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
-        self.error_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
+        
         self.ethernetConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue()
         self.usbConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["GPIB USB conneciton"].getValue()
         self.gPIBConnecton_2635B_icon_active=self._parent.MMG.memoryPool["System memory"]["2635B connection"].getValue()
         self.gPIBConnecton_2657A_icon_active=self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue()
 
-        
+        if self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue():
+            self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
+            self.stop_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
+            self.vacuum_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
+            self.heating_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
+            self.keepTemp_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度ｷｰﾌﾟ中"].getValue()
+            self.testing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
+            self.testFinishing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
+            self.error_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
+        else:
+            self.ready_icon_active=0
+            self.stop_icon_active=0
+            self.vacuum_icon_active=0
+            self.heating_icon_active=0
+            self.keepTemp_icon_active=0
+            self.testing_icon_active=0
+            self.testFinishing_icon_active=0
+            self.error_icon_active=0
+
+
         if self.ready_icon_active != self._parent.ready_icon._is_active:
             self._parent.ready_icon.set_active(self.ready_icon_active)
         if self.stop_icon_active != self._parent.stop_icon._is_active:
@@ -509,6 +546,8 @@ class Main_utility_manager(QWidget):
             self._parent.testFinishing_icon.set_active(self.testFinishing_icon_active)
         if self.error_icon_active != self._parent.error_icon._is_active:
             self._parent.error_icon.set_active(self.error_icon_active)
+
+
         if self.ethernetConnecton_icon_active != self._parent.ethernetConnecton_icon._is_active:
             self._parent.ethernetConnecton_icon.set_active(self.ethernetConnecton_icon_active)
         if self.usbConnecton_icon_active != self._parent.usbConnecton_icon._is_active:

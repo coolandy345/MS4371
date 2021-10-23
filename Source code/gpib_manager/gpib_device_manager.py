@@ -20,7 +20,10 @@ def set_memorypool_register(memoryPool,
 
             memoryPool[memorypool_name]=sub_memorypool
             sendItem=MemoryUnit(memorypool_name,registor_name)
+            print("sendItem",sendItem.pool_name,sendItem.registor_name)
             queuePool["database_Write_Queue"].put(sendItem)
+            queuePool["memory_modiflyInGUI_request_Queue"].put(sendItem)
+            
 
 def GPIB_USB_interface_connnection_Work(memorypool,queuePool):
     
