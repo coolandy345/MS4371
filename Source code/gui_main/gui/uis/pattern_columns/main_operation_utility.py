@@ -471,12 +471,12 @@ class Main_utility_manager(QWidget):
     def regularWork(self):
 
         
-        XYdata={}
-        XYdata["x"]=self.time/self.timeUnit
-        XYdata["y"]=random.random()*1000
-        self.data_array.append(XYdata)
-        self._parent.curve.setData(self.data_array)
-        self.time+=1
+        #XYdata={}
+        #XYdata["x"]=self.time/self.timeUnit
+        #XYdata["y"]=random.random()*1000
+        #self.data_array.append(XYdata)
+        #self._parent.curve.setData(self.data_array)
+        #self.time+=1
 
 
         self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()

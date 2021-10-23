@@ -286,39 +286,39 @@ class PyLeftMenuButton(QPushButton):
     # Event triggered when the mouse is over the BTN
     # ///////////////////////////////////////////////////////////////
     def enterEvent(self, event):
-        pass
-        #self.change_style(QEvent.Enter)
-        #if self.width() == 50 and self._tooltip_text:
-        #    pass
-            #self.move_tooltip()
-            #self.tooltip.show()
+        #pass
+        self.change_style(QEvent.Enter)
+        if self.width() == 50 and self._tooltip_text:
+            pass
+            self.move_tooltip()
+            self.tooltip.show()
 
     # MOUSE LEAVE
     # Event fired when the mouse leaves the BTN
     # ///////////////////////////////////////////////////////////////
     def leaveEvent(self, event):
-        pass
-        #self.change_style(QEvent.Leave)
-        #self.tooltip.hide()
+        #pass
+        self.change_style(QEvent.Leave)
+        self.tooltip.hide()
 
     # MOUSE PRESS
     # Event triggered when the left button is pressed
     # ///////////////////////////////////////////////////////////////
     def mousePressEvent(self, event):
-        self.clicked.emit()
-        #if event.button() == Qt.LeftButton:
-        #    self.change_style(QEvent.MouseButtonPress)
-        #    self.tooltip.hide()
-        #    return self.clicked.emit()
+        #self.clicked.emit()
+        if event.button() == Qt.LeftButton:
+            self.change_style(QEvent.MouseButtonPress)
+            self.tooltip.hide()
+            return self.clicked.emit()
 
     # MOUSE RELEASED
     # Event triggered after the mouse button is released
     # ///////////////////////////////////////////////////////////////
     def mouseReleaseEvent(self, event):
-        return self.released.emit()
-        #if event.button() == Qt.LeftButton:
-        #    self.change_style(QEvent.MouseButtonRelease)
-        #    return self.released.emit()
+        #return self.released.emit()
+        if event.button() == Qt.LeftButton:
+            self.change_style(QEvent.MouseButtonRelease)
+            return self.released.emit()
 
     # MOVE TOOLTIP
     # ///////////////////////////////////////////////////////////////
