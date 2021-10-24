@@ -2,7 +2,7 @@ import threading
 import time
 
 class Csv_manager():
-	def __inti__(self):
+	def __inti__(self,memoryPool,queuePool):
 		pass
 
 
@@ -11,4 +11,5 @@ class Csv_manager():
 
 def csv_manager_thread(memoryPool,queuePool):
 
-	pass
+	csv_manager=Csv_manager(memoryPool,queuePool)
+
