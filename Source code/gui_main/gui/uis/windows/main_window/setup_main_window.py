@@ -203,13 +203,7 @@ class SetupMainWindow:
             icon_path = Functions.set_svg_icon("icon_settings.svg")
         )
         MainFunctions.set_right_column_menu(self.main_namespace, self.main_namespace.ui.right_column.menu_1)
-        # ///////////////////////////////////////////////////////////////
-        # EXAMPLE CUSTOM WIDGETS
-        # Here are added the custom widgets to pages and columns that
-        # were created using Qt Designer.
-        # This is just an example and should be deleted when creating
-        # your application.
-        # ///////////////////////////////////////////////////////////////
+
 
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
@@ -225,35 +219,16 @@ class SetupMainWindow:
 
         self.main_namespace.MMG=Memory_Manager(Master_memoryPool=self.Master_memoryPool,queuePool=self.queuePool)
 
-        self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,queuePool=self.queuePool)
-        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,queuePool=self.queuePool)
-        self.main_namespace.main_utility_manager= Main_utility_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,queuePool=self.queuePool)
-        self.main_namespace.testfile_manager=Testfile_manager(self.main_namespace,app_parent=self.main_namespace.ui.central_widget,queuePool=self.queuePool)
+        self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,queuePool=self.queuePool)
+        self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,queuePool=self.queuePool)
+        
+        self.main_namespace.main_utility_manager= Main_utility_manager(self.main_namespace,queuePool=self.queuePool)
+
+
+        self.main_namespace.testfile_manager=Testfile_manager(self.main_namespace,queuePool=self.queuePool)
 
         
         
-        
-
-        #self.main_namespace.win =pg.PlotWidget(background=None,title="抵抗測定値")
-        
-        #self.main_namespace.win.setLabel(axis='bottom', text='時間', units='ms')
-        #self.main_namespace.win.setLabel(axis='left', text='抵抗値', units='Ω')
-
-        #self.main_namespace.win.setLimits(xMin=-0.9,xMax=20.9)
-        #self.main_namespace.axis = self.main_namespace.win.getAxis('bottom')
-        #self.main_namespace.axis.setStyle(autoReduceTextSpace=True)
-        #self.main_namespace.axis.setTickSpacing(2,1)
-        #self.main_namespace.win.setAxisItems({'bottom':self.main_namespace.axis})
-        
-        #self.main_namespace.win.showGrid(x=True, y=True)
-        #self.main_namespace.win.setMouseEnabled(x=True, y=False)
-        #self.main_namespace.win.addLegend()
-
-        #self.main_namespace.win.plot(x=[0,1,2,3,8],y=[5,10,10,0,50],pen=pg.mkPen((65,74,88), width=10), symbolBrush=(0,200,200),symbolPen='w', symbol='o', symbolSize=5, name="予定パターン")
-        
-        #self.main_namespace.ui.load_pages.gridLayout_9.addWidget(self.main_namespace.win, Qt.AlignCenter, Qt.AlignCenter)
-        
-
 
     # RESIZE GRIPS AND CHANGE POSITION
     # Resize or change position when window is resized

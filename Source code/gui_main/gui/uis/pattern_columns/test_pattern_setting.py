@@ -57,7 +57,6 @@ class TestPatternWidget(QWidget):
 
         
         self._parent=parent
-        self._app_parent=app_parent
         self.Step_number=0
         self.queuePool=queuePool
         self.step_widges_list=[]
@@ -83,9 +82,12 @@ class TestPatternWidget(QWidget):
         self.patternFile_Load()
         self.update_Request=True
 
-        self.timer=QTimer()
-        self.timer.timeout.connect(self.regularWork)
-        self.timer.start(10)
+        #self.timer=QTimer()
+        #self.timer.timeout.connect(self.regularWork)
+        #self.timer.start(10)
+
+        ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
+        ultility_Update_Thread.start()
 
         self.test=0
         self.test1=0
@@ -97,7 +99,6 @@ class TestPatternWidget(QWidget):
                 active=False,
                 step=_step,
                 parent = self._parent,
-                app_parent=self._app_parent,
                 )
             self.step_widges_list.append(test_step)
             self.step_widges_list[_step].setVisible (False)
@@ -755,27 +756,28 @@ class TestPatternWidget(QWidget):
         if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
-            self.queuePool["memory_WriteInGUI_Queue"].put(sendItem)
+            self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
 
-    def regularWork(self):
+    def ultility_Update_Work(self):
         #print("self.test1 = ",self.test1)
-        self.test1+=1
+        #self.test1+=1
+        while 1:
+            time.sleep(0.1)
 
+            #if time.time()-self.test >0.2 and time.time()-self.test <1000:
+            #    print("Temp lag occur time = ",time.time()-self.test)
 
-        #if time.time()-self.test >0.2 and time.time()-self.test <1000:
-        #    print("lag occur time = ",time.time()-self.test)
+            #self.test=time.time()
 
-        #self.test=time.time()
-
-        if self.IconButtonUpdate:
-            self.delete_IconButton.set_active(self.delete_IconButtonActiveState)
-            self.add_IconButton.set_active(self.add_IconButtonActiveState)
-            self.save_IconButton.set_active(self.save_IconButtonActiveState)
-            self.IconButtonUpdate=False
+            if self.IconButtonUpdate:
+                self.delete_IconButton.set_active(self.delete_IconButtonActiveState)
+                self.add_IconButton.set_active(self.add_IconButtonActiveState)
+                self.save_IconButton.set_active(self.save_IconButtonActiveState)
+                self.IconButtonUpdate=False
         
-        if self.update_Request:
-            self.update_Request=False
-            self.update()
+            if self.update_Request:
+                self.update_Request=False
+                self.update()
 
     def scroll_adjust_TestPattern(self):
         self._parent.ui.load_pages.scrollArea_4.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_4.horizontalScrollBar().maximum())

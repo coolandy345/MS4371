@@ -285,8 +285,16 @@ for pid_no in range(0,5):
 
     Base+=3
 
+test="INSERT INTO '{}' values({}, '現在電圧値',{},{},{},{},{},'{}')".format(Table_name,10016,"NULL",0,"NULL",0,1,"NULL")
+cur.execute(test)
 
-test="INSERT INTO '{}' values({}, '温度PV値',{},{},{},{},{},'{}')".format(Table_name,10019,-100,0,999,0,1,"NULL")
+test="INSERT INTO '{}' values({}, '現在電流値',{},{},{},{},{},'{}')".format(Table_name,10017,"NULL",0,"NULL",0,1,"NULL")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '現在抵抗値',{},{},{},{},{},'{}')".format(Table_name,10018,"NULL",0,"NULL",0,1,"NULL")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '温度PV値',{},{},{},{},{},'{}')".format(Table_name,10019,"NULL",0,"NULL",0,1,"NULL")
 cur.execute(test)
 
 test="INSERT INTO '{}' values({}, '実行PTN No.',{},{},{},{},{},'{}')".format(Table_name,10020,1,1,20,1,1,"NULL")

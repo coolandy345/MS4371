@@ -9,7 +9,6 @@ from multiprocessing import Manager,Queue
 # local module import
 # --------------------------------------------------------------------------- # 
 
-
 import sys
 import os
 import time
@@ -19,11 +18,12 @@ from registor_manager import *
 from gui_main import*
 
 from gui_main.qt_core import *
-
+from csv_manager import *
 
 from gpib_manager import *
 
 import ctypes
+import csv
 
 
 def shotdown_entire_app(future):
@@ -39,27 +39,46 @@ if __name__ == "__main__":
 
     QueuePool={}
     QueuePool["modbus_Write_Queue"]=MemoryPoolManager.Queue()
-    QueuePool["database_Write_Queue"]=MemoryPoolManager.Queue()
+    QueuePool["database_Uplaod_Queue"]=MemoryPoolManager.Queue()
 
-    QueuePool["memory_modiflyInGUI_request_Queue"]=MemoryPoolManager.Queue()
-    QueuePool["memory_WriteInGUI_Queue"]=MemoryPoolManager.Queue()
+    QueuePool["memory_DownlaodToGUI_request_Queue"]=MemoryPoolManager.Queue()
+    QueuePool["memory_UploadToMaster_Queue"]=MemoryPoolManager.Queue()
 
     QueuePool["GPIB_send_queue"]=MemoryPoolManager.Queue()
     QueuePool["GPIB_2635B_queue"]=MemoryPoolManager.Queue()
     QueuePool["GPIB_2657A_queue"]=MemoryPoolManager.Queue()
 
+    csv_Manager=Csv_manager()
+
+    with open('output.csv', 'w', newline='') as csvfile:
+      # 建立 CSV 檔寫入器
+      writer = csv.writer(csvfile)
+
+      # 寫入一列資料
+      writer.writerow(list)
+
+      # 寫入另外幾列資料
+      writer.writerow(['令狐沖', 175, 60])
+      writer.writerow(['岳靈珊', 165, 57])
+
     
     databaseLoadThread(MemoryPool)
     ##memoryWriteThread(MemoryPool,QueuePool)
-    #initial_GUI(MemoryPool,QueuePool)
+    initial_GUI(MemoryPool,QueuePool)
     #gpib_Thread(MemoryPool,QueuePool)
 
     with ProcessPoolExecutor(max_workers=10) as executor:
+
+    
+        executor.submit(csv_manager_thread,MemoryPool,QueuePool)
         executor.submit(gpib_Thread,MemoryPool,QueuePool)
         executor.submit(run_async_server,MemoryPool,QueuePool)
         executor.submit(databaseWriteThread,MemoryPool,QueuePool)
         Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
         Gui_future.add_done_callback(shotdown_entire_app)
+
+
+
 
 
   

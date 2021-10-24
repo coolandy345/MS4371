@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesAUNxpH.ui'
+## Form generated from reading UI file 'main_pagesdDEXPR.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import *  # type: ignore
+from PySide6.QtGui import *  # type: ignore
+from PySide6.QtWidgets import *  # type: ignore
 
 
 class Ui_MainPages(object):
@@ -43,7 +43,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 779, 510))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1187, 653))
         self.horizontalLayout_12 = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
         self.frame_10 = QFrame(self.scrollAreaWidgetContents)
@@ -864,7 +864,7 @@ class Ui_MainPages(object):
         self.gridFrame_2 = QFrame(self.page_2)
         self.gridFrame_2.setObjectName(u"gridFrame_2")
         self.gridFrame_2.setMinimumSize(QSize(0, 0))
-        self.gridFrame_2.setMaximumSize(QSize(16777215, 200))
+        self.gridFrame_2.setMaximumSize(QSize(16777215, 240))
         self.gridFrame_2.setStyleSheet(u"QFrame{\n"
 "	background-color: rgb(30, 34, 41);\n"
 "	border-color:rgb(30, 34, 41);\n"
@@ -1105,7 +1105,7 @@ class Ui_MainPages(object):
         self.frame_14 = QFrame(self.gridFrame_2)
         self.frame_14.setObjectName(u"frame_14")
         self.frame_14.setMinimumSize(QSize(0, 50))
-        self.frame_14.setMaximumSize(QSize(16777215, 50))
+        self.frame_14.setMaximumSize(QSize(16777215, 16777215))
         self.frame_14.setStyleSheet(u"border:none")
         self.frame_14.setFrameShape(QFrame.StyledPanel)
         self.frame_14.setFrameShadow(QFrame.Raised)
@@ -1113,48 +1113,26 @@ class Ui_MainPages(object):
         self.gridLayout_23.setSpacing(0)
         self.gridLayout_23.setObjectName(u"gridLayout_23")
         self.gridLayout_23.setContentsMargins(0, 0, 0, 0)
-        self.frame_21 = QFrame(self.frame_14)
-        self.frame_21.setObjectName(u"frame_21")
-        self.frame_21.setMinimumSize(QSize(200, 0))
-        self.frame_21.setMaximumSize(QSize(220, 16777215))
-        self.frame_21.setFrameShape(QFrame.StyledPanel)
-        self.frame_21.setFrameShadow(QFrame.Raised)
-        self.gridLayout_32 = QGridLayout(self.frame_21)
-        self.gridLayout_32.setObjectName(u"gridLayout_32")
-        self.label_35 = QLabel(self.frame_21)
-        self.label_35.setObjectName(u"label_35")
-        self.label_35.setMinimumSize(QSize(80, 30))
-        self.label_35.setMaximumSize(QSize(60, 16777215))
-        self.label_35.setStyleSheet(u"font: 18px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;")
-        self.label_35.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_32.addWidget(self.label_35, 0, 0, 1, 1)
-
-        self.label_36 = QLabel(self.frame_21)
-        self.label_36.setObjectName(u"label_36")
-        self.label_36.setMinimumSize(QSize(120, 0))
-        self.label_36.setMaximumSize(QSize(120, 16777215))
-        self.label_36.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;\n"
-"background-color: rgb(16, 18, 22);")
-        self.label_36.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_32.addWidget(self.label_36, 0, 1, 1, 1)
-
-
-        self.gridLayout_23.addWidget(self.frame_21, 0, 2, 1, 1)
-
         self.frame_17 = QFrame(self.frame_14)
         self.frame_17.setObjectName(u"frame_17")
         self.frame_17.setMinimumSize(QSize(200, 0))
-        self.frame_17.setMaximumSize(QSize(220, 16777215))
+        self.frame_17.setMaximumSize(QSize(16777215, 16777215))
         self.frame_17.setFrameShape(QFrame.StyledPanel)
         self.frame_17.setFrameShadow(QFrame.Raised)
         self.gridLayout_30 = QGridLayout(self.frame_17)
         self.gridLayout_30.setObjectName(u"gridLayout_30")
+        self.realtime_Voltage_lineEdit = QLabel(self.frame_17)
+        self.realtime_Voltage_lineEdit.setObjectName(u"realtime_Voltage_lineEdit")
+        self.realtime_Voltage_lineEdit.setMinimumSize(QSize(0, 0))
+        self.realtime_Voltage_lineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.realtime_Voltage_lineEdit.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;\n"
+"background-color: rgb(16, 18, 22);")
+        self.realtime_Voltage_lineEdit.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_30.addWidget(self.realtime_Voltage_lineEdit, 0, 1, 1, 1)
+
         self.label_31 = QLabel(self.frame_17)
         self.label_31.setObjectName(u"label_31")
         self.label_31.setMinimumSize(QSize(80, 30))
@@ -1166,25 +1144,81 @@ class Ui_MainPages(object):
 
         self.gridLayout_30.addWidget(self.label_31, 0, 0, 1, 1)
 
-        self.label_32 = QLabel(self.frame_17)
-        self.label_32.setObjectName(u"label_32")
-        self.label_32.setMinimumSize(QSize(120, 0))
-        self.label_32.setMaximumSize(QSize(120, 16777215))
-        self.label_32.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+
+        self.gridLayout_23.addWidget(self.frame_17, 1, 0, 1, 1)
+
+        self.frame_21 = QFrame(self.frame_14)
+        self.frame_21.setObjectName(u"frame_21")
+        self.frame_21.setMinimumSize(QSize(200, 0))
+        self.frame_21.setMaximumSize(QSize(16777215, 16777215))
+        self.frame_21.setFrameShape(QFrame.StyledPanel)
+        self.frame_21.setFrameShadow(QFrame.Raised)
+        self.gridLayout_32 = QGridLayout(self.frame_21)
+        self.gridLayout_32.setObjectName(u"gridLayout_32")
+        self.label_34 = QLabel(self.frame_21)
+        self.label_34.setObjectName(u"label_34")
+        self.label_34.setMinimumSize(QSize(80, 30))
+        self.label_34.setMaximumSize(QSize(60, 16777215))
+        self.label_34.setStyleSheet(u"font: 18px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+        self.label_34.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_32.addWidget(self.label_34, 0, 0, 1, 1)
+
+        self.realtime_Resistor_lineEdit = QLabel(self.frame_21)
+        self.realtime_Resistor_lineEdit.setObjectName(u"realtime_Resistor_lineEdit")
+        self.realtime_Resistor_lineEdit.setMinimumSize(QSize(0, 0))
+        self.realtime_Resistor_lineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.realtime_Resistor_lineEdit.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;\n"
 "background-color: rgb(16, 18, 22);")
-        self.label_32.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.realtime_Resistor_lineEdit.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_30.addWidget(self.label_32, 0, 1, 1, 1)
+        self.gridLayout_32.addWidget(self.realtime_Resistor_lineEdit, 0, 1, 1, 1)
 
 
-        self.gridLayout_23.addWidget(self.frame_17, 0, 1, 1, 1)
+        self.gridLayout_23.addWidget(self.frame_21, 1, 3, 1, 1)
+
+        self.frame_67 = QFrame(self.frame_14)
+        self.frame_67.setObjectName(u"frame_67")
+        self.frame_67.setMinimumSize(QSize(200, 0))
+        self.frame_67.setMaximumSize(QSize(16777215, 16777215))
+        self.frame_67.setFrameShape(QFrame.StyledPanel)
+        self.frame_67.setFrameShadow(QFrame.Raised)
+        self.gridLayout_33 = QGridLayout(self.frame_67)
+        self.gridLayout_33.setObjectName(u"gridLayout_33")
+        self.label_35 = QLabel(self.frame_67)
+        self.label_35.setObjectName(u"label_35")
+        self.label_35.setMinimumSize(QSize(80, 30))
+        self.label_35.setMaximumSize(QSize(60, 16777215))
+        self.label_35.setStyleSheet(u"font: 18px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+        self.label_35.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_33.addWidget(self.label_35, 0, 0, 1, 1)
+
+        self.realtime_Current_lineEdit = QLabel(self.frame_67)
+        self.realtime_Current_lineEdit.setObjectName(u"realtime_Current_lineEdit")
+        self.realtime_Current_lineEdit.setMinimumSize(QSize(0, 0))
+        self.realtime_Current_lineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.realtime_Current_lineEdit.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;\n"
+"background-color: rgb(16, 18, 22);")
+        self.realtime_Current_lineEdit.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_33.addWidget(self.realtime_Current_lineEdit, 0, 1, 1, 1)
+
+
+        self.gridLayout_23.addWidget(self.frame_67, 1, 2, 1, 1)
 
         self.frame_16 = QFrame(self.frame_14)
         self.frame_16.setObjectName(u"frame_16")
         self.frame_16.setMinimumSize(QSize(200, 0))
-        self.frame_16.setMaximumSize(QSize(220, 16777215))
+        self.frame_16.setMaximumSize(QSize(16777215, 16777215))
         self.frame_16.setFrameShape(QFrame.StyledPanel)
         self.frame_16.setFrameShadow(QFrame.Raised)
         self.gridLayout_25 = QGridLayout(self.frame_16)
@@ -1200,54 +1234,20 @@ class Ui_MainPages(object):
 
         self.gridLayout_25.addWidget(self.label_23, 0, 0, 1, 1)
 
-        self.label_26 = QLabel(self.frame_16)
-        self.label_26.setObjectName(u"label_26")
-        self.label_26.setMinimumSize(QSize(120, 0))
-        self.label_26.setMaximumSize(QSize(120, 16777215))
-        self.label_26.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.realtime_Temp_lineEdit = QLabel(self.frame_16)
+        self.realtime_Temp_lineEdit.setObjectName(u"realtime_Temp_lineEdit")
+        self.realtime_Temp_lineEdit.setMinimumSize(QSize(0, 0))
+        self.realtime_Temp_lineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.realtime_Temp_lineEdit.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;\n"
 "background-color: rgb(16, 18, 22);")
-        self.label_26.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.realtime_Temp_lineEdit.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_25.addWidget(self.label_26, 0, 1, 1, 1)
+        self.gridLayout_25.addWidget(self.realtime_Temp_lineEdit, 0, 1, 1, 1)
 
 
         self.gridLayout_23.addWidget(self.frame_16, 0, 0, 1, 1)
-
-        self.frame_19 = QFrame(self.frame_14)
-        self.frame_19.setObjectName(u"frame_19")
-        self.frame_19.setMinimumSize(QSize(200, 0))
-        self.frame_19.setMaximumSize(QSize(220, 16777215))
-        self.frame_19.setFrameShape(QFrame.StyledPanel)
-        self.frame_19.setFrameShadow(QFrame.Raised)
-        self.gridLayout_31 = QGridLayout(self.frame_19)
-        self.gridLayout_31.setObjectName(u"gridLayout_31")
-        self.label_33 = QLabel(self.frame_19)
-        self.label_33.setObjectName(u"label_33")
-        self.label_33.setMinimumSize(QSize(80, 30))
-        self.label_33.setMaximumSize(QSize(60, 16777215))
-        self.label_33.setStyleSheet(u"font: 18px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;")
-        self.label_33.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_31.addWidget(self.label_33, 0, 0, 1, 1)
-
-        self.label_34 = QLabel(self.frame_19)
-        self.label_34.setObjectName(u"label_34")
-        self.label_34.setMinimumSize(QSize(120, 0))
-        self.label_34.setMaximumSize(QSize(120, 16777215))
-        self.label_34.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;\n"
-"background-color: rgb(16, 18, 22);")
-        self.label_34.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_31.addWidget(self.label_34, 0, 1, 1, 1)
-
-
-        self.gridLayout_23.addWidget(self.frame_19, 0, 3, 1, 1)
 
 
         self.gridLayout_5.addWidget(self.frame_14, 1, 0, 1, 1)
@@ -1932,7 +1932,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -452, 1170, 1410))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1170, 1410))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -3206,8 +3206,8 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(2)
-        self.stackedWidget.setCurrentIndex(0)
+        self.pages.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 
 
@@ -3273,14 +3273,14 @@ class Ui_MainPages(object):
         self.label_39.setText(QCoreApplication.translate("MainPages", u"\u8b66\u5831", None))
         self.label_17.setText(QCoreApplication.translate("MainPages", u"\u505c\u6b62\u4e2d", None))
         self.label_40.setText(QCoreApplication.translate("MainPages", u"\u771f\u7a7a\u7f6e\u63db\u4e2d", None))
-        self.label_35.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u96fb\u6d41", None))
-        self.label_36.setText(QCoreApplication.translate("MainPages", u"100uA", None))
+        self.realtime_Voltage_lineEdit.setText(QCoreApplication.translate("MainPages", u"450V", None))
         self.label_31.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u96fb\u5727", None))
-        self.label_32.setText(QCoreApplication.translate("MainPages", u"450V", None))
+        self.label_34.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u62b5\u6297", None))
+        self.realtime_Resistor_lineEdit.setText(QCoreApplication.translate("MainPages", u"10\u03a9", None))
+        self.label_35.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u96fb\u6d41", None))
+        self.realtime_Current_lineEdit.setText(QCoreApplication.translate("MainPages", u"100uA", None))
         self.label_23.setText(QCoreApplication.translate("MainPages", u"\u7089\u5185\u6e29\u5ea6", None))
-        self.label_26.setText(QCoreApplication.translate("MainPages", u"1200\u2103", None))
-        self.label_33.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u62b5\u6297", None))
-        self.label_34.setText(QCoreApplication.translate("MainPages", u"10\u03a9", None))
+        self.realtime_Temp_lineEdit.setText(QCoreApplication.translate("MainPages", u"12.200 \u2103", None))
         self.label_44.setText(QCoreApplication.translate("MainPages", u"\u8868\u793a\u9805\u76ee", None))
         self.graphItem_combobox.setItemText(0, QCoreApplication.translate("MainPages", u"\u62b5\u6297\u5024", None))
         self.graphItem_combobox.setItemText(1, QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u30d1\u30bf\u30fc\u30f3", None))

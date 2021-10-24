@@ -40,6 +40,7 @@ from gui_main.gui.core.functions import *
 
 from .py_pattern_menu import *
 
+import threading
 import time
 
 
@@ -87,7 +88,6 @@ class PyTempStep(QWidget):
     def __init__(
         self , 
         parent = None,
-        app_parent = None,
         active = 1,
         step = 1,
         type = 0,
@@ -115,7 +115,6 @@ class PyTempStep(QWidget):
         self._PID_heater_no = PID_heater_no
         # Parent
         self._parent = parent
-        self._app_parent = app_parent
         
         # base prepare
         # ///////////////////////////////////////////////////////////////
@@ -129,8 +128,11 @@ class PyTempStep(QWidget):
         self.FocusStyleChange=False
         self.FocusStyle=self.focus_gray_out_style
         self.timer=QTimer()
-        self.timer.timeout.connect(self.timerCallback)
+        self.timer.timeout.connect(self.focus_Style_Work)
         self.timer.start(100)
+
+        focus_Style_Thread = threading.Thread(target = self.focus_Style_Work,daemon=True)
+        focus_Style_Thread.start()
 
         
         # Parameter_setting
@@ -162,7 +164,9 @@ class PyTempStep(QWidget):
 
 
 
-    def timerCallback(self):
+    def focus_Style_Work(self):
+        #while 1:
+            #time.sleep(0.1)
         if self.FocusStyleChange:
             self.pattern.page.setStyleSheet(self.FocusStyle)
             self.FocusStyleChange=False

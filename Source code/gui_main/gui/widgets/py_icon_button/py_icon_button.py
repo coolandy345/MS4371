@@ -139,6 +139,7 @@ class PyIconButton_simple(QPushButton):
                 self.change_style(1)
 
         def set_active(self, enable):
+            enable=bool(enable)
             if self._is_active != enable:
                 self._is_active=enable
                 self.change_style(self._is_active)

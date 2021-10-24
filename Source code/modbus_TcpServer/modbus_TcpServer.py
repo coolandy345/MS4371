@@ -136,8 +136,8 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
             self.memorypool[pool_name]=sub_memorypool
             sendItem=MemoryUnit(pool_name,registor_name)
-            self.queuepool["database_Write_Queue"].put(sendItem)
-            self.queuepool["memory_modiflyInGUI_request_Queue"].put(sendItem)
+            self.queuepool["database_Uplaod_Queue"].put(sendItem)
+            self.queuepool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
 
     def modbusDatabase_update_Work(self):
     

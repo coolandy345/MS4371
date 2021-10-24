@@ -74,7 +74,6 @@ class PyTestStep(QWidget):
     def __init__(
         self , 
         parent = None,
-        app_parent = None,
         active = 1,
         step = 0,
         voltage = 0
@@ -87,7 +86,6 @@ class PyTestStep(QWidget):
 
         # Parent
         self._parent = parent
-        self._app_parent = app_parent
         # base prepare
         # ///////////////////////////////////////////////////////////////
         self.setFixedSize(140,133)

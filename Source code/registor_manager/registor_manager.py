@@ -32,7 +32,7 @@ def databaseWriteThread(memoryPool,queuePool):
 
     while 1:
         getItem=MemoryUnit()
-        getItem=queuePool["database_Write_Queue"].get()
+        getItem=queuePool["database_Uplaod_Queue"].get()
         queuePool["modbus_Write_Queue"].put(getItem)
         time.sleep(0.5)
         
@@ -41,8 +41,8 @@ def databaseWriteThread(memoryPool,queuePool):
         cur.execute(test)
         #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
             
-        while not queuePool["database_Write_Queue"].empty():
-            getItem=queuePool["database_Write_Queue"].get()
+        while not queuePool["database_Uplaod_Queue"].empty():
+            getItem=queuePool["database_Uplaod_Queue"].get()
             queuePool["modbus_Write_Queue"].put(getItem)
 
             test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)

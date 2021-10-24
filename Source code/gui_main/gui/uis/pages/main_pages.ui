@@ -44,7 +44,7 @@
       <string notr="true">background-color: rgb(44, 49, 60);</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -76,8 +76,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>779</width>
-            <height>510</height>
+            <width>1187</width>
+            <height>653</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -1835,7 +1835,7 @@ min-height:30;</string>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>200</height>
+           <height>240</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -2407,7 +2407,7 @@ padding-right:5px;</string>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>50</height>
+              <height>16777215</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -2435,7 +2435,86 @@ padding-right:5px;</string>
              <property name="spacing">
               <number>0</number>
              </property>
-             <item row="0" column="2">
+             <item row="1" column="0">
+              <widget class="QFrame" name="frame_17">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_30">
+                <item row="0" column="1">
+                 <widget class="QLabel" name="realtime_Voltage_lineEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font: 30px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;
+background-color: rgb(16, 18, 22);</string>
+                  </property>
+                  <property name="text">
+                   <string>450V</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_31">
+                  <property name="minimumSize">
+                   <size>
+                    <width>80</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>60</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font: 18px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;</string>
+                  </property>
+                  <property name="text">
+                   <string>測定電圧</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="1" column="3">
               <widget class="QFrame" name="frame_21">
                <property name="minimumSize">
                 <size>
@@ -2445,7 +2524,7 @@ padding-right:5px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>220</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2456,6 +2535,85 @@ padding-right:5px;</string>
                 <enum>QFrame::Raised</enum>
                </property>
                <layout class="QGridLayout" name="gridLayout_32">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_34">
+                  <property name="minimumSize">
+                   <size>
+                    <width>80</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>60</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font: 18px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;</string>
+                  </property>
+                  <property name="text">
+                   <string>測定抵抗</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="realtime_Resistor_lineEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font: 30px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;
+background-color: rgb(16, 18, 22);</string>
+                  </property>
+                  <property name="text">
+                   <string>10Ω</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QFrame" name="frame_67">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_33">
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_35">
                   <property name="minimumSize">
@@ -2484,16 +2642,16 @@ padding-right:5px;</string>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLabel" name="label_36">
+                 <widget class="QLabel" name="realtime_Current_lineEdit">
                   <property name="minimumSize">
                    <size>
-                    <width>120</width>
+                    <width>0</width>
                     <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>120</width>
+                    <width>16777215</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -2514,85 +2672,6 @@ background-color: rgb(16, 18, 22);</string>
                </layout>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QFrame" name="frame_17">
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>220</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_30">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_31">
-                  <property name="minimumSize">
-                   <size>
-                    <width>80</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>60</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">font: 18px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;</string>
-                  </property>
-                  <property name="text">
-                   <string>測定電圧</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="label_32">
-                  <property name="minimumSize">
-                   <size>
-                    <width>120</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>120</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">font: 30px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;
-background-color: rgb(16, 18, 22);</string>
-                  </property>
-                  <property name="text">
-                   <string>450V</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
              <item row="0" column="0">
               <widget class="QFrame" name="frame_16">
                <property name="minimumSize">
@@ -2603,7 +2682,7 @@ background-color: rgb(16, 18, 22);</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>220</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2642,16 +2721,16 @@ padding-right:5px;</string>
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QLabel" name="label_26">
+                 <widget class="QLabel" name="realtime_Temp_lineEdit">
                   <property name="minimumSize">
                    <size>
-                    <width>120</width>
+                    <width>0</width>
                     <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>120</width>
+                    <width>16777215</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -2662,86 +2741,7 @@ padding-right:5px;
 background-color: rgb(16, 18, 22);</string>
                   </property>
                   <property name="text">
-                   <string>1200℃</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="0" column="3">
-              <widget class="QFrame" name="frame_19">
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>220</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_31">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_33">
-                  <property name="minimumSize">
-                   <size>
-                    <width>80</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>60</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">font: 18px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;</string>
-                  </property>
-                  <property name="text">
-                   <string>測定抵抗</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="label_34">
-                  <property name="minimumSize">
-                   <size>
-                    <width>120</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>120</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">font: 30px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;
-background-color: rgb(16, 18, 22);</string>
-                  </property>
-                  <property name="text">
-                   <string>10Ω</string>
+                   <string>12.200 ℃</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3380,7 +3380,7 @@ max-width:120;</string>
                 <string notr="true">background-color: rgb(30, 34, 41);</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="page_AutoOperate">
                 <layout class="QGridLayout" name="gridLayout_15">
@@ -4223,7 +4223,7 @@ border:None</string>
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-452</y>
+            <y>0</y>
             <width>1170</width>
             <height>1410</height>
            </rect>
