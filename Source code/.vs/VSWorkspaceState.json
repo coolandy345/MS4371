@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\csv_manager",
-    "\\gpib_manager"
+    "\\main_operator"
   ],
-  "SelectedNode": "\\gpib_manager\\gpib_device_manager.py",
+  "SelectedNode": "\\libusb-1.0.dll",
   "PreviewInSolutionExplorer": false
 }

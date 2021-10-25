@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 #from ctypes import cdll 
 import sys
 import time
@@ -307,7 +309,7 @@ class GPIB_device():
         #If we have any error code
         if len(getItem.error_message):
             self.connect_action(False)
-            return getItem.error_message
+            return False,getItem.error_message
         else:
             self.device_IDN=getItem.result
             self.connect_action(True)

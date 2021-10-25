@@ -21,6 +21,7 @@ from gui_main.qt_core import *
 from csv_manager import *
 
 from gpib_manager import *
+from main_operator import *
 
 import ctypes
 import csv
@@ -48,34 +49,30 @@ if __name__ == "__main__":
     QueuePool["GPIB_2635B_queue"]=MemoryPoolManager.Queue()
     QueuePool["GPIB_2657A_queue"]=MemoryPoolManager.Queue()
 
-    csv_Manager=Csv_manager()
+    QueuePool["subFolderMakeQueue"]=MemoryPoolManager.Queue()
+    QueuePool["fileMakeQueue"]=MemoryPoolManager.Queue()
+    QueuePool["testDataQueue"]=MemoryPoolManager.Queue()
 
-    with open('output.csv', 'w', newline='') as csvfile:
-      # 建立 CSV 檔寫入器
-      writer = csv.writer(csvfile)
+    EvevtPool={}
+    EvevtPool["Auto Run Start"]=MemoryPoolManager.Event()
+    EvevtPool["Record stop"]=MemoryPoolManager.Event()
 
-      # 寫入一列資料
-      writer.writerow(list)
 
-      # 寫入另外幾列資料
-      writer.writerow(['令狐沖', 175, 60])
-      writer.writerow(['岳靈珊', 165, 57])
 
-    
     databaseLoadThread(MemoryPool)
     ##memoryWriteThread(MemoryPool,QueuePool)
-    initial_GUI(MemoryPool,QueuePool)
+    #initial_GUI(MemoryPool,QueuePool)
     #gpib_Thread(MemoryPool,QueuePool)
 
     with ProcessPoolExecutor(max_workers=10) as executor:
-
-    
-        executor.submit(csv_manager_thread,MemoryPool,QueuePool)
+        
+        executor.submit(operator_thread,MemoryPool,QueuePool,EvevtPool)
+        executor.submit(csv_manager_thread,MemoryPool,QueuePool,EvevtPool)
         executor.submit(gpib_Thread,MemoryPool,QueuePool)
-        executor.submit(run_async_server,MemoryPool,QueuePool)
-        executor.submit(databaseWriteThread,MemoryPool,QueuePool)
-        Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
-        Gui_future.add_done_callback(shotdown_entire_app)
+        #executor.submit(run_async_server,MemoryPool,QueuePool)
+        #executor.submit(databaseWriteThread,MemoryPool,QueuePool)
+        #Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
+        #Gui_future.add_done_callback(shotdown_entire_app)
 
 
 

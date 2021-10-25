@@ -20,7 +20,7 @@ def set_memorypool_register(memoryPool,
 
             memoryPool[memorypool_name]=sub_memorypool
             sendItem=MemoryUnit(memorypool_name,registor_name)
-            print("sendItem",sendItem.pool_name,sendItem.registor_name)
+            #print("sendItem",sendItem.pool_name,sendItem.registor_name)
             queuePool["database_Uplaod_Queue"].put(sendItem)
             queuePool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
             
@@ -28,8 +28,6 @@ def set_memorypool_register(memoryPool,
 def GPIB_USB_interface_connnection_Work(memorypool,queuePool):
     
     # find our device
-    
-    
     connection=False
     set_memorypool_register(memorypool,queuePool,"System memory","GPIB USB conneciton",0)
     while 1:
@@ -55,9 +53,9 @@ def gpib_Thread(memoryPool,queuePool):
     gPIB_USB_interface_connnection_Thread = threading.Thread(target = GPIB_USB_interface_connnection_Work,daemon=True,args = (memoryPool,queuePool))
     gPIB_USB_interface_connnection_Thread.start()
     
-    #GPIB device class create 
-    gpib_2635B_manager=GPIB_device_2635B(memoryPool,queuePool)
-    gpib_2657A_manager=GPIB_device_2657A(memoryPool,queuePool)
+    ##GPIB device class create 
+    #gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
+    #gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
 
 
 

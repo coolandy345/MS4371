@@ -60,7 +60,7 @@ class Memory_Manager():
                 item.registor_name
 
             poolNameList = list(dict.fromkeys(poolNameList))
-            print("getItem",poolNameList)
+            #print("getItem",poolNameList)
             for pool_name in poolNameList:
                 self.memoryPool[pool_name]=self.Master_memoryPool[pool_name]
 
@@ -533,7 +533,7 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.realtime_grapgLayout.addWidget(self._parent.realTimeData_Graph, Qt.AlignCenter, Qt.AlignCenter)
 
     def realtime_data_Update_Work(self):
-        print("realtime_data_Update_Work")
+        #print("realtime_data_Update_Work")
         while 1:
             time.sleep(0.1)
 
