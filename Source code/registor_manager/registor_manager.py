@@ -24,7 +24,7 @@ class MemoryUnit():
 
 
 
-def databaseWriteThread(memoryPool,queuePool):
+def databaseWriteThread(memoryPool,queuePool,eventPool):
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
@@ -64,7 +64,7 @@ def databaseLoadThread(memoryPool):
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
 
-    
+    memoryPool["Measurement_data"]=None
 
     pool={}
     for row in cur.execute('SELECT * FROM "Modbus Registor Pool - Registor" '):

@@ -33,7 +33,7 @@ class Csv_manager():
 
     def reset_Work(self):
         while 1:
-            self.eventPool["Record stop"].wait()
+            self.eventPool["CSV stop"].wait()
             self.dataRecord_Stop=True
 
     def subFolderMake_Work(self):

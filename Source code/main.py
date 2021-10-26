@@ -53,26 +53,35 @@ if __name__ == "__main__":
     QueuePool["fileMakeQueue"]=MemoryPoolManager.Queue()
     QueuePool["testDataQueue"]=MemoryPoolManager.Queue()
 
-    EvevtPool={}
-    EvevtPool["Auto Run Start"]=MemoryPoolManager.Event()
-    EvevtPool["Record stop"]=MemoryPoolManager.Event()
+    EventPool={}
+    EventPool["Auto Run Start"]=MemoryPoolManager.Event()
+    EventPool["Auto Run Start confirm"]=MemoryPoolManager.Event()
+    
+    EventPool["Test approve"]=MemoryPoolManager.Event()
+    EventPool["GPIB_Test_Finish"]=MemoryPoolManager.Event()
+    EventPool["CSV_Data_arrive"]=MemoryPoolManager.Event()
+    EventPool["GUI_Data_arrive"]=MemoryPoolManager.Event()
+    
+    EventPool["Database_data_Initial"]=MemoryPoolManager.Event()
+    EventPool["CSV stop"]=MemoryPoolManager.Event()
+    EventPool["GPIB Stop"]=MemoryPoolManager.Event()
 
-
-
+    
     databaseLoadThread(MemoryPool)
     ##memoryWriteThread(MemoryPool,QueuePool)
-    #initial_GUI(MemoryPool,QueuePool)
+    #initial_GUI(MemoryPool,QueuePool,EventPool)
     #gpib_Thread(MemoryPool,QueuePool)
+    #operator_thread(MemoryPool,QueuePool,EventPool)
 
     with ProcessPoolExecutor(max_workers=10) as executor:
         
-        executor.submit(operator_thread,MemoryPool,QueuePool,EvevtPool)
-        executor.submit(csv_manager_thread,MemoryPool,QueuePool,EvevtPool)
+        executor.submit(operator_thread,MemoryPool,QueuePool,EventPool)
+        executor.submit(csv_manager_thread,MemoryPool,QueuePool,EventPool)
         executor.submit(gpib_Thread,MemoryPool,QueuePool)
-        #executor.submit(run_async_server,MemoryPool,QueuePool)
-        #executor.submit(databaseWriteThread,MemoryPool,QueuePool)
-        #Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool)
-        #Gui_future.add_done_callback(shotdown_entire_app)
+        executor.submit(run_async_server,MemoryPool,QueuePool)
+        executor.submit(databaseWriteThread,MemoryPool,QueuePool,EventPool)
+        Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool,EventPool)
+        Gui_future.add_done_callback(shotdown_entire_app)
 
 
 

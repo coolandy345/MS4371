@@ -366,6 +366,9 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, '実行PTN No.変更',{},{},{},{},{},'{}')".format(Table_name,10172,0,0,1,0,1,"エッジ(PLC側でRST)")
 cur.execute(test)
 
+test="INSERT INTO '{}' values({}, '大気圧',{},{},{},{},{},'{}')".format(Table_name,10173,0,0,1,0,1,"エッジ(PLC側でRST)")
+cur.execute(test)
+
 test="INSERT INTO '{}' values({}, '変更連絡',{},{},{},{},{},'{}')".format(Table_name,10190,0,0,1,0,1,"エッジ(PLC側でRST) PC側でデータ変更した場合ONさせる")
 cur.execute(test)
 

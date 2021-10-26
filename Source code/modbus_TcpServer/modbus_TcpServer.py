@@ -133,11 +133,15 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
             sub_memorypool=copy.deepcopy(self.memorypool[pool_name])
             sub_memorypool[registor_name].setValue(value)
-
             self.memorypool[pool_name]=sub_memorypool
             sendItem=MemoryUnit(pool_name,registor_name)
             self.queuepool["database_Uplaod_Queue"].put(sendItem)
             self.queuepool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
+
+            #sub_memorypool=copy.deepcopy(self.memorypool["Modbus Registor Pool - Registor"])
+            #sub_memorypool["変更連絡"].setValue(value)
+            #self.memorypool[pool_name]=sub_memorypool
+            #sendItem=MemoryUnit(pool_name,registor_name)
 
     def modbusDatabase_update_Work(self):
     
@@ -150,7 +154,8 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 unit=self.memorypool["Modbus Registor Pool - Registor"][getItem.registor_name]
                 self.register_dict[unit.registor_number+self.register_shift]=unit.getModbusValue()
 
-
+                unit=self.memorypool["Modbus Registor Pool - Registor"]["変更連絡"]
+                self.register_dict[unit.registor_number+self.register_shift]=1
 
         
 

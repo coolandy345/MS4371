@@ -221,7 +221,7 @@ class GPIB_device():
         self.queuePool=queuePool
         
         self.initiail_GPIB_device()
-
+        
         connnection_check_Thread = threading.Thread(target = self.connnection_check_Work,daemon=True)
         connnection_check_Thread.start()
 
@@ -327,6 +327,8 @@ class GPIB_device():
             self.memoryPool[memorypool_name]=sub_memorypool
             sendItem=MemoryUnit(memorypool_name,registor_name)
             self.queuePool["database_Uplaod_Queue"].put(sendItem)
+            self.queuePool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
+
 
         
 

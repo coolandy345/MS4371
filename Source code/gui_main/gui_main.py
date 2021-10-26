@@ -46,7 +46,7 @@ os.environ["QT_FONT_DPI"] = "96"
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
 class MainWindow(QMainWindow):
-    def __init__(self,Master_memoryPool,queuePool):
+    def __init__(self,Master_memoryPool,queuePool,eventPool):
         super().__init__()
 
 
@@ -58,6 +58,8 @@ class MainWindow(QMainWindow):
         self.ui.setup_ui(self)
         self.Master_memoryPool=Master_memoryPool
         self.queuePool=queuePool
+        self.eventPool=eventPool
+        
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
         settings = Settings()
@@ -69,7 +71,7 @@ class MainWindow(QMainWindow):
 
         #setupMainWindow=SetupMainWindow()
         #setupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
-        self.SetupMainWindow=SetupMainWindow(main_namespace=self,Master_memoryPool=self.Master_memoryPool,queuePool=self.queuePool)
+        self.SetupMainWindow=SetupMainWindow(main_namespace=self,Master_memoryPool=self.Master_memoryPool,queuePool=self.queuePool,eventPool=self.eventPool)
         #SetupMainWindow.setup_gui(self,memory_pool=self.memory_pool)
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
@@ -166,12 +168,12 @@ class MainWindow(QMainWindow):
 
 
 
-def initial_GUI(Master_memoryPool,queuePool):
+def initial_GUI(Master_memoryPool,queuePool,eventPool):
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon("icon.ico"))
-    window = MainWindow(Master_memoryPool,queuePool)
+    window = MainWindow(Master_memoryPool,queuePool,eventPool)
     
     #QThreadPool.globalInstance().setStackSize(10000)
     #QThreadPool.globalInstance().setMaxThreadCount(1000)

@@ -105,12 +105,14 @@ class Main_utility_manager(QWidget):
     def __init__( 
             self, 
             parent = None,
-            queuePool={}
+            queuePool={},
+            eventPool={}
     ):
         super().__init__()
 
         self._parent=parent
         self.queuePool=queuePool
+        self.eventPool=eventPool
 
         
 
@@ -156,9 +158,21 @@ class Main_utility_manager(QWidget):
         realtime_data_Update_Thread.start()
 
 
-        
+    def wait_Operator_Start_Work(self):
+        if self.eventPool["Auto Run Start confirm"].wait(0.1):
+            self.eventPool["Auto Run Start confirm"].clear()
+            print("operator is starting")
+        else:
+            self._parent.testfile_manager.set_content_Editeable(True)
+            print("operator is fail")
+            
+    def set_memorypool_register(self,pool_name,registor_name,value):
 
-
+        if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
+            self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
+            sendItem=MemoryUnit(pool_name,registor_name)
+            self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
+            
     def btn_callback(self):
         btn_name=self.sender().objectName()
 
@@ -167,6 +181,12 @@ class Main_utility_manager(QWidget):
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
         elif btn_name == "autostart_pushButton":
+
+            self.eventPool["Auto Run Start"].set()
+            wait_Operator_Start_Thread = threading.Thread(target = self.wait_Operator_Start_Work,daemon=True)
+            wait_Operator_Start_Thread.start()
+
+            self._parent.testfile_manager.set_content_Editeable(False)
 
             #Check all condition to start sequence
                 # Lock parameter setting
@@ -187,17 +207,19 @@ class Main_utility_manager(QWidget):
 
 
             pass
-        elif btn_name == "outputStop_pushButton":
-            #Reset GPIB device any way
 
-            pass
         elif btn_name == "gasFreeflow_pushButton":
             # Set Gas registor to memory bus
-            pass
-        elif btn_name == "eMSstop_pushButton":
+            self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
+
+        elif btn_name == "eMSstop_pushButton" or btn_name == "outputStop_pushButton":
+            self.eventPool["GPIB Stop"].set()
+            
             #Stop Auto sequence
                 #if we ok to process
                     #Lock auto start check box
+
+             #Reset GPIB device any way
 
             pass
 
@@ -205,12 +227,16 @@ class Main_utility_manager(QWidget):
             # Set measurement mode 
 
             pass
+
         elif btn_name == "voltage_lineEdit":
             # Set output voltage limit
-            pass
+            self.set_memorypool_register("System memory","Manual_Measurement_Voltage",float(self._parent.ui.load_pages.voltage_lineEdit.text()))
+
+
         elif btn_name == "AutoMode_pattern_comboBox":
             #choose pattern
-            pass
+            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()))
+
 
         elif btn_name == "graphItem_combobox":
             index=self._parent.ui.load_pages.graphItem_combobox.currentText()
@@ -267,7 +293,6 @@ class Main_utility_manager(QWidget):
 
         self._parent.ui.load_pages.btn_AutoMode.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.btn_ManaualMode.clicked.connect(self.btn_callback)
-        self._parent.ui.load_pages.autostart_pushButton.clicked.connect(self.btn_callback)
 
         self._parent.ui.load_pages.manualMeasurement_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.voltageOutput_pushButton.clicked.connect(self.btn_callback)
@@ -278,6 +303,7 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.eMSstop_pushButton.clicked.connect(self.btn_callback)
 
         self._parent.ui.load_pages.voltage_lineEdit.editingFinished.connect(self.btn_callback)
+        self._parent.ui.load_pages.voltage_lineEdit.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.measurement_comboBox.currentIndexChanged.connect(self.btn_callback)
 
         self._parent.ui.load_pages.graphItem_combobox.currentIndexChanged.connect(self.btn_callback)

@@ -69,7 +69,10 @@ cur.execute(test)
 
 
 
-test="INSERT INTO '{}' values('Start make csv','{}','{}')".format(Table_name,0,"NULL")
+test="INSERT INTO '{}' values('Manual_Measurement_Voltage','{}','{}')".format(Table_name,0,"NULL")
+cur.execute(test)
+
+test="INSERT INTO '{}' values('Manual_Measurement_Mode','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(test)
 
 

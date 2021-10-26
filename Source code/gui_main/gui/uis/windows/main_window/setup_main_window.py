@@ -70,12 +70,14 @@ import pyqtgraph as pg
 # PY WINDOW
 # ///////////////////////////////////////////////////////////////
 class SetupMainWindow:
-    def __init__(self,main_namespace,Master_memoryPool,queuePool):
+    def __init__(self,main_namespace,Master_memoryPool,queuePool,eventPool):
         super().__init__()
 
         self.main_namespace=main_namespace
         self.Master_memoryPool=Master_memoryPool
         self.queuePool=queuePool
+        
+        self.eventPool=eventPool
         self.setup_gui()
         
 
@@ -222,7 +224,7 @@ class SetupMainWindow:
         self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,queuePool=self.queuePool)
         self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,queuePool=self.queuePool)
         
-        self.main_namespace.main_utility_manager= Main_utility_manager(self.main_namespace,queuePool=self.queuePool)
+        self.main_namespace.main_utility_manager= Main_utility_manager(self.main_namespace,queuePool=self.queuePool,eventPool=self.eventPool)
 
 
         self.main_namespace.testfile_manager=Testfile_manager(self.main_namespace,queuePool=self.queuePool)

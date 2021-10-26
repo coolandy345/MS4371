@@ -154,24 +154,42 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_testMeterialName.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_testMeterial.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_MeterialMainDie.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_MeterialMainDie.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_MeterialinnerDie.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_MeterialinnerDie.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_thinkness.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_thinkness.setValidator(QDoubleValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_1_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_1_P.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_PID_1_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_1_I.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_PID_1_D.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_1_D.setValidator(QDoubleValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_2_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_2_P.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_PID_2_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_2_I.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_PID_2_D.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_2_D.setValidator(QDoubleValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_3_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_3_P.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_PID_3_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_3_I.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_PID_3_D.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_3_D.setValidator(QDoubleValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_4_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_4_P.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_PID_4_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_4_I.setValidator(QDoubleValidator())
         self._parent.ui.load_pages.lineEdit_PID_4_D.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_4_D.setValidator(QDoubleValidator())
+        
+        
+        
 
     def set_content_Editeable(self,enable):
 
