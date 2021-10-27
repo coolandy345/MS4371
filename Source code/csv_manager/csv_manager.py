@@ -5,6 +5,7 @@ import time
 import os
 from operator import *
 import csv
+from main_operator import *
 
 def csv_manager_thread(memoryPool,queuePool,eventPool):
 	csv_manager=Csv_manager(memoryPool,queuePool,eventPool)
@@ -39,19 +40,19 @@ class Csv_manager():
     def subFolderMake_Work(self):
         while 1:
             self.dataRecord_Stop=False
-            self.subFoldergetItem=self.queuePool["subFolderMakeQueue"].get()
+            subFoldergetItem=self.queuePool["subFolderMakeQueue"].get()
 
-            self.prepare_Subfolder(self.subFoldergetItem.stage)
+            self.prepare_Subfolder(subFoldergetItem.stage)
             self.fileMake_Work()
 
             
 
-    def prepare_Subfolder(self):
+    def prepare_Subfolder(self,stage):
         Main_FolderPath=self.memoryPool["System memory"]["Main_FolderPath"].getValue()
-        if self.subFoldergetItem.stage[0]==test_profile_package.RT_stage:
+        if stage[0]==Test_folder_package.RT_stage:
             path = os.path.join(Main_FolderPath, "RT")
-        elif self.subFoldergetItem.stage[0]==test_profile_package.Temp_stage:
-            path = os.path.join(Main_FolderPath, "{}℃".format(self.subFoldergetItem.stage[1]))
+        elif stage[0]==Test_folder_package.Temp_stage:
+            path = os.path.join(Main_FolderPath, "{}℃".format(stage[1]))
         else:
             return False
         self.subPath=path
@@ -59,21 +60,21 @@ class Csv_manager():
 
     def fileMake_Work(self):
 
-        process=True
         while 1:
             try:
                 getItem=self.queuePool["fileMakeQueue"].get(0.1)
-                process=True
+
+                self.prepare_CsvFile(getItem)
+                if self.subFoldergetItem.stage[0]==Test_profile_package.Temp_stage:
+                    self.testDataQueue_Work("抵抗測定結果")
+                self.testDataQueue_Work("BG測定結果")
+
             except :
-                process=False
+                
                 if self.dataRecord_Stop:
                     return
 
-            if process:
-                self.prepare_CsvFile(getItem)
-                if self.subFoldergetItem.stage[0]==test_profile_package.Temp_stage:
-                    self.testDataQueue_Work("抵抗測定結果")
-                self.testDataQueue_Work("BG測定結果")
+            
 
     def prepare_CsvFile(self,profile):
 

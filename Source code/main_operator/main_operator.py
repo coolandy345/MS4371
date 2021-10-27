@@ -5,7 +5,7 @@ import threading
 import time
 import copy
 
-class test_folder_package():
+class Test_folder_package():
 
     RT_stage=1
     Temp_stage=2
@@ -16,7 +16,7 @@ class test_folder_package():
 
         self.stage=stage
 
-class test_profile_package():
+class Test_profile_package():
 
     QC_Test=1
     Costomer_Test=2
@@ -56,7 +56,7 @@ class test_profile_package():
             self.costomer=""
             self.costomerName=""
 
-class single_test_unitPackage():
+class Single_data_unitPackage():
 
     #If count=-1 mean data stream is finish
 
@@ -91,13 +91,10 @@ class Operator():
         self.queuePool=queuePool
         self.eventPool=eventPool
         
-        print("1")
 
         self.gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
-        print("2")
         self.gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
 
-        print("3")
         auto_Run_Start_Thread = threading.Thread(target = self.auto_Run_Start_Work,daemon=True)
         auto_Run_Start_Thread.start()
 
@@ -113,7 +110,10 @@ class Operator():
             self.eventPool["GPIB Stop"].clear()
 
             self.stop=True
-            print("GPIB stop")
+            print("GPIB EMS stop")
+
+            self.gpib_2657A.send_Command("reset()")
+
 
     def set_memorypool_register(self,
                                                 memorypool_name,
@@ -129,6 +129,39 @@ class Operator():
             sendItem=MemoryUnit(memorypool_name,registor_name)
             queuePool["database_Uplaod_Queue"].put(sendItem)
             queuePool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
+
+    def measurement_initial(
+                                self,
+                                voltage=0,
+                                test_time=0,
+                                sample_time=0
+                            ):
+        self.GPIB_device_ScriptPrepare(voltage,test_time,sample_time)
+
+        #Wait PLC tell us if we can start to test
+        while not self.eventPool["Test approve"].wait(0.1):
+            #If we got stop signal
+            if self.stop:
+                return False
+
+        #Get PLC approve to process
+        #print("PLC allow us to start measurment")
+        self.eventPool["Test approve"].clear()
+        set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
+        
+        #               - send trigger to GPIB device to start script
+        self.GPIB_device_startScript()
+        #               - initial measure data retrive Thread
+        GPIB_data_retrive_Thread = threading.Thread(target = self.GPIB_data_retrive_Work,daemon=True)
+        GPIB_data_retrive_Thread.start()
+
+        while not self.eventPool["GPIB_Test_Finish"].wait(0.1):
+            #If we got stop signal
+            if self.stop:
+                return False
+        self.eventPool["GPIB_Test_Finish"].clear()
+
+        
 
     def auto_Run_Start_Work(self):
         while 1:
@@ -198,152 +231,112 @@ class Operator():
 
 
 
-                    self.GPIB_device_ScriptPrepare(test_pattern)
-
-                    self.abort=False
-                    #Wait PLC tell us if we can start to test
-                    while not self.eventPool["Test approve"].wait(0.1):
-                        #If we got stop signal
-                        if self.stop:
-                            self.abort=True
-                            break
-                    self.eventPool["Test approve"].clear()
-
-                    #If we got stop signal stop this auto start
-                    if self.abort:
-                        break
-
-                    
-                    #start test 
-                    #print("PLC allow us to start measurment")
-                    
                     #               - tell csv_manager get ready
+                    if test_pattern_no=="RT":
+                        test_folder_package=Test_folder_package([Test_folder_package.RT_stage,0])
+                        self.queuePool["subFolderMakeQueue"].put(test_folder_package)
 
-                    #               - send trigger to GPIB device to start script
-                    self.GPIB_device_startScript()
-                    #               - initial measure data retrive Thread
-                    GPIB_data_retrive_Thread = threading.Thread(target = self.GPIB_data_retrive_Work,daemon=True)
-                    GPIB_data_retrive_Thread.start()
+                    else:
+                        test_folder_package=Test_folder_package([Test_folder_package.Temp_stage,0])
+                        self.queuePool["subFolderMakeQueue"].put(test_folder_package)
 
-                    while not self.eventPool["GPIB_Test_Finish"].wait(0.1):
-                        #If we got stop signal
-                        if self.stop:
-                            self.abort=True
-                            break
-                    self.eventPool["GPIB_Test_Finish"].clear()
-
-                    #If we got stop signal stop this auto start
-                    if self.abort:
-                        break
-
-                    #Tell PLC we had finish measurement test 
+                    self.measurement_initial()
+                     #Tell PLC we had finish measurement test 
                     set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
-
 
             
         #clear  Start Run Auto run event
         self.eventPool["Auto Run Start"].clear()
 
-    def GPIB_device_ScriptPrepare(self,patten):
+    def GPIB_device_ScriptPrepare(self,voltage,test_time,sample_time):
         #reset all gpib device include TSP-Link device
-            #-reset()
-            #-node[1].errorqueue.clear()
-            #-node[2].errorqueue.clear()
-            #-node[1].status.reset()
-            #-node[2].status.reset()
-            #-tsplink.reset()
-            #-node[1].dataqueue.clear()
-            #-node[1].display.clear()
-            #-node[1].display.setcursor(1, 1)
-            #-node[1].display.settext("Prepare")
-            #-node[1].display.setcursor(2, 1)
-            #-node[1].display.settext("Wait to start PTN.1")
-            #-node[2].display.clear()
-            #-node[2].display.setcursor(1, 1)
-            #-node[2].display.settext("Prepare")
-            #-node[2].display.setcursor(2, 1)
-            #-node[2].display.settext("Wait to start PTN.1")
 
-
+        self.gpib_2657A.send_Command("reset()")
+        self.gpib_2657A.send_Command("node[1].errorqueue.clear()")
+        self.gpib_2657A.send_Command("node[2].errorqueue.clear()")
+        self.gpib_2657A.send_Command("node[1].status.reset()")
+        self.gpib_2657A.send_Command("node[2].status.reset()")
+        self.gpib_2657A.send_Command("tsplink.reset()")
+        self.gpib_2657A.send_Command("node[1].dataqueue.clear()")
+        self.gpib_2657A.send_Command("node[1].display.clear()")
+        self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+        self.gpib_2657A.send_Command("node[1].display.settext(\"Prepare\")")
+        self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
+        self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
+        self.gpib_2657A.send_Command("node[1].display.settext(\"Wait to start PTN.1\")")
+        self.gpib_2657A.send_Command("node[2].display.clear()")
+        self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+        self.gpib_2657A.send_Command("node[2].display.settext(\"Prepare\")")
+        self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
+        self.gpib_2657A.send_Command("node[2].display.settext(\"Wait to start PTN.1\")")
         #prepare test pattern to script
-
         #send script to TSP-Link Master
 
-            #-loadscript testProfile
+        #-loadscript testProfile
+        self.gpib_2657A.send_Command("tsplink.trigger[0].reset()")
+        self.gpib_2657A.send_Command("tsplink.trigger[1].reset()")
+        self.gpib_2657A.send_Command("tsplink.trigger[2].reset()")
+        self.gpib_2657A.send_Command("tsplink.trigger[3].reset()")
 
-            #-tsplink.trigger[0].reset()
-            #-tsplink.trigger[1].reset()
-            #-tsplink.trigger[2].reset()
-            #-tsplink.trigger[3].reset()
-
-            #-node[1].smua.reset()
-            #-node[1].smua.nvbuffer1.clear()
-            #-node[1].smua.nvbuffer1.collecttimestamps = 1
-            #-node[1].smua.nvbuffer1.timestampresolution=0.000001     if total time is short then 70minute
-            #-node[1].smua.nvbuffer1.timestampresolution=0.000010     if total time is bigger then 70minute
-            #-node[1].smua.trigger.initiate()
-            #-node[1].smua.trigger.autoclear = 1
-            #-node[1].smua.trigger.measure.i(smua.nvbuffer1)
-            #-node[1].smua.trigger.measure.stimulus=tsplink.trigger[1].EVENT_ID
-            #-node[1].tsplink.trigger[2].stimulus=smua.trigger.MEASURE_COMPLETE_EVENT_ID
+        self.gpib_2657A.send_Command("node[1].smua.reset()")
+        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clear()")
+        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.collecttimestamps = 1")
+        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.timestampresolution=0.000001")     #if total time is short then 70minute
+        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.timestampresolution=0.000010")     #if total time is bigger then 70minute
+        self.gpib_2657A.send_Command("node[1].smua.trigger.initiate()")
+        self.gpib_2657A.send_Command("node[1].smua.trigger.autoclear = 1")
+        self.gpib_2657A.send_Command("node[1].smua.trigger.measure.i(smua.nvbuffer1)")
+        self.gpib_2657A.send_Command("node[1].smua.trigger.measure.stimulus=tsplink.trigger[1].EVENT_ID")
+        self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].stimulus=smua.trigger.MEASURE_COMPLETE_EVENT_ID")
             
-            #-node[2].smua.reset()
-            #-node[2].smua.nvbuffer1.clear()
-            #-node[2].smua.nvbuffer1.collecttimestamps = 1
-            #-node[2].smua.nvbuffer1.timestampresolution=0.000001     if total time is short then 70minute
-            #-node[2].smua.nvbuffer1.timestampresolution=0.000010     if total time is bigger then 70minute
-            #-node[2].smua.trigger.initiate()
-            #-node[2].smua.trigger.autoclear = 1
-            #-node[2].smua.trigger.measure.v(smua.nvbuffer1)
-            #-node[2].smua.trigger.measure.stimulus=tsplink.trigger[1].EVENT_ID
-            #-node[2].tsplink.trigger[3].stimulus=smua.trigger.MEASURE_COMPLETE_EVENT_ID
-            #-
-            #-
-            #-node[1].trigger.timer[0].reset()                                                                          //Set sync timer
-            #-node[1]trigger.timer[0].clear()
-            #-node[1]trigger.timer[0].count= 測定回数
-            #-node[1]trigger.timer[0].delay= サンプリング周期
-            #-node[1]trigger.timer[0].stimulus=tsplink.trigger[0].EVENT_ID
-            #-node[1]tsplink.trigger[1].stimulus=trigger.timer[0].EVENT_ID
-            #-
-            #-
-            #-
-            #-node[1]trigger.blender[1].reset()                                                                      //Set blender
-            #-node[1]trigger.blender[1].stimulus[1]=tsplink.trigger[2].EVENT_ID
-            #-node[1]trigger.blender[1].stimulus[2]=tsplink.trigger[3].EVENT_ID
-            #-
-            #-
-            #-node[1].smua.source.func = smua.OUTPUT_DCVOLTS                    //output high voltage
-            #-node[1].smua.source.autorangev = smua.AUTORANGE_ON
-            #-node[1].smua.source.levelv = 測定電圧
-            #-node[1].smua.source.limiti = 20e-3 
-            #-node[1].smua.measure.rangei = 20e-3
-            #-node[1].smua.source.output = smua.OUTPUT_ON
-            #-
-            #-
-            #-node[1].tsplink.trigger[0].assert()                                                           //start measurement loop
-            #-
-            #-for count 1,測定回数 do
-            #-  node[1].trigger.blender[1].wait()
-            #-  node[1].current_name=node[1].smua.nvbuffer1.measurefunctions[N]
-            #-  node[1].current_time=node[1].smua.nvbuffer1.timestamps[count]
-            #-  node[1].current_value=node[1].smua.nvbuffer1.readings[count]
-            #-  node[1].voltage_name=node[2].smua.nvbuffer1.measurefunctions[N]
-            #-  node[1].voltage_time=node[2].smua.nvbuffer1.timestamps[count]
-            #-  node[1].voltage_value=node[2].smua.nvbuffer1.readings[count]
-            #-
-            #-  node[1].sendItem={count,current_name,current_time,current_value,voltage_name,voltage_time,voltage_value}
-            #-
-            #-  node[1].dataqueue.add(sendItem)
-            #-
-            #-node[1].dataqueue.add(-1)
-            #-
-            #-tsplink.trigger[0].assert()
-            #-
-            #-node[1].smua.source.output = smua.OUTPUT_OFF                          //TurnOFF high voltage
-            #-
-            #-endscript
-        pass
+        self.gpib_2657A.send_Command("node[2].smua.reset()")
+        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clear()")
+        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.collecttimestamps = 1")
+        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.timestampresolution=0.000001")     #if total time is short then 70minute
+        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.timestampresolution=0.000010")    #if total time is bigger then 70minute
+        self.gpib_2657A.send_Command("node[2].smua.trigger.initiate()")
+        self.gpib_2657A.send_Command("node[2].smua.trigger.autoclear = 1")
+        self.gpib_2657A.send_Command("node[2].smua.trigger.measure.v(smua.nvbuffer1)")
+        self.gpib_2657A.send_Command("node[2].smua.trigger.measure.stimulus=tsplink.trigger[1].EVENT_ID")
+        self.gpib_2657A.send_Command("node[2].tsplink.trigger[3].stimulus=smua.trigger.MEASURE_COMPLETE_EVENT_ID")
+
+        self.gpib_2657A.send_Command("node[1].trigger.timer[0].reset()")                                                                         #//Set sync timer
+        self.gpib_2657A.send_Command("node[1]trigger.timer[0].clear()")
+        self.gpib_2657A.send_Command("node[1]trigger.timer[0].count= 測定回数")
+        self.gpib_2657A.send_Command("node[1]trigger.timer[0].delay= サンプリング周期")
+        self.gpib_2657A.send_Command("node[1]trigger.timer[0].stimulus=tsplink.trigger[0].EVENT_ID")
+        self.gpib_2657A.send_Command("node[1]tsplink.trigger[1].stimulus=trigger.timer[0].EVENT_ID")
+
+        self.gpib_2657A.send_Command("node[1]trigger.blender[1].reset()")                                                                      #//Set blender
+        self.gpib_2657A.send_Command("node[1]trigger.blender[1].stimulus[1]=tsplink.trigger[2].EVENT_ID")
+        self.gpib_2657A.send_Command("node[1]trigger.blender[1].stimulus[2]=tsplink.trigger[3].EVENT_ID")
+
+        self.gpib_2657A.send_Command("node[1].smua.source.func = smua.OUTPUT_DCVOLTS")                   #//output high voltage
+        self.gpib_2657A.send_Command("node[1].smua.source.autorangev = smua.AUTORANGE_ON")
+        self.gpib_2657A.send_Command("node[1].smua.source.levelv = 測定電圧")
+        self.gpib_2657A.send_Command("node[1].smua.source.limiti = 20e-3 ")
+        self.gpib_2657A.send_Command("node[1].smua.measure.rangei = 20e-3")
+        self.gpib_2657A.send_Command("node[1].smua.source.output = smua.OUTPUT_ON")
+
+        self.gpib_2657A.send_Command("node[1].tsplink.trigger[0].assert()")                                                           #//start measurement loop
+
+        self.gpib_2657A.send_Command("for count 1,測定回数 do")
+        self.gpib_2657A.send_Command("  node[1].trigger.blender[1].wait()")
+        self.gpib_2657A.send_Command("  node[1].current_name=node[1].smua.nvbuffer1.measurefunctions[N")
+        self.gpib_2657A.send_Command("  node[1].current_time=node[1].smua.nvbuffer1.timestamps[count]")
+        self.gpib_2657A.send_Command("  node[1].current_value=node[1].smua.nvbuffer1.readings[count]")
+        self.gpib_2657A.send_Command("  node[1].voltage_name=node[2].smua.nvbuffer1.measurefunctions[N]")
+        self.gpib_2657A.send_Command("  node[1].voltage_time=node[2].smua.nvbuffer1.timestamps[count]")
+        self.gpib_2657A.send_Command("  node[1].voltage_value=node[2].smua.nvbuffer1.readings[count]")
+
+        self.gpib_2657A.send_Command("  node[1].sendItem={count,current_name,current_time,current_value,voltage_name,voltage_time,voltage_value}")
+
+        self.gpib_2657A.send_Command("  node[1].print(sendItem)")
+        self.gpib_2657A.send_Command("end)")
+
+        self.gpib_2657A.send_Command("node[1].smua.source.output = smua.OUTPUT_OFF")                         #//TurnOFF high voltage
+        self.gpib_2657A.send_Command("node[1].print(\"finish\")")
+        self.gpib_2657A.send_Command("endscript")
 
     def GPIB_device_startScript(self):
         #send GPIB command to TSP-Master
@@ -353,9 +346,9 @@ class Operator():
         #send GPIB command to get Voltage and Current
         self.measurement_data=[]
         while 1:
-            result,error_message=self.gpib_2657A.read_Command("node[1].print(dataqueue.next())")
+            result,error_message=self.gpib_2657A.read_Command()
             if not error_message:
-                if result==-1:
+                if result==-"finish":
                     self.eventPool["GPIB_Test_Finish"].set()
                     break
                 else:
@@ -374,7 +367,7 @@ class Operator():
                     result_list=list(result.split(","))
                     print(result_list)
 
-                    data_pachage=single_test_unitPackage(
+                    data_pachage=Single_data_unitPackage(
                             count=int(result_list[0]),
                             time=float(result_list[2]),
                             Temperature=float(self.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()),

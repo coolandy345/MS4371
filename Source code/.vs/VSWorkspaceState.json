@@ -1,9 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\csv_manager",
-    "\\main_operator"
+    "\\gpib_manager",
+    "\\gui_main",
+    "\\gui_main\\gui",
+    "\\gui_main\\gui\\uis",
+    "\\gui_main\\gui\\uis\\pattern_columns",
+    "\\gui_main\\gui\\uis\\windows",
+    "\\gui_main\\gui\\uis\\windows\\main_window",
+    "\\modbus_TcpServer",
+    "\\registor_manager"
   ],
-  "SelectedNode": "\\libusb-1.0.dll",
+  "SelectedNode": "\\gpib_manager\\gpib_manager.py",
   "PreviewInSolutionExplorer": false
 }

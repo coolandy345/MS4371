@@ -135,7 +135,7 @@ class GPIB_Driver():
             elif  self.getItem.type==GPIB_package.send_type:
                 error_code=self.send_Command(self.getItem.command)
             elif  self.getItem.type==GPIB_package.read_type:
-                error_code,getMessage=self.request_Command(self.getItem.command)
+                error_code,getMessage=self.request_Command()
 
             error_message=self.err_check(error_code)
             
@@ -160,14 +160,11 @@ class GPIB_Driver():
         else:
             return 0
 
-    def request_Command(self,command):
+    def request_Command(self):
 
         error=0
         
-        error=self.send_Command(command)
-        if error:
-            return error,None
-        error,result=self.get_Value(command)
+        error,result=self.get_Value()
         return error,result
 
     def err_check(self,error_code):
@@ -198,7 +195,7 @@ class GPIB_Driver():
 
     def get_Value(self):
 
-        read_buffer= ctypes.create_string_buffer(100)
+        read_buffer= ctypes.create_string_buffer(1000)
         self.GPIB.ibrd(self.dev_descriptor[self.getItem.name],read_buffer,read_buffer._length_)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
@@ -220,7 +217,7 @@ class GPIB_device():
         self.memoryPool=memoryPool
         self.queuePool=queuePool
         
-        self.initiail_GPIB_device()
+        self.set_memorypool_register("System memory","{} connection".format(self.name),0)
         
         connnection_check_Thread = threading.Thread(target = self.connnection_check_Work,daemon=True)
         connnection_check_Thread.start()
@@ -251,33 +248,40 @@ class GPIB_device():
     
     def connect_action(self,connect):
         
-         self.connection=connect
+         if self.connection!=connect:
 
-         if self.connection:
-            self.set_memorypool_register("System memory","{} connection".format(self.name),1)
-         else:
-            self.set_memorypool_register("System memory","{} connection".format(self.name),0)
+             self.connection=connect
+             if self.connection:
+                self.set_memorypool_register("System memory","{} connection".format(self.name),1)
+             else:
+                self.set_memorypool_register("System memory","{} connection".format(self.name),0)
 
     def connnection_check_Work(self):
         while 1:
-            sendItem=GPIB_package(
-                    type=GPIB_package.read_type,
-                    command="*IDN?",
-                    name=self.name,
-                    address=self.address
-                )
-            self.queuePool["GPIB_send_queue"].put(sendItem)
-            getItem=self.queuePool["GPIB_{}_queue".format(self.name)].get()
-            #If we have any error code
-            if len(getItem.error_message):
-                self.connect_action(False)
+            if self.connection:
+                sendItem=GPIB_package(
+                        type=GPIB_package.read_type,
+                        command="*IDN?",
+                        name=self.name,
+                        address=self.address
+                    )
+                self.queuePool["GPIB_send_queue"].put(sendItem)
+                getItem=self.queuePool["GPIB_{}_queue".format(self.name)].get()
+                #If we have any error code
+                if len(getItem.error_message):
+                    self.connect_action(False)
+                else:
+                    self.device_IDN=getItem.result
+                    self.connect_action(True)
             else:
-                self.device_IDN=getItem.result
-                self.connect_action(True)
+                self.initiail_GPIB_device()
             
             time.sleep(1)
 
     def  send_Command(self,messgae):
+        if not self.connection:
+            return False
+
         sendItem=GPIB_package(
                 type=GPIB_package.send_type,
                 command=messgae,
@@ -296,10 +300,12 @@ class GPIB_device():
 
         return getItem.error_message
 
-    def  read_Command(self,messgae):
+    def  read_Command(self):
+        if not self.connection:
+            return False
+
         sendItem=GPIB_package(
                 type=GPIB_package.read_type,
-                command=messgae,
                 name=self.name,
                 address=self.address
             )
@@ -313,8 +319,9 @@ class GPIB_device():
         else:
             self.device_IDN=getItem.result
             self.connect_action(True)
+            return getItem.result , getItem.error_message
 
-        return getItem.result , getItem.error_message
+        
 
 
     def set_memorypool_register(self,memorypool_name,registor_name,value):
