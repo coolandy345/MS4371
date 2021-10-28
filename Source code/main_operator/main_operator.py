@@ -256,7 +256,7 @@ class Operator():
                     test_pattern_listInPTN.append("RT")
 
                 for step in range(1,Modbus_Registor_Pool["PTNData_{}_実行STEP数".format(operate_PTN_number)].getValue()+1):
-                    if Modbus_Registor_Pool["PTNData_{}_STEP_{}_STEP情報".format(operate_PTN_number,step)].getValue()==2:
+                    if Modbus_Registor_Pool["PTNData_{}_STEP_{}_STEP種類".format(operate_PTN_number,step)].getValue()==2:
                         #this is a test pattern
                         test_pattern=Modbus_Registor_Pool["PTNData_{}_STEP_{}_測定パターン".format(operate_PTN_number,step)].getValue()
                         test_pattern_listInPTN.append(test_pattern)

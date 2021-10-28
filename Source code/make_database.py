@@ -38,26 +38,7 @@ Base=0
 
 
 
-実行STEP数=6
-実行STEP数_name="実行STEP数"
-実行STEP数_default=0
-実行STEP数_max=20
-実行STEP数_min=0
-実行STEP数_comment="NULL"
 
-測定雰囲気=7
-測定雰囲気_name="測定雰囲気"
-測定雰囲気_default=0
-測定雰囲気_max=4
-測定雰囲気_min=0
-測定雰囲気_comment="b0:大気 b1:真空 b2:N2置換"
-
-RT計測=8
-RT計測_name="RT計測"
-RT計測_default=0
-RT計測_max=1
-RT計測_min=0
-RT計測_comment="0/1"
 
 パターン有効=9
 パターン有効_name="パターン有効"
@@ -79,6 +60,27 @@ RT計測_comment="0/1"
 運転総時間_max="NULL"
 運転総時間_min="NULL"
 運転総時間_comment="Hour"
+
+実行STEP数=12
+実行STEP数_name="実行STEP数"
+実行STEP数_default=0
+実行STEP数_max=20
+実行STEP数_min=0
+実行STEP数_comment="NULL"
+
+測定雰囲気=13
+測定雰囲気_name="測定雰囲気"
+測定雰囲気_default=0
+測定雰囲気_max=4
+測定雰囲気_min=0
+測定雰囲気_comment="b0:大気 b1:真空 b2:N2置換"
+
+RT計測=14
+RT計測_name="RT計測"
+RT計測_default=0
+RT計測_max=1
+RT計測_min=0
+RT計測_comment="0/1"
 
 SV値=100
 SV値_name="SV値"
@@ -157,7 +159,12 @@ N2流量_comment="真空時0"
 ステップ累計時間_min="NULL"
 ステップ累計時間_comment="Hour"
 
-
+STEP種類=118
+STEP種類_name="STEP種類"
+STEP種類_default=0
+STEP種類_max=2
+STEP種類_min=0
+STEP種類_comment="0:測定外 1:END 2:測定有 END時測定無"
 
 STEP情報=119
 STEP情報_name="STEP情報"
@@ -207,6 +214,11 @@ for pattern_no in range(1,21):
     test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+名称_3,pattern_no,名称_3_name,名称_3_min,名称_3_default,名称_3_max,名称_3_default,0,名称_3_comment)
     cur.execute(test)
 
+    
+
+    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+パターン有効,pattern_no,パターン有効_name,パターン有効_min,パターン有効_default,パターン有効_max,パターン有効_default,0,パターン有効_comment)
+    cur.execute(test)
+
     test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+実行STEP数,pattern_no,実行STEP数_name,実行STEP数_min,実行STEP数_default,実行STEP数_max,実行STEP数_default,0,実行STEP数_comment)
     cur.execute(test)
 
@@ -214,9 +226,6 @@ for pattern_no in range(1,21):
     cur.execute(test)
 
     test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+RT計測,pattern_no,RT計測_name,RT計測_min,RT計測_default,RT計測_max,RT計測_default,0,RT計測_comment)
-    cur.execute(test)
-
-    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+パターン有効,pattern_no,パターン有効_name,パターン有効_min,パターン有効_default,パターン有効_max,パターン有効_default,0,パターン有効_comment)
     cur.execute(test)
 
     test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+註記,pattern_no,註記_name,註記_min,註記_default,註記_max,註記_default,0,註記_comment)
@@ -262,6 +271,9 @@ for pattern_no in range(1,21):
 
 
 
+
+        test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+STEP種類,pattern_no,step,STEP種類_name,STEP種類_min,STEP種類_default,STEP種類_max,STEP種類_default,0,STEP種類_comment)
+        cur.execute(test)
 
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+STEP情報,pattern_no,step,STEP情報_name,STEP情報_min,STEP情報_default,STEP情報_max,STEP情報_default,0,STEP情報_comment)
         cur.execute(test)
@@ -348,10 +360,10 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, '測定開始',{},{},{},{},{},'{}')".format(Table_name,10120,0,0,1,0,1,"エッジ(PC側でRST)")
 cur.execute(test)
 
-test="INSERT INTO '{}' values({}, 'PC Boot',{},{},{},{},{},'{}')".format(Table_name,10150,0,0,1,0,1,"エッジ(PC側でRST)")
+test="INSERT INTO '{}' values({}, 'PC Boot',{},{},{},{},{},'{}')".format(Table_name,10150,0,0,1,0,1,"PC側常に1にする")
 cur.execute(test)
 
-test="INSERT INTO '{}' values({}, 'リモート',{},{},{},{},{},'{}')".format(Table_name,10151,0,0,1,0,1,"NULL")
+test="INSERT INTO '{}' values({}, 'リモート',{},{},{},{},{},'{}')".format(Table_name,10151,0,0,1,0,1,"リモートモードに入ると1にする")
 cur.execute(test)
 
 test="INSERT INTO '{}' values({}, 'PC警報',{},{},{},{},{},'{}')".format(Table_name,10152,0,0,1,0,1,"NULL")
