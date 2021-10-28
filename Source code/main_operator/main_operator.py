@@ -93,7 +93,7 @@ class Operator():
         
 
         self.gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
-        self.gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
+        #self.gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
 
         auto_Run_Start_Thread = threading.Thread(target = self.auto_Run_Start_Work,daemon=True)
         auto_Run_Start_Thread.start()

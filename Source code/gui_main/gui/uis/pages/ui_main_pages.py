@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesXsENvG.ui'
+## Form generated from reading UI file 'main_pagesdRVrYV.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import *  # type: ignore
+from PySide6.QtGui import *  # type: ignore
+from PySide6.QtWidgets import *  # type: ignore
 
 
 class Ui_MainPages(object):
@@ -268,11 +268,17 @@ class Ui_MainPages(object):
 
         self.lineEdit_meterialArea = QLabel(self.frame_62)
         self.lineEdit_meterialArea.setObjectName(u"lineEdit_meterialArea")
-        self.lineEdit_meterialArea.setMinimumSize(QSize(140, 32))
-        self.lineEdit_meterialArea.setMaximumSize(QSize(140, 16777215))
-        self.lineEdit_meterialArea.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.lineEdit_meterialArea.setMinimumSize(QSize(0, 32))
+        self.lineEdit_meterialArea.setMaximumSize(QSize(16777215, 16777215))
+        self.lineEdit_meterialArea.setStyleSheet(u"background-color: rgb(37, 42, 50);\n"
 "color: rgb(225, 230, 241);\n"
-"padding-right:5px;")
+"border-width: 1px;\n"
+"border-style: none;\n"
+"border-radius: 5px;\n"
+"padding-left:5px;\n"
+"padding-right:5px;\n"
+"font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"min-height:30;")
         self.lineEdit_meterialArea.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.gridLayout_10.addWidget(self.lineEdit_meterialArea, 5, 1, 1, 1)
@@ -407,11 +413,17 @@ class Ui_MainPages(object):
 
         self.lineEdit_meterialVolume = QLabel(self.frame_62)
         self.lineEdit_meterialVolume.setObjectName(u"lineEdit_meterialVolume")
-        self.lineEdit_meterialVolume.setMinimumSize(QSize(140, 32))
-        self.lineEdit_meterialVolume.setMaximumSize(QSize(140, 16777215))
-        self.lineEdit_meterialVolume.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.lineEdit_meterialVolume.setMinimumSize(QSize(0, 32))
+        self.lineEdit_meterialVolume.setMaximumSize(QSize(16777215, 16777215))
+        self.lineEdit_meterialVolume.setStyleSheet(u"background-color: rgb(37, 42, 50);\n"
 "color: rgb(225, 230, 241);\n"
-"padding-right:5px;")
+"border-width: 1px;\n"
+"border-style: none;\n"
+"border-radius: 5px;\n"
+"padding-left:5px;\n"
+"padding-right:5px;\n"
+"font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"min-height:30;")
         self.lineEdit_meterialVolume.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.gridLayout_10.addWidget(self.lineEdit_meterialVolume, 6, 1, 1, 1)
@@ -1977,7 +1989,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1170, 1410))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1098, 1410))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -2059,7 +2071,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1112, 200))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 100, 200))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -2661,7 +2673,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 1112, 200))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 100, 200))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)

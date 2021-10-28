@@ -260,37 +260,37 @@ class Testfile_manager(QWidget):
             self.set_memorypool_register("System memory","年度",self._year)
 
         elif btn=="lineEdit_testNumber":
-            self._testNumber=self._parent.ui.load_pages.lineEdit_year.text()
+            self._testNumber=self._parent.ui.load_pages.lineEdit_testNumber.text()
             self.set_memorypool_register("System memory","依頼測定番号",self._testNumber)
 
         elif btn=="lineEdit_costomer":
-            self._costomer=self._parent.ui.load_pages.lineEdit_year.text()
+            self._costomer=self._parent.ui.load_pages.lineEdit_costomer.text()
             self.set_memorypool_register("System memory","依頼元",self._costomer)
 
         elif btn=="lineEdit_costomerName":
-            self._costomerName=self._parent.ui.load_pages.lineEdit_year.text()
+            self._costomerName=self._parent.ui.load_pages.lineEdit_costomerName.text()
             self.set_memorypool_register("System memory","依頼者",self._costomerName)
 
         elif btn=="lineEdit_testMeterialName":
-            self._testMeterialName=self._parent.ui.load_pages.lineEdit_year.text()
+            self._testMeterialName=self._parent.ui.load_pages.lineEdit_testMeterialName.text()
             self.set_memorypool_register("System memory","試料名称",self._testMeterialName)
 
         elif btn=="lineEdit_testMeterial":
-            self._testMeterial=self._parent.ui.load_pages.lineEdit_year.text()
+            self._testMeterial=self._parent.ui.load_pages.lineEdit_testMeterial.text()
             self.set_memorypool_register("System memory","材料",self._testMeterial)
 
         elif btn=="lineEdit_MeterialMainDie":
-            self._MeterialMainDie=float(self._parent.ui.load_pages.lineEdit_year.text())
+            self._MeterialMainDie=float(self._parent.ui.load_pages.lineEdit_MeterialMainDie.text())
             self.set_memorypool_register("System memory","主電極径(mm)",self._MeterialMainDie)
             self.areaVolumeCal()
 
         elif btn=="lineEdit_MeterialinnerDie":
-            self._MeterialinnerDie=float(self._parent.ui.load_pages.lineEdit_year.text())
+            self._MeterialinnerDie=float(self._parent.ui.load_pages.lineEdit_MeterialinnerDie.text())
             self.set_memorypool_register("System memory","ガード電極の内径(mm)",self._MeterialinnerDie)
             self.areaVolumeCal()
 
         elif btn=="lineEdit_thinkness":
-            self._thinkness=float(self._parent.ui.load_pages.lineEdit_year.text())
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_thinkness.text())
             self.set_memorypool_register("System memory","試料の厚さ(mm)",self._thinkness)
             self.areaVolumeCal()
 
@@ -365,9 +365,8 @@ class Testfile_manager(QWidget):
         print(self.meterial_area)
         print(self.meterial_volume)
 
-        self._parent.ui.load_pages.lineEdit_meterialArea.setText("".format(self.meterial_area))
-        self._parent.ui.load_pages.lineEdit_meterialVolume.setText("".format(self.meterial_volume))
-        
+        self._parent.ui.load_pages.lineEdit_meterialArea.setText("{:.2e}".format(self.meterial_area))
+        self._parent.ui.load_pages.lineEdit_meterialVolume.setText("{:.2e}".format(self.meterial_volume))
 
     def prepare_folder(self):
 

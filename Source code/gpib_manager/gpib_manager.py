@@ -115,6 +115,13 @@ class GPIB_Driver():
 
     def __init__(self,memoryPool,queuePool):
         self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
+
+
+        byte_string="GPIB0".encode("utf8")
+        self.send_buffer= ctypes.create_string_buffer(byte_string)
+        self.board_descriptor=self.GPIB.ibfindW(self.send_buffer)
+        self.GPIB.ibdma(self.board_descriptor,1)
+        
         self.memoryPool=memoryPool
         self.queuePool=queuePool
         self.dev_descriptor={}
@@ -126,7 +133,7 @@ class GPIB_Driver():
         while 1:
             
             self.getItem=self.queuePool["GPIB_send_queue"].get()
-
+            
             error_code=0
             getMessage=None
             
@@ -151,8 +158,12 @@ class GPIB_Driver():
     
     def initiail_GPIB_device(self):
 
-        self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T10ms, 1, 0)
+        #byte_string="GPIB000".encode("utf8")
+        #self.send_buffer= ctypes.create_string_buffer(byte_string)
+        #self.GPIB.ibfind(self.send_buffer)
 
+        self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T30ms, 1, 0)
+        self.GPIB.ibclr(self.dev_descriptor[self.getItem.name])
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
@@ -178,31 +189,37 @@ class GPIB_Driver():
 
 
     def send_Command(self,command):
-
+        test=time.time()
         byte_string=command.encode("utf8")
-        send_buffer= ctypes.create_string_buffer(byte_string)
-        
-        self.GPIB.ibwrt(self.dev_descriptor[self.getItem.name],send_buffer,send_buffer._length_)
+        self.send_buffer= ctypes.create_string_buffer(byte_string)
+
+        self.GPIB.ibwrt(self.dev_descriptor[self.getItem.name],self.send_buffer,self.send_buffer._length_)
         
         Ret=self.GPIB.ThreadIbsta()
-        
         err=self.GPIB.ThreadIberr()
         
         if ((Ret & self.ERR) != 0):
+            print("send_Command time1 is ",time.time()-test)
             return err
         else:
+            print("send_Command time1 is ",time.time()-test)
             return 0
 
     def get_Value(self):
+        test=time.time()
 
         read_buffer= ctypes.create_string_buffer(1000)
         self.GPIB.ibrd(self.dev_descriptor[self.getItem.name],read_buffer,read_buffer._length_)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
+        
+        
         if ((Ret & self.ERR) != 0):
+            print("get_Value time1 is ",time.time()-test)
             return err,None
         else:
             result=read_buffer.value.decode("utf8")
+            print("get_Value time1 is ",time.time()-test)
             return 0,result
 
 class GPIB_device():
@@ -216,6 +233,8 @@ class GPIB_device():
         self.name=name
         self.memoryPool=memoryPool
         self.queuePool=queuePool
+
+        self.test=0
         
         self.set_memorypool_register("System memory","{} connection".format(self.name),0)
         
@@ -240,8 +259,10 @@ class GPIB_device():
             print("Fail init device at adress {} Error is {}".format(self.address,getItem.error_message))
             return getItem.error_message
         else:
+            print("secess init GPIB device at {}".format(self.name))
             self.connect_action(True)
-            self.send_Command("smua.reset()")
+            #self.send_Command("*CLS?")
+            self.send_Command("reset()")
             self.send_Command("beeper.beep(0.1, 2400)")
             return None
 
@@ -257,26 +278,36 @@ class GPIB_device():
                 self.set_memorypool_register("System memory","{} connection".format(self.name),0)
 
     def connnection_check_Work(self):
+        
         while 1:
+            #print("connnection_check_Loop time1 is ",time.time()-test)
+            
             if self.connection:
-                sendItem=GPIB_package(
-                        type=GPIB_package.read_type,
-                        command="*IDN?",
-                        name=self.name,
-                        address=self.address
-                    )
-                self.queuePool["GPIB_send_queue"].put(sendItem)
-                getItem=self.queuePool["GPIB_{}_queue".format(self.name)].get()
+                test=time.time()
+                self.send_Command("*IDN?")
+                result,error_code=self.read_Command()
+                print("connnection_check_Work time2 is ",time.time()-test)
+                #print("connnection_check_Work time2 is ",time.time()-test)
+
+                print("get connection check message of  {} -- result is {} , errorcode is {}".format(self.name,result,error_code))
                 #If we have any error code
-                if len(getItem.error_message):
+                if len(error_code):
                     self.connect_action(False)
                 else:
-                    self.device_IDN=getItem.result
+                    self.device_IDN=result
+                    #self.send_Command("display.setcursor(1, 1)")
+                    #self.send_Command("display.settext(\"{}\")".format(self.name))
+                    #self.send_Command("display.setcursor(2, 1)")
+                    #self.send_Command("display.settext(\"{}          \")".format(self.test))
+                    #self.test+=1
+                   
                     self.connect_action(True)
             else:
+                #print("fail connection check at {}".format(self.name))
                 self.initiail_GPIB_device()
             
-            time.sleep(1)
+            #print("connnection_check_Work time3 is ",time.time()-test)
+            time.sleep(0.1)
 
     def  send_Command(self,messgae):
         if not self.connection:

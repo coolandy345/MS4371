@@ -182,7 +182,7 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
         elif btn_name == "autostart_pushButton":
 
-            self.eventPool["Auto Run Start"].set()
+            #self.eventPool["Auto Run Start"].set()
             wait_Operator_Start_Thread = threading.Thread(target = self.wait_Operator_Start_Work,daemon=True)
             wait_Operator_Start_Thread.start()
 

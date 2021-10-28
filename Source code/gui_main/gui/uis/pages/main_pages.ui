@@ -546,20 +546,26 @@ min-height:30;</string>
                      <widget class="QLabel" name="lineEdit_meterialArea">
                       <property name="minimumSize">
                        <size>
-                        <width>140</width>
+                        <width>0</width>
                         <height>32</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>140</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">font: 12px bold italic large &quot;游ゴシック&quot;;
+                       <string notr="true">background-color: rgb(37, 42, 50);
 color: rgb(225, 230, 241);
-padding-right:5px;</string>
+border-width: 1px;
+border-style: none;
+border-radius: 5px;
+padding-left:5px;
+padding-right:5px;
+font: 12px &quot;游ゴシック&quot;;
+min-height:30;</string>
                       </property>
                       <property name="text">
                        <string>試料の厚さ(mm)</string>
@@ -843,20 +849,26 @@ padding-right:5px;</string>
                      <widget class="QLabel" name="lineEdit_meterialVolume">
                       <property name="minimumSize">
                        <size>
-                        <width>140</width>
+                        <width>0</width>
                         <height>32</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>140</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">font: 12px bold italic large &quot;游ゴシック&quot;;
+                       <string notr="true">background-color: rgb(37, 42, 50);
 color: rgb(225, 230, 241);
-padding-right:5px;</string>
+border-width: 1px;
+border-style: none;
+border-radius: 5px;
+padding-left:5px;
+padding-right:5px;
+font: 12px &quot;游ゴシック&quot;;
+min-height:30;</string>
                       </property>
                       <property name="text">
                        <string>試料の厚さ(mm)</string>
@@ -4338,7 +4350,7 @@ min-height:30;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1170</width>
+            <width>1098</width>
             <height>1410</height>
            </rect>
           </property>
@@ -4512,7 +4524,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>1112</width>
+                      <width>100</width>
                       <height>200</height>
                      </rect>
                     </property>
@@ -5889,7 +5901,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>1112</width>
+                      <width>100</width>
                       <height>200</height>
                      </rect>
                     </property>
