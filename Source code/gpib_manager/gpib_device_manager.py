@@ -53,9 +53,6 @@ def gpib_Thread(memoryPool,queuePool):
     gPIB_USB_interface_connnection_Thread = threading.Thread(target = GPIB_USB_interface_connnection_Work,daemon=True,args = (memoryPool,queuePool))
     gPIB_USB_interface_connnection_Thread.start()
     
-    ##GPIB device class create 
-    #gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
-    #gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
 
 
 

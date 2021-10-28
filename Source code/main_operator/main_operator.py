@@ -4,6 +4,7 @@ from gpib_manager import GPIB_device_2635B,GPIB_device_2657A,GPIB_Driver,GPIB_pa
 import threading
 import time
 import copy
+from gpib_manager import *
 
 class Test_folder_package():
 
@@ -77,7 +78,8 @@ class Single_data_unitPackage():
 
 
 def operator_thread(memoryPool,queuePool,eventPool):
-    print("fdggfd")
+    gpib_Thread(memoryPool,queuePool)
+
     operator=Operator(memoryPool,queuePool,eventPool)
 
 class Operator():
@@ -93,7 +95,7 @@ class Operator():
         
 
         self.gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
-        #self.gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
+        self.gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
 
         auto_Run_Start_Thread = threading.Thread(target = self.auto_Run_Start_Work,daemon=True)
         auto_Run_Start_Thread.start()

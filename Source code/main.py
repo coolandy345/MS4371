@@ -20,7 +20,7 @@ from gui_main import*
 from gui_main.qt_core import *
 from csv_manager import *
 
-from gpib_manager import *
+
 from main_operator import *
 
 import ctypes
@@ -77,7 +77,6 @@ if __name__ == "__main__":
         
         executor.submit(operator_thread,MemoryPool,QueuePool,EventPool)
         executor.submit(csv_manager_thread,MemoryPool,QueuePool,EventPool)
-        executor.submit(gpib_Thread,MemoryPool,QueuePool)
         executor.submit(run_async_server,MemoryPool,QueuePool)
         executor.submit(databaseWriteThread,MemoryPool,QueuePool,EventPool)
         Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool,EventPool)

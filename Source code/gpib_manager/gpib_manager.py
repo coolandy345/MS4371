@@ -199,14 +199,11 @@ class GPIB_Driver():
         err=self.GPIB.ThreadIberr()
         
         if ((Ret & self.ERR) != 0):
-            print("send_Command time1 is ",time.time()-test)
             return err
         else:
-            print("send_Command time1 is ",time.time()-test)
             return 0
 
     def get_Value(self):
-        test=time.time()
 
         read_buffer= ctypes.create_string_buffer(1000)
         self.GPIB.ibrd(self.dev_descriptor[self.getItem.name],read_buffer,read_buffer._length_)
@@ -215,18 +212,15 @@ class GPIB_Driver():
         
         
         if ((Ret & self.ERR) != 0):
-            print("get_Value time1 is ",time.time()-test)
             return err,None
         else:
             result=read_buffer.value.decode("utf8")
-            print("get_Value time1 is ",time.time()-test)
             return 0,result
 
 class GPIB_device():
     def __init__(self,memoryPool,queuePool,address,name):
         
         self.address=address
-        self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
         self.connection = False
         self.dev_descriptor=0
         self.device_IDN=""
@@ -274,8 +268,10 @@ class GPIB_device():
              self.connection=connect
              if self.connection:
                 self.set_memorypool_register("System memory","{} connection".format(self.name),1)
+                print("{} connection".format(self.name),1)
              else:
                 self.set_memorypool_register("System memory","{} connection".format(self.name),0)
+                print("{} connection".format(self.name),0)
 
     def connnection_check_Work(self):
         
@@ -283,35 +279,25 @@ class GPIB_device():
             #print("connnection_check_Loop time1 is ",time.time()-test)
             
             if self.connection:
-                test=time.time()
                 self.send_Command("*IDN?")
                 result,error_code=self.read_Command()
-                print("connnection_check_Work time2 is ",time.time()-test)
-                #print("connnection_check_Work time2 is ",time.time()-test)
-
-                print("get connection check message of  {} -- result is {} , errorcode is {}".format(self.name,result,error_code))
+                #print("get connection check message of  {} -- result is {} , errorcode is {}".format(self.name,result,error_code))
                 #If we have any error code
                 if len(error_code):
                     self.connect_action(False)
                 else:
                     self.device_IDN=result
-                    #self.send_Command("display.setcursor(1, 1)")
-                    #self.send_Command("display.settext(\"{}\")".format(self.name))
-                    #self.send_Command("display.setcursor(2, 1)")
-                    #self.send_Command("display.settext(\"{}          \")".format(self.test))
-                    #self.test+=1
-                   
                     self.connect_action(True)
             else:
                 #print("fail connection check at {}".format(self.name))
                 self.initiail_GPIB_device()
             
             #print("connnection_check_Work time3 is ",time.time()-test)
-            time.sleep(0.1)
+            time.sleep(1)
 
     def  send_Command(self,messgae):
         if not self.connection:
-            return False
+            return "No connection"
 
         sendItem=GPIB_package(
                 type=GPIB_package.send_type,
@@ -333,7 +319,7 @@ class GPIB_device():
 
     def  read_Command(self):
         if not self.connection:
-            return False
+            return "","No connection"
 
         sendItem=GPIB_package(
                 type=GPIB_package.read_type,
@@ -346,7 +332,7 @@ class GPIB_device():
         #If we have any error code
         if len(getItem.error_message):
             self.connect_action(False)
-            return False,getItem.error_message
+            return "",getItem.error_message
         else:
             self.device_IDN=getItem.result
             self.connect_action(True)

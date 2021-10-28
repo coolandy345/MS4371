@@ -344,9 +344,6 @@ class Testfile_manager(QWidget):
 
     def areaVolumeCal(self):
 
-        print(self._MeterialMainDie)
-        print(self._MeterialinnerDie)
-        print(self._thinkness)
 
 
         if self._MeterialMainDie and self._MeterialinnerDie:
@@ -362,8 +359,6 @@ class Testfile_manager(QWidget):
             self.meterial_area=None
             self.meterial_volume=None
 
-        print(self.meterial_area)
-        print(self.meterial_volume)
 
         self._parent.ui.load_pages.lineEdit_meterialArea.setText("{:.2e}".format(self.meterial_area))
         self._parent.ui.load_pages.lineEdit_meterialVolume.setText("{:.2e}".format(self.meterial_volume))
