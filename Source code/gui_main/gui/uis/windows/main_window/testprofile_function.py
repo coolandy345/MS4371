@@ -349,19 +349,22 @@ class Testfile_manager(QWidget):
         if self._MeterialMainDie and self._MeterialinnerDie:
             temp=(self._MeterialMainDie+self._MeterialinnerDie)/4
             self.meterial_area=temp*temp*math.pi
-
+            self._parent.ui.load_pages.lineEdit_meterialArea.setText("{:.2e}".format(self.meterial_area))
             if self._thinkness:
                 self.meterial_volume=self.meterial_area*self._thinkness
+                self._parent.ui.load_pages.lineEdit_meterialVolume.setText("{:.2e}".format(self.meterial_volume))
+
             else:
                 self.meterial_volume=None
+                self._parent.ui.load_pages.lineEdit_meterialVolume.setText("")
 
         else:
             self.meterial_area=None
             self.meterial_volume=None
-
-
-        self._parent.ui.load_pages.lineEdit_meterialArea.setText("{:.2e}".format(self.meterial_area))
-        self._parent.ui.load_pages.lineEdit_meterialVolume.setText("{:.2e}".format(self.meterial_volume))
+            self._parent.ui.load_pages.lineEdit_meterialArea.setText("")
+            self._parent.ui.load_pages.lineEdit_meterialVolume.setText("")
+        
+        
 
     def prepare_folder(self):
 

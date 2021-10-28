@@ -284,7 +284,7 @@ class TempPatternWidget(QWidget):
         
         self._parent.ui.load_pages.commect_lineEdit.textEdited.disconnect()
         self._parent.ui.load_pages.commect_lineEdit.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.commect_lineEdit.setText(self.cache_steplist.comment)
+        self._parent.ui.load_pages.commect_lineEdit.setText(str(self.cache_steplist.comment))
         self._parent.ui.load_pages.commect_lineEdit.textEdited.connect(self.ui_click_callback)
 
 
@@ -629,6 +629,7 @@ class TempPatternWidget(QWidget):
             
         
 
+        self.set_memorypool_register("Modbus Registor Pool - Registor","変更連絡",1)
         #Reload cache_list from memory
         self.patternFile_Load()
 

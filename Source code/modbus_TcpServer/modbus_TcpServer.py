@@ -61,29 +61,30 @@ class CustomDataBlock(ModbusSparseDataBlock):
         self.ethernet_connection_pool=False
         self.set_memorypool_register("System memory","Ethernet conneciton",False)
         
-
         #get dict
         self.get_register_dict()
 
-        super().__init__(self.register_dict)
 
+
+        super().__init__(self.register_dict)
+        
         ethernet_connection_thread = threading.Thread(target = self.ethernet_connection_Work,daemon=True)
         ethernet_connection_thread.start()
 
         database_update_thread = threading.Thread(target = self.modbusDatabase_update_Work,daemon=True)
         database_update_thread.start()
 
-
+        
     def get_register_dict(self):
         self.register_dict={}
 
         for unit in self.memorypool["Modbus Registor Pool - Registor"].values():
             self.register_namedict[unit.registor_number+self.register_shift]=unit.name
-            self.register_dict[unit.registor_number+self.register_shift]=unit.getValue()
+            self.register_dict[unit.registor_number+self.register_shift]=unit.getModbusValue()
 
-    def getValues(self, address, count=1):
-        super(CustomDataBlock, self).getValues(address, count)
-        self.ethernet_connection_pool=True
+    #def getValues(self, address, count):
+    #    super(self).getValues(address, count)
+    #    self.ethernet_connection_pool=True
 
     def ethernet_connection_Work(self):
         while 1:
@@ -109,6 +110,8 @@ class CustomDataBlock(ModbusSparseDataBlock):
         :param values: The new values to be set
         """
         super(CustomDataBlock, self).setValues(address, value)
+
+        print(address,value)
 
         # whatever you want to do with the written value is done here,
         # however make sure not to do too much work here or it will
@@ -153,9 +156,10 @@ class CustomDataBlock(ModbusSparseDataBlock):
             if getItem.pool_name=="Modbus Registor Pool - Registor":
                 unit=self.memorypool["Modbus Registor Pool - Registor"][getItem.registor_name]
                 self.register_dict[unit.registor_number+self.register_shift]=unit.getModbusValue()
+                self.setValues(unit.registor_number+self.register_shift, unit.getModbusValue())
+                #print("変更連絡",unit.registor_number,unit.getModbusValue(),self.register_dict[unit.registor_number+self.register_shift])
 
-                unit=self.memorypool["Modbus Registor Pool - Registor"]["変更連絡"]
-                self.register_dict[unit.registor_number+self.register_shift]=1
+                
 
         
 

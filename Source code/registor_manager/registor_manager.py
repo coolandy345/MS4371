@@ -67,6 +67,8 @@ def databaseLoadThread(memoryPool):
     memoryPool["Measurement_data"]=None
 
     pool={}
+    
+    full_Range_list=list(range(0,10201))
     for row in cur.execute('SELECT * FROM "Modbus Registor Pool - Registor" '):
 
         register=ModbusRegistorClass.ModbusPackage(number       =row[0],
@@ -79,8 +81,17 @@ def databaseLoadThread(memoryPool):
                                comment      =row[7]
                                )
         pool[register.name]=register
+        
+        full_Range_list.remove(row[0])
+
+    for unit in full_Range_list:
+        pool["blank_pos_{}".format(unit)]=ModbusRegistorClass.ModbusPackage(number=unit)
 
     memoryPool["Modbus Registor Pool - Registor"]=pool
+    #print(pool)
+    
+    
+
 
     pool={}
     for row in cur.execute('SELECT * FROM "Measurement Pattern" '):

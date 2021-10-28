@@ -125,18 +125,36 @@ class Operator():
             self.gpib_2657A.send_Command("reset()")
             
             self.gpib_2657A.send_Command("tsplink.reset() ")
+            self.gpib_2657A.send_Command("dataqueue.clear()  ")
+            
 
-            self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("delay(1)")
-            self.gpib_2657A.send_Command("node[2].beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("node[2].beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("node[2].beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("for element = 1, 3 do ")
+            self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("sendItem={element, node[1].tsplink.node,node[2].tsplink.node}")
+            self.gpib_2657A.send_Command("dataqueue.add(sendItem)  ")
+            self.gpib_2657A.send_Command("end")
+
+            
+            
+
+            self.gpib_2657A.send_Command(" print(\"access queue now\") ")
+ 
+            self.gpib_2657A.send_Command("while dataqueue.count > 0 do  ")
+            self.gpib_2657A.send_Command(" x = dataqueue.next()  ")
+            self.gpib_2657A.send_Command(" print(x[0]) ")
+            self.gpib_2657A.send_Command("end")
+
+            self.gpib_2657A.send_Command(" print(\"finial\") ")
+ 
+
+
+            #self.gpib_2657A.send_Command("  node[1].sendItem={ver1,ver2}")
+            #self.gpib_2657A.send_Command("  node[1].print(sendItem)")
+            #self.gpib_2657A.send_Command("end)")
 
             self.gpib_2657A.send_Command("endscript")
 
-
+            self.gpib_2657A.send_Command("testProfile.run()")
             pass
 
 
@@ -146,9 +164,11 @@ class Operator():
             self.eventPool["Test Event2"].clear()
             print("Test Event2 trigger")
 
-            self.gpib_2657A.send_Command("testProfile.run()")
+            print(self.gpib_2657A.read_Command())
+
+            result_list=list(result.split(","))
             time.sleep(1)
-            #print(self.gpib_2657A.read_Command())
+            
             pass
 
     def stop_Work(self):

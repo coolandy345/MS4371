@@ -75,6 +75,7 @@ if __name__ == "__main__":
     #initial_GUI(MemoryPool,QueuePool,EventPool)
     #gpib_Thread(MemoryPool,QueuePool)
     #operator_thread(MemoryPool,QueuePool,EventPool)
+    #run_async_server(MemoryPool,QueuePool)
 
     with ProcessPoolExecutor(max_workers=10) as executor:
         

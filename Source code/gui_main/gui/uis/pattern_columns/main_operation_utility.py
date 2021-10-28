@@ -212,6 +212,7 @@ class Main_utility_manager(QWidget):
 
         elif btn_name == "gasFreeflow_pushButton":
             # Set Gas registor to memory bus
+            print("大気圧　設定")
             self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
 
         elif btn_name == "eMSstop_pushButton" or btn_name == "outputStop_pushButton":
