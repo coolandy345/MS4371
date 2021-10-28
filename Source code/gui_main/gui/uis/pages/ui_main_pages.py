@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesyjFMIu.ui'
+## Form generated from reading UI file 'main_pagesXsENvG.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -102,7 +102,7 @@ class Ui_MainPages(object):
 
         self.QC_Test_RadioButton = QRadioButton(self.frame_48)
         self.QC_Test_RadioButton.setObjectName(u"QC_Test_RadioButton")
-        self.QC_Test_RadioButton.setMinimumSize(QSize(140, 35))
+        self.QC_Test_RadioButton.setMinimumSize(QSize(140, 32))
         self.QC_Test_RadioButton.setMaximumSize(QSize(140, 35))
         self.QC_Test_RadioButton.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
@@ -115,8 +115,8 @@ class Ui_MainPages(object):
 
         self.Costom_Test_RadioButton = QRadioButton(self.frame_48)
         self.Costom_Test_RadioButton.setObjectName(u"Costom_Test_RadioButton")
-        self.Costom_Test_RadioButton.setMinimumSize(QSize(0, 35))
-        self.Costom_Test_RadioButton.setMaximumSize(QSize(140, 35))
+        self.Costom_Test_RadioButton.setMinimumSize(QSize(0, 32))
+        self.Costom_Test_RadioButton.setMaximumSize(QSize(140, 32))
         self.Costom_Test_RadioButton.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "padding-left:60px;\n"
@@ -239,16 +239,16 @@ class Ui_MainPages(object):
         self.frame_62.setFrameShadow(QFrame.Raised)
         self.gridLayout_10 = QGridLayout(self.frame_62)
         self.gridLayout_10.setObjectName(u"gridLayout_10")
-        self.label_24 = QLabel(self.frame_62)
-        self.label_24.setObjectName(u"label_24")
-        self.label_24.setMinimumSize(QSize(140, 35))
-        self.label_24.setMaximumSize(QSize(140, 35))
-        self.label_24.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.label_32 = QLabel(self.frame_62)
+        self.label_32.setObjectName(u"label_32")
+        self.label_32.setMinimumSize(QSize(140, 0))
+        self.label_32.setMaximumSize(QSize(140, 16777215))
+        self.label_32.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
-        self.label_24.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.label_32.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_10.addWidget(self.label_24, 0, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.label_32, 6, 0, 1, 1)
 
         self.lineEdit_testMeterialName = QLineEdit(self.frame_62)
         self.lineEdit_testMeterialName.setObjectName(u"lineEdit_testMeterialName")
@@ -266,16 +266,16 @@ class Ui_MainPages(object):
 
         self.gridLayout_10.addWidget(self.lineEdit_testMeterialName, 0, 1, 1, 1)
 
-        self.label_22 = QLabel(self.frame_62)
-        self.label_22.setObjectName(u"label_22")
-        self.label_22.setMinimumSize(QSize(140, 35))
-        self.label_22.setMaximumSize(QSize(140, 35))
-        self.label_22.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.lineEdit_meterialArea = QLabel(self.frame_62)
+        self.lineEdit_meterialArea.setObjectName(u"lineEdit_meterialArea")
+        self.lineEdit_meterialArea.setMinimumSize(QSize(140, 32))
+        self.lineEdit_meterialArea.setMaximumSize(QSize(140, 16777215))
+        self.lineEdit_meterialArea.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
-        self.label_22.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.lineEdit_meterialArea.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.gridLayout_10.addWidget(self.label_22, 1, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.lineEdit_meterialArea, 5, 1, 1, 1)
 
         self.lineEdit_testMeterial = QLineEdit(self.frame_62)
         self.lineEdit_testMeterial.setObjectName(u"lineEdit_testMeterial")
@@ -293,6 +293,43 @@ class Ui_MainPages(object):
 
         self.gridLayout_10.addWidget(self.lineEdit_testMeterial, 1, 1, 1, 1)
 
+        self.label_10 = QLabel(self.frame_62)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setMinimumSize(QSize(140, 0))
+        self.label_10.setMaximumSize(QSize(140, 16777215))
+        self.label_10.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+        self.label_10.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_10.addWidget(self.label_10, 4, 0, 1, 1)
+
+        self.lineEdit_thinkness = QLineEdit(self.frame_62)
+        self.lineEdit_thinkness.setObjectName(u"lineEdit_thinkness")
+        self.lineEdit_thinkness.setMaximumSize(QSize(60, 16777215))
+        self.lineEdit_thinkness.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
+"color: rgb(225, 230, 241);\n"
+"border-width: 1px;\n"
+"border-style: solid;\n"
+"border-radius: 5px;\n"
+"padding-left:5px;\n"
+"padding-right:5px;\n"
+"font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"min-height:30;")
+
+        self.gridLayout_10.addWidget(self.lineEdit_thinkness, 4, 1, 1, 1)
+
+        self.label_26 = QLabel(self.frame_62)
+        self.label_26.setObjectName(u"label_26")
+        self.label_26.setMinimumSize(QSize(140, 0))
+        self.label_26.setMaximumSize(QSize(140, 16777215))
+        self.label_26.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+        self.label_26.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_10.addWidget(self.label_26, 5, 0, 1, 1)
+
         self.label_8 = QLabel(self.frame_62)
         self.label_8.setObjectName(u"label_8")
         self.label_8.setMinimumSize(QSize(140, 35))
@@ -303,6 +340,32 @@ class Ui_MainPages(object):
         self.label_8.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_10.addWidget(self.label_8, 2, 0, 1, 1)
+
+        self.lineEdit_MeterialinnerDie = QLineEdit(self.frame_62)
+        self.lineEdit_MeterialinnerDie.setObjectName(u"lineEdit_MeterialinnerDie")
+        self.lineEdit_MeterialinnerDie.setMaximumSize(QSize(60, 16777215))
+        self.lineEdit_MeterialinnerDie.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
+"color: rgb(225, 230, 241);\n"
+"border-width: 1px;\n"
+"border-style: solid;\n"
+"border-radius: 5px;\n"
+"padding-left:5px;\n"
+"padding-right:5px;\n"
+"font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"min-height:30;")
+
+        self.gridLayout_10.addWidget(self.lineEdit_MeterialinnerDie, 3, 1, 1, 1)
+
+        self.label_24 = QLabel(self.frame_62)
+        self.label_24.setObjectName(u"label_24")
+        self.label_24.setMinimumSize(QSize(140, 35))
+        self.label_24.setMaximumSize(QSize(140, 35))
+        self.label_24.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;")
+        self.label_24.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_10.addWidget(self.label_24, 0, 0, 1, 1)
 
         self.lineEdit_MeterialMainDie = QLineEdit(self.frame_62)
         self.lineEdit_MeterialMainDie.setObjectName(u"lineEdit_MeterialMainDie")
@@ -331,46 +394,27 @@ class Ui_MainPages(object):
 
         self.gridLayout_10.addWidget(self.label_9, 3, 0, 1, 1)
 
-        self.lineEdit_MeterialinnerDie = QLineEdit(self.frame_62)
-        self.lineEdit_MeterialinnerDie.setObjectName(u"lineEdit_MeterialinnerDie")
-        self.lineEdit_MeterialinnerDie.setMaximumSize(QSize(60, 16777215))
-        self.lineEdit_MeterialinnerDie.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
-"color: rgb(225, 230, 241);\n"
-"border-width: 1px;\n"
-"border-style: solid;\n"
-"border-radius: 5px;\n"
-"padding-left:5px;\n"
-"padding-right:5px;\n"
-"font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"min-height:30;")
-
-        self.gridLayout_10.addWidget(self.lineEdit_MeterialinnerDie, 3, 1, 1, 1)
-
-        self.label_10 = QLabel(self.frame_62)
-        self.label_10.setObjectName(u"label_10")
-        self.label_10.setMinimumSize(QSize(140, 0))
-        self.label_10.setMaximumSize(QSize(140, 16777215))
-        self.label_10.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.label_22 = QLabel(self.frame_62)
+        self.label_22.setObjectName(u"label_22")
+        self.label_22.setMinimumSize(QSize(140, 35))
+        self.label_22.setMaximumSize(QSize(140, 35))
+        self.label_22.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
-        self.label_10.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.label_22.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_10.addWidget(self.label_10, 4, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.label_22, 1, 0, 1, 1)
 
-        self.lineEdit_thinkness = QLineEdit(self.frame_62)
-        self.lineEdit_thinkness.setObjectName(u"lineEdit_thinkness")
-        self.lineEdit_thinkness.setMaximumSize(QSize(60, 16777215))
-        self.lineEdit_thinkness.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
+        self.lineEdit_meterialVolume = QLabel(self.frame_62)
+        self.lineEdit_meterialVolume.setObjectName(u"lineEdit_meterialVolume")
+        self.lineEdit_meterialVolume.setMinimumSize(QSize(140, 32))
+        self.lineEdit_meterialVolume.setMaximumSize(QSize(140, 16777215))
+        self.lineEdit_meterialVolume.setStyleSheet(u"font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
-"border-width: 1px;\n"
-"border-style: solid;\n"
-"border-radius: 5px;\n"
-"padding-left:5px;\n"
-"padding-right:5px;\n"
-"font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"min-height:30;")
+"padding-right:5px;")
+        self.lineEdit_meterialVolume.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.gridLayout_10.addWidget(self.lineEdit_thinkness, 4, 1, 1, 1)
+        self.gridLayout_10.addWidget(self.lineEdit_meterialVolume, 6, 1, 1, 1)
 
 
         self.horizontalLayout_9.addWidget(self.frame_62, 0, Qt.AlignLeft|Qt.AlignTop)
@@ -2241,8 +2285,8 @@ class Ui_MainPages(object):
 
         self.commect_lineEdit = QLineEdit(self.frame_20)
         self.commect_lineEdit.setObjectName(u"commect_lineEdit")
-        self.commect_lineEdit.setMinimumSize(QSize(400, 0))
-        self.commect_lineEdit.setMaximumSize(QSize(400, 16777215))
+        self.commect_lineEdit.setMinimumSize(QSize(400, 32))
+        self.commect_lineEdit.setMaximumSize(QSize(212, 16777215))
         self.commect_lineEdit.setStyleSheet(u"background-color: rgba(0, 0, 0,80);\n"
 "color: rgb(225, 230, 241);\n"
 "border-width: 1px;\n"
@@ -3208,7 +3252,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 
@@ -3228,16 +3272,20 @@ class Ui_MainPages(object):
         self.lineEdit_costomer.setText(QCoreApplication.translate("MainPages", u"\u682a\u5f0f\u4f1a\u793e\u30e2\u30c8\u30e4\u30de", None))
         self.label_5.setText(QCoreApplication.translate("MainPages", u"\u4f9d\u983c\u8005", None))
         self.lineEdit_costomerName.setText(QCoreApplication.translate("MainPages", u"\u9ec4", None))
-        self.label_24.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u540d\u79f0", None))
+        self.label_32.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u4f53\u7a4d(mm\u00b3)", None))
         self.lineEdit_testMeterialName.setText(QCoreApplication.translate("MainPages", u"material_1", None))
-        self.label_22.setText(QCoreApplication.translate("MainPages", u"\u6750\u6599", None))
+        self.lineEdit_meterialArea.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u306e\u539a\u3055(mm)", None))
         self.lineEdit_testMeterial.setText(QCoreApplication.translate("MainPages", u"42", None))
-        self.label_8.setText(QCoreApplication.translate("MainPages", u"\u4e3b\u96fb\u6975\u5f84(mm)", None))
-        self.lineEdit_MeterialMainDie.setText(QCoreApplication.translate("MainPages", u"42", None))
-        self.label_9.setText(QCoreApplication.translate("MainPages", u"\u30ac\u30fc\u30c9\u96fb\u6975\u306e\u5185\u5f84(mm)", None))
-        self.lineEdit_MeterialinnerDie.setText(QCoreApplication.translate("MainPages", u"15", None))
         self.label_10.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u306e\u539a\u3055(mm)", None))
         self.lineEdit_thinkness.setText(QCoreApplication.translate("MainPages", u"1.5", None))
+        self.label_26.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u8868\u9762\u7a4d(mm\u00b2)", None))
+        self.label_8.setText(QCoreApplication.translate("MainPages", u"\u4e3b\u96fb\u6975\u5f84(mm)", None))
+        self.lineEdit_MeterialinnerDie.setText(QCoreApplication.translate("MainPages", u"15", None))
+        self.label_24.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u540d\u79f0", None))
+        self.lineEdit_MeterialMainDie.setText(QCoreApplication.translate("MainPages", u"42", None))
+        self.label_9.setText(QCoreApplication.translate("MainPages", u"\u30ac\u30fc\u30c9\u96fb\u6975\u306e\u5185\u5f84(mm)", None))
+        self.label_22.setText(QCoreApplication.translate("MainPages", u"\u6750\u6599", None))
+        self.lineEdit_meterialVolume.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u306e\u539a\u3055(mm)", None))
         self.label_13.setText("")
         self.lineEdit_PID_1_D.setText(QCoreApplication.translate("MainPages", u"1.5", None))
         self.lineEdit_PID_1_I.setText(QCoreApplication.translate("MainPages", u"1.5", None))

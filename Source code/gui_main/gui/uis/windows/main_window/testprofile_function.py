@@ -1,6 +1,6 @@
 
 from gui_main.gui.widgets.py_table_widget.py_table_widget import PyTableWidget
-
+import math
 
 from . functions_main_window import *
 import sys
@@ -188,7 +188,7 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_PID_4_D.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_4_D.setValidator(QDoubleValidator())
         
-        
+        self.areaVolumeCal()
         
 
     def set_content_Editeable(self,enable):
@@ -280,64 +280,94 @@ class Testfile_manager(QWidget):
             self.set_memorypool_register("System memory","材料",self._testMeterial)
 
         elif btn=="lineEdit_MeterialMainDie":
-            self._MeterialMainDie=self._parent.ui.load_pages.lineEdit_year.text()
+            self._MeterialMainDie=float(self._parent.ui.load_pages.lineEdit_year.text())
             self.set_memorypool_register("System memory","主電極径(mm)",self._MeterialMainDie)
+            self.areaVolumeCal()
 
         elif btn=="lineEdit_MeterialinnerDie":
-            self._MeterialinnerDie=self._parent.ui.load_pages.lineEdit_year.text()
+            self._MeterialinnerDie=float(self._parent.ui.load_pages.lineEdit_year.text())
             self.set_memorypool_register("System memory","ガード電極の内径(mm)",self._MeterialinnerDie)
+            self.areaVolumeCal()
 
         elif btn=="lineEdit_thinkness":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_year.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_year.text())
             self.set_memorypool_register("System memory","試料の厚さ(mm)",self._thinkness)
+            self.areaVolumeCal()
 
         elif btn=="lineEdit_PID_1_P":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_1_P.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_1_P.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_P",self._thinkness)
 
         elif btn=="lineEdit_PID_1_I":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_1_I.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_1_I.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_I",self._thinkness)
 
         elif btn=="lineEdit_PID_1_D":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_1_D.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_1_D.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_D",self._thinkness)
 
         elif btn=="lineEdit_PID_2_P":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_2_P.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_2_P.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_P",self._thinkness)
 
         elif btn=="lineEdit_PID_2_I":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_2_I.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_2_I.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_I",self._thinkness)
 
         elif btn=="lineEdit_PID_2_D":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_2_D.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_2_D.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_D",self._thinkness)
 
         elif btn=="lineEdit_PID_3_P":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_3_P.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_3_P.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_P",self._thinkness)
 
         elif btn=="lineEdit_PID_3_I":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_3_I.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_3_I.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_I",self._thinkness)
 
         elif btn=="lineEdit_PID_3_D":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_3_D.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_3_D.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_D",self._thinkness)
 
         elif btn=="lineEdit_PID_4_P":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_4_P.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_4_P.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_P",self._thinkness)
 
         elif btn=="lineEdit_PID_4_I":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_4_I.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_4_I.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_I",self._thinkness)
 
         elif btn=="lineEdit_PID_4_D":
-            self._thinkness=self._parent.ui.load_pages.lineEdit_PID_4_D.text()
+            self._thinkness=float(self._parent.ui.load_pages.lineEdit_PID_4_D.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_D",self._thinkness)
+
+    def areaVolumeCal(self):
+
+        print(self._MeterialMainDie)
+        print(self._MeterialinnerDie)
+        print(self._thinkness)
+
+
+        if self._MeterialMainDie and self._MeterialinnerDie:
+            temp=(self._MeterialMainDie+self._MeterialinnerDie)/4
+            self.meterial_area=temp*temp*math.pi
+
+            if self._thinkness:
+                self.meterial_volume=self.meterial_area*self._thinkness
+            else:
+                self.meterial_volume=None
+
+        else:
+            self.meterial_area=None
+            self.meterial_volume=None
+
+        print(self.meterial_area)
+        print(self.meterial_volume)
+
+        self._parent.ui.load_pages.lineEdit_meterialArea.setText("".format(self.meterial_area))
+        self._parent.ui.load_pages.lineEdit_meterialVolume.setText("".format(self.meterial_volume))
+        
 
     def prepare_folder(self):
 
