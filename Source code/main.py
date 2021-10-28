@@ -66,6 +66,9 @@ if __name__ == "__main__":
     EventPool["CSV stop"]=MemoryPoolManager.Event()
     EventPool["GPIB Stop"]=MemoryPoolManager.Event()
 
+    EventPool["Test Event1"]=MemoryPoolManager.Event()
+    EventPool["Test Event2"]=MemoryPoolManager.Event()
+
     
     databaseLoadThread(MemoryPool)
     ##memoryWriteThread(MemoryPool,QueuePool)

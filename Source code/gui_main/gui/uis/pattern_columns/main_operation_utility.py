@@ -197,11 +197,13 @@ class Main_utility_manager(QWidget):
             pass
             #self._parent.testfile_manager.prepare_folder()
         elif btn_name == "manualMeasurement_pushButton":
+            self.eventPool["Test Event2"].set()
              # Read valtage and current from gpib device
 
 
             pass
         elif btn_name == "voltageOutput_pushButton":
+            self.eventPool["Test Event1"].set()
             # Check if we can output valtage
             # Let GPIB device to output valtage 
 

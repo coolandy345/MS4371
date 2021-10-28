@@ -94,16 +94,61 @@ class Operator():
         self.eventPool=eventPool
         
 
-        self.gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
+        #self.gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
         self.gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
 
-        auto_Run_Start_Thread = threading.Thread(target = self.auto_Run_Start_Work,daemon=True)
-        auto_Run_Start_Thread.start()
+        #auto_Run_Start_Thread = threading.Thread(target = self.auto_Run_Start_Work,daemon=True)
+        #auto_Run_Start_Thread.start()
 
-        stop_Thread = threading.Thread(target = self.stop_Work,daemon=True)
+        test1_Thread=threading.Thread(target = self.test_Work1,daemon=True)
+        test1_Thread.start()
+
+        test2_Thread=threading.Thread(target = self.test_Work2,daemon=True)
+        test2_Thread.start()
+
+
+        stop_Thread = threading.Thread(target = self.stop_Work2,daemon=True)
         stop_Thread.start()
 
         while 1:
+            pass
+
+    def test_Work1(self):
+        while 1:
+            self.eventPool["Test Event1"].wait()
+            self.eventPool["Test Event1"].clear()
+            print("Test Event1 trigger")
+
+
+            self.gpib_2657A.send_Command("loadscript testProfile")
+            
+            self.gpib_2657A.send_Command("reset()")
+            
+            self.gpib_2657A.send_Command("tsplink.reset() ")
+
+            self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("delay(1)")
+            self.gpib_2657A.send_Command("node[2].beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("node[2].beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("node[2].beeper.beep(0.1, 2400)")
+
+            self.gpib_2657A.send_Command("endscript")
+
+
+            pass
+
+
+    def test_Work2(self):
+        while 1:
+            self.eventPool["Test Event2"].wait()
+            self.eventPool["Test Event2"].clear()
+            print("Test Event2 trigger")
+
+            self.gpib_2657A.send_Command("testProfile.run()")
+            time.sleep(1)
+            #print(self.gpib_2657A.read_Command())
             pass
 
     def stop_Work(self):
@@ -275,6 +320,7 @@ class Operator():
         #send script to TSP-Link Master
 
         #-loadscript testProfile
+        self.gpib_2657A.send_Command("loadscript testProfile")
         self.gpib_2657A.send_Command("tsplink.trigger[0].reset()")
         self.gpib_2657A.send_Command("tsplink.trigger[1].reset()")
         self.gpib_2657A.send_Command("tsplink.trigger[2].reset()")

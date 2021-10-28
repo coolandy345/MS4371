@@ -117,10 +117,7 @@ class GPIB_Driver():
         self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
 
 
-        byte_string="GPIB0".encode("utf8")
-        self.send_buffer= ctypes.create_string_buffer(byte_string)
-        self.board_descriptor=self.GPIB.ibfindW(self.send_buffer)
-        self.GPIB.ibdma(self.board_descriptor,1)
+        
         
         self.memoryPool=memoryPool
         self.queuePool=queuePool
@@ -157,10 +154,10 @@ class GPIB_Driver():
 
     
     def initiail_GPIB_device(self):
-
-        #byte_string="GPIB000".encode("utf8")
-        #self.send_buffer= ctypes.create_string_buffer(byte_string)
-        #self.GPIB.ibfind(self.send_buffer)
+        byte_string="GPIB0".encode("utf8")
+        self.send_buffer= ctypes.create_string_buffer(byte_string)
+        self.board_descriptor=self.GPIB.ibfindW(self.send_buffer)
+        self.GPIB.ibdma(self.board_descriptor,1)
 
         self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T30ms, 1, 0)
         self.GPIB.ibclr(self.dev_descriptor[self.getItem.name])
@@ -255,23 +252,28 @@ class GPIB_device():
         else:
             print("secess init GPIB device at {}".format(self.name))
             self.connect_action(True)
-            #self.send_Command("*CLS?")
             self.send_Command("reset()")
+            self.send_Command("*CLS")
             self.send_Command("beeper.beep(0.1, 2400)")
             return None
 
     
     def connect_action(self,connect):
-        
-         if self.connection!=connect:
 
-             self.connection=connect
-             if self.connection:
-                self.set_memorypool_register("System memory","{} connection".format(self.name),1)
-                print("{} connection".format(self.name),1)
-             else:
-                self.set_memorypool_register("System memory","{} connection".format(self.name),0)
-                print("{} connection".format(self.name),0)
+        self.connection=connect
+        self.set_memorypool_register("System memory","{} connection".format(self.name),self.connection)
+
+
+        
+         #if self.connection!=connect:
+
+         #    self.connection=connect
+         #    if self.connection:
+         #       self.set_memorypool_register("System memory","{} connection".format(self.name),1)
+         #       print("{} connection".format(self.name),1)
+         #    else:
+         #       self.set_memorypool_register("System memory","{} connection".format(self.name),0)
+         #       print("{} connection".format(self.name),0)
 
     def connnection_check_Work(self):
         
@@ -279,15 +281,16 @@ class GPIB_device():
             #print("connnection_check_Loop time1 is ",time.time()-test)
             
             if self.connection:
-                self.send_Command("*IDN?")
-                result,error_code=self.read_Command()
-                #print("get connection check message of  {} -- result is {} , errorcode is {}".format(self.name,result,error_code))
-                #If we have any error code
-                if len(error_code):
-                    self.connect_action(False)
-                else:
-                    self.device_IDN=result
-                    self.connect_action(True)
+                pass
+                #self.send_Command("*IDN?")
+                #result,error_code=self.read_Command()
+                ##print("get connection check message of  {} -- result is {} , errorcode is {}".format(self.name,result,error_code))
+                ##If we have any error code
+                #if len(error_code):
+                #    self.connect_action(False)
+                #else:
+                #    self.device_IDN=result
+                #    self.connect_action(True)
             else:
                 #print("fail connection check at {}".format(self.name))
                 self.initiail_GPIB_device()
