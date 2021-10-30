@@ -369,6 +369,9 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, 'PC警報',{},{},{},{},{},'{}')".format(Table_name,10152,0,0,1,0,1,"NULL")
 cur.execute(test)
 
+test="INSERT INTO '{}' values({}, '変更連絡',{},{},{},{},{},'{}')".format(Table_name,10160,0,0,1,0,1,"エッジ(PLC側でRST) PC側でデータ変更した場合ONさせる")
+cur.execute(test)
+
 test="INSERT INTO '{}' values({}, '運転開始',{},{},{},{},{},'{}')".format(Table_name,10170,0,0,1,0,1,"エッジ(PLC側でRST)")
 cur.execute(test)
 
@@ -381,8 +384,10 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, '大気圧',{},{},{},{},{},'{}')".format(Table_name,10173,0,0,1,0,1,"エッジ(PLC側でRST)")
 cur.execute(test)
 
-test="INSERT INTO '{}' values({}, '変更連絡',{},{},{},{},{},'{}')".format(Table_name,10190,0,0,1,0,1,"エッジ(PLC側でRST) PC側でデータ変更した場合ONさせる")
-cur.execute(test)
+
+
+#test="INSERT INTO '{}' values({}, '変更レジスター番号',{},{},{},{},{},'{}')".format(Table_name,10191,0,0,65535,0,1,"変更したレジスター番号はここ記入")
+#cur.execute(test)
 
 
 System_Registor_Database.commit()

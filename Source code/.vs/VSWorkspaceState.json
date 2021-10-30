@@ -11,6 +11,6 @@
     "\\modbus_TcpServer",
     "\\registor_manager"
   ],
-  "SelectedNode": "\\main_operator\\main_operator.py",
+  "SelectedNode": "\\modbus_TcpServer\\modbus_TcpServer.py",
   "PreviewInSolutionExplorer": false
 }

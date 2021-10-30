@@ -261,8 +261,10 @@ class GPIB_device():
     def connect_action(self,connect):
 
         self.connection=connect
-        self.set_memorypool_register("System memory","{} connection".format(self.name),self.connection)
-
+        #self.set_memorypool_register("System memory","{} connection".format(self.name),self.connection)
+        self.set_memorypool_register("System memory","2635B connection".format(self.name),self.connection)
+        self.set_memorypool_register("System memory","2657A connection".format(self.name),self.connection)
+        #self.set_memorypool_register("System memory","2635B connection".format(self.name),self.connection)
 
         
          #if self.connection!=connect:
@@ -337,6 +339,7 @@ class GPIB_device():
             self.connect_action(False)
             return "",getItem.error_message
         else:
+            getItem.result=getItem.result.removesuffix("\n")
             self.device_IDN=getItem.result
             self.connect_action(True)
             return getItem.result , getItem.error_message

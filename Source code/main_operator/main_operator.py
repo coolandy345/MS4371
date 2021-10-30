@@ -5,6 +5,7 @@ import threading
 import time
 import copy
 from gpib_manager import *
+from registor_manager import *
 
 class Test_folder_package():
 
@@ -97,8 +98,11 @@ class Operator():
         #self.gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
         self.gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
 
+        self.gpib_2657A_control=False
+
         #auto_Run_Start_Thread = threading.Thread(target = self.auto_Run_Start_Work,daemon=True)
         #auto_Run_Start_Thread.start()
+
 
         test1_Thread=threading.Thread(target = self.test_Work1,daemon=True)
         test1_Thread.start()
@@ -106,19 +110,28 @@ class Operator():
         test2_Thread=threading.Thread(target = self.test_Work2,daemon=True)
         test2_Thread.start()
 
-
-        stop_Thread = threading.Thread(target = self.stop_Work2,daemon=True)
+        stop_Thread = threading.Thread(target = self.stop_Work,daemon=True)
         stop_Thread.start()
 
-        while 1:
-            pass
+        #TSP_check_Thread = threading.Thread(target = self.TSP_check_Work,daemon=True)
+        #TSP_check_Thread.start()
+
+
+        self.set_memorypool_register("Modbus Registor Pool - Registor","PC Boot",0)
+
+        self.set_memorypool_register("Modbus Registor Pool - Registor","PC Boot",1)
+
+    #def TSP_check_Work(self):
+    #    self.
+    #    pass
+        
 
     def test_Work1(self):
+        
         while 1:
             self.eventPool["Test Event1"].wait()
             self.eventPool["Test Event1"].clear()
             print("Test Event1 trigger")
-
 
             self.gpib_2657A.send_Command("loadscript testProfile")
             
@@ -134,14 +147,12 @@ class Operator():
             self.gpib_2657A.send_Command("dataqueue.add(sendItem)  ")
             self.gpib_2657A.send_Command("end")
 
-            
-            
 
             self.gpib_2657A.send_Command(" print(\"access queue now\") ")
  
             self.gpib_2657A.send_Command("while dataqueue.count > 0 do  ")
             self.gpib_2657A.send_Command(" x = dataqueue.next()  ")
-            self.gpib_2657A.send_Command(" print(x[0]) ")
+            self.gpib_2657A.send_Command(" print(x[1],x[2],x[3]) ")
             self.gpib_2657A.send_Command("end")
 
             self.gpib_2657A.send_Command(" print(\"finial\") ")
@@ -164,9 +175,13 @@ class Operator():
             self.eventPool["Test Event2"].clear()
             print("Test Event2 trigger")
 
-            print(self.gpib_2657A.read_Command())
 
-            result_list=list(result.split(","))
+            message,errorcode=self.gpib_2657A.read_Command()
+            if errorcode:
+                print("GPIB Read エラー発生",errorcode)
+            else:
+                print(type(message.split('\t')),message.split('\t'))
+            #result_list=list(result.split(","))
             time.sleep(1)
             
             pass
@@ -186,16 +201,16 @@ class Operator():
                                                 memorypool_name,
                                                 registor_name,
                                                 value):
-        
-        if self.memoryPool[memorypool_name][registor_name].getValue()!=value:
 
+        if self.memoryPool[memorypool_name][registor_name].getValue()!=value:
             sub_memorypool=copy.deepcopy(self.memoryPool[memorypool_name])
             sub_memorypool[registor_name].setValue(value)
-
+            
             self.memoryPool[memorypool_name]=sub_memorypool
             sendItem=MemoryUnit(memorypool_name,registor_name)
-            queuePool["database_Uplaod_Queue"].put(sendItem)
-            queuePool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
+            
+            self.queuePool["database_Uplaod_Queue"].put(sendItem)
+            self.queuePool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
 
     def measurement_initial(
                                 self,

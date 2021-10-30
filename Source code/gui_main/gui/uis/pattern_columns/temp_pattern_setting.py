@@ -696,7 +696,7 @@ class TempPatternWidget(QWidget):
 
 
 
-        self.set_memorypool_register("Modbus Registor Pool - Registor","変更連絡",1)
+        
         #Reload cache_list from memory
         self.patternFile_Load()
 

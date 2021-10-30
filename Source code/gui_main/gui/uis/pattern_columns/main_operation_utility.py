@@ -175,6 +175,7 @@ class Main_utility_manager(QWidget):
             
     def btn_callback(self):
         btn_name=self.sender().objectName()
+        print(btn_name,"is press")
 
         if btn_name == "btn_AutoMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_AutoOperate)
@@ -196,6 +197,13 @@ class Main_utility_manager(QWidget):
 
             pass
             #self._parent.testfile_manager.prepare_folder()
+
+        elif btn_name == "remoteConnect_pushButton":
+            set=self._parent.ui.load_pages.remoteConnect_pushButton.isChecked()
+            self.set_memorypool_register("Modbus Registor Pool - Registor","リモート",int(set))
+
+            pass
+
         elif btn_name == "manualMeasurement_pushButton":
             self.eventPool["Test Event2"].set()
              # Read valtage and current from gpib device
@@ -212,9 +220,8 @@ class Main_utility_manager(QWidget):
 
         elif btn_name == "gasFreeflow_pushButton":
             # Set Gas registor to memory bus
-            print("大気圧　設定")
-            self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
-
+            #self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
+            pass
         elif btn_name == "eMSstop_pushButton" or btn_name == "outputStop_pushButton":
             self.eventPool["GPIB Stop"].set()
             
@@ -300,6 +307,11 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.manualMeasurement_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.voltageOutput_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.outputStop_pushButton.clicked.connect(self.btn_callback)
+
+
+
+        
+        self._parent.ui.load_pages.remoteConnect_pushButton.clicked.connect(self.btn_callback)
 
         self._parent.ui.load_pages.gasFreeflow_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.autostart_pushButton.clicked.connect(self.btn_callback)
@@ -582,7 +594,10 @@ class Main_utility_manager(QWidget):
                 self.realTime_Resistor=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在抵抗値"].getValue()
                 self._parent.ui.load_pages.realtime_Resistor_lineEdit.setText("{}".format(Quantity(self.realTime_Resistor,"Ω").render(prec=4)))
 
+
     def ultility_Update_Work(self):
+        self.AutoMode_pattern_comboBox_contantList=[]
+
         while 1:
 
             time.sleep(0.1)
@@ -594,12 +609,13 @@ class Main_utility_manager(QWidget):
             #self.data_array.append(XYdata)
             #self._parent.curve.setData(self.data_array)
             #self.time+=1
-
-            self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.disconnect()
-            self._parent.ui.load_pages.AutoMode_pattern_comboBox.clear()
-            self._parent.ui.load_pages.AutoMode_pattern_comboBox.addItems(self._parent.tempPattern.patternFile_nameList)
-            self._parent.ui.load_pages.AutoMode_pattern_comboBox.setCurrentIndex(self.choose_pattern)
-            self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.connect(self.btn_callback)
+            if self.AutoMode_pattern_comboBox_contantList !=self._parent.tempPattern.patternFile_nameList:
+                self.AutoMode_pattern_comboBox_contantList=self._parent.tempPattern.patternFile_nameList
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.disconnect()
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.clear()
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.addItems(self.AutoMode_pattern_comboBox_contantList)
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setCurrentIndex(self.choose_pattern)
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.connect(self.btn_callback)
         
             self.ethernetConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue()
             self.usbConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["GPIB USB conneciton"].getValue()

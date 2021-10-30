@@ -18,9 +18,11 @@ class MemoryUnit():
 
     def __init__(self,
                  pool_name="",
-                 registor_name=""):
+                 registor_name="",
+                 count=0):
         self.pool_name=pool_name
         self.registor_name=registor_name
+        self.count=count
 
 
 
@@ -34,6 +36,7 @@ def databaseWriteThread(memoryPool,queuePool,eventPool):
         getItem=MemoryUnit()
         getItem=queuePool["database_Uplaod_Queue"].get()
         queuePool["modbus_Write_Queue"].put(getItem)
+        
         time.sleep(0.5)
         
         test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
@@ -44,6 +47,7 @@ def databaseWriteThread(memoryPool,queuePool,eventPool):
         while not queuePool["database_Uplaod_Queue"].empty():
             getItem=queuePool["database_Uplaod_Queue"].get()
             queuePool["modbus_Write_Queue"].put(getItem)
+            
 
             test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
             #print(test)
@@ -85,7 +89,7 @@ def databaseLoadThread(memoryPool):
         full_Range_list.remove(row[0])
 
     for unit in full_Range_list:
-        pool["blank_pos_{}".format(unit)]=ModbusRegistorClass.ModbusPackage(number=unit)
+        pool["blank_pos_{}".format(unit)]=ModbusRegistorClass.ModbusPackage(name="blank_pos_{}".format(unit),number=unit)
 
     memoryPool["Modbus Registor Pool - Registor"]=pool
     #print(pool)

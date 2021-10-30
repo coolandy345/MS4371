@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesdRVrYV.ui'
+## Form generated from reading UI file 'main_pagesBRlOyk.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -268,7 +268,7 @@ class Ui_MainPages(object):
 
         self.lineEdit_meterialArea = QLabel(self.frame_62)
         self.lineEdit_meterialArea.setObjectName(u"lineEdit_meterialArea")
-        self.lineEdit_meterialArea.setMinimumSize(QSize(0, 32))
+        self.lineEdit_meterialArea.setMinimumSize(QSize(0, 30))
         self.lineEdit_meterialArea.setMaximumSize(QSize(16777215, 16777215))
         self.lineEdit_meterialArea.setStyleSheet(u"background-color: rgb(37, 42, 50);\n"
 "color: rgb(225, 230, 241);\n"
@@ -413,7 +413,7 @@ class Ui_MainPages(object):
 
         self.lineEdit_meterialVolume = QLabel(self.frame_62)
         self.lineEdit_meterialVolume.setObjectName(u"lineEdit_meterialVolume")
-        self.lineEdit_meterialVolume.setMinimumSize(QSize(0, 32))
+        self.lineEdit_meterialVolume.setMinimumSize(QSize(0, 30))
         self.lineEdit_meterialVolume.setMaximumSize(QSize(16777215, 16777215))
         self.lineEdit_meterialVolume.setStyleSheet(u"background-color: rgb(37, 42, 50);\n"
 "color: rgb(225, 230, 241);\n"
@@ -1526,6 +1526,37 @@ class Ui_MainPages(object):
         self.horizontalLayout_8 = QHBoxLayout(self.frame_18)
         self.horizontalLayout_8.setSpacing(0)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.remoteConnect_pushButton = QPushButton(self.frame_18)
+        self.remoteConnect_pushButton.setObjectName(u"remoteConnect_pushButton")
+        self.remoteConnect_pushButton.setMinimumSize(QSize(210, 30))
+        self.remoteConnect_pushButton.setMaximumSize(QSize(210, 30))
+        self.remoteConnect_pushButton.setLayoutDirection(Qt.LeftToRight)
+        self.remoteConnect_pushButton.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(44, 36, 0);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	\n"
+"    background-color: rgb(80, 80, 80);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 8px;\n"
+"}\n"
+"QPushButton:checked{\n"
+"	background-color: rgb(79, 159, 238);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(109, 182, 238);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	background-color: rgb(69, 140, 207);\n"
+"}")
+        self.remoteConnect_pushButton.setCheckable(True)
+        self.remoteConnect_pushButton.setChecked(False)
+        self.remoteConnect_pushButton.setAutoRepeatInterval(100)
+
+        self.horizontalLayout_8.addWidget(self.remoteConnect_pushButton)
+
 
         self.verticalLayout_4.addWidget(self.frame_18)
 
@@ -1678,13 +1709,17 @@ class Ui_MainPages(object):
         self.gasFreeflow_pushButton.setTabletTracking(False)
         self.gasFreeflow_pushButton.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(44, 36, 0);\n"
-"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"	background-color: rgb(255, 65, 182);\n"
-"	background-color: rgb(79, 159, 238);\n"
+"	font: 23px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	\n"
+"    background-color: rgb(80, 80, 80);\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-radius: 12px;\n"
+"	border-radius: 8px;\n"
 "}\n"
+"QPushButton:checked{\n"
+"	background-color: rgb(79, 159, 238);\n"
+"}\n"
+"\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(109, 182, 238);\n"
 "}\n"
@@ -1692,6 +1727,7 @@ class Ui_MainPages(object):
 "QPushButton:pressed {\n"
 "	background-color: rgb(69, 140, 207);\n"
 "}")
+        self.gasFreeflow_pushButton.setCheckable(True)
 
         self.verticalLayout_5.addWidget(self.gasFreeflow_pushButton, 0, Qt.AlignHCenter)
 
@@ -1716,12 +1752,17 @@ class Ui_MainPages(object):
         self.autostart_pushButton.setLayoutDirection(Qt.LeftToRight)
         self.autostart_pushButton.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(44, 36, 0);\n"
-"	font: 30px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"	background-color: rgb(79, 159, 238);\n"
+"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	\n"
+"    background-color: rgb(80, 80, 80);\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-radius: 25px;\n"
 "}\n"
+"QPushButton:checked{\n"
+"	background-color: rgb(79, 159, 238);\n"
+"}\n"
+"\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(109, 182, 238);\n"
 "}\n"
@@ -1729,6 +1770,7 @@ class Ui_MainPages(object):
 "QPushButton:pressed {\n"
 "	background-color: rgb(69, 140, 207);\n"
 "}")
+        self.autostart_pushButton.setCheckable(True)
         self.autostart_pushButton.setAutoRepeatInterval(100)
 
         self.verticalLayout_7.addWidget(self.autostart_pushButton)
@@ -1803,11 +1845,16 @@ class Ui_MainPages(object):
         self.voltageOutput_pushButton.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(44, 36, 0);\n"
 "	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"	background-color: rgb(79, 159, 238);\n"
+"	\n"
+"    background-color: rgb(80, 80, 80);\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-radius: 25px;\n"
 "}\n"
+"QPushButton:checked{\n"
+"	background-color: rgb(79, 159, 238);\n"
+"}\n"
+"\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(109, 182, 238);\n"
 "}\n"
@@ -1815,6 +1862,7 @@ class Ui_MainPages(object):
 "QPushButton:pressed {\n"
 "	background-color: rgb(69, 140, 207);\n"
 "}")
+        self.voltageOutput_pushButton.setCheckable(True)
         self.voltageOutput_pushButton.setAutoRepeatInterval(100)
 
         self.gridLayout_19.addWidget(self.voltageOutput_pushButton, 0, 0, 1, 1, Qt.AlignBottom)
@@ -1827,11 +1875,16 @@ class Ui_MainPages(object):
         self.manualMeasurement_pushButton.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(44, 36, 0);\n"
 "	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"	background-color: rgb(79, 159, 238);\n"
+"	\n"
+"    background-color: rgb(80, 80, 80);\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-radius: 25px;\n"
 "}\n"
+"QPushButton:checked{\n"
+"	background-color: rgb(79, 159, 238);\n"
+"}\n"
+"\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(109, 182, 238);\n"
 "}\n"
@@ -1839,6 +1892,7 @@ class Ui_MainPages(object):
 "QPushButton:pressed {\n"
 "	background-color: rgb(69, 140, 207);\n"
 "}")
+        self.manualMeasurement_pushButton.setCheckable(True)
         self.manualMeasurement_pushButton.setAutoRepeatInterval(100)
 
         self.gridLayout_19.addWidget(self.manualMeasurement_pushButton, 1, 0, 1, 1, Qt.AlignBottom)
@@ -1989,7 +2043,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1098, 1410))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1170, 1410))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -2071,7 +2125,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 100, 200))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1112, 200))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -2673,7 +2727,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 100, 200))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 1112, 200))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -3264,7 +3318,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 
@@ -3353,6 +3407,7 @@ class Ui_MainPages(object):
         self.timeUnit_comboBox.setItemText(2, QCoreApplication.translate("MainPages", u"1h/div", None))
 
         self.label_2.setText("")
+        self.remoteConnect_pushButton.setText(QCoreApplication.translate("MainPages", u"\u30ea\u30e2\u30fc\u30c8\u63a5\u7d9a", None))
         self.btn_AutoMode.setText(QCoreApplication.translate("MainPages", u"\u81ea\u52d5\u30e2\u30fc\u30c9", None))
         self.btn_ManaualMode.setText(QCoreApplication.translate("MainPages", u"\u624b\u52d5\u30e2\u30fc\u30c9", None))
         self.label_16.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u30d1\u30bf\u30fc\u30f3\u540d", None))

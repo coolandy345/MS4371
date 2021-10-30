@@ -44,7 +44,7 @@
       <string notr="true">background-color: rgb(44, 49, 60);</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -547,7 +547,7 @@ min-height:30;</string>
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>32</height>
+                        <height>30</height>
                        </size>
                       </property>
                       <property name="maximumSize">
@@ -850,7 +850,7 @@ padding-right:5px;</string>
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>32</height>
+                        <height>30</height>
                        </size>
                       </property>
                       <property name="maximumSize">
@@ -3380,6 +3380,62 @@ border:none;</string>
              <property name="spacing">
               <number>0</number>
              </property>
+             <item>
+              <widget class="QPushButton" name="remoteConnect_pushButton">
+               <property name="minimumSize">
+                <size>
+                 <width>210</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>210</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 8px;
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(79, 159, 238);
+}
+
+QPushButton:hover {
+	
+	color: rgb(44, 36, 0);
+	background-color: rgb(109, 182, 238);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgb(69, 140, 207);
+}</string>
+               </property>
+               <property name="text">
+                <string>リモート接続</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+               <property name="autoRepeatInterval">
+                <number>100</number>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -3500,7 +3556,7 @@ max-width:120;</string>
                 <string notr="true">background-color: rgb(30, 34, 41);</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="page_AutoOperate">
                 <layout class="QGridLayout" name="gridLayout_15">
@@ -3759,24 +3815,34 @@ border:none;</string>
                          </property>
                          <property name="styleSheet">
                           <string notr="true">QPushButton {
-	color: rgb(44, 36, 0);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(255, 65, 182);
-	background-color: rgb(79, 159, 238);
+	color: rgb(202, 206, 216);
+	font: 21px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
 	border-width: 1px;
 	border-style: solid;
-	border-radius: 12px;
+	border-radius: 8px;
 }
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(79, 159, 238);
+}
+
 QPushButton:hover {
+	
+	color: rgb(44, 36, 0);
 	background-color: rgb(109, 182, 238);
 }
 
 QPushButton:pressed {
+	color: rgb(44, 36, 0);
 	background-color: rgb(69, 140, 207);
 }</string>
                          </property>
                          <property name="text">
                           <string>大気圧</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
                          </property>
                         </widget>
                        </item>
@@ -3841,23 +3907,34 @@ QPushButton:pressed {
                          </property>
                          <property name="styleSheet">
                           <string notr="true">QPushButton {
-	color: rgb(44, 36, 0);
-	font: 30px  &quot;游ゴシック&quot;;
-	background-color: rgb(79, 159, 238);
+	color: rgb(202, 206, 216);
+	font: 28px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 25px;
 }
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(79, 159, 238);
+}
+
 QPushButton:hover {
+	
+	color: rgb(44, 36, 0);
 	background-color: rgb(109, 182, 238);
 }
 
 QPushButton:pressed {
+	color: rgb(44, 36, 0);
 	background-color: rgb(69, 140, 207);
 }</string>
                          </property>
                          <property name="text">
                           <string>運転開始</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
                          </property>
                          <property name="autoRepeatInterval">
                           <number>100</number>
@@ -4022,23 +4099,34 @@ QPushButton:pressed {
                          </property>
                          <property name="styleSheet">
                           <string notr="true">QPushButton {
-	color: rgb(44, 36, 0);
+	color: rgb(202, 206, 216);
 	font: 28px  &quot;游ゴシック&quot;;
-	background-color: rgb(79, 159, 238);
+	background-color: rgb(65, 65, 65);
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 25px;
 }
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(79, 159, 238);
+}
+
 QPushButton:hover {
+	
+	color: rgb(44, 36, 0);
 	background-color: rgb(109, 182, 238);
 }
 
 QPushButton:pressed {
+	color: rgb(44, 36, 0);
 	background-color: rgb(69, 140, 207);
 }</string>
                          </property>
                          <property name="text">
                           <string>電圧印加</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
                          </property>
                          <property name="autoRepeatInterval">
                           <number>100</number>
@@ -4064,23 +4152,34 @@ QPushButton:pressed {
                          </property>
                          <property name="styleSheet">
                           <string notr="true">QPushButton {
-	color: rgb(44, 36, 0);
+	color: rgb(202, 206, 216);
 	font: 28px  &quot;游ゴシック&quot;;
-	background-color: rgb(79, 159, 238);
+	background-color: rgb(65, 65, 65);
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 25px;
 }
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(79, 159, 238);
+}
+
 QPushButton:hover {
+	
+	color: rgb(44, 36, 0);
 	background-color: rgb(109, 182, 238);
 }
 
 QPushButton:pressed {
+	color: rgb(44, 36, 0);
 	background-color: rgb(69, 140, 207);
 }</string>
                          </property>
                          <property name="text">
                           <string>マニュアル測定</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
                          </property>
                          <property name="autoRepeatInterval">
                           <number>100</number>
@@ -4350,7 +4449,7 @@ min-height:30;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1098</width>
+            <width>1170</width>
             <height>1410</height>
            </rect>
           </property>
@@ -4524,7 +4623,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>1112</width>
                       <height>200</height>
                      </rect>
                     </property>
@@ -5901,7 +6000,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>1112</width>
                       <height>200</height>
                      </rect>
                     </property>
