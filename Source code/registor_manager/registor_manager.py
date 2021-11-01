@@ -24,7 +24,35 @@ class MemoryUnit():
         self.registor_name=registor_name
         self.count=count
 
+def databaseWriteThread_NoModbusLoop(memoryPool,queuePool,eventPool):
 
+    database_relative_path="Database and Profile/System Registor Structure Database.db"
+    System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
+    cur = System_Registor_Database.cursor()
+
+    while 1:
+        getItem=MemoryUnit()
+        getItem=queuePool["database_modbusUplaod_Queue"].get()
+        
+        time.sleep(0.1)
+        
+        test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
+        #print(test)
+        cur.execute(test)
+        #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
+            
+        while not queuePool["database_Uplaod_Queue"].empty():
+            getItem=queuePool["database_Uplaod_Queue"].get()
+            
+
+            test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
+            #print(test)
+            cur.execute(test)
+
+            #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
+         
+
+        System_Registor_Database.commit()
 
 def databaseWriteThread(memoryPool,queuePool,eventPool):
 
@@ -37,7 +65,7 @@ def databaseWriteThread(memoryPool,queuePool,eventPool):
         getItem=queuePool["database_Uplaod_Queue"].get()
         queuePool["modbus_Write_Queue"].put(getItem)
         
-        time.sleep(0.5)
+        time.sleep(0.1)
         
         test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
         #print(test)

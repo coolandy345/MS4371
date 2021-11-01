@@ -378,10 +378,13 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, '測定終了',{},{},{},{},{},'{}')".format(Table_name,10171,0,0,1,0,1,"エッジ(PLC側でRST)")
 cur.execute(test)
 
-test="INSERT INTO '{}' values({}, '実行PTN No.変更',{},{},{},{},{},'{}')".format(Table_name,10172,0,0,1,0,1,"エッジ(PLC側でRST)")
+test="INSERT INTO '{}' values({}, '実行PTN No.変更',{},{},{},{},{},'{}')".format(Table_name,10172,0,0,1,0,1,"エッジ(PLC側でRST) PC選定パターン変更時に1にします")
 cur.execute(test)
 
 test="INSERT INTO '{}' values({}, '大気圧',{},{},{},{},{},'{}')".format(Table_name,10173,0,0,1,0,1,"エッジ(PLC側でRST)")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '運転停止',{},{},{},{},{},'{}')".format(Table_name,10174,0,0,1,0,1,"エッジ(PLC側でRST)")
 cur.execute(test)
 
 

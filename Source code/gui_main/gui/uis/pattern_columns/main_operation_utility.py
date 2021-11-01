@@ -55,14 +55,25 @@ class Memory_Manager():
             
             #Check the pools has been changed
             poolNameList=[]
-            for item in getItem_list:
-                poolNameList.append(item.pool_name)
+            for getItem in getItem_list:
+                poolNameList.append(getItem.pool_name)
                 #item.registor_name
 
             poolNameList = list(dict.fromkeys(poolNameList))
+
+            import_pool={}
+            for poolname in poolNameList:
+                import_pool[poolname]=[]
+
+            for getItem in getItem_list:
+                import_pool[getItem.pool_name].append(getItem)
+
             #print("getItem",poolNameList)
             for pool_name in poolNameList:
-                self.memoryPool[pool_name]=self.Master_memoryPool[pool_name]
+
+                for item in import_pool[pool_name]:
+                    value=self.Master_memoryPool[item.pool_name][item.registor_name].getValue()
+                    self.memoryPool[item.pool_name][item.registor_name].setValue(value)
 
     def main_MemoryUpLoad_Work(self):
         """
@@ -167,7 +178,7 @@ class Main_utility_manager(QWidget):
             print("operator is fail")
             
     def set_memorypool_register(self,pool_name,registor_name,value):
-
+        
         if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
@@ -184,10 +195,13 @@ class Main_utility_manager(QWidget):
         elif btn_name == "autostart_pushButton":
 
             #self.eventPool["Auto Run Start"].set()
-            wait_Operator_Start_Thread = threading.Thread(target = self.wait_Operator_Start_Work,daemon=True)
-            wait_Operator_Start_Thread.start()
+            #wait_Operator_Start_Thread = threading.Thread(target = self.wait_Operator_Start_Work,daemon=True)
+            #wait_Operator_Start_Thread.start()
 
             self._parent.testfile_manager.set_content_Editeable(False)
+            self._parent.ui.load_pages.autostart_pushButton.setChecked(1)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
+
 
             #Check all condition to start sequence
                 # Lock parameter setting
@@ -201,6 +215,8 @@ class Main_utility_manager(QWidget):
         elif btn_name == "remoteConnect_pushButton":
             set=self._parent.ui.load_pages.remoteConnect_pushButton.isChecked()
             self.set_memorypool_register("Modbus Registor Pool - Registor","リモート",int(set))
+            #self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",int(set))
+
 
             pass
 
@@ -224,6 +240,11 @@ class Main_utility_manager(QWidget):
             pass
         elif btn_name == "eMSstop_pushButton" or btn_name == "outputStop_pushButton":
             self.eventPool["GPIB Stop"].set()
+            self._parent.ui.load_pages.autostart_pushButton.setChecked(0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
+            #self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",1)
+
             
             #Stop Auto sequence
                 #if we ok to process
@@ -245,8 +266,8 @@ class Main_utility_manager(QWidget):
 
         elif btn_name == "AutoMode_pattern_comboBox":
             #choose pattern
-            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()))
-
+            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()))
+            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
 
         elif btn_name == "graphItem_combobox":
             index=self._parent.ui.load_pages.graphItem_combobox.currentText()
@@ -594,6 +615,9 @@ class Main_utility_manager(QWidget):
                 self.realTime_Resistor=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在抵抗値"].getValue()
                 self._parent.ui.load_pages.realtime_Resistor_lineEdit.setText("{}".format(Quantity(self.realTime_Resistor,"Ω").render(prec=4)))
 
+
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定開始"].getValue():
+                print("測定開始　信号到達")
 
     def ultility_Update_Work(self):
         self.AutoMode_pattern_comboBox_contantList=[]

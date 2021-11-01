@@ -41,6 +41,9 @@ if __name__ == "__main__":
     QueuePool={}
     QueuePool["modbus_Write_Queue"]=MemoryPoolManager.Queue()
     QueuePool["database_Uplaod_Queue"]=MemoryPoolManager.Queue()
+    QueuePool["database_modbusUplaod_Queue"]=MemoryPoolManager.Queue()
+
+    
 
     QueuePool["memory_DownlaodToGUI_request_Queue"]=MemoryPoolManager.Queue()
     QueuePool["memory_UploadToMaster_Queue"]=MemoryPoolManager.Queue()
@@ -82,6 +85,8 @@ if __name__ == "__main__":
         executor.submit(csv_manager_thread,MemoryPool,QueuePool,EventPool)
         executor.submit(run_async_server,MemoryPool,QueuePool)
         executor.submit(databaseWriteThread,MemoryPool,QueuePool,EventPool)
+        executor.submit(databaseWriteThread_NoModbusLoop,MemoryPool,QueuePool,EventPool)
+
         executor.submit(operator_thread,MemoryPool,QueuePool,EventPool)
         Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool,EventPool)
         Gui_future.add_done_callback(shotdown_entire_app)
