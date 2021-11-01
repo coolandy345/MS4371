@@ -57,7 +57,7 @@ class Memory_Manager():
             poolNameList=[]
             for item in getItem_list:
                 poolNameList.append(item.pool_name)
-                item.registor_name
+                #item.registor_name
 
             poolNameList = list(dict.fromkeys(poolNameList))
             #print("getItem",poolNameList)
@@ -85,7 +85,7 @@ class Memory_Manager():
             poolNameList=[]
             for item in getItem_list:
                 poolNameList.append(item.pool_name)
-                item.registor_name
+                #item.registor_name
 
             #Remove Duplicates From poolNameList
             poolNameList = list(dict.fromkeys(poolNameList))

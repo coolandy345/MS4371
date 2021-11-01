@@ -19,7 +19,7 @@ class MemoryUnit():
     def __init__(self,
                  pool_name="",
                  registor_name="",
-                 count=0):
+                 count=1):
         self.pool_name=pool_name
         self.registor_name=registor_name
         self.count=count
