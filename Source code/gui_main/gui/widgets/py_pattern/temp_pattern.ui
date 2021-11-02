@@ -186,6 +186,11 @@ border-radius: 4px;</string>
          </property>
          <item>
           <property name="text">
+           <string>No.0</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>No.1</string>
           </property>
          </item>
@@ -282,6 +287,11 @@ border-radius: 4px;</string>
          <property name="maxVisibleItems">
           <number>5</number>
          </property>
+         <item>
+          <property name="text">
+           <string>No.0</string>
+          </property>
+         </item>
          <item>
           <property name="text">
            <string>No.1</string>

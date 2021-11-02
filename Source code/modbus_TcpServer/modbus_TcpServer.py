@@ -70,7 +70,8 @@ class CustomDataBlock(ModbusSparseDataBlock):
         #get dict
         self.get_register_dict()
 
-        self.Modbus_debug=False
+        self.Modbus_debug=True
+        #print(self.register_dict)
 
         super().__init__(self.register_dict)
         
@@ -83,7 +84,6 @@ class CustomDataBlock(ModbusSparseDataBlock):
         
     def get_register_dict(self):
         self.register_dict={}
-
         for unit in self.memorypool["Modbus Registor Pool - Registor"].values():
             self.register_namedict[unit.registor_number+self.register_shift]=unit.name
             self.register_dict[unit.registor_number+self.register_shift]=unit.getModbusValue()
@@ -91,8 +91,14 @@ class CustomDataBlock(ModbusSparseDataBlock):
     def getValues(self, address, count):
         self.ethernet_connection_pool=True
         registor_name=self.register_namedict[address]
+
         if self.Modbus_debug:
-            print("modbus read - ","[{}]".format(address-self.register_shift),registor_name,count)
+            #value_list=[]
+            #if add in range(0,count):
+            #registor_name=self.register_namedict[address+add]
+            #value_list.append(self.Modbuspool[registor_name].getValue())
+            print("modbus read - ","[{}]".format(address-self.register_shift),registor_name,count,self.Modbuspool[registor_name].getValue())
+
         return super().getValues(address, count)
 
     def ethernet_connection_Work(self):
@@ -105,7 +111,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
             self.ethernet_connection_pool=False
 
-            time.sleep(2)
+            time.sleep(0.2)
 
     def set_memorypool_register(self,pool_name,registor_name,value):
 

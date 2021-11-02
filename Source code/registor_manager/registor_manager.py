@@ -120,7 +120,10 @@ def databaseLoadThread(memoryPool):
         pool["blank_pos_{}".format(unit)]=ModbusRegistorClass.ModbusPackage(name="blank_pos_{}".format(unit),number=unit)
 
     memoryPool["Modbus Registor Pool - Registor"]=pool
-    #print(pool)
+
+    #for item in pool.values():
+
+    #    print(item.name,item.registor_number)
     
     
 

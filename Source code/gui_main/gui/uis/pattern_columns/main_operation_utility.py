@@ -201,7 +201,7 @@ class Main_utility_manager(QWidget):
             self._parent.testfile_manager.set_content_Editeable(False)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(1)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
-
+            self._parent.ui.load_pages.autostart_pushButton.setChecked(0)
 
             #Check all condition to start sequence
                 # Lock parameter setting
@@ -213,6 +213,7 @@ class Main_utility_manager(QWidget):
             #self._parent.testfile_manager.prepare_folder()
 
         elif btn_name == "remoteConnect_pushButton":
+
             set=self._parent.ui.load_pages.remoteConnect_pushButton.isChecked()
             self.set_memorypool_register("Modbus Registor Pool - Registor","リモート",int(set))
             #self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",int(set))
@@ -237,13 +238,18 @@ class Main_utility_manager(QWidget):
         elif btn_name == "gasFreeflow_pushButton":
             # Set Gas registor to memory bus
             #self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
+            
             pass
+
+
+
         elif btn_name == "eMSstop_pushButton" or btn_name == "outputStop_pushButton":
             self.eventPool["GPIB Stop"].set()
+            self._parent.testfile_manager.set_content_Editeable(True)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
-            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
-            #self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",1)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
 
             
             #Stop Auto sequence
@@ -599,6 +605,8 @@ class Main_utility_manager(QWidget):
         while 1:
             time.sleep(0.1)
 
+            
+
             if self.realTime_Temp!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue():
                 self.realTime_Temp=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()
                 self._parent.ui.load_pages.realtime_Temp_lineEdit.setText("{}".format(Quantity(self.realTime_Temp,"℃").render(prec=4)))
@@ -616,8 +624,8 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.realtime_Resistor_lineEdit.setText("{}".format(Quantity(self.realTime_Resistor,"Ω").render(prec=4)))
 
 
-            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定開始"].getValue():
-                print("測定開始　信号到達")
+            #if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定開始"].getValue():
+            #    print("測定開始　信号到達")
 
     def ultility_Update_Work(self):
         self.AutoMode_pattern_comboBox_contantList=[]
@@ -646,6 +654,8 @@ class Main_utility_manager(QWidget):
             self.gPIBConnecton_2635B_icon_active=self._parent.MMG.memoryPool["System memory"]["2635B connection"].getValue()
             self.gPIBConnecton_2657A_icon_active=self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue()
 
+
+
             if self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue():
                 self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
                 self.stop_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
@@ -655,6 +665,10 @@ class Main_utility_manager(QWidget):
                 self.testing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
                 self.testFinishing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
                 self.error_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
+
+                if not self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
+                    self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(True)
+
             else:
                 self.ready_icon_active=0
                 self.stop_icon_active=0
@@ -664,6 +678,13 @@ class Main_utility_manager(QWidget):
                 self.testing_icon_active=0
                 self.testFinishing_icon_active=0
                 self.error_icon_active=0
+
+
+                
+                if self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
+                    self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(False)
+                if self._parent.ui.load_pages.remoteConnect_pushButton.isChecked():
+                    self._parent.ui.load_pages.remoteConnect_pushButton.setChecked(False)
 
             if self.ready_icon_active != self._parent.ready_icon._is_active:
                 self._parent.ready_icon.set_active(self.ready_icon_active)

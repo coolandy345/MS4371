@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patternHippAG.ui'
+## Form generated from reading UI file 'temp_patternvQGMXR.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import *  # type: ignore
+from PySide6.QtGui import *  # type: ignore
+from PySide6.QtWidgets import *  # type: ignore
 
 
 class Ui_temp_pattern(object):
@@ -80,6 +80,7 @@ class Ui_temp_pattern(object):
         self.PID_muffle_comboBox.addItem("")
         self.PID_muffle_comboBox.addItem("")
         self.PID_muffle_comboBox.addItem("")
+        self.PID_muffle_comboBox.addItem("")
         self.PID_muffle_comboBox.setObjectName(u"PID_muffle_comboBox")
         self.PID_muffle_comboBox.setMinimumSize(QSize(80, 20))
         self.PID_muffle_comboBox.setMaximumSize(QSize(16777215, 20))
@@ -117,6 +118,7 @@ class Ui_temp_pattern(object):
         self.gridLayout_4.addWidget(self.SV_lineEdit, 5, 1, 1, 2)
 
         self.PID_heater_comboBox = QComboBox(self.page2)
+        self.PID_heater_comboBox.addItem("")
         self.PID_heater_comboBox.addItem("")
         self.PID_heater_comboBox.addItem("")
         self.PID_heater_comboBox.addItem("")
@@ -383,15 +385,17 @@ class Ui_temp_pattern(object):
     def retranslateUi(self, temp_pattern):
         temp_pattern.setWindowTitle(QCoreApplication.translate("temp_pattern", u"Form", None))
         self.N2_label.setText(QCoreApplication.translate("temp_pattern", u"N2 (SLM)", None))
-        self.PID_muffle_comboBox.setItemText(0, QCoreApplication.translate("temp_pattern", u"No.1", None))
-        self.PID_muffle_comboBox.setItemText(1, QCoreApplication.translate("temp_pattern", u"No.2", None))
-        self.PID_muffle_comboBox.setItemText(2, QCoreApplication.translate("temp_pattern", u"No.3", None))
-        self.PID_muffle_comboBox.setItemText(3, QCoreApplication.translate("temp_pattern", u"No.4", None))
+        self.PID_muffle_comboBox.setItemText(0, QCoreApplication.translate("temp_pattern", u"No.0", None))
+        self.PID_muffle_comboBox.setItemText(1, QCoreApplication.translate("temp_pattern", u"No.1", None))
+        self.PID_muffle_comboBox.setItemText(2, QCoreApplication.translate("temp_pattern", u"No.2", None))
+        self.PID_muffle_comboBox.setItemText(3, QCoreApplication.translate("temp_pattern", u"No.3", None))
+        self.PID_muffle_comboBox.setItemText(4, QCoreApplication.translate("temp_pattern", u"No.4", None))
 
-        self.PID_heater_comboBox.setItemText(0, QCoreApplication.translate("temp_pattern", u"No.1", None))
-        self.PID_heater_comboBox.setItemText(1, QCoreApplication.translate("temp_pattern", u"No.2", None))
-        self.PID_heater_comboBox.setItemText(2, QCoreApplication.translate("temp_pattern", u"No.3", None))
-        self.PID_heater_comboBox.setItemText(3, QCoreApplication.translate("temp_pattern", u"No.4", None))
+        self.PID_heater_comboBox.setItemText(0, QCoreApplication.translate("temp_pattern", u"No.0", None))
+        self.PID_heater_comboBox.setItemText(1, QCoreApplication.translate("temp_pattern", u"No.1", None))
+        self.PID_heater_comboBox.setItemText(2, QCoreApplication.translate("temp_pattern", u"No.2", None))
+        self.PID_heater_comboBox.setItemText(3, QCoreApplication.translate("temp_pattern", u"No.3", None))
+        self.PID_heater_comboBox.setItemText(4, QCoreApplication.translate("temp_pattern", u"No.4", None))
 
         self.Time_label.setText(QCoreApplication.translate("temp_pattern", u"\u6642\uff1a\u5206", None))
         self.label_4.setText(QCoreApplication.translate("temp_pattern", u":", None))
