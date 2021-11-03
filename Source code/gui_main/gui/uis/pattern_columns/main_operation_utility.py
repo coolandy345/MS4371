@@ -168,6 +168,62 @@ class Main_utility_manager(QWidget):
         realtime_data_Update_Thread = threading.Thread(target = self.realtime_data_Update_Work,daemon=True)
         realtime_data_Update_Thread.start()
 
+    def autoRun_logic(self):
+
+        self.ethernetConnecton_icon_active
+        
+        self.autostart_signal=True
+        self.remoteConnect_signal=True
+        self.stop_signal=True
+        self.gasFreeflow_signal=True
+
+        self.ready_icon_active
+        self.stop_icon_active
+        self.vacuum_icon_active
+        self.heating_icon_active
+        self.keepTemp_icon_active
+        self.testing_icon_active
+        self.testFinishing_icon_active
+        self.error_icon_active
+
+
+        #
+        if self.ethernetConnecton_icon_active and self.ready_icon_active and not self.error_icon_active:
+            
+
+
+
+
+
+
+            pass
+
+        else:
+            
+            if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
+
+            if self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
+                self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(False)
+            if self._parent.ui.load_pages.remoteConnect_pushButton.isChecked():
+                self._parent.ui.load_pages.remoteConnect_pushButton.setChecked(False)
+                
+            if self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
+                self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
+            if self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
+                self._parent.ui.load_pages.eMSstop_pushButton.setChecked(False)
+                
+            if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
+                self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
+            if self._parent.ui.load_pages.autostart_pushButton.isChecked():
+                self._parent.ui.load_pages.autostart_pushButton.setChecked(False)
+                
+            if self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
+                self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
+            if self._parent.ui.load_pages.gasFreeflow_pushButton.isChecked():
+                self._parent.ui.load_pages.gasFreeflow_pushButton.setChecked(False)
+
+
 
     def wait_Operator_Start_Work(self):
         if self.eventPool["Auto Run Start confirm"].wait(0.1):
@@ -193,13 +249,23 @@ class Main_utility_manager(QWidget):
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
         elif btn_name == "autostart_pushButton":
-
+            self.autostart_signal=True
             #self.eventPool["Auto Run Start"].set()
             #wait_Operator_Start_Thread = threading.Thread(target = self.wait_Operator_Start_Work,daemon=True)
             #wait_Operator_Start_Thread.start()
 
             self._parent.testfile_manager.set_content_Editeable(False)
+
+            self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
+
+            self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(1)
+            self._parent.ui.load_pages.autostart_pushButton.setText("運転中")
+
+            self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(True)
+            self._parent.ui.load_pages.eMSstop_pushButton.setChecked(0)
+            
+            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
@@ -207,15 +273,14 @@ class Main_utility_manager(QWidget):
 
             #Check all condition to start sequence
                 # Lock parameter setting
-                # Prepare folder to record
+                # Prepare folder to recorda
                 # Tell PLC to start pattern
 
-
-            pass
             #self._parent.testfile_manager.prepare_folder()
 
         elif btn_name == "remoteConnect_pushButton":
-
+            
+            self.remoteConnect_signal=True
             set=self._parent.ui.load_pages.remoteConnect_pushButton.isChecked()
             self.set_memorypool_register("Modbus Registor Pool - Registor","リモート",int(set))
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
@@ -236,15 +301,13 @@ class Main_utility_manager(QWidget):
         elif btn_name == "voltageOutput_pushButton":
             self.eventPool["Test Event1"].set()
             # Check if we can output valtage
-            # Let GPIB device to output valtage 
-
-
+            # Let GPIB device to output valtage
             pass
 
         elif btn_name == "gasFreeflow_pushButton":
+            self.gasFreeflow_signal=True
             # Set Gas registor to memory bus
             #self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
-            self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
             
             pass
@@ -252,9 +315,20 @@ class Main_utility_manager(QWidget):
 
 
         elif btn_name == "eMSstop_pushButton" or btn_name == "outputStop_pushButton":
+            self.stop_signal=True
             self.eventPool["GPIB Stop"].set()
             self._parent.testfile_manager.set_content_Editeable(True)
+
+            self._parent.ui.load_pages.autostart_pushButton.setEnabled(True)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(0)
+            self._parent.ui.load_pages.autostart_pushButton.setText("運転開始")
+
+            self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
+            self._parent.ui.load_pages.eMSstop_pushButton.setChecked(1)
+
+            
+            self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
+
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
@@ -280,8 +354,16 @@ class Main_utility_manager(QWidget):
 
 
         elif btn_name == "AutoMode_pattern_comboBox":
+
+            self._parent.ui.load_pages.autostart_pushButton.setEnabled(True)
+            self._parent.ui.load_pages.autostart_pushButton.setChecked(0)
+
+            self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
+            self._parent.ui.load_pages.eMSstop_pushButton.setChecked(0)
+
             #choose pattern
-            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()))
+            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1))
+            time.sleep(0.1)
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
 
         elif btn_name == "graphItem_combobox":
@@ -666,7 +748,14 @@ class Main_utility_manager(QWidget):
 
 
             if self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue():
-                self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
+
+                if self.ready_icon_active!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue():
+                    self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
+
+                    self._parent.ui.load_pages.autostart_pushButton.setEnabled(self.ready_icon_active)
+                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(self.ready_icon_active)
+
+
                 self.stop_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
                 self.vacuum_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
                 self.heating_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
@@ -678,6 +767,8 @@ class Main_utility_manager(QWidget):
                 if not self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
                     self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(True)
 
+
+
             else:
                 self.ready_icon_active=0
                 self.stop_icon_active=0
@@ -688,12 +779,28 @@ class Main_utility_manager(QWidget):
                 self.testFinishing_icon_active=0
                 self.error_icon_active=0
 
-
+                
                 
                 if self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
                     self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(False)
                 if self._parent.ui.load_pages.remoteConnect_pushButton.isChecked():
                     self._parent.ui.load_pages.remoteConnect_pushButton.setChecked(False)
+                
+                #if self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
+                #    self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
+                #if self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
+                #    self._parent.ui.load_pages.eMSstop_pushButton.setChecked(False)
+                
+                #if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
+                #    self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
+                #if self._parent.ui.load_pages.autostart_pushButton.isChecked():
+                #    self._parent.ui.load_pages.autostart_pushButton.setChecked(False)
+                
+                #if self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
+                #    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
+                #if self._parent.ui.load_pages.gasFreeflow_pushButton.isChecked():
+                #    self._parent.ui.load_pages.gasFreeflow_pushButton.setChecked(False)
+
 
             if self.ready_icon_active != self._parent.ready_icon._is_active:
                 self._parent.ready_icon.set_active(self.ready_icon_active)

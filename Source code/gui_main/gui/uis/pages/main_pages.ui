@@ -44,7 +44,7 @@
       <string notr="true">background-color: rgb(44, 49, 60);</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -4197,30 +4197,36 @@ QPushButton:pressed {
                           </size>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">QPushButton {
-	color: rgb(44, 36, 0);
+                          <string notr="true">
+QPushButton {
+	color: rgb(202, 206, 216);
 	font: 30px  &quot;游ゴシック&quot;;
-	background-color: rgb(255, 88, 105);
+	background-color: rgb(65, 65, 65);
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 30px;
 }
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(255, 88, 105);
+}
+
 QPushButton:hover {
+	
+	color: rgb(44, 36, 0);
 	background-color: rgb(255, 124, 163);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 30px;
 }
 
 QPushButton:pressed {
+	color: rgb(44, 36, 0);
 	background-color: rgb(220, 37, 95);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 30px;
 }</string>
                          </property>
                          <property name="text">
                           <string>運転停止</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
                          </property>
                         </widget>
                        </item>

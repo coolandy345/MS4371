@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesUxhdeQ.ui'
+## Form generated from reading UI file 'main_pagesWfsTup.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -1897,27 +1897,31 @@ class Ui_MainPages(object):
         self.eMSstop_pushButton.setObjectName(u"eMSstop_pushButton")
         self.eMSstop_pushButton.setMinimumSize(QSize(210, 90))
         self.eMSstop_pushButton.setMaximumSize(QSize(210, 90))
-        self.eMSstop_pushButton.setStyleSheet(u"QPushButton {\n"
-"	color: rgb(44, 36, 0);\n"
+        self.eMSstop_pushButton.setStyleSheet(u"\n"
+"QPushButton {\n"
+"	color: rgb(202, 206, 216);\n"
 "	font: 30px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"	background-color: rgb(255, 88, 105);\n"
+"	background-color: rgb(65, 65, 65);\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-radius: 30px;\n"
 "}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(255, 88, 105);\n"
+"}\n"
+"\n"
 "QPushButton:hover {\n"
+"	\n"
+"	color: rgb(44, 36, 0);\n"
 "	background-color: rgb(255, 124, 163);\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-radius: 30px;\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
 "	background-color: rgb(220, 37, 95);\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-radius: 30px;\n"
 "}")
+        self.eMSstop_pushButton.setCheckable(True)
 
         self.verticalLayout_7.addWidget(self.eMSstop_pushButton)
 
@@ -2167,7 +2171,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1098, 1410))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1170, 1410))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -2249,7 +2253,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1040, 200))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1112, 200))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -2851,7 +2855,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 1040, 200))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 1112, 200))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -3442,7 +3446,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 

@@ -127,7 +127,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
         
     def MainDatabase_upload_Work(self):
             #test=time.time()
-
+            print(self.MainPool_update_namelist)
                 
             local_namelist=[]
             #Remove void item in  MainPool_update_namelist

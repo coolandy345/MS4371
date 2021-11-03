@@ -192,7 +192,7 @@ class TempPatternWidget(QWidget):
                 self.focus_patternFile_number=self.availlible_patternFile_count
         
         
-        self.patternFile_nameList=[""]
+        self.patternFile_nameList=[]
 
         for ptn_no in range(1,21):
 
@@ -317,7 +317,7 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.patternfile_comboBox.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.patternfile_comboBox.clear()
         self._parent.ui.load_pages.patternfile_comboBox.addItems(self.patternFile_nameList)
-        self._parent.ui.load_pages.patternfile_comboBox.setCurrentIndex(self.focus_patternFile_number)
+        self._parent.ui.load_pages.patternfile_comboBox.setCurrentIndex(self.focus_patternFile_number-1)
         self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         
@@ -568,12 +568,12 @@ class TempPatternWidget(QWidget):
                 elif result=="Cancel":
                     #User is not want Delete file
                     self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.disconnect()
-                    self._parent.ui.load_pages.patternfile_comboBox.setCurrentIndex(self.focus_patternFile_number)
+                    self._parent.ui.load_pages.patternfile_comboBox.setCurrentIndex(self.focus_patternFile_number-1)
                     self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
                     return
 
 
-            self.focus_patternFile_number=self._parent.ui.load_pages.patternfile_comboBox.currentIndex()
+            self.focus_patternFile_number=self._parent.ui.load_pages.patternfile_comboBox.currentIndex()+1
             self.patternFile_Load()
 
         elif btn_name=="commect_lineEdit":
