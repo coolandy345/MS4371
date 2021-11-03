@@ -131,12 +131,33 @@ N2流量_comment="真空時0"
 ヒーター_PID_No_min=0
 ヒーター_PID_No_comment="NULL"
 
+スレーブSP上限=108
+スレーブSP上限_name="スレーブSP上限"
+スレーブSP上限_default=0
+スレーブSP上限_max=65535
+スレーブSP上限_min=0
+スレーブSP上限_comment=""
+
+リミッター=109
+リミッター_name="リミッター"
+リミッター_default=0
+リミッター_max=65535
+リミッター_min=0
+リミッター_comment=""
+
 測定有=110
 測定有_name="測定有"
 測定有_default=0
 測定有_max=1
 測定有_min=0
 測定有_comment="有時温度変化なし"
+
+スレーブSP下限=111
+スレーブSP下限_name="スレーブSP下限"
+スレーブSP下限_default=0
+スレーブSP下限_max=65535
+スレーブSP下限_min=0
+スレーブSP下限_comment=""
 
 測定パターン=112
 測定パターン_name="測定パターン"
@@ -257,7 +278,16 @@ for pattern_no in range(1,21):
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+ヒーター_PID_No,pattern_no,step,ヒーター_PID_No_name,ヒーター_PID_No_min,ヒーター_PID_No_default,ヒーター_PID_No_max,ヒーター_PID_No_default,0,ヒーター_PID_No_comment)
         cur.execute(test)
 
+        test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+スレーブSP上限,pattern_no,step,スレーブSP上限_name,スレーブSP上限_min,スレーブSP上限_default,スレーブSP上限_max,スレーブSP上限_default,0,スレーブSP上限_comment)
+        cur.execute(test)
+
+        test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+リミッター,pattern_no,step,リミッター_name,リミッター_min,リミッター_default,リミッター_max,リミッター_default,0,リミッター_comment)
+        cur.execute(test)
+
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+測定有,pattern_no,step,測定有_name,測定有_min,測定有_default,測定有_max,測定有_default,0,測定有_comment)
+        cur.execute(test)
+
+        test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+スレーブSP下限,pattern_no,step,スレーブSP下限_name,スレーブSP下限_min,スレーブSP下限_default,スレーブSP下限_max,スレーブSP下限_default,0,スレーブSP下限_comment)
         cur.execute(test)
 
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+測定パターン,pattern_no,step,測定パターン_name,測定パターン_min,測定パターン_default,測定パターン_max,測定パターン_default,0,測定パターン_comment)
@@ -268,9 +298,6 @@ for pattern_no in range(1,21):
 
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+ステップ累計時間,pattern_no,step,ステップ累計時間_name,ステップ累計時間_min,ステップ累計時間_default,ステップ累計時間_max,ステップ累計時間_default,0,ステップ累計時間_comment)
         cur.execute(test)
-
-
-
 
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+STEP種類,pattern_no,step,STEP種類_name,STEP種類_min,STEP種類_default,STEP種類_max,STEP種類_default,0,STEP種類_comment)
         cur.execute(test)

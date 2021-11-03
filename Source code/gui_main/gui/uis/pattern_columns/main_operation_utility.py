@@ -133,7 +133,7 @@ class Main_utility_manager(QWidget):
         self.heating_icon_active=False
         self.keepTemp_icon_active=False
         self.testing_icon_active=False
-        self.testFinishing_icon_active=False
+        self.autoRunFinishing_icon_active=False
         self.error_icon_active=False
         self.ethernetConnecton_icon_active=False
         self.usbConnecton_icon_active=False
@@ -183,30 +183,107 @@ class Main_utility_manager(QWidget):
         self.heating_icon_active
         self.keepTemp_icon_active
         self.testing_icon_active
-        self.testFinishing_icon_active
+        self.autoRunFinishing_icon_active
         self.error_icon_active
 
 
-        #
-        if self.ethernetConnecton_icon_active and self.ready_icon_active and not self.error_icon_active:
-            
-
-
-
-
-
-
-            pass
+        #If we got ethernet access
+        if self.ethernetConnecton_icon_active:
+            if not self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
+                self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(True)
 
         else:
-            
-            if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
-                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
-
             if self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
                 self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(False)
             if self._parent.ui.load_pages.remoteConnect_pushButton.isChecked():
                 self._parent.ui.load_pages.remoteConnect_pushButton.setChecked(False)
+
+
+
+
+        #Check if we ok to operate
+        if (self._parent.ui.load_pages.remoteConnect_pushButton.isChecked() and 
+            self.ready_icon_active and 
+            not self.error_icon_active
+            ):
+
+            #check MS4371 is at Running state
+            if (self.vacuum_icon_active or
+                self.heating_icon_active or
+                self.keepTemp_icon_active):
+
+                self._parent.testfile_manager.set_content_Editeable(False)
+
+                #Enbale stop btn
+                if not self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
+                    self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(True)
+                if self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
+                    self._parent.ui.load_pages.eMSstop_pushButton.setChecked(False)
+
+                #Disable Run,freeGas,combobox, btn
+                if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
+                    self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
+                if not self._parent.ui.load_pages.autostart_pushButton.isChecked():
+                    self._parent.ui.load_pages.autostart_pushButton.setChecked(True)
+                self._parent.ui.load_pages.autostart_pushButton.setText("運転中")
+                
+                if self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
+                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
+
+                if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
+                    self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
+
+            #check MS4371 is at Finish state
+            elif self.autoRunFinishing_icon_active:
+
+                self._parent.testfile_manager.set_content_Editeable(True)
+
+                #Enbale Run,stop,freeGas,combobox btn
+                if self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
+                    self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(True)
+                if not self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
+                    self._parent.ui.load_pages.eMSstop_pushButton.setChecked(True)
+
+                if not self._parent.ui.load_pages.autostart_pushButton.isEnabled():
+                    self._parent.ui.load_pages.autostart_pushButton.setEnabled(True)
+                if self._parent.ui.load_pages.autostart_pushButton.isChecked():
+                    self._parent.ui.load_pages.autostart_pushButton.setChecked(False)
+                self._parent.ui.load_pages.autostart_pushButton.setText("運転開始")
+
+                if not self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
+                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(True)
+
+                if not self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
+                    self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
+
+            #MS4371 is at IDLE state
+            else:
+
+                self._parent.testfile_manager.set_content_Editeable(True)
+
+                #Disable stop btn
+                if self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
+                    self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
+                if self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
+                    self._parent.ui.load_pages.eMSstop_pushButton.setChecked(False)
+
+                #Enbale Run,freeGas,combobox, btn
+                if not self._parent.ui.load_pages.autostart_pushButton.isEnabled():
+                    self._parent.ui.load_pages.autostart_pushButton.setEnabled(True)
+                self._parent.ui.load_pages.autostart_pushButton.setText("運転開始")
+
+                
+                if not self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
+                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(True)
+
+                if not self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
+                    self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
+
+
+        else:
+            #We are not allow to operate
+            if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
                 
             if self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
                 self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
@@ -220,8 +297,6 @@ class Main_utility_manager(QWidget):
                 
             if self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
                 self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
-            if self._parent.ui.load_pages.gasFreeflow_pushButton.isChecked():
-                self._parent.ui.load_pages.gasFreeflow_pushButton.setChecked(False)
 
 
 
@@ -255,7 +330,6 @@ class Main_utility_manager(QWidget):
             #wait_Operator_Start_Thread.start()
 
             self._parent.testfile_manager.set_content_Editeable(False)
-
             self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
 
             self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
@@ -542,7 +616,7 @@ class Main_utility_manager(QWidget):
         
         self._parent.ui.load_pages.Layout_Status_Testing.addWidget(self._parent.testing_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self._parent.testFinishing_icon = PyIconButton_simple(
+        self._parent.autoRunFinishing_icon = PyIconButton_simple(
                 icon = "cold-temperature-extralarge.svg",
                 icon_active = "cold-temperature-extralarge.svg",
                 icon_hover = "cold-temperature-extralarge.svg",
@@ -555,7 +629,7 @@ class Main_utility_manager(QWidget):
                 bg_color_hover =  "#1e2229",
                 bg_color_pressed =  "#1e2229",
             )
-        self._parent.ui.load_pages.Layout_Status_TestFinishing.addWidget(self._parent.testFinishing_icon, Qt.AlignCenter, Qt.AlignCenter)
+        self._parent.ui.load_pages.Layout_Status_TestFinishing.addWidget(self._parent.autoRunFinishing_icon, Qt.AlignCenter, Qt.AlignCenter)
 
         self._parent.error_icon = PyIconButton_simple(
                 icon = "fi-rr-exclamation-extralarge.svg",
@@ -748,25 +822,15 @@ class Main_utility_manager(QWidget):
 
 
             if self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue():
-
-                if self.ready_icon_active!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue():
-                    self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
-
-                    self._parent.ui.load_pages.autostart_pushButton.setEnabled(self.ready_icon_active)
-                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(self.ready_icon_active)
-
-
+                
+                self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
                 self.stop_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
                 self.vacuum_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
                 self.heating_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
                 self.keepTemp_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度ｷｰﾌﾟ中"].getValue()
                 self.testing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
-                self.testFinishing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
+                self.autoRunFinishing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
                 self.error_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
-
-                if not self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
-                    self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(True)
-
 
 
             else:
@@ -776,30 +840,10 @@ class Main_utility_manager(QWidget):
                 self.heating_icon_active=0
                 self.keepTemp_icon_active=0
                 self.testing_icon_active=0
-                self.testFinishing_icon_active=0
+                self.autoRunFinishing_icon_active=0
                 self.error_icon_active=0
 
-                
-                
-                if self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
-                    self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(False)
-                if self._parent.ui.load_pages.remoteConnect_pushButton.isChecked():
-                    self._parent.ui.load_pages.remoteConnect_pushButton.setChecked(False)
-                
-                #if self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
-                #    self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
-                #if self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
-                #    self._parent.ui.load_pages.eMSstop_pushButton.setChecked(False)
-                
-                #if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
-                #    self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
-                #if self._parent.ui.load_pages.autostart_pushButton.isChecked():
-                #    self._parent.ui.load_pages.autostart_pushButton.setChecked(False)
-                
-                #if self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
-                #    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
-                #if self._parent.ui.load_pages.gasFreeflow_pushButton.isChecked():
-                #    self._parent.ui.load_pages.gasFreeflow_pushButton.setChecked(False)
+            self.autoRun_logic()
 
 
             if self.ready_icon_active != self._parent.ready_icon._is_active:
@@ -814,8 +858,8 @@ class Main_utility_manager(QWidget):
                 self._parent.keepTemp_icon.set_active(self.keepTemp_icon_active)
             if self.testing_icon_active != self._parent.testing_icon._is_active:
                 self._parent.testing_icon.set_active(self.testing_icon_active)
-            if self.testFinishing_icon_active != self._parent.testFinishing_icon._is_active:
-                self._parent.testFinishing_icon.set_active(self.testFinishing_icon_active)
+            if self.autoRunFinishing_icon_active != self._parent.autoRunFinishing_icon._is_active:
+                self._parent.autoRunFinishing_icon.set_active(self.autoRunFinishing_icon_active)
             if self.error_icon_active != self._parent.error_icon._is_active:
                 self._parent.error_icon.set_active(self.error_icon_active)
 
