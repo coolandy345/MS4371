@@ -200,8 +200,10 @@ class Main_utility_manager(QWidget):
 
             self._parent.testfile_manager.set_content_Editeable(False)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(1)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
-            self._parent.ui.load_pages.autostart_pushButton.setChecked(0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",0)
 
             #Check all condition to start sequence
                 # Lock parameter setting
@@ -216,6 +218,10 @@ class Main_utility_manager(QWidget):
 
             set=self._parent.ui.load_pages.remoteConnect_pushButton.isChecked()
             self.set_memorypool_register("Modbus Registor Pool - Registor","リモート",int(set))
+            self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",0)
             #self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",int(set))
 
 
@@ -238,6 +244,7 @@ class Main_utility_manager(QWidget):
         elif btn_name == "gasFreeflow_pushButton":
             # Set Gas registor to memory bus
             #self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
             
             pass
@@ -248,6 +255,8 @@ class Main_utility_manager(QWidget):
             self.eventPool["GPIB Stop"].set()
             self._parent.testfile_manager.set_content_Editeable(True)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
 
