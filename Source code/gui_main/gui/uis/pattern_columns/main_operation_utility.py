@@ -441,6 +441,7 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
 
         elif btn_name == "graphItem_combobox":
+
             index=self._parent.ui.load_pages.graphItem_combobox.currentText()
             if index=="抵抗値":
                 self.graph_Item="Resistor"
@@ -458,6 +459,8 @@ class Main_utility_manager(QWidget):
                 self.timeLabel="hr"
                 self.timeMaxRange=10
                 self.timeMinRange=1
+            
+            self.graph_update()
                 
             
         elif btn_name == "timeUnit_comboBox":
@@ -479,7 +482,6 @@ class Main_utility_manager(QWidget):
                 self.timeMaxRange=10
                 self.timeMinRange=1
 
-            self.graph_update()
 
     def utility_update(self):
         pass
@@ -710,60 +712,65 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.Layout_Status_2635B_GPIBConnecton.addWidget(self._parent.gPIBConnecton_2635B_icon, Qt.AlignCenter, Qt.AlignCenter)
 
     def graph_update(self):
-        self.data_array=[]
+        self.measurement_data_array=[]
 
         if self.graph_Item=="Resistor":
+            print("Resistor")
             #for data in self._parent.MMG.memoryPool["Read Measurement Data"]:
             #    XYdata={}
             #    XYdata["x"]=data.time/self.timeUnit
             #    XYdata["y"]=data.resistor
-            #    self.data_array.append(XYdata)
-            self._parent.curve.setData(self.data_array)
-        else:
+            #    self.measurement_data_array.append(XYdata)
+
+            self._parent.curve.setData(self.measurement_data_array)
+        elif self.graph_Item=="Pattern":
+
             self.choose_pattern=self._parent.MMG.memoryPool["System memory"]["choose_Pattern"].getValue()
-            if choose_pattern:
-                pattern_availible_number=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(choose_pattern)].getValue()
+            print("self.choose_pattern",self.choose_pattern)
+            if self.choose_pattern:
+                pattern_availible_number=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(self.choose_pattern)].getValue()
             
-                self.data_array.append({"x":0,"y":0})
+                self.measurement_data_array.append({"x":0,"y":0})
                 for step in (1,pattern_availible_number+1):
                     XYdata={}
-                    XYdata["x"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(choose_pattern,step)].getValue()
-                    XYdata["y"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(choose_pattern,step)].getValue()
-                    self.data_array.append(XYdata)
+                    XYdata["x"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(self.choose_pattern,step)].getValue()
+                    XYdata["y"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(self.choose_pattern,step)].getValue()
+                    self.measurement_data_array.append(XYdata)
             #not choose_pattern yet 
             else:
-                self.data_array=[]
-            self._parent.curve.setData(self.data_array)
+                self.measurement_data_array=[]
+            self._parent.curve.setData(self.measurement_data_array)
 
-        self._parent.realTimeData_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
-        self._parent.realTimeData_Graph.setLimits(minXRange=self.timeMinRange,maxXRange=self.timeMaxRange)
+        self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
+        self.realTimeData_Graph.setLimits(minXRange=self.timeMinRange,maxXRange=self.timeMaxRange)
 
     def graph_setup(self):
-        self._parent.realTimeData_Graph =pg.PlotWidget(background=None,title="測定抵抗値")
-        self._parent.realTimeData_Graph.setLabel(axis='left', text='抵抗値', units='Ω')
-        self._parent.realTimeData_Graph.setLabel(axis='bottom', text='時間', units='s')
 
-        self._parent.Xaxis = self._parent.realTimeData_Graph.getAxis('bottom')
-        self._parent.realTimeData_Graph.setAxisItems({'bottom':self._parent.Xaxis})
+        self.realTimeData_Graph =pg.PlotWidget(background=None,title="測定抵抗値")
+        self.realTimeData_Graph.setLabel(axis='left', text='抵抗値', units='Ω')
+        self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units='s')
+
+        self._parent.Xaxis = self.realTimeData_Graph.getAxis('bottom')
+        self.realTimeData_Graph.setAxisItems({'bottom':self._parent.Xaxis})
         
-        self._parent.Yaxis = self._parent.realTimeData_Graph.getAxis('left')
+        self._parent.Yaxis = self.realTimeData_Graph.getAxis('left')
         self._parent.Yaxis.enableAutoSIPrefix(True)
 
-        self._parent.realTimeData_Graph.showGrid(x=True, y=True)
-        self._parent.realTimeData_Graph.setMouseEnabled(x=True, y=False)
-        self._parent.realTimeData_Graph.setLimits(minXRange=1,maxXRange=10)
-        self._parent.realTimeData_Graph.setLimits(xMin=0,yMin=0)
+        self.realTimeData_Graph.showGrid(x=True, y=True)
+        self.realTimeData_Graph.setMouseEnabled(x=True, y=False)
+        self.realTimeData_Graph.setLimits(minXRange=1,maxXRange=10)
+        self.realTimeData_Graph.setLimits(xMin=0,yMin=0)
 
-        self._parent.curve=self._parent.realTimeData_Graph.plot(pen=pg.mkPen((225, 230, 241),width=5), 
+        self._parent.curve=self.realTimeData_Graph.plot(pen=pg.mkPen((225, 230, 241),width=5), 
                                    symbolBrush=(0,0,0),
                                    symbolPen='w', 
                                    #symbol='o', 
                                    symbolSize=5, 
                                    name="予定パターン")
         
-        self.data_array=[]
-        self._parent.curve.setData(self.data_array)
-        self._parent.ui.load_pages.realtime_grapgLayout.addWidget(self._parent.realTimeData_Graph, Qt.AlignCenter, Qt.AlignCenter)
+        self.measurement_data_array=[]
+        self._parent.curve.setData(self.measurement_data_array)
+        self._parent.ui.load_pages.realtime_grapgLayout.addWidget(self.realTimeData_Graph, Qt.AlignCenter, Qt.AlignCenter)
 
     def realtime_data_Update_Work(self):
         #print("realtime_data_Update_Work")
@@ -803,8 +810,8 @@ class Main_utility_manager(QWidget):
             #XYdata={}
             #XYdata["x"]=self.time/self.timeUnit
             #XYdata["y"]=random.random()*1000
-            #self.data_array.append(XYdata)
-            #self._parent.curve.setData(self.data_array)
+            #self.measurement_data_array.append(XYdata)
+            #self._parent.curve.setData(self.measurement_data_array)
             #self.time+=1
             if self.AutoMode_pattern_comboBox_contantList !=self._parent.tempPattern.patternFile_nameList:
                 self.AutoMode_pattern_comboBox_contantList=self._parent.tempPattern.patternFile_nameList

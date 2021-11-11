@@ -4870,7 +4870,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>1040</width>
                       <height>200</height>
                      </rect>
                     </property>
@@ -6247,7 +6247,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>1040</width>
                       <height>200</height>
                      </rect>
                     </property>
