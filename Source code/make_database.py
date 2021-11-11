@@ -138,12 +138,12 @@ N2流量_comment="真空時0"
 スレーブSP上限_min=0
 スレーブSP上限_comment=""
 
-リミッター=109
-リミッター_name="リミッター"
-リミッター_default=0
-リミッター_max=65535
-リミッター_min=0
-リミッター_comment=""
+シフト=109
+シフト_name="シフト"
+シフト_default=0
+シフト_max=65535
+シフト_min=0
+シフト_comment=""
 
 測定有=110
 測定有_name="測定有"
@@ -281,7 +281,7 @@ for pattern_no in range(1,21):
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+スレーブSP上限,pattern_no,step,スレーブSP上限_name,スレーブSP上限_min,スレーブSP上限_default,スレーブSP上限_max,スレーブSP上限_default,0,スレーブSP上限_comment)
         cur.execute(test)
 
-        test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+リミッター,pattern_no,step,リミッター_name,リミッター_min,リミッター_default,リミッター_max,リミッター_default,0,リミッター_comment)
+        test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+シフト,pattern_no,step,シフト_name,シフト_min,シフト_default,シフト_max,シフト_default,0,シフト_comment)
         cur.execute(test)
 
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+sub_base+測定有,pattern_no,step,測定有_name,測定有_min,測定有_default,測定有_max,測定有_default,0,測定有_comment)
@@ -385,6 +385,21 @@ test="INSERT INTO '{}' values({}, '測定可',{},{},{},{},{},'{}')".format(Table
 cur.execute(test)
 
 test="INSERT INTO '{}' values({}, '測定開始',{},{},{},{},{},'{}')".format(Table_name,10120,0,0,1,0,1,"エッジ(PC側でRST)")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '運転開始RST',{},{},{},{},{},'{}')".format(Table_name,10125,0,0,1,0,1,"エッジ(PC側でRST)")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '測定終了RST',{},{},{},{},{},'{}')".format(Table_name,10126,0,0,1,0,1,"エッジ(PC側でRST)")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '実行PTN No.変更RST',{},{},{},{},{},'{}')".format(Table_name,10127,0,0,1,0,1,"エッジ(PC側でRST)")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '大気圧RST',{},{},{},{},{},'{}')".format(Table_name,10128,0,0,1,0,1,"エッジ(PC側でRST)")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '運転停止RST',{},{},{},{},{},'{}')".format(Table_name,10129,0,0,1,0,1,"エッジ(PC側でRST)")
 cur.execute(test)
 
 test="INSERT INTO '{}' values({}, 'PC Boot',{},{},{},{},{},'{}')".format(Table_name,10150,0,0,1,0,1,"PC側常に1にする")

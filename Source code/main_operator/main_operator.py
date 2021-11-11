@@ -100,8 +100,8 @@ class Operator():
 
         self.gpib_2657A_control=False
 
-        #auto_Run_Start_Thread = threading.Thread(target = self.auto_Run_Start_Work,daemon=True)
-        #auto_Run_Start_Thread.start()
+        auto_Run_Start_Thread = threading.Thread(target = self.auto_Run_Start_Work,daemon=True)
+        auto_Run_Start_Thread.start()
 
 
         test1_Thread=threading.Thread(target = self.test_Work1,daemon=True)
@@ -250,86 +250,147 @@ class Operator():
         while 1:
             #get event Start Run Auto run
             self.eventPool["Auto Run Start"].wait()
-            self.eventPool["Auto Run Start confirm"].set()
+            #clear  Start Run Auto run event
+            self.eventPool["Auto Run Start"].clear()
+
+            time.sleep(2)
+
             self.stop=False
 
             Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
-
-
-            #check if PLC is ok to start
-            #check if PLC is stop
-            if Modbus_Registor_Pool["運転可"].getValue() and Modbus_Registor_Pool["停止中"].getValue():
-
-                #Tell PLC start pattern and PLC will reset this
-                set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
+            self.gpib_2657A.send_Command("reset()")
+            #self.gpib_2657A.send_Command("node[1].errorqueue.clear()")
+            #self.gpib_2657A.send_Command("node[2].errorqueue.clear()")
+            #self.gpib_2657A.send_Command("node[1].status.reset()")
+            #self.gpib_2657A.send_Command("node[2].status.reset()")
+            self.gpib_2657A.send_Command("tsplink.reset()")
+            self.gpib_2657A.send_Command("node[1].dataqueue.clear()")
+            self.gpib_2657A.send_Command("node[1].display.clear()")
+            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Prepare\")")
+            self.gpib_2657A.send_Command("node[2].display.clear()")
+            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[2].display.settext(\"Remote\")")
+            time.sleep(2)
+            self.gpib_2657A.send_Command("node[1].display.clear()")
+            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Start\")")
+            time.sleep(2)
+            self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("node[1].display.clear()")
+            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Step 1\")")
+            self.gpib_2657A.send_Command("node[2].display.clear()")
+            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[2].display.settext(\"Step 1\")")
+            time.sleep(0.5)
+            self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("node[1].display.clear()")
+            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Step 2\")")
+            self.gpib_2657A.send_Command("node[2].display.clear()")
+            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[2].display.settext(\"Step 2\")")
+            time.sleep(0.5)
+            self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("node[1].display.clear()")
+            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Step 3\")")
+            self.gpib_2657A.send_Command("node[2].display.clear()")
+            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[2].display.settext(\"Step 3\")")
+            time.sleep(0.5)
+            self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
+            self.gpib_2657A.send_Command("node[1].display.clear()")
+            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Step 4\")")
+            self.gpib_2657A.send_Command("node[2].display.clear()")
+            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[2].display.settext(\"Step 4\")")
+            time.sleep(0.5)
+            self.gpib_2657A.send_Command("node[1].display.clear()")
+            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Finish\")")
+            self.gpib_2657A.send_Command("node[2].display.clear()")
+            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("node[2].display.settext(\"Finish\")")
             
-                #check if there is any test pattern at future pattern step
-                operate_PTN_number=Modbus_Registor_Pool["実行PTN No.変更"].getValue()
+            time.sleep(2)
+            self.eventPool["Auto Run finish"].set()
 
-                test_pattern_listInPTN=[]
 
-                if Modbus_Registor_Pool["PTNData_{}_RT計測".format(operate_PTN_number)].getValue():
-                    test_pattern_listInPTN.append("RT")
+            ##check if PLC is ok to start
+            ##check if PLC is stop
+            #if Modbus_Registor_Pool["運転可"].getValue() and Modbus_Registor_Pool["停止中"].getValue():
 
-                for step in range(1,Modbus_Registor_Pool["PTNData_{}_実行STEP数".format(operate_PTN_number)].getValue()+1):
-                    if Modbus_Registor_Pool["PTNData_{}_STEP_{}_STEP種類".format(operate_PTN_number,step)].getValue()==2:
-                        #this is a test pattern
-                        test_pattern=Modbus_Registor_Pool["PTNData_{}_STEP_{}_測定パターン".format(operate_PTN_number,step)].getValue()
-                        test_pattern_listInPTN.append(test_pattern)
+            #    #Tell PLC start pattern and PLC will reset this
+            #    set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
+            
+            #    #check if there is any test pattern at future pattern step
+            #    operate_PTN_number=Modbus_Registor_Pool["実行PTN No.変更"].getValue()
 
-                #print(test_pattern_listInPTN)
+            #    test_pattern_listInPTN=[]
+
+            #    if Modbus_Registor_Pool["PTNData_{}_RT計測".format(operate_PTN_number)].getValue():
+            #        test_pattern_listInPTN.append("RT")
+
+            #    for step in range(1,Modbus_Registor_Pool["PTNData_{}_実行STEP数".format(operate_PTN_number)].getValue()+1):
+            #        if Modbus_Registor_Pool["PTNData_{}_STEP_{}_STEP種類".format(operate_PTN_number,step)].getValue()==2:
+            #            #this is a test pattern
+            #            test_pattern=Modbus_Registor_Pool["PTNData_{}_STEP_{}_測定パターン".format(operate_PTN_number,step)].getValue()
+            #            test_pattern_listInPTN.append(test_pattern)
+
+            #    #print(test_pattern_listInPTN)
                 
-                Measurement_Pattern=self.memoryPool["Measurement Pattern"]
-                #if yes
-                for test_pattern_no in test_pattern_listInPTN:
+            #    Measurement_Pattern=self.memoryPool["Measurement Pattern"]
+            #    #if yes
+            #    for test_pattern_no in test_pattern_listInPTN:
 
 
-                    test_pattern=testlist()
-                    if test_pattern_no=="RT":
-                        #prepare test profile and send script to GPIB device
-                        test_pattern.active=Measurement_Pattern["PTNData_{}_パターン有効".format(test_pattern_no)].getValue(),
-                        test_pattern.BG0_test_time=Measurement_Pattern["PTNData_{}_BG0測定時間".format(test_pattern_no)].getValue(),
-                        test_pattern.BG_sampletime=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_no)].getValue()
+            #        test_pattern=testlist()
+            #        if test_pattern_no=="RT":
+            #            #prepare test profile and send script to GPIB device
+            #            test_pattern.active=Measurement_Pattern["PTNData_{}_パターン有効".format(test_pattern_no)].getValue(),
+            #            test_pattern.BG0_test_time=Measurement_Pattern["PTNData_{}_BG0測定時間".format(test_pattern_no)].getValue(),
+            #            test_pattern.BG_sampletime=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_no)].getValue()
                             
-                    else:
-                        #prepare test profile and send script to GPIB device
+            #        else:
+            #            #prepare test profile and send script to GPIB device
                         
-                        test_pattern.name=Measurement_Pattern["PTNData_{}_名称".format(test_pattern_no)].getValue(),
-                        test_pattern.comment=Measurement_Pattern["PTNData_{}_註記".format(test_pattern_no)].getValue(),
-                        test_pattern.active=Measurement_Pattern["PTNData_{}_パターン有効".format(test_pattern_no)].getValue(),
-                        test_pattern.step_number=Measurement_Pattern["PTNData_{}_実行STEP数".format(test_pattern_no)].getValue(),
-                        test_pattern.test_time=Measurement_Pattern["PTNData_{}_測定時間".format(test_pattern_no)].getValue(),
-                        test_pattern.test_sampletime=Measurement_Pattern["PTNData_{}_測定sampletime".format(test_pattern_no)].getValue(),
-                        test_pattern.BG0_test_time=Measurement_Pattern["PTNData_{}_BG0測定時間".format(test_pattern_no)].getValue(),
-                        test_pattern.BG_test_time=Measurement_Pattern["PTNData_{}_BG測定時間".format(test_pattern_no)].getValue(),
-                        test_pattern.BG_sampletime=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_no)].getValue()
+            #            test_pattern.name=Measurement_Pattern["PTNData_{}_名称".format(test_pattern_no)].getValue(),
+            #            test_pattern.comment=Measurement_Pattern["PTNData_{}_註記".format(test_pattern_no)].getValue(),
+            #            test_pattern.active=Measurement_Pattern["PTNData_{}_パターン有効".format(test_pattern_no)].getValue(),
+            #            test_pattern.step_number=Measurement_Pattern["PTNData_{}_実行STEP数".format(test_pattern_no)].getValue(),
+            #            test_pattern.test_time=Measurement_Pattern["PTNData_{}_測定時間".format(test_pattern_no)].getValue(),
+            #            test_pattern.test_sampletime=Measurement_Pattern["PTNData_{}_測定sampletime".format(test_pattern_no)].getValue(),
+            #            test_pattern.BG0_test_time=Measurement_Pattern["PTNData_{}_BG0測定時間".format(test_pattern_no)].getValue(),
+            #            test_pattern.BG_test_time=Measurement_Pattern["PTNData_{}_BG測定時間".format(test_pattern_no)].getValue(),
+            #            test_pattern.BG_sampletime=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_no)].getValue()
                             
-                        units=[]
-                        for unit in range(1,test_pattern.step_number+1):
-                            unit=testUnit(
-                                voltage=Measurement_Pattern["PTNData_{}_STEP_{}_電圧".format(test_pattern_no,unit)].getValue()
-                                )
-                            units.append(unit)
-                        test_pattern.units=units
+            #            units=[]
+            #            for unit in range(1,test_pattern.step_number+1):
+            #                unit=testUnit(
+            #                    voltage=Measurement_Pattern["PTNData_{}_STEP_{}_電圧".format(test_pattern_no,unit)].getValue()
+            #                    )
+            #                units.append(unit)
+            #            test_pattern.units=units
 
 
 
-                    #               - tell csv_manager get ready
-                    if test_pattern_no=="RT":
-                        test_folder_package=Test_folder_package([Test_folder_package.RT_stage,0])
-                        self.queuePool["subFolderMakeQueue"].put(test_folder_package)
+            #        #               - tell csv_manager get ready
+            #        if test_pattern_no=="RT":
+            #            test_folder_package=Test_folder_package([Test_folder_package.RT_stage,0])
+            #            self.queuePool["subFolderMakeQueue"].put(test_folder_package)
 
-                    else:
-                        test_folder_package=Test_folder_package([Test_folder_package.Temp_stage,0])
-                        self.queuePool["subFolderMakeQueue"].put(test_folder_package)
+            #        else:
+            #            test_folder_package=Test_folder_package([Test_folder_package.Temp_stage,0])
+            #            self.queuePool["subFolderMakeQueue"].put(test_folder_package)
 
-                    self.measurement_initial()
-                     #Tell PLC we had finish measurement test 
-                    set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
+            #        self.measurement_initial()
+            #         #Tell PLC we had finish measurement test 
+            #        set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
 
             
-        #clear  Start Run Auto run event
-        self.eventPool["Auto Run Start"].clear()
 
     def GPIB_device_ScriptPrepare(self,voltage,test_time,sample_time):
         #reset all gpib device include TSP-Link device

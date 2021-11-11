@@ -203,7 +203,7 @@ class TestPatternWidget(QWidget):
                 self.focus_patternFile_number=self.availlible_patternFile_count
         
 
-        self.patternFile_nameList=[""]
+        self.patternFile_nameList=[]
 
         
         for file_number in range(1,21):

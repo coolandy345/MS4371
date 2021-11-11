@@ -157,7 +157,7 @@ class Main_utility_manager(QWidget):
         self.realTime_Current=0
         self.realTime_Resistor=0
 
-        
+        self.measurement_start=False
         #self.timer=QTimer()
         #self.timer.timeout.connect(self.ultility_Update_Work)
         #self.timer.start(10)
@@ -167,6 +167,8 @@ class Main_utility_manager(QWidget):
 
         realtime_data_Update_Thread = threading.Thread(target = self.realtime_data_Update_Work,daemon=True)
         realtime_data_Update_Thread.start()
+
+        
 
     def autoRun_logic(self):
 
@@ -198,115 +200,82 @@ class Main_utility_manager(QWidget):
             if self._parent.ui.load_pages.remoteConnect_pushButton.isChecked():
                 self._parent.ui.load_pages.remoteConnect_pushButton.setChecked(False)
 
+        #if PLC is allow us to start
+        if (self._parent.ui.load_pages.remoteConnect_pushButton.isChecked() and self.ready_icon_active):
+            #Enable conent editable
+            self._parent.testfile_manager.set_content_Editeable(True)
 
+            #Enbale AutoRun
+            self._parent.ui.load_pages.autostart_pushButton.setText("運転開始")
+            if not self._parent.ui.load_pages.autostart_pushButton.isEnabled():
+                self._parent.ui.load_pages.autostart_pushButton.setEnabled(True)
+            if self._parent.ui.load_pages.autostart_pushButton.isChecked():
+                self._parent.ui.load_pages.autostart_pushButton.setChecked(False)
 
+            #Enbale FreeGas flow
+            if not self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
+                self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(True)
 
-        #Check if we ok to operate
-        if (self._parent.ui.load_pages.remoteConnect_pushButton.isChecked() and 
-            self.ready_icon_active and 
-            not self.error_icon_active
-            ):
+            #Enbale pattern be choose
+            if not self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
 
-            #check MS4371 is at Running state
+            #Disbale EMS stop
+            if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
+                self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
+            if self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
+                self._parent.ui.load_pages.eMSstop_pushButton.setChecked(False)
+
+        #if PLC is not allow us to start
+        else:
+
+            #if PLC is at Running state
             if (self.vacuum_icon_active or
                 self.heating_icon_active or
-                self.keepTemp_icon_active):
+                self.keepTemp_icon_active or 
+                self.testing_icon_active or 
+                self.autoRunFinishing_icon_active):
 
+                #Disable conent editable
                 self._parent.testfile_manager.set_content_Editeable(False)
 
-                #Enbale stop btn
-                if not self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
+                #Enbale EMS stop
+                if not self._parent.ui.load_pages.autostart_pushButton.isEnabled():
                     self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(True)
                 if self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
-                    self._parent.ui.load_pages.eMSstop_pushButton.setChecked(False)
-
-                #Disable Run,freeGas,combobox, btn
-                if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
-                    self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
-                if not self._parent.ui.load_pages.autostart_pushButton.isChecked():
-                    self._parent.ui.load_pages.autostart_pushButton.setChecked(True)
-                self._parent.ui.load_pages.autostart_pushButton.setText("運転中")
-                
-                if self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
-                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
-
-                if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
-                    self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
-
-            #check MS4371 is at Finish state
-            elif self.autoRunFinishing_icon_active:
-
-                self._parent.testfile_manager.set_content_Editeable(True)
-
-                #Enbale Run,stop,freeGas,combobox btn
-                if self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
-                    self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(True)
-                if not self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
                     self._parent.ui.load_pages.eMSstop_pushButton.setChecked(True)
+                    
+                
 
-                if not self._parent.ui.load_pages.autostart_pushButton.isEnabled():
-                    self._parent.ui.load_pages.autostart_pushButton.setEnabled(True)
-                if self._parent.ui.load_pages.autostart_pushButton.isChecked():
-                    self._parent.ui.load_pages.autostart_pushButton.setChecked(False)
-                self._parent.ui.load_pages.autostart_pushButton.setText("運転開始")
-
-                if not self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
-                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(True)
-
-                if not self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
-                    self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
-
-            #MS4371 is at IDLE state
+            #if PLC is not at Running state also PLC is not allow to start
             else:
-
-                self._parent.testfile_manager.set_content_Editeable(True)
-
-                #Disable stop btn
-                if self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
+                #Disbale EMS stop
+                if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
                     self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
                 if self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
                     self._parent.ui.load_pages.eMSstop_pushButton.setChecked(False)
 
-                #Enbale Run,freeGas,combobox, btn
-                if not self._parent.ui.load_pages.autostart_pushButton.isEnabled():
-                    self._parent.ui.load_pages.autostart_pushButton.setEnabled(True)
-                self._parent.ui.load_pages.autostart_pushButton.setText("運転開始")
-
-                
-                if not self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
-                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(True)
-
-                if not self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
-                    self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
-
-
-        else:
-            #We are not allow to operate
-            if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
-                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
-                
-            if self._parent.ui.load_pages.eMSstop_pushButton.isEnabled():
-                self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
-            if self._parent.ui.load_pages.eMSstop_pushButton.isChecked():
-                self._parent.ui.load_pages.eMSstop_pushButton.setChecked(False)
-                
+            #Disbale AutoRun
             if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
                 self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
             if self._parent.ui.load_pages.autostart_pushButton.isChecked():
-                self._parent.ui.load_pages.autostart_pushButton.setChecked(False)
-                
+                self._parent.ui.load_pages.autostart_pushButton.setChecked(True)
+
+            #Disbale FreeGas flow
             if self._parent.ui.load_pages.gasFreeflow_pushButton.isEnabled():
                 self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
+            if self._parent.ui.load_pages.gasFreeflow_pushButton.isChecked():
+                self._parent.ui.load_pages.gasFreeflow_pushButton.setChecked(False)
+
+            #Disbale pattern be choose
+            if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
 
 
 
-    def wait_Operator_Start_Work(self):
-        if self.eventPool["Auto Run Start confirm"].wait(0.1):
-            self.eventPool["Auto Run Start confirm"].clear()
-            print("operator is starting")
-        else:
-            self._parent.testfile_manager.set_content_Editeable(True)
-            print("operator is fail")
+
+
+    
             
     def set_memorypool_register(self,pool_name,registor_name,value):
         
@@ -321,23 +290,17 @@ class Main_utility_manager(QWidget):
 
         if btn_name == "btn_AutoMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_AutoOperate)
+        elif btn_name == "test_pushButton":
+            self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
         elif btn_name == "autostart_pushButton":
             self.autostart_signal=True
-            #self.eventPool["Auto Run Start"].set()
-            #wait_Operator_Start_Thread = threading.Thread(target = self.wait_Operator_Start_Work,daemon=True)
-            #wait_Operator_Start_Thread.start()
-
-            self._parent.testfile_manager.set_content_Editeable(False)
-            self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
+            self.measurement_start=False
 
             self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(1)
             self._parent.ui.load_pages.autostart_pushButton.setText("運転中")
-
-            self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(True)
-            self._parent.ui.load_pages.eMSstop_pushButton.setChecked(0)
             
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
@@ -381,27 +344,14 @@ class Main_utility_manager(QWidget):
         elif btn_name == "gasFreeflow_pushButton":
             self.gasFreeflow_signal=True
             # Set Gas registor to memory bus
-            #self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
-            self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
+            #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
             
-            pass
-
 
 
         elif btn_name == "eMSstop_pushButton" or btn_name == "outputStop_pushButton":
             self.stop_signal=True
             self.eventPool["GPIB Stop"].set()
-            self._parent.testfile_manager.set_content_Editeable(True)
-
-            self._parent.ui.load_pages.autostart_pushButton.setEnabled(True)
-            self._parent.ui.load_pages.autostart_pushButton.setChecked(0)
-            self._parent.ui.load_pages.autostart_pushButton.setText("運転開始")
-
-            self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
-            self._parent.ui.load_pages.eMSstop_pushButton.setChecked(1)
-
-            
-            self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
 
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
@@ -415,7 +365,6 @@ class Main_utility_manager(QWidget):
 
              #Reset GPIB device any way
 
-            pass
 
         elif btn_name == "measurement_comboBox":
             # Set measurement mode 
@@ -502,7 +451,8 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.voltageOutput_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.outputStop_pushButton.clicked.connect(self.btn_callback)
 
-
+        
+        self._parent.ui.load_pages.test_pushButton.clicked.connect(self.btn_callback)
 
         
         self._parent.ui.load_pages.remoteConnect_pushButton.clicked.connect(self.btn_callback)
@@ -796,8 +746,53 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.realtime_Resistor_lineEdit.setText("{}".format(Quantity(self.realTime_Resistor,"Ω").render(prec=4)))
 
 
-            #if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定開始"].getValue():
-            #    print("測定開始　信号到達")
+
+
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定開始"].getValue():
+                #self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
+                if not self.measurement_start:
+                    print("測定開始　信号到達")
+                    self.measurement_start=True
+                    measurement_finish_wait_Thread = threading.Thread(target = self.measurement_finish_wait_Work,daemon=True)
+                    measurement_finish_wait_Thread.start()
+
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転開始RST"].getValue():
+                print("運転開始RST")
+                self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始RST",0)
+
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定終了RST"].getValue():
+                print("測定終了RST")
+                self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了RST",0)
+
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No.変更RST"].getValue():
+                print("実行PTN No.変更RST")
+                self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更RST",0)
+
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["大気圧RST"].getValue():
+                print("大気圧RST")
+                self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧RST",0)
+
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転停止RST"].getValue():
+                print("運転停止RST")
+                self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止RST",0)
+
+
+
+    def measurement_finish_wait_Work(self):
+        print("測定開始")
+        self.eventPool["Auto Run Start"].set()
+
+        self.eventPool["Auto Run finish"].wait()
+        self.eventPool["Auto Run finish"].clear()
+        self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
+        time.sleep(2)
+        print("測定終了")
+        self.measurement_start=False
 
     def ultility_Update_Work(self):
         self.AutoMode_pattern_comboBox_contantList=[]
@@ -805,14 +800,7 @@ class Main_utility_manager(QWidget):
         while 1:
 
             time.sleep(0.1)
-
-            #self.time=0
-            #XYdata={}
-            #XYdata["x"]=self.time/self.timeUnit
-            #XYdata["y"]=random.random()*1000
-            #self.measurement_data_array.append(XYdata)
-            #self._parent.curve.setData(self.measurement_data_array)
-            #self.time+=1
+            
             if self.AutoMode_pattern_comboBox_contantList !=self._parent.tempPattern.patternFile_nameList:
                 self.AutoMode_pattern_comboBox_contantList=self._parent.tempPattern.patternFile_nameList
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.disconnect()
@@ -820,6 +808,18 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.addItems(self.AutoMode_pattern_comboBox_contantList)
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.setCurrentIndex(self.choose_pattern)
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.connect(self.btn_callback)
+
+            gas_mode=self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1].gas_condition
+            
+            if gas_mode==0:
+                gas_mode="未選択"
+            if gas_mode==1:
+                gas_mode="大気"
+            elif gas_mode==2:
+                gas_mode="真空"
+            elif gas_mode==3:
+                gas_mode="N2置換"
+            self._parent.ui.load_pages.Gas_mode_Label.setText("雰囲気モード：{}".format(gas_mode))
         
             self.ethernetConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue()
             self.usbConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["GPIB USB conneciton"].getValue()

@@ -70,7 +70,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
         #get dict
         self.get_register_dict()
 
-        self.Modbus_debug=True
+        self.Modbus_debug=False
         #print(self.register_dict)
 
         super().__init__(self.register_dict)
@@ -127,7 +127,9 @@ class CustomDataBlock(ModbusSparseDataBlock):
         
     def MainDatabase_upload_Work(self):
             #test=time.time()
-            print(self.MainPool_update_namelist)
+            
+            if self.Modbus_debug:
+                print(self.MainPool_update_namelist)
                 
             local_namelist=[]
             #Remove void item in  MainPool_update_namelist
@@ -171,10 +173,12 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 if val!=self.Modbuspool[registor_name].getValue():
                     self.Modbuspool[registor_name].setValue(val)
                     self.MainPool_update_namelist.append(registor_name)
+                    print("modbus write - ","[{}]".format(address_temp-self.register_shift),registor_name,val)
                     change=True
                 address_temp+=1
             if change:
                 #if self.Modbus_debug:
+                    
                     #print("modbus write - ","[{}]".format(address-self.register_shift),registor_name,"count - [{}]".format(len(value)),value)
                     self.MainDatabase_upload_Work()
                     #self.MainPool_update_Request=True

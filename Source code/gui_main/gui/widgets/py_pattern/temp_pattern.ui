@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>192</width>
-    <height>389</height>
+    <width>200</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>0</height>
+    <width>200</width>
+    <height>380</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>16777215</width>
-    <height>16777215</height>
+    <width>200</width>
+    <height>380</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -124,16 +124,16 @@ border:none;</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
        <property name="leftMargin">
-        <number>2</number>
+        <number>6</number>
        </property>
        <property name="topMargin">
-        <number>2</number>
+        <number>6</number>
        </property>
        <property name="rightMargin">
-        <number>2</number>
+        <number>6</number>
        </property>
        <property name="bottomMargin">
-        <number>2</number>
+        <number>6</number>
        </property>
        <property name="spacing">
         <number>6</number>
@@ -149,13 +149,13 @@ border:none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -201,7 +201,7 @@ border-radius: 4px;</string>
         </widget>
        </item>
        <item row="12" column="1">
-        <widget class="QSpinBox" name="KeepTime_lineEdit_2">
+        <widget class="QSpinBox" name="Sp_limit_up_lineEdit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -211,13 +211,13 @@ border-radius: 4px;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="mouseTracking">
@@ -254,17 +254,17 @@ font: 12px &quot;游ゴシック&quot;;</string>
         </widget>
        </item>
        <item row="14" column="0">
-        <widget class="QLabel" name="KeepTime_label_4">
+        <widget class="QLabel" name="Shift_label">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -282,13 +282,13 @@ border:none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -302,17 +302,17 @@ border:none;</string>
         </widget>
        </item>
        <item row="11" column="0">
-        <widget class="QLabel" name="KeepTime_label_2">
+        <widget class="QLabel" name="KeepTime_label">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -330,13 +330,13 @@ border:none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -360,13 +360,13 @@ border:none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -396,13 +396,13 @@ border-radius: 4px;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -471,7 +471,7 @@ background-color: rgb(30, 34, 41);</string>
              <enum>QAbstractSpinBox::NoButtons</enum>
             </property>
             <property name="maximum">
-             <number>999</number>
+             <number>99</number>
             </property>
             <property name="stepType">
              <enum>QAbstractSpinBox::DefaultStepType</enum>
@@ -535,7 +535,7 @@ background-color: rgb(30, 34, 41);</string>
              <enum>QAbstractSpinBox::NoButtons</enum>
             </property>
             <property name="maximum">
-             <number>999</number>
+             <number>59</number>
             </property>
             <property name="stepType">
              <enum>QAbstractSpinBox::DefaultStepType</enum>
@@ -553,13 +553,13 @@ background-color: rgb(30, 34, 41);</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -608,13 +608,13 @@ border:none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="mouseTracking">
@@ -651,7 +651,7 @@ font: 12px &quot;游ゴシック&quot;;</string>
         </widget>
        </item>
        <item row="13" column="1">
-        <widget class="QSpinBox" name="KeepTime_lineEdit_3">
+        <widget class="QSpinBox" name="Sp_limit_down_lineEdit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -661,13 +661,13 @@ font: 12px &quot;游ゴシック&quot;;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="mouseTracking">
@@ -708,13 +708,13 @@ font: 12px &quot;游ゴシック&quot;;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -728,17 +728,17 @@ border:none;</string>
         </widget>
        </item>
        <item row="13" column="0">
-        <widget class="QLabel" name="KeepTime_label_5">
+        <widget class="QLabel" name="Sp_limit_down_label">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -756,13 +756,13 @@ border:none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -786,13 +786,13 @@ border:none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="mouseTracking">
@@ -854,7 +854,7 @@ font: 12px &quot;游ゴシック&quot;;</string>
         </widget>
        </item>
        <item row="14" column="1">
-        <widget class="QSpinBox" name="KeepTime_lineEdit_4">
+        <widget class="QSpinBox" name="Shift_lineEdit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -864,13 +864,13 @@ font: 12px &quot;游ゴシック&quot;;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="mouseTracking">
@@ -907,17 +907,17 @@ font: 12px &quot;游ゴシック&quot;;</string>
         </widget>
        </item>
        <item row="12" column="0">
-        <widget class="QLabel" name="KeepTime_label_3">
+        <widget class="QLabel" name="Sp_limit_up_label">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -935,13 +935,13 @@ border:none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>15</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>15</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -965,13 +965,13 @@ border:none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -1023,6 +1023,18 @@ border-radius: 4px;</string>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
          </property>
          <property name="styleSheet">
           <string notr="true">font:12px &quot;游ゴシック&quot;;
@@ -1084,8 +1096,8 @@ border-radius: 4px;</string>
            <widget class="QLabel" name="Step_label">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>0</height>
+              <width>130</width>
+              <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -1165,13 +1177,13 @@ border-radius: 2px;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>20</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="mouseTracking">

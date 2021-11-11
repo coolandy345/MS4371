@@ -18,9 +18,15 @@ class tempUnit():
         PID_muffle_No=0,
         PID_heater_No=0,
         time_keep=0,
+        sp_limit_up=0,
+        sp_limit_down=0,
+        shift=0,
         test_measure_enable=0,
         test_measure_PatternNo=0
         ):
+        self.step_time=0
+        self.total_time=0
+
         
         self.Step_Type=Step_Type
         self.time_hour=time_hour
@@ -30,9 +36,20 @@ class tempUnit():
         self.PID_muffle_No=PID_muffle_No
         self.PID_heater_No=PID_heater_No
         self.time_keep=time_keep
+        self.sp_limit_up=sp_limit_up
+        self.sp_limit_down=sp_limit_down
+        self.shift=shift
+
         self.test_measure_enable=test_measure_enable
         self.test_measure_PatternNo=test_measure_PatternNo
         
+    def get_step_time(self):
+
+        if (self.Step_Type==self.temp_unit_type or
+            self.Step_Type==self.test_unit_type):
+            return self.time_hour*60+self.time_min
+        else:
+            return 0
 
     def print_unit(self):
 
@@ -260,15 +277,18 @@ class templist():
 
 
         self.units[step].Step_Type=input.Step_Type
+        self.units[step].time_hour=input.time_hour
+        self.units[step].time_min=input.time_min
         self.units[step].SV=input.SV
         self.units[step].N2_flowRate=input.N2_flowRate
+        self.units[step].time_keep=input.time_keep
+        self.units[step].sp_limit_up=input.sp_limit_up
+        self.units[step].sp_limit_down=input.sp_limit_down
+        self.units[step].shift=input.shift
         self.units[step].PID_muffle_No=input.PID_muffle_No
         self.units[step].PID_heater_No=input.PID_heater_No
         self.units[step].test_measure_enable=input.test_measure_enable
         self.units[step].test_measure_PatternNo=input.test_measure_PatternNo
-        self.units[step].time_hour=input.time_hour
-        self.units[step].time_keep=input.time_keep
-        self.units[step].time_min=input.time_min
 
         self.check_and_adjust()
 

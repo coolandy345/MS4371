@@ -127,23 +127,23 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_MeterialinnerDie.setText(str(self._MeterialinnerDie))
         self._parent.ui.load_pages.lineEdit_thinkness.setText(str(self._thinkness))
 
-        self._parent.ui.load_pages.lineEdit_PID_0_P.setText(str("{:0.1f}".format(0.1*self.pid_parameter_list[0][0])))
+        self._parent.ui.load_pages.lineEdit_PID_0_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[0][0])))
         self._parent.ui.load_pages.lineEdit_PID_0_I.setText(str(self.pid_parameter_list[0][1]))
         self._parent.ui.load_pages.lineEdit_PID_0_D.setText(str(self.pid_parameter_list[0][2]))
 
-        self._parent.ui.load_pages.lineEdit_PID_1_P.setText(str("{:0.1f}".format(0.1*self.pid_parameter_list[1][0])))
+        self._parent.ui.load_pages.lineEdit_PID_1_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[1][0])))
         self._parent.ui.load_pages.lineEdit_PID_1_I.setText(str(self.pid_parameter_list[1][1]))
         self._parent.ui.load_pages.lineEdit_PID_1_D.setText(str(self.pid_parameter_list[1][2]))
 
-        self._parent.ui.load_pages.lineEdit_PID_2_P.setText(str("{:0.1f}".format(0.1*self.pid_parameter_list[2][0])))
+        self._parent.ui.load_pages.lineEdit_PID_2_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[2][0])))
         self._parent.ui.load_pages.lineEdit_PID_2_I.setText(str(self.pid_parameter_list[2][1]))
         self._parent.ui.load_pages.lineEdit_PID_2_D.setText(str(self.pid_parameter_list[2][2]))
 
-        self._parent.ui.load_pages.lineEdit_PID_3_P.setText(str("{:0.1f}".format(0.1*self.pid_parameter_list[3][0])))
+        self._parent.ui.load_pages.lineEdit_PID_3_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[3][0])))
         self._parent.ui.load_pages.lineEdit_PID_3_I.setText(str(self.pid_parameter_list[3][1]))
         self._parent.ui.load_pages.lineEdit_PID_3_D.setText(str(self.pid_parameter_list[3][2]))
 
-        self._parent.ui.load_pages.lineEdit_PID_4_P.setText(str("{:0.1f}".format(0.1*self.pid_parameter_list[4][0])))
+        self._parent.ui.load_pages.lineEdit_PID_4_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[4][0])))
         self._parent.ui.load_pages.lineEdit_PID_4_I.setText(str(self.pid_parameter_list[4][1]))
         self._parent.ui.load_pages.lineEdit_PID_4_D.setText(str(self.pid_parameter_list[4][2]))
 
@@ -165,35 +165,35 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_thinkness.setValidator(QDoubleValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_0_P.editingFinished.connect(self.button_callback)
-        self._parent.ui.load_pages.lineEdit_PID_0_P.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.lineEdit_PID_0_P.setValidator(QDoubleValidator(decimals=2))
         self._parent.ui.load_pages.lineEdit_PID_0_I.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_0_I.setValidator(QIntValidator())
         self._parent.ui.load_pages.lineEdit_PID_0_D.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_0_D.setValidator(QIntValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_1_P.editingFinished.connect(self.button_callback)
-        self._parent.ui.load_pages.lineEdit_PID_1_P.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.lineEdit_PID_1_P.setValidator(QDoubleValidator(decimals=2))
         self._parent.ui.load_pages.lineEdit_PID_1_I.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_1_I.setValidator(QIntValidator())
         self._parent.ui.load_pages.lineEdit_PID_1_D.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_1_D.setValidator(QIntValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_2_P.editingFinished.connect(self.button_callback)
-        self._parent.ui.load_pages.lineEdit_PID_2_P.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.lineEdit_PID_2_P.setValidator(QDoubleValidator(decimals=2))
         self._parent.ui.load_pages.lineEdit_PID_2_I.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_2_I.setValidator(QIntValidator())
         self._parent.ui.load_pages.lineEdit_PID_2_D.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_2_D.setValidator(QIntValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_3_P.editingFinished.connect(self.button_callback)
-        self._parent.ui.load_pages.lineEdit_PID_3_P.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.lineEdit_PID_3_P.setValidator(QDoubleValidator(decimals=2))
         self._parent.ui.load_pages.lineEdit_PID_3_I.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_3_I.setValidator(QIntValidator())
         self._parent.ui.load_pages.lineEdit_PID_3_D.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_3_D.setValidator(QIntValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_4_P.editingFinished.connect(self.button_callback)
-        self._parent.ui.load_pages.lineEdit_PID_4_P.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.lineEdit_PID_4_P.setValidator(QDoubleValidator(decimals=2))
         self._parent.ui.load_pages.lineEdit_PID_4_I.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_4_I.setValidator(QIntValidator())
         self._parent.ui.load_pages.lineEdit_PID_4_D.editingFinished.connect(self.button_callback)
@@ -310,8 +310,10 @@ class Testfile_manager(QWidget):
             self.areaVolumeCal()
 
         elif btn=="lineEdit_PID_0_P":
+            if float(self._parent.ui.load_pages.lineEdit_PID_0_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_0_P.setText(str("{:0.01f}".format(0.1)))
             self.PID_0_P=float(self._parent.ui.load_pages.lineEdit_PID_0_P.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_P",10*self.PID_0_P)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_P",100*self.PID_0_P)
 
         elif btn=="lineEdit_PID_0_I":
             self.PID_0_I=float(self._parent.ui.load_pages.lineEdit_PID_0_I.text())
@@ -322,8 +324,10 @@ class Testfile_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_D",self.PID_0_D)
 
         elif btn=="lineEdit_PID_1_P":
+            if float(self._parent.ui.load_pages.lineEdit_PID_1_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_1_P.setText(str("{:0.01f}".format(0.1)))
             self.PID_1_P=float(self._parent.ui.load_pages.lineEdit_PID_1_P.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_P",10*self.PID_1_P)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_P",100*self.PID_1_P)
 
         elif btn=="lineEdit_PID_1_I":
             self.PID_1_I=float(self._parent.ui.load_pages.lineEdit_PID_1_I.text())
@@ -334,8 +338,10 @@ class Testfile_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_D",self.PID_1_D)
 
         elif btn=="lineEdit_PID_2_P":
+            if float(self._parent.ui.load_pages.lineEdit_PID_2_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_2_P.setText(str("{:0.01f}".format(0.1)))
             self.PID_2_P=float(self._parent.ui.load_pages.lineEdit_PID_2_P.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_P",10*self.PID_2_P)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_P",100*self.PID_2_P)
 
         elif btn=="lineEdit_PID_2_I":
             self.PID_2_I=float(self._parent.ui.load_pages.lineEdit_PID_2_I.text())
@@ -346,8 +352,10 @@ class Testfile_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_D",self.PID_2_D)
 
         elif btn=="lineEdit_PID_3_P":
+            if float(self._parent.ui.load_pages.lineEdit_PID_3_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_3_P.setText(str("{:0.01f}".format(0.1)))
             self.PID_3_P=float(self._parent.ui.load_pages.lineEdit_PID_3_P.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_P",10*self.PID_3_P)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_P",100*self.PID_3_P)
 
         elif btn=="lineEdit_PID_3_I":
             self.PID_3_I=float(self._parent.ui.load_pages.lineEdit_PID_3_I.text())
@@ -358,8 +366,10 @@ class Testfile_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_D",self.PID_3_D)
 
         elif btn=="lineEdit_PID_4_P":
+            if float(self._parent.ui.load_pages.lineEdit_PID_4_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_4_P.setText(str("{:0.01f}".format(0.1)))
             self.PID_4_P=float(self._parent.ui.load_pages.lineEdit_PID_4_P.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_P",10*self.PID_4_P)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_P",100*self.PID_4_P)
 
         elif btn=="lineEdit_PID_4_I":
             self.PID_4_I=float(self._parent.ui.load_pages.lineEdit_PID_4_I.text())

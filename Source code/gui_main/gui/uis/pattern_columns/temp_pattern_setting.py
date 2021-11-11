@@ -106,7 +106,7 @@ class TempPatternWidget(QWidget):
             self.step_widges_list.append(temp_step)
             self.step_widges_list[_step].setVisible (False)
             self._parent.ui.load_pages.horizontalLayout_3.addWidget(self.step_widges_list[_step])
-            self._parent.ui.load_pages.scrollArea_3.setMinimumSize(QSize(0, 320))
+            #self._parent.ui.load_pages.scrollArea_3.setMinimumSize(QSize(0, 380))
         
         
     def setup_TempGraph(self):
@@ -234,6 +234,13 @@ class TempPatternWidget(QWidget):
                     PID_muffle_No           =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_マッフル_PID_No".format(ptn_no,step_no)].getValue(),
                     PID_heater_No           =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ヒーター_PID_No".format(ptn_no,step_no)].getValue(),
                     time_keep               =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(ptn_no,step_no)].getValue(),
+
+                    sp_limit_up             =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_スレーブSP上限".format(ptn_no,step_no)].getValue(),
+                    sp_limit_down        =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_スレーブSP下限".format(ptn_no,step_no)].getValue(),
+                    shift               =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_シフト".format(ptn_no,step_no)].getValue(),
+
+
+
                     test_measure_enable     =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(ptn_no,step_no)].getValue(),
                     test_measure_PatternNo  =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定パターン".format(ptn_no,step_no)].getValue()
                     )
@@ -277,6 +284,11 @@ class TempPatternWidget(QWidget):
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_時".format(file_number,step),step_unit.time_hour)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_分".format(file_number,step),step_unit.time_min)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_キープ時間".format(file_number,step),step_unit.time_keep)
+
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_スレーブSP上限".format(file_number,step),step_unit.sp_limit_up)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_スレーブSP下限".format(file_number,step),step_unit.sp_limit_down)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_シフト".format(file_number,step),step_unit.shift)
+
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_N2流量".format(file_number,step),step_unit.N2_flowRate)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_マッフル_PID_No".format(file_number,step),step_unit.PID_muffle_No)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_ヒーター_PID_No".format(file_number,step),step_unit.PID_heater_No)
@@ -463,9 +475,13 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].pattern.Min_lineEdit.setValue(unit.time_min)
 
                 self.step_widges_list[_step].pattern.SV_lineEdit.setValue(unit.SV)
-                self.step_widges_list[_step].pattern.N2_lineEdit.setValue(unit.N2_flowRate)
+                self.step_widges_list[_step].pattern.N2_lineEdit.setText("{}".format(unit.N2_flowRate*0.1))
                 self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
                 self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
+
+                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setValue(unit.sp_limit_up)
+                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setValue(unit.sp_limit_down)
+                self.step_widges_list[_step].pattern.Shift_lineEdit.setValue(unit.shift)
 
                 pass
             elif unit.Step_Type==tempUnit.test_unit_type:  #test unit
@@ -473,6 +489,11 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
                 self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
                 self.step_widges_list[_step].pattern.KeepTime_lineEdit.setValue(unit.time_keep)
+
+                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setValue(unit.sp_limit_up)
+                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setValue(unit.sp_limit_down)
+                self.step_widges_list[_step].pattern.Shift_lineEdit.setValue(unit.shift)
+
                 self.step_widges_list[_step].update_testFileCombobox(unit.test_measure_PatternNo)
                 #self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
                 pass
@@ -671,6 +692,11 @@ class TempPatternWidget(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_時".format(self.focus_patternFile_number,step),list.units[step].time_hour)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_分".format(self.focus_patternFile_number,step),list.units[step].time_min)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_キープ時間".format(self.focus_patternFile_number,step),list.units[step].time_keep)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_スレーブSP上限".format(self.focus_patternFile_number,step),list.units[step].sp_limit_up)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_スレーブSP下限".format(self.focus_patternFile_number,step),list.units[step].sp_limit_down)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_シフト".format(self.focus_patternFile_number,step),list.units[step].shift)
+
+
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_N2流量".format(self.focus_patternFile_number,step),list.units[step].N2_flowRate)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_マッフル_PID_No".format(self.focus_patternFile_number,step),list.units[step].PID_muffle_No)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_ヒーター_PID_No".format(self.focus_patternFile_number,step),list.units[step].PID_heater_No)
@@ -896,6 +922,9 @@ class TempPatternWidget(QWidget):
                 cache_stepUnit.test_measure_PatternNo   !=memory_stepUnit.test_measure_PatternNo or
                 cache_stepUnit.time_hour                !=memory_stepUnit.time_hour or
                 cache_stepUnit.time_keep                !=memory_stepUnit.time_keep or
+                cache_stepUnit.sp_limit_up                !=memory_stepUnit.sp_limit_up or
+                cache_stepUnit.sp_limit_down                !=memory_stepUnit.sp_limit_down or
+                cache_stepUnit.shift                !=memory_stepUnit.shift or
                 cache_stepUnit.time_min                 !=memory_stepUnit.time_min
                 ):
                     self.content_Change=True
@@ -905,15 +934,18 @@ class TempPatternWidget(QWidget):
     def step_modifly_manager(self,step):
         stepUnit=self.cache_steplist.getStep(step)
 
-        stepUnit.Step_Type              =self.step_widges_list[step]._type
-        stepUnit.time_hour              =self.step_widges_list[step]._hour
-        stepUnit.time_min               =self.step_widges_list[step]._minute
-        stepUnit.SV                     =self.step_widges_list[step]._temperature
-        stepUnit.N2_flowRate            =self.step_widges_list[step]._n2_flowrate
-        stepUnit.PID_muffle_No          =self.step_widges_list[step]._PID_muffle_no
-        stepUnit.PID_heater_No          =self.step_widges_list[step]._PID_heater_no
-        stepUnit.time_keep              =self.step_widges_list[step]._keep_seccond
-        stepUnit.test_measure_PatternNo =self.step_widges_list[step]._test_pattern
+        stepUnit.Step_Type                          =self.step_widges_list[step]._type
+        stepUnit.time_hour                          =self.step_widges_list[step]._hour
+        stepUnit.time_min                           =self.step_widges_list[step]._minute
+        stepUnit.SV                                     =self.step_widges_list[step]._temperature
+        stepUnit.N2_flowRate                     =self.step_widges_list[step]._n2_flowrate
+        stepUnit.PID_muffle_No                  =self.step_widges_list[step]._PID_muffle_no
+        stepUnit.PID_heater_No                  =self.step_widges_list[step]._PID_heater_no
+        stepUnit.time_keep                          =self.step_widges_list[step]._keep_seccond
+        stepUnit.sp_limit_up                         =self.step_widges_list[step]._sp_limit_up
+        stepUnit.sp_limit_down                     =self.step_widges_list[step]._sp_limit_down
+        stepUnit.shift                                     =self.step_widges_list[step]._shift
+        stepUnit.test_measure_PatternNo   =self.step_widges_list[step]._test_pattern
 
         self.cache_steplist.setStep(step,stepUnit)
         

@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesWkieKV.ui'
+## Form generated from reading UI file 'main_pagessKoOVY.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import *  # type: ignore
+from PySide6.QtGui import *  # type: ignore
+from PySide6.QtWidgets import *  # type: ignore
 
 
 class Ui_MainPages(object):
     def setupUi(self, MainPages):
         if not MainPages.objectName():
             MainPages.setObjectName(u"MainPages")
-        MainPages.resize(1223, 689)
+        MainPages.resize(1223, 647)
         MainPages.setMinimumSize(QSize(0, 0))
         self.gridLayout_8 = QGridLayout(MainPages)
         self.gridLayout_8.setObjectName(u"gridLayout_8")
@@ -43,7 +43,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 828, 535))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1187, 611))
         self.horizontalLayout_12 = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
         self.frame_10 = QFrame(self.scrollAreaWidgetContents)
@@ -1288,7 +1288,7 @@ class Ui_MainPages(object):
         self.gridLayout_30.setObjectName(u"gridLayout_30")
         self.realtime_Voltage_lineEdit = QLabel(self.frame_17)
         self.realtime_Voltage_lineEdit.setObjectName(u"realtime_Voltage_lineEdit")
-        self.realtime_Voltage_lineEdit.setMinimumSize(QSize(0, 0))
+        self.realtime_Voltage_lineEdit.setMinimumSize(QSize(0, 50))
         self.realtime_Voltage_lineEdit.setMaximumSize(QSize(16777215, 16777215))
         self.realtime_Voltage_lineEdit.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
@@ -1333,7 +1333,7 @@ class Ui_MainPages(object):
 
         self.realtime_Resistor_lineEdit = QLabel(self.frame_21)
         self.realtime_Resistor_lineEdit.setObjectName(u"realtime_Resistor_lineEdit")
-        self.realtime_Resistor_lineEdit.setMinimumSize(QSize(0, 0))
+        self.realtime_Resistor_lineEdit.setMinimumSize(QSize(0, 50))
         self.realtime_Resistor_lineEdit.setMaximumSize(QSize(16777215, 16777215))
         self.realtime_Resistor_lineEdit.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
@@ -1367,7 +1367,7 @@ class Ui_MainPages(object):
 
         self.realtime_Current_lineEdit = QLabel(self.frame_67)
         self.realtime_Current_lineEdit.setObjectName(u"realtime_Current_lineEdit")
-        self.realtime_Current_lineEdit.setMinimumSize(QSize(0, 0))
+        self.realtime_Current_lineEdit.setMinimumSize(QSize(0, 50))
         self.realtime_Current_lineEdit.setMaximumSize(QSize(16777215, 16777215))
         self.realtime_Current_lineEdit.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
@@ -1401,7 +1401,7 @@ class Ui_MainPages(object):
 
         self.realtime_Temp_lineEdit = QLabel(self.frame_16)
         self.realtime_Temp_lineEdit.setObjectName(u"realtime_Temp_lineEdit")
-        self.realtime_Temp_lineEdit.setMinimumSize(QSize(0, 0))
+        self.realtime_Temp_lineEdit.setMinimumSize(QSize(0, 50))
         self.realtime_Temp_lineEdit.setMaximumSize(QSize(16777215, 16777215))
         self.realtime_Temp_lineEdit.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
@@ -1782,14 +1782,14 @@ class Ui_MainPages(object):
 
         self.verticalLayout_6.addWidget(self.AutoMode_pattern_comboBox, 0, Qt.AlignBottom)
 
-        self.label = QLabel(self.frame_6)
-        self.label.setObjectName(u"label")
-        self.label.setStyleSheet(u"font: 18px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.Gas_mode_Label = QLabel(self.frame_6)
+        self.Gas_mode_Label.setObjectName(u"Gas_mode_Label")
+        self.Gas_mode_Label.setStyleSheet(u"font: 18px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;\n"
 "border:None")
 
-        self.verticalLayout_6.addWidget(self.label, 0, Qt.AlignBottom)
+        self.verticalLayout_6.addWidget(self.Gas_mode_Label, 0, Qt.AlignBottom)
 
 
         self.gridLayout_16.addWidget(self.frame_6, 0, 0, 1, 1, Qt.AlignBottom)
@@ -1814,6 +1814,38 @@ class Ui_MainPages(object):
         self.verticalLayout_5.setSpacing(6)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 10, 0, 10)
+        self.test_pushButton = QPushButton(self.frame_5)
+        self.test_pushButton.setObjectName(u"test_pushButton")
+        self.test_pushButton.setMinimumSize(QSize(210, 30))
+        self.test_pushButton.setMaximumSize(QSize(210, 30))
+        self.test_pushButton.setTabletTracking(False)
+        self.test_pushButton.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 21px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(65, 65, 65);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 8px;\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(79, 159, 238);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(109, 182, 238);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(69, 140, 207);\n"
+"}")
+        self.test_pushButton.setCheckable(False)
+
+        self.verticalLayout_5.addWidget(self.test_pushButton)
+
         self.gasFreeflow_pushButton = QPushButton(self.frame_5)
         self.gasFreeflow_pushButton.setObjectName(u"gasFreeflow_pushButton")
         self.gasFreeflow_pushButton.setMinimumSize(QSize(210, 30))
@@ -2171,7 +2203,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1098, 1410))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1098, 1610))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -2235,6 +2267,7 @@ class Ui_MainPages(object):
         self.frame_43.setFrameShadow(QFrame.Raised)
         self.gridLayout_9 = QGridLayout(self.frame_43)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
+        self.gridLayout_9.setContentsMargins(-1, -1, 18, -1)
 
         self.verticalLayout_10.addWidget(self.frame_43)
 
@@ -2242,7 +2275,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setObjectName(u"scrollArea_3")
         sizePolicy.setHeightForWidth(self.scrollArea_3.sizePolicy().hasHeightForWidth())
         self.scrollArea_3.setSizePolicy(sizePolicy)
-        self.scrollArea_3.setMinimumSize(QSize(0, 200))
+        self.scrollArea_3.setMinimumSize(QSize(0, 400))
         self.scrollArea_3.setSizeIncrement(QSize(0, 0))
         self.scrollArea_3.setStyleSheet(u"\n"
 "background-color: rgb(25, 28, 34);\n"
@@ -2253,7 +2286,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 100, 200))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1040, 400))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -2855,7 +2888,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 100, 200))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 1040, 200))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -3481,41 +3514,41 @@ class Ui_MainPages(object):
         self.label_22.setText(QCoreApplication.translate("MainPages", u"\u6750\u6599", None))
         self.lineEdit_meterialVolume.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u306e\u539a\u3055(mm)", None))
         self.label_13.setText("")
-        self.lineEdit_PID_0_D.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.lineEdit_PID_0_I.setText(QCoreApplication.translate("MainPages", u"1.5", None))
+        self.lineEdit_PID_0_D.setText(QCoreApplication.translate("MainPages", u"593", None))
+        self.lineEdit_PID_0_I.setText(QCoreApplication.translate("MainPages", u"1000", None))
         self.label_121.setText(QCoreApplication.translate("MainPages", u"PID\u8a2d\u5b9a 0", None))
         self.label_122.setText(QCoreApplication.translate("MainPages", u"I", None))
         self.label_123.setText(QCoreApplication.translate("MainPages", u"P", None))
         self.label_124.setText(QCoreApplication.translate("MainPages", u"D", None))
-        self.lineEdit_PID_0_P.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.lineEdit_PID_1_D.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.lineEdit_PID_1_I.setText(QCoreApplication.translate("MainPages", u"1.5", None))
+        self.lineEdit_PID_0_P.setText(QCoreApplication.translate("MainPages", u"35", None))
+        self.lineEdit_PID_1_D.setText(QCoreApplication.translate("MainPages", u"13", None))
+        self.lineEdit_PID_1_I.setText(QCoreApplication.translate("MainPages", u"1000", None))
         self.label_109.setText(QCoreApplication.translate("MainPages", u"PID\u8a2d\u5b9a 1", None))
         self.label_110.setText(QCoreApplication.translate("MainPages", u"I", None))
         self.label_111.setText(QCoreApplication.translate("MainPages", u"P", None))
         self.label_112.setText(QCoreApplication.translate("MainPages", u"D", None))
-        self.lineEdit_PID_1_P.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.lineEdit_PID_2_D.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.lineEdit_PID_2_I.setText(QCoreApplication.translate("MainPages", u"1.5", None))
+        self.lineEdit_PID_1_P.setText(QCoreApplication.translate("MainPages", u"35", None))
+        self.lineEdit_PID_2_D.setText(QCoreApplication.translate("MainPages", u"593", None))
+        self.lineEdit_PID_2_I.setText(QCoreApplication.translate("MainPages", u"1000", None))
         self.label_113.setText(QCoreApplication.translate("MainPages", u"PID\u8a2d\u5b9a 2", None))
         self.label_114.setText(QCoreApplication.translate("MainPages", u"I", None))
         self.label_115.setText(QCoreApplication.translate("MainPages", u"P", None))
         self.label_116.setText(QCoreApplication.translate("MainPages", u"D", None))
-        self.lineEdit_PID_2_P.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.lineEdit_PID_3_D.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.lineEdit_PID_3_I.setText(QCoreApplication.translate("MainPages", u"1.5", None))
+        self.lineEdit_PID_2_P.setText(QCoreApplication.translate("MainPages", u"6.5", None))
+        self.lineEdit_PID_3_D.setText(QCoreApplication.translate("MainPages", u"13", None))
+        self.lineEdit_PID_3_I.setText(QCoreApplication.translate("MainPages", u"1000", None))
         self.label_117.setText(QCoreApplication.translate("MainPages", u"PID\u8a2d\u5b9a 3", None))
         self.label_118.setText(QCoreApplication.translate("MainPages", u"I", None))
         self.label_119.setText(QCoreApplication.translate("MainPages", u"P", None))
         self.label_120.setText(QCoreApplication.translate("MainPages", u"D", None))
-        self.lineEdit_PID_3_P.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.lineEdit_PID_4_D.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.lineEdit_PID_4_I.setText(QCoreApplication.translate("MainPages", u"1.5", None))
+        self.lineEdit_PID_3_P.setText(QCoreApplication.translate("MainPages", u"32", None))
+        self.lineEdit_PID_4_D.setText(QCoreApplication.translate("MainPages", u"10", None))
+        self.lineEdit_PID_4_I.setText(QCoreApplication.translate("MainPages", u"1000", None))
         self.label_105.setText(QCoreApplication.translate("MainPages", u"PID\u8a2d\u5b9a 4", None))
         self.label_106.setText(QCoreApplication.translate("MainPages", u"I", None))
         self.label_107.setText(QCoreApplication.translate("MainPages", u"P", None))
         self.label_108.setText(QCoreApplication.translate("MainPages", u"D", None))
-        self.lineEdit_PID_4_P.setText(QCoreApplication.translate("MainPages", u"1.5", None))
+        self.lineEdit_PID_4_P.setText(QCoreApplication.translate("MainPages", u"0.1", None))
         self.label_37.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u4e2d", None))
         self.label_38.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u7d42\u4e86", None))
         self.label_30.setText(QCoreApplication.translate("MainPages", u"\u6e29\u5ea6\u30ad\u30fc\u30d7\u4e2d", None))
@@ -3549,8 +3582,9 @@ class Ui_MainPages(object):
         self.AutoMode_pattern_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"pattern1", None))
         self.AutoMode_pattern_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"pattern2", None))
 
-        self.label.setText(QCoreApplication.translate("MainPages", u"\u96f0\u56f2\u6c17\u30e2\u30fc\u30c9\uff1a\u5927\u6c17", None))
+        self.Gas_mode_Label.setText(QCoreApplication.translate("MainPages", u"\u96f0\u56f2\u6c17\u30e2\u30fc\u30c9\uff1a\u5927\u6c17", None))
         self.label_11.setText("")
+        self.test_pushButton.setText(QCoreApplication.translate("MainPages", u"TEST", None))
         self.gasFreeflow_pushButton.setText(QCoreApplication.translate("MainPages", u"\u5927\u6c17\u5727", None))
         self.autostart_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u958b\u59cb", None))
         self.eMSstop_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u505c\u6b62", None))

@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     EventPool={}
     EventPool["Auto Run Start"]=MemoryPoolManager.Event()
-    EventPool["Auto Run Start confirm"]=MemoryPoolManager.Event()
+    EventPool["Auto Run finish"]=MemoryPoolManager.Event()
     
     EventPool["Test approve"]=MemoryPoolManager.Event()
     EventPool["GPIB_Test_Finish"]=MemoryPoolManager.Event()
@@ -88,6 +88,7 @@ if __name__ == "__main__":
         executor.submit(databaseWriteThread_NoModbusLoop,MemoryPool,QueuePool,EventPool)
 
         executor.submit(operator_thread,MemoryPool,QueuePool,EventPool)
+
         Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool,EventPool)
         Gui_future.add_done_callback(shotdown_entire_app)
 
