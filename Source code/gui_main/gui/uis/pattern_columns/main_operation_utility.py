@@ -725,7 +725,7 @@ class Main_utility_manager(QWidget):
             self._parent.curve.setData(self.measurement_data_array)
         elif self.graph_Item=="Pattern":
 
-            self.choose_pattern=self._parent.MMG.memoryPool["System memory"]["choose_Pattern"].getValue()
+            self.choose_pattern=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No."].getValue()
             print("self.choose_pattern",self.choose_pattern)
             if self.choose_pattern:
                 pattern_availible_number=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(self.choose_pattern)].getValue()
