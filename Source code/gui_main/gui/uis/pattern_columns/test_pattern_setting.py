@@ -274,7 +274,7 @@ class TestPatternWidget(QWidget):
         
         self._parent.ui.load_pages.test_commect_lineEdit.textEdited.disconnect()
         self._parent.ui.load_pages.test_commect_lineEdit.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.test_commect_lineEdit.setText(self.cache_steplist.comment)
+        self._parent.ui.load_pages.test_commect_lineEdit.setText(str(self.cache_steplist.comment))
         self._parent.ui.load_pages.test_commect_lineEdit.textEdited.connect(self.ui_click_callback)
 
         self._parent.ui.load_pages.test_time_SpinBox.valueChanged.disconnect()
@@ -667,7 +667,7 @@ class TestPatternWidget(QWidget):
     def patternFile_Delete(self):
 
 
-        result=self.lunchOptionDialog("測定パターン \"{}\" 削除しますか？".format(self.patternFile_nameList[self.focus_patternFile_number]),PyDialog.warning_2_type)
+        result=self.lunchOptionDialog("測定パターン \"{}\" 削除しますか？".format(self.patternFile_nameList[self.focus_patternFile_number-1]),PyDialog.warning_2_type)
 
         if result=="No":
             return

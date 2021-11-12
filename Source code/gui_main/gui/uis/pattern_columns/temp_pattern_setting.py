@@ -297,14 +297,14 @@ class TempPatternWidget(QWidget):
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_STEP種類".format(file_number,step),step_unit.Step_Type)
 
                 if step<=self.patternFiles[file_number].step_number:
-                    if list.units[step].Step_Type==tempUnit.temp_unit_type:
+                    if self.patternFiles[file_number].units[step].Step_Type==tempUnit.temp_unit_type:
                         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_STEP情報".format(file_number,step),2)
                         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_測定有".format(file_number,step),0)
 
-                    elif list.units[step].Step_Type==tempUnit.test_unit_type:
+                    elif self.patternFiles[file_number].units[step].Step_Type==tempUnit.test_unit_type:
                         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_STEP情報".format(file_number,step),2)
                         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_測定有".format(file_number,step),1)
-                    elif list.units[step].Step_Type==tempUnit.End_unit_type:
+                    elif self.patternFiles[file_number].units[step].Step_Type==tempUnit.End_unit_type:
                         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_STEP情報".format(file_number,step),1)
                         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_測定有".format(file_number,step),0)
                 else:
@@ -450,6 +450,7 @@ class TempPatternWidget(QWidget):
                 if _step==self.cache_steplist.step_number+1 and self.editorEnable:
                     self.step_widges_list[_step].setVisible (True)
                     self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
+
                 else:
                     self.step_widges_list[_step].setVisible (False)
                     self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
@@ -628,7 +629,7 @@ class TempPatternWidget(QWidget):
 
     def patternFile_Delete(self):
 
-        result=self.lunchOptionDialog("温度パターン \"{}\" 削除しますか？".format(self.patternFile_nameList[self.focus_patternFile_number]),PyDialog.warning_2_type)
+        result=self.lunchOptionDialog("温度パターン \"{}\" 削除しますか？".format(self.patternFile_nameList[self.focus_patternFile_number-1]),PyDialog.warning_2_type)
 
         if result=="No":
             return
@@ -857,7 +858,9 @@ class TempPatternWidget(QWidget):
         elif btn == "pattern_menu_delete_pushButton":
             self.cache_steplist.units.append(tempUnit())
             self.cache_steplist.units.pop(self.focus_step_number)
+            self.un_focus_step(self.focus_step_number)
             self.cache_steplist.step_number-=1
+
             #print("pattern_menu_delete ",self.focus_step_number)
             pass
 
