@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagessKoOVY.ui'
+## Form generated from reading UI file 'main_pagesjXzcAS.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -1814,14 +1814,46 @@ class Ui_MainPages(object):
         self.verticalLayout_5.setSpacing(6)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 10, 0, 10)
+        self.test_pushButton_2 = QPushButton(self.frame_5)
+        self.test_pushButton_2.setObjectName(u"test_pushButton_2")
+        self.test_pushButton_2.setMinimumSize(QSize(210, 15))
+        self.test_pushButton_2.setMaximumSize(QSize(210, 15))
+        self.test_pushButton_2.setTabletTracking(False)
+        self.test_pushButton_2.setStyleSheet(u"QPushButton {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(65, 65, 65);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 8px;\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(79, 159, 238);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(109, 182, 238);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(69, 140, 207);\n"
+"}")
+        self.test_pushButton_2.setCheckable(False)
+
+        self.verticalLayout_5.addWidget(self.test_pushButton_2)
+
         self.test_pushButton = QPushButton(self.frame_5)
         self.test_pushButton.setObjectName(u"test_pushButton")
-        self.test_pushButton.setMinimumSize(QSize(210, 30))
-        self.test_pushButton.setMaximumSize(QSize(210, 30))
+        self.test_pushButton.setMinimumSize(QSize(210, 15))
+        self.test_pushButton.setMaximumSize(QSize(210, 15))
         self.test_pushButton.setTabletTracking(False)
         self.test_pushButton.setStyleSheet(u"QPushButton {\n"
 "	color: rgb(202, 206, 216);\n"
-"	font: 21px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "	background-color: rgb(65, 65, 65);\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
@@ -3584,7 +3616,8 @@ class Ui_MainPages(object):
 
         self.Gas_mode_Label.setText(QCoreApplication.translate("MainPages", u"\u96f0\u56f2\u6c17\u30e2\u30fc\u30c9\uff1a\u5927\u6c17", None))
         self.label_11.setText("")
-        self.test_pushButton.setText(QCoreApplication.translate("MainPages", u"TEST", None))
+        self.test_pushButton_2.setText(QCoreApplication.translate("MainPages", u"TEST2", None))
+        self.test_pushButton.setText(QCoreApplication.translate("MainPages", u"TEST1", None))
         self.gasFreeflow_pushButton.setText(QCoreApplication.translate("MainPages", u"\u5927\u6c17\u5727", None))
         self.autostart_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u958b\u59cb", None))
         self.eMSstop_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u505c\u6b62", None))

@@ -44,7 +44,7 @@
       <string notr="true">background-color: rgb(44, 49, 60);</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -76,8 +76,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>828</width>
-            <height>535</height>
+            <width>1187</width>
+            <height>611</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -1002,7 +1002,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>593</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1035,7 +1035,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>1000</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1176,7 +1176,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>35</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1243,7 +1243,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>13</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1276,7 +1276,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>1000</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1417,7 +1417,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>35</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1484,7 +1484,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>593</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1517,7 +1517,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>1000</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1658,7 +1658,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>6.5</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1725,7 +1725,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>13</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1758,7 +1758,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>1000</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1899,7 +1899,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>32</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1966,7 +1966,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>10</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1999,7 +1999,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>1000</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -2140,7 +2140,7 @@ font: 12px &quot;游ゴシック&quot;;
 min-height:30;</string>
                          </property>
                          <property name="text">
-                          <string>1.5</string>
+                          <string>0.1</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -2822,7 +2822,7 @@ padding-right:5px;</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>0</height>
+                    <height>50</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -2928,7 +2928,7 @@ padding-right:5px;</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>0</height>
+                    <height>50</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -3007,7 +3007,7 @@ padding-right:5px;</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>0</height>
+                    <height>50</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -3086,7 +3086,7 @@ padding-right:5px;</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>0</height>
+                    <height>50</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -3960,7 +3960,7 @@ border-radius: 5px;</string>
                         </widget>
                        </item>
                        <item alignment="Qt::AlignBottom">
-                        <widget class="QLabel" name="label">
+                        <widget class="QLabel" name="Gas_mode_Label">
                          <property name="styleSheet">
                           <string notr="true">font: 18px &quot;游ゴシック&quot;;
 color: rgb(225, 230, 241);
@@ -4037,6 +4037,56 @@ border:none;</string>
                        <property name="bottomMargin">
                         <number>10</number>
                        </property>
+                       <item>
+                        <widget class="QPushButton" name="test_pushButton">
+                         <property name="minimumSize">
+                          <size>
+                           <width>210</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>210</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="tabletTracking">
+                          <bool>false</bool>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+	color: rgb(202, 206, 216);
+	font: 21px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 8px;
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(79, 159, 238);
+}
+
+QPushButton:hover {
+	
+	color: rgb(44, 36, 0);
+	background-color: rgb(109, 182, 238);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgb(69, 140, 207);
+}</string>
+                         </property>
+                         <property name="text">
+                          <string>TEST</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>false</bool>
+                         </property>
+                        </widget>
+                       </item>
                        <item alignment="Qt::AlignHCenter">
                         <widget class="QPushButton" name="gasFreeflow_pushButton">
                          <property name="minimumSize">
@@ -4696,7 +4746,7 @@ min-height:30;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1170</width>
+            <width>1098</width>
             <height>1610</height>
            </rect>
           </property>
@@ -4825,7 +4875,11 @@ padding-right:5px;</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QGridLayout" name="gridLayout_9"/>
+                   <layout class="QGridLayout" name="gridLayout_9">
+                    <property name="rightMargin">
+                     <number>18</number>
+                    </property>
+                   </layout>
                   </widget>
                  </item>
                  <item>
@@ -4870,7 +4924,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>1112</width>
+                      <width>1040</width>
                       <height>400</height>
                      </rect>
                     </property>
@@ -6247,7 +6301,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>1112</width>
+                      <width>1040</width>
                       <height>200</height>
                      </rect>
                     </property>

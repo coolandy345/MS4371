@@ -292,6 +292,11 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_AutoOperate)
         elif btn_name == "test_pushButton":
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
+
+        
+        elif btn_name == "test_pushButton_2":
+            self.eventPool["Noise Measure Start"].set()
+
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
         elif btn_name == "autostart_pushButton":
@@ -453,6 +458,9 @@ class Main_utility_manager(QWidget):
 
         
         self._parent.ui.load_pages.test_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.test_pushButton_2.clicked.connect(self.btn_callback)
+
+        
 
         
         self._parent.ui.load_pages.remoteConnect_pushButton.clicked.connect(self.btn_callback)
