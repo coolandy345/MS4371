@@ -476,6 +476,9 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.graphItem_combobox.currentIndexChanged.connect(self.btn_callback)
         self._parent.ui.load_pages.timeUnit_comboBox.currentIndexChanged.connect(self.btn_callback)
         
+        self._parent.ui.load_pages.AutoMode_pattern_comboBox.clear()
+        emptylist=[""]
+        self._parent.ui.load_pages.AutoMode_pattern_comboBox.addItems(emptylist)
         self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.connect(self.btn_callback)
 
         self._parent.ready_icon = PyIconButton_simple(
@@ -809,6 +812,7 @@ class Main_utility_manager(QWidget):
 
             time.sleep(0.1)
             
+
             if self.AutoMode_pattern_comboBox_contantList !=self._parent.tempPattern.patternFile_nameList:
                 self.AutoMode_pattern_comboBox_contantList=self._parent.tempPattern.patternFile_nameList
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.disconnect()
@@ -817,16 +821,21 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.setCurrentIndex(self.choose_pattern)
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.connect(self.btn_callback)
 
-            gas_mode=self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1].gas_condition
+            if not self._parent.tempPattern.patternFiles==[] and not self.AutoMode_pattern_comboBox_contantList:
+
+                print(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1)
+                gas_mode=self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1].gas_condition
             
-            if gas_mode==0:
+                if gas_mode==0:
+                    gas_mode="未選択"
+                if gas_mode==1:
+                    gas_mode="大気"
+                elif gas_mode==2:
+                    gas_mode="真空"
+                elif gas_mode==3:
+                    gas_mode="N2置換"
+            else:
                 gas_mode="未選択"
-            if gas_mode==1:
-                gas_mode="大気"
-            elif gas_mode==2:
-                gas_mode="真空"
-            elif gas_mode==3:
-                gas_mode="N2置換"
             self._parent.ui.load_pages.Gas_mode_Label.setText("雰囲気モード：{}".format(gas_mode))
         
             self.ethernetConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue()
