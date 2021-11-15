@@ -296,6 +296,8 @@ class Main_utility_manager(QWidget):
         
         elif btn_name == "test_pushButton_2":
             self.eventPool["Noise Measure Start"].set()
+        elif btn_name == "test_pushButton_3":
+            self.eventPool["Noise Measure Stop"].set()
 
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
@@ -459,6 +461,7 @@ class Main_utility_manager(QWidget):
         
         self._parent.ui.load_pages.test_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.test_pushButton_2.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.test_pushButton_3.clicked.connect(self.btn_callback)
 
         
 
