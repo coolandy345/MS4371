@@ -159,12 +159,8 @@ class PyTempStep(QWidget):
 
             )
         self._menu.menu_frame.move(60, 0)
-
         self._menu.menu_frame.hide()
         self.type_modifly_callback()
-
-
-
 
 
 
@@ -427,15 +423,18 @@ class PyTempStep(QWidget):
             self.pattern.KeepTime_lineEdit.setDisabled(False)
             self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_gray_out_style)
             self.pattern.KeepTime_label.setStyleSheet(self.label_gray_out_style)
-
+            
+            self.pattern.Sp_limit_up_lineEdit.setValue(0)
             self.pattern.Sp_limit_up_lineEdit.setEnabled(False)
             self.pattern.Sp_limit_up_lineEdit.setStyleSheet(self.line_gray_out_style)
             self.pattern.Sp_limit_up_label.setStyleSheet(self.label_gray_out_style)
-
+            
+            self.pattern.Sp_limit_down_lineEdit.setValue(0)
             self.pattern.Sp_limit_down_lineEdit.setEnabled(False)
             self.pattern.Sp_limit_down_lineEdit.setStyleSheet(self.line_gray_out_style)
             self.pattern.Sp_limit_down_label.setStyleSheet(self.label_gray_out_style)
-
+            
+            self.pattern.Shift_lineEdit.setValue(0)
             self.pattern.Shift_lineEdit.setEnabled(False)
             self.pattern.Shift_lineEdit.setStyleSheet(self.line_gray_out_style)
             self.pattern.Shift_label.setStyleSheet(self.label_gray_out_style)
@@ -499,7 +498,7 @@ class PyTempStep(QWidget):
             self._parent.tempPattern.close_one_menu(self._step)
 
     def paintEvent(self, event):
-        return
+        pass
 
 
     def setFocusStyle(self,enable):

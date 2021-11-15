@@ -78,7 +78,7 @@ class TestPatternWidget(QWidget):
         self.utility_setup()
         self.setup_TempPattern()
         self.setup_TempGraph()
-        self.memory_reader()
+        #self.memory_reader()
         self.patternFile_Load()
         self.update_Request=True
 
@@ -208,10 +208,10 @@ class TestPatternWidget(QWidget):
         
         for file_number in range(1,21):
             pattern=testlist(
-                name            =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_名称".format(file_number)].getValue(),
+                name            =str(self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_名称".format(file_number)].value),
                 step_number     =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_実行STEP数".format(file_number)].getValue(),
                 active          =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_パターン有効".format(file_number)].getValue(),
-                comment         =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_註記".format(file_number)].value,
+                comment         =str(self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_註記".format(file_number)].value),
                 test_time       =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(file_number)].getValue(),
                 test_sampletime =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定sampletime".format(file_number)].getValue(),
                 BG0_test_time   =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(file_number)].getValue(),
@@ -264,11 +264,18 @@ class TestPatternWidget(QWidget):
 
 
         #Scan Avilible pattern import to patternfile_comboBox
+
+        #self._parent.ui.load_pages.Test_Totalcount_Label.setText("計測回数：{} 回".format(hour,min))
+
+        self.cache_steplist.total_time=self.cache_steplist.BG0_test_time+self.cache_steplist.step_number*self.cache_steplist.test_time+self.cache_steplist.step_number*self.cache_steplist.BG_test_time
+
+        self._parent.ui.load_pages.Test_Totaltime_Label.setText("合計時間：{} 分".format(self.cache_steplist.total_time))
+
         self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.disconnect()
         self._parent.ui.load_pages.testfile_comboBox.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.testfile_comboBox.clear()
         self._parent.ui.load_pages.testfile_comboBox.addItems(self.patternFile_nameList)
-        self._parent.ui.load_pages.testfile_comboBox.setCurrentIndex(self.focus_patternFile_number)
+        self._parent.ui.load_pages.testfile_comboBox.setCurrentIndex(self.focus_patternFile_number-1)
         self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         
@@ -603,6 +610,7 @@ class TestPatternWidget(QWidget):
             self.patternFile_New()
 
         elif btn_name=="testfile_comboBox":
+
             if self.content_Change:
                 result=self.lunchOptionDialog("変更内容は未保存です。内容を保存しますか",PyDialog.warning_3_type)
 
@@ -622,7 +630,7 @@ class TestPatternWidget(QWidget):
                     return
 
 
-            self.focus_patternFile_number=self._parent.ui.load_pages.testfile_comboBox.currentIndex()
+            self.focus_patternFile_number=self._parent.ui.load_pages.testfile_comboBox.currentIndex()+1
             self.patternFile_Load()
 
         elif btn_name=="test_commect_lineEdit":
@@ -650,6 +658,7 @@ class TestPatternWidget(QWidget):
             self.update_Request=True
 
     def patternFile_Load(self):
+
         self.set_memorypool_register("Measurement Pattern","フォーカスPTN番号",self.focus_patternFile_number)
         self.memory_reader()
 
@@ -694,6 +703,7 @@ class TestPatternWidget(QWidget):
         QThreadPool.globalInstance().start(self.patternFile_Save_Worker)
 
     def patternFile_Save_work(self):
+
         #Refresh patternFiles
         self.patternFiles[self.focus_patternFile_number]=copy.deepcopy(self.cache_steplist)
         
@@ -845,6 +855,7 @@ class TestPatternWidget(QWidget):
         elif btn == "pattern_menu_delete_pushButton":
             self.cache_steplist.units.append(testUnit())
             self.cache_steplist.units.pop(self.focus_step_number)
+            self.un_focus_step(self.focus_step_number)
             self.cache_steplist.step_number-=1
             #print("pattern_menu_delete ",self.focus_step_number)
             pass
@@ -863,7 +874,7 @@ class TestPatternWidget(QWidget):
         self.GraphRegionList[_step].setFocusStyle(False)
         
         if self.focus_step_number==_step:
-            self.focus_step_number=0
+            self.focus_step_number=1
 
 
     def content_change_check(self):

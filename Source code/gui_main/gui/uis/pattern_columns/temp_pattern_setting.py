@@ -280,7 +280,10 @@ class TempPatternWidget(QWidget):
 
             for step in range(1,21):
                 step_unit=self.patternFiles[file_number].getStep(step)
+
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_SV値".format(file_number,step),step_unit.SV)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_ステップ所要時間".format(file_number,step),step_unit.step_time)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_ステップ累計時間".format(file_number,step),step_unit.total_time)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_時".format(file_number,step),step_unit.time_hour)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_分".format(file_number,step),step_unit.time_min)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_キープ時間".format(file_number,step),step_unit.time_keep)
@@ -339,14 +342,20 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.commect_lineEdit.textEdited.connect(self.ui_click_callback)
 
 
+        hour=self.cache_steplist.total_time//60
+        min=self.cache_steplist.total_time%60
+        self._parent.ui.load_pages.Temp_Totaltime_Label.setText("合計時間：{} 時間 {} 分".format(hour,min))
+        
+
+
         self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.disconnect()
         self._parent.ui.load_pages.gas_Combobox.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.gas_Combobox.setCurrentIndex(self.cache_steplist.gas_condition)
+        self._parent.ui.load_pages.gas_Combobox.setCurrentIndex(self.cache_steplist.gas_condition-1)
         self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.connect(self.ui_click_callback)
 
         self._parent.ui.load_pages.RT_combobox.currentIndexChanged.disconnect()
         self._parent.ui.load_pages.RT_combobox.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.RT_combobox.setCurrentIndex(self.cache_steplist.RT_measure)
+        self._parent.ui.load_pages.RT_combobox.setCurrentIndex(self.cache_steplist.RT_measure-1)
         self._parent.ui.load_pages.RT_combobox.currentIndexChanged.connect(self.ui_click_callback)
 
         
@@ -433,14 +442,15 @@ class TempPatternWidget(QWidget):
     # update step widge
     # /////////////////////////////
     def updata_step_widge(self):
-        #self.updata_step_widge_Worker=updata_step_widge_Thread(self)
-        #QThreadPool.globalInstance().start(self.updata_step_widge_Worker)
+        self.updata_step_widge_Worker=updata_step_widge_Thread(self)
+        QThreadPool.globalInstance().start(self.updata_step_widge_Worker)
 
-        updata_step_widge_Thread = threading.Thread(target = self.updata_step_widge_work,daemon=True)
-        updata_step_widge_Thread.start()
+        #updata_step_widge_Thread = threading.Thread(target = self.updata_step_widge_work,daemon=True)
+        #updata_step_widge_Thread.start()
 
     def updata_step_widge_work(self):
         #adjust the Visible of each step
+
         for _step in range(1,21):
             
             if _step<=self.cache_steplist.step_number :
@@ -450,10 +460,10 @@ class TempPatternWidget(QWidget):
                 if _step==self.cache_steplist.step_number+1 and self.editorEnable:
                     self.step_widges_list[_step].setVisible (True)
                     self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
-
                 else:
                     self.step_widges_list[_step].setVisible (False)
                     self.step_widges_list[_step].pattern.page.setCurrentIndex(False)
+
             #Only last step has End type
             if _step==self.cache_steplist.step_number :
                 self.step_widges_list[_step].enableEndType(True)
@@ -603,11 +613,11 @@ class TempPatternWidget(QWidget):
             self.update_Request=True
 
         elif btn_name=="gas_Combobox":
-            self.cache_steplist.set_gas_condition(self._parent.ui.load_pages.gas_Combobox.currentIndex())
+            self.cache_steplist.set_gas_condition(self._parent.ui.load_pages.gas_Combobox.currentIndex()+1)
             self.update_Request=True
 
         elif btn_name=="RT_combobox":
-            self.cache_steplist.set_RT_measure(self._parent.ui.load_pages.RT_combobox.currentIndex())
+            self.cache_steplist.set_RT_measure(self._parent.ui.load_pages.RT_combobox.currentIndex()+1)
             self.update_Request=True
         
     def patternFile_Load(self):
@@ -618,7 +628,6 @@ class TempPatternWidget(QWidget):
 
         #Reset paste function
         self.paste_ready=False
-
         if(self.focus_patternFile_number>=1 and self.focus_patternFile_number<=20):
             self.cache_steplist=copy.deepcopy(self.patternFiles[self.focus_patternFile_number])
             self.editorEnable=True
@@ -690,6 +699,9 @@ class TempPatternWidget(QWidget):
         
         for step in range(1,21):
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_SV値".format(self.focus_patternFile_number,step),list.units[step].SV)
+            
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_ステップ所要時間".format(self.focus_patternFile_number,step),list.units[step].step_time)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_ステップ累計時間".format(self.focus_patternFile_number,step),list.units[step].total_time)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_時".format(self.focus_patternFile_number,step),list.units[step].time_hour)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_時間_分".format(self.focus_patternFile_number,step),list.units[step].time_min)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_キープ時間".format(self.focus_patternFile_number,step),list.units[step].time_keep)
@@ -723,6 +735,7 @@ class TempPatternWidget(QWidget):
 
 
 
+        
         
         #Reload cache_list from memory
         self.patternFile_Load()
@@ -878,7 +891,7 @@ class TempPatternWidget(QWidget):
         self.GraphRegionList[_step].setFocusStyle(False)
         
         if self.focus_step_number==_step:
-            self.focus_step_number=0
+            self.focus_step_number=1
 
     def close_menu(self):
         for step in range(1,21):
@@ -888,6 +901,23 @@ class TempPatternWidget(QWidget):
         self.step_widges_list[step]._menu.menu_frame.hide()
 
     def content_change_check(self):
+
+        #total time calculate
+        for step in range(1,self.cache_steplist.step_number+1):
+
+            self.cache_steplist.units[step].step_time  =(self.cache_steplist.units[step].time_hour*60)+self.cache_steplist.units[step].time_min
+
+            if step==1:
+                self.cache_steplist.units[step].total_time=self.cache_steplist.units[step].step_time
+            else:
+                self.cache_steplist.units[step].total_time=self.cache_steplist.units[step].step_time+self.cache_steplist.units[step-1].total_time
+
+        #Temp_Totaltime_Label
+        if self.cache_steplist.step_number!=0:
+            self.cache_steplist.total_time=self.cache_steplist.units[self.cache_steplist.step_number].total_time
+        else:
+            self.cache_steplist.total_time=0
+        #print("content_change_check",self.cache_steplist.total_time)
 
         if (self.cache_steplist!=None and
             self.patternFiles[self.focus_patternFile_number]!=None
@@ -918,7 +948,7 @@ class TempPatternWidget(QWidget):
                 if(
                 cache_stepUnit.Step_Type                !=memory_stepUnit.Step_Type or
                 cache_stepUnit.SV                       !=memory_stepUnit.SV or
-                cache_stepUnit.N2_flowRate              !=memory_stepUnit.N2_flowRate or
+                float(cache_stepUnit.N2_flowRate)              !=float(memory_stepUnit.N2_flowRate) or
                 cache_stepUnit.PID_muffle_No            !=memory_stepUnit.PID_muffle_No or
                 cache_stepUnit.PID_heater_No            !=memory_stepUnit.PID_heater_No or
                 cache_stepUnit.test_measure_enable      !=memory_stepUnit.test_measure_enable or
@@ -933,11 +963,13 @@ class TempPatternWidget(QWidget):
                     self.content_Change=True
 
 
-
     def step_modifly_manager(self,step):
+
+
         stepUnit=self.cache_steplist.getStep(step)
 
         stepUnit.Step_Type                          =self.step_widges_list[step]._type
+        
         stepUnit.time_hour                          =self.step_widges_list[step]._hour
         stepUnit.time_min                           =self.step_widges_list[step]._minute
         stepUnit.SV                                     =self.step_widges_list[step]._temperature
@@ -953,10 +985,10 @@ class TempPatternWidget(QWidget):
         self.cache_steplist.setStep(step,stepUnit)
         
         self.update_Request=True
-
+        
 
     def update(self):
-
+        
         self.content_change_check()
         self.updata_step_widge()
         self.update_graph()

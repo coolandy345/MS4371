@@ -142,7 +142,7 @@ class Main_utility_manager(QWidget):
 
         self.choose_pattern=0
 
-        self.graph_Item="Resistor"
+        self.graph_Item="Measure_Data"
 
         self.timeUnit=1
         self.timeLabel="s"
@@ -290,14 +290,17 @@ class Main_utility_manager(QWidget):
 
         if btn_name == "btn_AutoMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_AutoOperate)
-        elif btn_name == "test_pushButton":
-            self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
+
+
 
         
-        elif btn_name == "test_pushButton_2":
+        elif btn_name == "Noisetest_pushButton":
             self.eventPool["Noise Measure Start"].set()
-        elif btn_name == "test_pushButton_3":
-            self.eventPool["Noise Measure Stop"].set()
+
+
+
+        #elif btn_name == "test_pushButton_3":
+        #    self.eventPool["Noise Measure Stop"].set()
 
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
@@ -399,22 +402,20 @@ class Main_utility_manager(QWidget):
         elif btn_name == "graphItem_combobox":
 
             index=self._parent.ui.load_pages.graphItem_combobox.currentText()
-            if index=="抵抗値":
-                self.graph_Item="Resistor"
+            if index=="測定数値":
+                self.graph_Item="Measure_Data"
                 self._parent.ui.load_pages.timeUnit_Label.setVisible (True)
                 self._parent.ui.load_pages.timeUnit_comboBox.setVisible (True)
-                self._parent.ui.load_pages.frame_66.setVisible (True)
+                self._parent.ui.load_pages.frame_19.setVisible (True)
+
             elif index=="運転パターン":
                 self.graph_Item="Pattern"
                 self._parent.ui.load_pages.timeUnit_Label.setVisible (False)
                 self._parent.ui.load_pages.timeUnit_comboBox.setVisible (False)
-                self._parent.ui.load_pages.frame_66.setVisible (False)
+                self._parent.ui.load_pages.frame_19.setVisible (False)
 
                 
-                self.timeUnit=3600
-                self.timeLabel="hr"
-                self.timeMaxRange=10
-                self.timeMinRange=1
+                
             
             self.graph_update()
                 
@@ -459,9 +460,7 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.outputStop_pushButton.clicked.connect(self.btn_callback)
 
         
-        self._parent.ui.load_pages.test_pushButton.clicked.connect(self.btn_callback)
-        self._parent.ui.load_pages.test_pushButton_2.clicked.connect(self.btn_callback)
-        self._parent.ui.load_pages.test_pushButton_3.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.Noisetest_pushButton.clicked.connect(self.btn_callback)
 
         
 
@@ -678,8 +677,8 @@ class Main_utility_manager(QWidget):
     def graph_update(self):
         self.measurement_data_array=[]
 
-        if self.graph_Item=="Resistor":
-            print("Resistor")
+        if self.graph_Item=="Measure_Data":
+            print("Measure_Data")
             #for data in self._parent.MMG.memoryPool["Read Measurement Data"]:
             #    XYdata={}
             #    XYdata["x"]=data.time/self.timeUnit
@@ -687,26 +686,39 @@ class Main_utility_manager(QWidget):
             #    self.measurement_data_array.append(XYdata)
 
             self._parent.curve.setData(self.measurement_data_array)
+
+            self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
+            self.realTimeData_Graph.setLabel(axis='left', text='抵抗値', units='Ω')
+            self.realTimeData_Graph.setLimits(minXRange=self.timeMinRange,maxXRange=self.timeMaxRange)
+
+
         elif self.graph_Item=="Pattern":
 
             self.choose_pattern=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No."].getValue()
-            print("self.choose_pattern",self.choose_pattern)
             if self.choose_pattern:
                 pattern_availible_number=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(self.choose_pattern)].getValue()
             
                 self.measurement_data_array.append({"x":0,"y":0})
-                for step in (1,pattern_availible_number+1):
+                for step in range(1,pattern_availible_number+2):
                     XYdata={}
-                    XYdata["x"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(self.choose_pattern,step)].getValue()
+                    XYdata["x"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(self.choose_pattern,step)].getValue()/60
                     XYdata["y"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(self.choose_pattern,step)].getValue()
                     self.measurement_data_array.append(XYdata)
             #not choose_pattern yet 
             else:
                 self.measurement_data_array=[]
-            self._parent.curve.setData(self.measurement_data_array)
 
-        self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
-        self.realTimeData_Graph.setLimits(minXRange=self.timeMinRange,maxXRange=self.timeMaxRange)
+            self._parent.curve.setData(self.measurement_data_array)
+            self.timeUnit=3600
+            self.timeLabel="hr"
+            self.timeMaxRange=10
+            self.timeMinRange=1
+
+            self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units="hr")
+            self.realTimeData_Graph.setLabel(axis='left', text='温度', units='℃')
+            self.realTimeData_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
+
+        
 
     def graph_setup(self):
 
@@ -715,13 +727,16 @@ class Main_utility_manager(QWidget):
         self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units='s')
 
         self._parent.Xaxis = self.realTimeData_Graph.getAxis('bottom')
+        
+        self._parent.Xaxis.enableAutoSIPrefix(False)
         self.realTimeData_Graph.setAxisItems({'bottom':self._parent.Xaxis})
         
         self._parent.Yaxis = self.realTimeData_Graph.getAxis('left')
         self._parent.Yaxis.enableAutoSIPrefix(True)
 
+
         self.realTimeData_Graph.showGrid(x=True, y=True)
-        self.realTimeData_Graph.setMouseEnabled(x=True, y=False)
+        self.realTimeData_Graph.setMouseEnabled(x=False, y=False)
         self.realTimeData_Graph.setLimits(minXRange=1,maxXRange=10)
         self.realTimeData_Graph.setLimits(xMin=0,yMin=0)
 
@@ -740,8 +755,6 @@ class Main_utility_manager(QWidget):
         #print("realtime_data_Update_Work")
         while 1:
             time.sleep(0.1)
-
-            
 
             if self.realTime_Temp!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue():
                 self.realTime_Temp=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()
@@ -824,11 +837,14 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.setCurrentIndex(self.choose_pattern)
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndexChanged.connect(self.btn_callback)
 
-            if not self._parent.tempPattern.patternFiles==[] and not self.AutoMode_pattern_comboBox_contantList:
 
-                print(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1)
-                gas_mode=self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1].gas_condition
-            
+            if not self._parent.tempPattern.patternFiles==[] and self.AutoMode_pattern_comboBox_contantList:
+
+                if self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1]:
+                    gas_mode=self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1].gas_condition
+                else:
+                    gas_mode==0
+
                 if gas_mode==0:
                     gas_mode="未選択"
                 if gas_mode==1:
@@ -839,6 +855,7 @@ class Main_utility_manager(QWidget):
                     gas_mode="N2置換"
             else:
                 gas_mode="未選択"
+
             self._parent.ui.load_pages.Gas_mode_Label.setText("雰囲気モード：{}".format(gas_mode))
         
             self.ethernetConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue()

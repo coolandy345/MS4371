@@ -39,7 +39,6 @@ class tempUnit():
         self.sp_limit_up=sp_limit_up
         self.sp_limit_down=sp_limit_down
         self.shift=shift
-
         self.test_measure_enable=test_measure_enable
         self.test_measure_PatternNo=test_measure_PatternNo
         
@@ -54,12 +53,17 @@ class tempUnit():
     def print_unit(self):
 
         print("Step_Type = ",self.Step_Type)
+        print("step_time = ",self.step_time)
+        print("total_time = ",self.total_time)
         print("time_hour = ",self.time_hour)
         print("time_min = ",self.time_min)
         print("SV = ",self.SV)
         print("N2_flowRate = ",self.N2_flowRate)
         print("PID_muffle_No = ",self.PID_muffle_No)
         print("PID_heater_No = ",self.PID_heater_No)
+        print("sp_limit_up = ",self.sp_limit_up)
+        print("sp_limit_down = ",self.sp_limit_down)
+        print("shift = ",self.shift)
         print("time_keep = ",self.time_keep)
         print("test_measure_enable = ",self.test_measure_enable)
         print("test_measure_PatternNo = ",self.test_measure_PatternNo)
@@ -78,6 +82,7 @@ class templist():
         step_number=0,
         gas_condition=0,
         RT_measure=0,
+
         ):
 
         self.name=name
@@ -94,7 +99,7 @@ class templist():
                 asciicode_2!="" or
                 asciicode_3!=""):
             self.name_ASC2string(self.asciicode_0,self.asciicode_1,self.asciicode_2,self.asciicode_3)
-
+        self.total_time=0
         self.comment=comment
         self.active=active
         self.step_number=step_number   ####
@@ -277,6 +282,8 @@ class templist():
 
 
         self.units[step].Step_Type=input.Step_Type
+        self.units[step].step_time=input.step_time
+        self.units[step].total_time=input.total_time
         self.units[step].time_hour=input.time_hour
         self.units[step].time_min=input.time_min
         self.units[step].SV=input.SV
@@ -339,6 +346,7 @@ class testlist():
         self.comment=comment
         self.active=active
         self.step_number=step_number
+        self.total_time=0
         self.test_time=test_time
         self.test_sampletime=test_sampletime
         self.BG0_test_time=BG0_test_time

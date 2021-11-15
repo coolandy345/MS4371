@@ -247,7 +247,7 @@ class GPIB_device():
         #If we have any error code
         if len(getItem.error_message):
             self.connect_action(False)
-            print("Fail init device at adress {} Error is {}".format(self.address,getItem.error_message))
+            #print("Fail init device at adress {} Error is {}".format(self.address,getItem.error_message))
             return getItem.error_message
         else:
             print("secess init GPIB device at {}".format(self.name))
