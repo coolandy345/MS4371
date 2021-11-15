@@ -60,6 +60,8 @@ if __name__ == "__main__":
     EventPool["Auto Run Start"]=MemoryPoolManager.Event()
     EventPool["Auto Run finish"]=MemoryPoolManager.Event()
     
+    EventPool["Noise Measure Start"]=MemoryPoolManager.Event()
+    
     EventPool["Test approve"]=MemoryPoolManager.Event()
     EventPool["GPIB_Test_Finish"]=MemoryPoolManager.Event()
     EventPool["CSV_Data_arrive"]=MemoryPoolManager.Event()
