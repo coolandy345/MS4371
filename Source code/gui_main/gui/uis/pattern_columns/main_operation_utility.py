@@ -7,6 +7,7 @@ import random
 from modbus_TcpServer import MeasurePackage
 from registor_manager import *
 from quantiphy import Quantity
+import numpy as np
 
 
 class Memory_Manager():
@@ -684,12 +685,14 @@ class Main_utility_manager(QWidget):
             #    XYdata["x"]=data.time/self.timeUnit
             #    XYdata["y"]=data.resistor
             #    self.measurement_data_array.append(XYdata)
+            self.measurement_data_array = 1000 * np.random.random(size=10000)
+            #self.measurement_data_array =range(1,10000)
 
             self._parent.curve.setData(self.measurement_data_array)
 
             self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
             self.realTimeData_Graph.setLabel(axis='left', text='抵抗値', units='Ω')
-            self.realTimeData_Graph.setLimits(minXRange=self.timeMinRange,maxXRange=self.timeMaxRange)
+            #self.realTimeData_Graph.setLimits(minXRange=0)
 
 
         elif self.graph_Item=="Pattern":
@@ -716,7 +719,7 @@ class Main_utility_manager(QWidget):
 
             self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units="hr")
             self.realTimeData_Graph.setLabel(axis='left', text='温度', units='℃')
-            self.realTimeData_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
+            #self.realTimeData_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
 
         
 
@@ -736,16 +739,16 @@ class Main_utility_manager(QWidget):
 
 
         self.realTimeData_Graph.showGrid(x=True, y=True)
-        self.realTimeData_Graph.setMouseEnabled(x=False, y=False)
-        self.realTimeData_Graph.setLimits(minXRange=1,maxXRange=10)
+        self.realTimeData_Graph.setMouseEnabled(x=True, y=True)
+        #self.realTimeData_Graph.setLimits(minXRange=1,maxXRange=10)
         self.realTimeData_Graph.setLimits(xMin=0,yMin=0)
 
-        self._parent.curve=self.realTimeData_Graph.plot(pen=pg.mkPen((225, 230, 241),width=5), 
-                                   symbolBrush=(0,0,0),
-                                   symbolPen='w', 
-                                   #symbol='o', 
-                                   symbolSize=5, 
-                                   name="予定パターン")
+        self._parent.curve=self.realTimeData_Graph.plot(pen=pg.mkPen(225, 230, 241),
+                                                        symbolPen='w',
+                                                        symbolBrush=(0,0,0),
+                                                        symbolSize=5,
+                                                        name="予定パターン",
+                                                        )
         
         self.measurement_data_array=[]
         self._parent.curve.setData(self.measurement_data_array)

@@ -20,9 +20,11 @@ class PyGraphRegionItem(pg.LinearRegionItem):
                  hoverBrush=None, hoverPen=None, movable=True, bounds=None, 
                  span=(0, 1), swapMode='sort'):
 
-        super().__init__(values=values, orientation=orientation, brush=brush, pen=pen,
-                 hoverBrush=hoverBrush, hoverPen=hoverPen, movable=movable, bounds=bounds, 
-                 span=span, swapMode=swapMode)
+        #super().__init__(values=values, orientation=orientation, brush=brush, pen=pen,
+        #         hoverBrush=hoverBrush, hoverPen=hoverPen, movable=movable, bounds=bounds, 
+        #         span=span, swapMode=swapMode)
+
+        super().__init__()
         
         self.parent=parent
         self.app_parent=app_parent

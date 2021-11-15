@@ -129,7 +129,8 @@ class TempPatternWidget(QWidget):
         self.graph.setLimits(minXRange=9,maxXRange=20)
         #self.graph.setMinimumSize(QSize(1100, 300))
 
-        self.curve=self.graph.plot(pen=pg.mkPen((225, 230, 241),width=5), 
+
+        self.curve=self.graph.plot(pen=pg.mkPen(225, 230, 241), 
                                    symbolBrush=(0,0,0),
                                    symbolPen='w', 
                                    #symbol='o', 
