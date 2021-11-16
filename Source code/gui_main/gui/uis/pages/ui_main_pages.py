@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesucdJlh.ui'
+## Form generated from reading UI file 'main_pageseHGgId.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -90,7 +90,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 948, 671))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1121, 671))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -115,6 +115,7 @@ class Ui_MainPages(object):
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.frame_48 = QFrame(self.frame_42)
         self.frame_48.setObjectName(u"frame_48")
+        self.frame_48.setMinimumSize(QSize(0, 0))
         self.frame_48.setStyleSheet(u"QFrame{\n"
 "	background-color: rgb(36, 40, 49);\n"
 "	border:none;\n"
@@ -152,7 +153,7 @@ class Ui_MainPages(object):
 
         self.QC_Test_RadioButton = QRadioButton(self.frame_48)
         self.QC_Test_RadioButton.setObjectName(u"QC_Test_RadioButton")
-        self.QC_Test_RadioButton.setMinimumSize(QSize(0, 32))
+        self.QC_Test_RadioButton.setMinimumSize(QSize(0, 35))
         self.QC_Test_RadioButton.setMaximumSize(QSize(16777215, 35))
         self.QC_Test_RadioButton.setStyleSheet(u"padding-left:60px;\n"
 "background-color: rgb(36, 40, 49);")
@@ -162,7 +163,7 @@ class Ui_MainPages(object):
 
         self.Costom_Test_RadioButton = QRadioButton(self.frame_48)
         self.Costom_Test_RadioButton.setObjectName(u"Costom_Test_RadioButton")
-        self.Costom_Test_RadioButton.setMinimumSize(QSize(0, 32))
+        self.Costom_Test_RadioButton.setMinimumSize(QSize(0, 35))
         self.Costom_Test_RadioButton.setMaximumSize(QSize(16777215, 32))
         self.Costom_Test_RadioButton.setStyleSheet(u"padding-left:60px;\n"
 "background-color: rgb(36, 40, 49);")
@@ -223,7 +224,7 @@ class Ui_MainPages(object):
         self.gridLayout_7.addWidget(self.lineEdit_costomerName, 5, 1, 1, 1)
 
 
-        self.horizontalLayout_9.addWidget(self.frame_48, 0, Qt.AlignLeft|Qt.AlignTop)
+        self.horizontalLayout_9.addWidget(self.frame_48, 0, Qt.AlignTop)
 
         self.frame_63 = QFrame(self.frame_42)
         self.frame_63.setObjectName(u"frame_63")
@@ -247,6 +248,10 @@ class Ui_MainPages(object):
 
         self.frame_62 = QFrame(self.frame_42)
         self.frame_62.setObjectName(u"frame_62")
+        sizePolicy.setHeightForWidth(self.frame_62.sizePolicy().hasHeightForWidth())
+        self.frame_62.setSizePolicy(sizePolicy)
+        self.frame_62.setMinimumSize(QSize(0, 0))
+        self.frame_62.setMaximumSize(QSize(16777215, 16777215))
         self.frame_62.setStyleSheet(u"QFrame{\n"
 "	background-color: rgb(36, 40, 49);\n"
 "	border:none;\n"
@@ -261,8 +266,8 @@ class Ui_MainPages(object):
         self.gridLayout_10.setHorizontalSpacing(12)
         self.label_32 = QLabel(self.frame_62)
         self.label_32.setObjectName(u"label_32")
-        self.label_32.setMinimumSize(QSize(140, 0))
-        self.label_32.setMaximumSize(QSize(140, 16777215))
+        self.label_32.setMinimumSize(QSize(140, 35))
+        self.label_32.setMaximumSize(QSize(140, 35))
         self.label_32.setStyleSheet(u"")
         self.label_32.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -295,8 +300,8 @@ class Ui_MainPages(object):
 
         self.label_10 = QLabel(self.frame_62)
         self.label_10.setObjectName(u"label_10")
-        self.label_10.setMinimumSize(QSize(140, 0))
-        self.label_10.setMaximumSize(QSize(140, 16777215))
+        self.label_10.setMinimumSize(QSize(140, 35))
+        self.label_10.setMaximumSize(QSize(140, 35))
         self.label_10.setStyleSheet(u"")
         self.label_10.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -311,8 +316,8 @@ class Ui_MainPages(object):
 
         self.label_26 = QLabel(self.frame_62)
         self.label_26.setObjectName(u"label_26")
-        self.label_26.setMinimumSize(QSize(140, 0))
-        self.label_26.setMaximumSize(QSize(140, 16777215))
+        self.label_26.setMinimumSize(QSize(140, 35))
+        self.label_26.setMaximumSize(QSize(140, 35))
         self.label_26.setStyleSheet(u"")
         self.label_26.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -353,8 +358,8 @@ class Ui_MainPages(object):
 
         self.label_9 = QLabel(self.frame_62)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setMinimumSize(QSize(140, 0))
-        self.label_9.setMaximumSize(QSize(140, 16777215))
+        self.label_9.setMinimumSize(QSize(140, 35))
+        self.label_9.setMaximumSize(QSize(140, 35))
         self.label_9.setStyleSheet(u"")
         self.label_9.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -379,7 +384,7 @@ class Ui_MainPages(object):
         self.gridLayout_10.addWidget(self.lineEdit_meterialVolume, 6, 1, 1, 1)
 
 
-        self.horizontalLayout_9.addWidget(self.frame_62, 0, Qt.AlignLeft|Qt.AlignTop)
+        self.horizontalLayout_9.addWidget(self.frame_62, 0, Qt.AlignTop)
 
 
         self.verticalLayout_9.addWidget(self.frame_42, 0, Qt.AlignLeft)
@@ -1522,21 +1527,24 @@ class Ui_MainPages(object):
         self.Resistor_checkBox = QCheckBox(self.frame_19)
         self.Resistor_checkBox.setObjectName(u"Resistor_checkBox")
         self.Resistor_checkBox.setMinimumSize(QSize(0, 0))
-        self.Resistor_checkBox.setStyleSheet(u"background-color: rgba(0, 0, 0, 80);")
+        self.Resistor_checkBox.setStyleSheet(u"background-color: rgba(0, 0, 0, 80);\n"
+"padding:5px")
 
         self.horizontalLayout_5.addWidget(self.Resistor_checkBox)
 
         self.Voltage_checkBox = QCheckBox(self.frame_19)
         self.Voltage_checkBox.setObjectName(u"Voltage_checkBox")
         self.Voltage_checkBox.setMinimumSize(QSize(0, 0))
-        self.Voltage_checkBox.setStyleSheet(u"background-color: rgba(0, 0, 0, 80);")
+        self.Voltage_checkBox.setStyleSheet(u"background-color: rgba(0, 0, 0, 80);\n"
+"padding:5px")
 
         self.horizontalLayout_5.addWidget(self.Voltage_checkBox)
 
         self.Current_checkBox = QCheckBox(self.frame_19)
         self.Current_checkBox.setObjectName(u"Current_checkBox")
         self.Current_checkBox.setMinimumSize(QSize(0, 0))
-        self.Current_checkBox.setStyleSheet(u"background-color: rgba(0, 0, 0, 80);")
+        self.Current_checkBox.setStyleSheet(u"background-color: rgba(0, 0, 0, 80);\n"
+"padding:5px")
 
         self.horizontalLayout_5.addWidget(self.Current_checkBox)
 
@@ -2322,7 +2330,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -480, 1104, 1620))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1104, 1612))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -2446,7 +2454,7 @@ class Ui_MainPages(object):
         self.commect_lineEdit = QLineEdit(self.frame_20)
         self.commect_lineEdit.setObjectName(u"commect_lineEdit")
         self.commect_lineEdit.setMinimumSize(QSize(400, 0))
-        self.commect_lineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.commect_lineEdit.setMaximumSize(QSize(400, 16777215))
         self.commect_lineEdit.setStyleSheet(u"")
         self.commect_lineEdit.setCursorPosition(0)
 
@@ -2456,7 +2464,7 @@ class Ui_MainPages(object):
         self.patternfile_comboBox.addItem("")
         self.patternfile_comboBox.setObjectName(u"patternfile_comboBox")
         self.patternfile_comboBox.setMinimumSize(QSize(400, 0))
-        self.patternfile_comboBox.setMaximumSize(QSize(16777215, 16777215))
+        self.patternfile_comboBox.setMaximumSize(QSize(400, 16777215))
         self.patternfile_comboBox.setMouseTracking(True)
         self.patternfile_comboBox.setStyleSheet(u"")
         self.patternfile_comboBox.setEditable(False)
@@ -2605,7 +2613,7 @@ class Ui_MainPages(object):
         self.frame_37.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_14 = QHBoxLayout(self.frame_37)
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
-        self.horizontalLayout_14.setContentsMargins(9, 0, 9, 0)
+        self.horizontalLayout_14.setContentsMargins(0, 0, 0, 0)
         self.frame_40 = QFrame(self.frame_37)
         self.frame_40.setObjectName(u"frame_40")
         self.frame_40.setMinimumSize(QSize(50, 0))
@@ -2621,6 +2629,7 @@ class Ui_MainPages(object):
         self.label_7.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
+        self.label_7.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_13.addWidget(self.label_7)
 
@@ -2642,6 +2651,7 @@ class Ui_MainPages(object):
         self.label_6.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
+        self.label_6.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_12.addWidget(self.label_6)
 
@@ -2679,6 +2689,7 @@ class Ui_MainPages(object):
         self.label_3 = QLabel(self.frame_38)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setStyleSheet(u"")
+        self.label_3.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_11.addWidget(self.label_3)
 
@@ -2970,6 +2981,7 @@ class Ui_MainPages(object):
         self.label_47 = QLabel(self.frame_52)
         self.label_47.setObjectName(u"label_47")
         self.label_47.setStyleSheet(u"")
+        self.label_47.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_16.addWidget(self.label_47)
 
@@ -2989,6 +3001,7 @@ class Ui_MainPages(object):
         self.label_46 = QLabel(self.frame_56)
         self.label_46.setObjectName(u"label_46")
         self.label_46.setStyleSheet(u"")
+        self.label_46.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_15.addWidget(self.label_46)
 
@@ -3026,6 +3039,7 @@ class Ui_MainPages(object):
         self.label_15 = QLabel(self.frame_54)
         self.label_15.setObjectName(u"label_15")
         self.label_15.setStyleSheet(u"")
+        self.label_15.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_14.addWidget(self.label_15)
 
@@ -3033,14 +3047,14 @@ class Ui_MainPages(object):
         self.horizontalLayout_15.addWidget(self.frame_54)
 
 
-        self.gridLayout_47.addWidget(self.frame_50, 0, 6, 3, 1)
+        self.gridLayout_47.addWidget(self.frame_50, 0, 6, 3, 1, Qt.AlignRight)
 
         self.frame_51 = QFrame(self.frame_34)
         self.frame_51.setObjectName(u"frame_51")
         sizePolicy.setHeightForWidth(self.frame_51.sizePolicy().hasHeightForWidth())
         self.frame_51.setSizePolicy(sizePolicy)
-        self.frame_51.setMinimumSize(QSize(400, 0))
-        self.frame_51.setMaximumSize(QSize(16777215, 16777215))
+        self.frame_51.setMinimumSize(QSize(800, 0))
+        self.frame_51.setMaximumSize(QSize(800, 16777215))
         self.frame_51.setStyleSheet(u"")
         self.frame_51.setFrameShape(QFrame.StyledPanel)
         self.frame_51.setFrameShadow(QFrame.Raised)
@@ -3064,8 +3078,8 @@ class Ui_MainPages(object):
         self.test_sampletime_LineEdit.setObjectName(u"test_sampletime_LineEdit")
         sizePolicy.setHeightForWidth(self.test_sampletime_LineEdit.sizePolicy().hasHeightForWidth())
         self.test_sampletime_LineEdit.setSizePolicy(sizePolicy)
-        self.test_sampletime_LineEdit.setMinimumSize(QSize(0, 0))
-        self.test_sampletime_LineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.test_sampletime_LineEdit.setMinimumSize(QSize(0, 30))
+        self.test_sampletime_LineEdit.setMaximumSize(QSize(16777215, 30))
         self.test_sampletime_LineEdit.setStyleSheet(u"")
         self.test_sampletime_LineEdit.setAlignment(Qt.AlignCenter)
         self.test_sampletime_LineEdit.setReadOnly(False)
@@ -3088,8 +3102,8 @@ class Ui_MainPages(object):
         self.bg_time_LineEdit.setObjectName(u"bg_time_LineEdit")
         sizePolicy.setHeightForWidth(self.bg_time_LineEdit.sizePolicy().hasHeightForWidth())
         self.bg_time_LineEdit.setSizePolicy(sizePolicy)
-        self.bg_time_LineEdit.setMinimumSize(QSize(0, 0))
-        self.bg_time_LineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.bg_time_LineEdit.setMinimumSize(QSize(0, 30))
+        self.bg_time_LineEdit.setMaximumSize(QSize(16777215, 30))
         self.bg_time_LineEdit.setStyleSheet(u"")
         self.bg_time_LineEdit.setAlignment(Qt.AlignCenter)
         self.bg_time_LineEdit.setReadOnly(False)
@@ -3124,8 +3138,8 @@ class Ui_MainPages(object):
         self.test_time_LineEdit.setObjectName(u"test_time_LineEdit")
         sizePolicy.setHeightForWidth(self.test_time_LineEdit.sizePolicy().hasHeightForWidth())
         self.test_time_LineEdit.setSizePolicy(sizePolicy)
-        self.test_time_LineEdit.setMinimumSize(QSize(0, 0))
-        self.test_time_LineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.test_time_LineEdit.setMinimumSize(QSize(0, 30))
+        self.test_time_LineEdit.setMaximumSize(QSize(16777215, 30))
         self.test_time_LineEdit.setStyleSheet(u"")
         self.test_time_LineEdit.setAlignment(Qt.AlignCenter)
         self.test_time_LineEdit.setReadOnly(False)
@@ -3166,8 +3180,8 @@ class Ui_MainPages(object):
         self.bg0_time_LineEdit.setObjectName(u"bg0_time_LineEdit")
         sizePolicy.setHeightForWidth(self.bg0_time_LineEdit.sizePolicy().hasHeightForWidth())
         self.bg0_time_LineEdit.setSizePolicy(sizePolicy)
-        self.bg0_time_LineEdit.setMinimumSize(QSize(0, 0))
-        self.bg0_time_LineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.bg0_time_LineEdit.setMinimumSize(QSize(0, 30))
+        self.bg0_time_LineEdit.setMaximumSize(QSize(16777215, 30))
         self.bg0_time_LineEdit.setStyleSheet(u"")
         self.bg0_time_LineEdit.setAlignment(Qt.AlignCenter)
         self.bg0_time_LineEdit.setReadOnly(False)
@@ -3190,8 +3204,8 @@ class Ui_MainPages(object):
         self.bg_sampletime_LineEdit.setObjectName(u"bg_sampletime_LineEdit")
         sizePolicy.setHeightForWidth(self.bg_sampletime_LineEdit.sizePolicy().hasHeightForWidth())
         self.bg_sampletime_LineEdit.setSizePolicy(sizePolicy)
-        self.bg_sampletime_LineEdit.setMinimumSize(QSize(0, 0))
-        self.bg_sampletime_LineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.bg_sampletime_LineEdit.setMinimumSize(QSize(0, 30))
+        self.bg_sampletime_LineEdit.setMaximumSize(QSize(16777215, 30))
         self.bg_sampletime_LineEdit.setStyleSheet(u"")
         self.bg_sampletime_LineEdit.setAlignment(Qt.AlignCenter)
         self.bg_sampletime_LineEdit.setReadOnly(False)
@@ -3202,8 +3216,8 @@ class Ui_MainPages(object):
         self.SUM_filter_LineEdit.setObjectName(u"SUM_filter_LineEdit")
         sizePolicy.setHeightForWidth(self.SUM_filter_LineEdit.sizePolicy().hasHeightForWidth())
         self.SUM_filter_LineEdit.setSizePolicy(sizePolicy)
-        self.SUM_filter_LineEdit.setMinimumSize(QSize(0, 0))
-        self.SUM_filter_LineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.SUM_filter_LineEdit.setMinimumSize(QSize(0, 30))
+        self.SUM_filter_LineEdit.setMaximumSize(QSize(16777215, 30))
         self.SUM_filter_LineEdit.setStyleSheet(u"")
         self.SUM_filter_LineEdit.setAlignment(Qt.AlignCenter)
         self.SUM_filter_LineEdit.setReadOnly(False)
@@ -3624,7 +3638,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 

@@ -130,7 +130,8 @@ class TempPatternWidget(QWidget):
         #self.graph.setMinimumSize(QSize(500, 300))
         #self.graph.setFixedSize(500, 300)
 
-        self.curve=self.graph.plot(pen=pg.mkPen(225, 230, 241), 
+        self.curve=self.graph.plot(
+                                   pen=pg.mkPen('w',width=5), 
                                    symbolBrush=(0,0,0),
                                    symbolPen='w', 
                                    #symbol='o', 
@@ -226,8 +227,11 @@ class TempPatternWidget(QWidget):
             
             for step_no in range(1,21):
 
+
                 unit=tempUnit(
                     Step_Type               =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_STEP種類".format(ptn_no,step_no)].getValue(),
+                    step_time               =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ所要時間".format(ptn_no,step_no)].getValue(),
+                    total_time               =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(ptn_no,step_no)].getValue(),
                     time_hour               =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_時".format(ptn_no,step_no)].getValue(),
                     time_min                =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_時間_分".format(ptn_no,step_no)].getValue(),
                     SV                      =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(ptn_no,step_no)].getValue(),
@@ -970,7 +974,6 @@ class TempPatternWidget(QWidget):
         stepUnit=self.cache_steplist.getStep(step)
 
         stepUnit.Step_Type                          =self.step_widges_list[step]._type
-        
         stepUnit.time_hour                          =self.step_widges_list[step]._hour
         stepUnit.time_min                           =self.step_widges_list[step]._minute
         stepUnit.SV                                     =self.step_widges_list[step]._temperature

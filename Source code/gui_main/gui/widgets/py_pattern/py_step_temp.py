@@ -235,7 +235,14 @@ class PyTempStep(QWidget):
 
         
 
-    
+    def maxmin(self,max,min,data):
+        if data>=max:
+            return max,True
+        elif data<=min:
+            return min,True
+        else:
+            return data,False
+
     #When infomation is modifly by user , call back to this function
     def modifly_callback(self):
         if (self.sender==None):
@@ -248,23 +255,68 @@ class PyTempStep(QWidget):
         except AttributeError: #When self._parent.tempPattern is not initial yet
             return
 
-        #print("click in side step after modifly STEP ", self._step," name = ",self.sender().objectName())
-        self._hour=int(self.pattern.Hour_lineEdit.text())
-        self._minute=int(self.pattern.Min_lineEdit.text())
+        btn_name=self.sender().objectName()
+        
+        if btn_name=="Hour_lineEdit":
+            data=int(self.pattern.Hour_lineEdit.text())
+            self._hour,err=self.maxmin(59,0,data)
+            if err:
+                self.pattern.Hour_lineEdit.setText(str(self._hour))
+            
+        elif btn_name=="Min_lineEdit":
+            data=int(self.pattern.Min_lineEdit.text())
+            self._minute,err=self.maxmin(59,0,data)
+            if err:
+                self.pattern.Min_lineEdit.setText(str(self._minute))
 
-        self._temperature=int(self.pattern.SV_lineEdit.text())
-        self._n2_flowrate=float(self.pattern.N2_lineEdit.text())*10
+        elif btn_name=="SV_lineEdit":
+            data=int(self.pattern.SV_lineEdit.text())
+            self._temperature,err=self.maxmin(800,0,data)
+            if err:
+                self.pattern.SV_lineEdit.setText(str(self._temperature))
 
-        self._PID_muffle_no=self.pattern.PID_muffle_comboBox.currentIndex()
-        self._PID_heater_no=self.pattern.PID_heater_comboBox.currentIndex()
+        elif btn_name=="N2_lineEdit":
+            data=float(self.pattern.N2_lineEdit.text())*10
+            self._n2_flowrate,err=self.maxmin(1000,1,data)
+            if err:
+                self.pattern.N2_lineEdit.setText(str(self._n2_flowrate))
 
-        self._keep_seccond=int(self.pattern.KeepTime_lineEdit.text())
 
-        self._sp_limit_up=int(self.pattern.Sp_limit_up_lineEdit.text())
-        self._sp_limit_down=int(self.pattern.Sp_limit_down_lineEdit.text())
-        self._shift=int(self.pattern.Shift_lineEdit.text())
+        elif btn_name=="PID_muffle_comboBox":
+            self._PID_muffle_no=self.pattern.PID_muffle_comboBox.currentIndex()
 
-        self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
+        elif btn_name=="PID_heater_comboBox":
+            self._PID_heater_no=self.pattern.PID_heater_comboBox.currentIndex()
+
+        elif btn_name=="KeepTime_lineEdit":
+            data=int(self.pattern.KeepTime_lineEdit.text())
+            self._keep_seccond,err=self.maxmin(1000,0,data)
+            if err:
+                self.pattern.KeepTime_lineEdit.setText(str(self._keep_seccond))
+
+
+
+        elif btn_name=="Sp_limit_up_lineEdit":
+            data=int(self.pattern.Sp_limit_up_lineEdit.text())
+            self._sp_limit_up,err=self.maxmin(1000,0,data)
+            if err:
+                self.pattern.Sp_limit_up_lineEdit.setText(str(self._sp_limit_up))
+
+        elif btn_name=="Sp_limit_down_lineEdit":
+            data=int(self.pattern.Sp_limit_down_lineEdit.text())
+            self._sp_limit_down,err=self.maxmin(1000,0,data)
+            if err:
+                self.pattern.Sp_limit_down_lineEdit.setText(str(self._sp_limit_down))
+
+        elif btn_name=="Shift_lineEdit":
+            data=int(self.pattern.Shift_lineEdit.text())
+            self._shift,err=self.maxmin(1000,0,data)
+            if err:
+                self.pattern.Shift_lineEdit.setText(str(self._shift))
+
+        
+        elif btn_name=="TestPattern_comboBox":
+            self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
         
         #Call upper mother renew information
         self._parent.tempPattern.step_modifly_manager(self._step)

@@ -123,12 +123,13 @@ class TestPatternWidget(QWidget):
         self.graph.showGrid(x=True, y=True)
         self.graph.setMouseEnabled(x=True, y=False)
         self.graph.setLimits(minXRange=9,maxXRange=20)
-        self.graph.setMinimumSize(QSize(1100, 300))
-
-        self.curve=self.graph.plot(pen=pg.mkPen(225, 230, 241), 
+        #self.graph.setMinimumSize(QSize(1100, 300))
+        
+        self.curve=self.graph.plot(
+                                   pen=pg.mkPen('w',width=5), 
                                    symbolBrush=(0,0,0),
                                    symbolPen='w', 
-                                   #symbol='o', 
+                                   symbol='o', 
                                    symbolSize=5, 
                                    name="測定パターン")
         
@@ -605,7 +606,6 @@ class TestPatternWidget(QWidget):
     def ui_click_callback(self):
 
         btn_name=self.sender().objectName()
-        print(btn_name)
 
         if btn_name=="削除":
             self.patternFile_Delete()
@@ -643,24 +643,55 @@ class TestPatternWidget(QWidget):
             self.update_Request=True
 
         elif btn_name=="test_time_LineEdit":
-            self.cache_steplist.set_Test_time(float(self._parent.ui.load_pages.test_time_LineEdit.text()))
+            data=float(self._parent.ui.load_pages.test_time_LineEdit.text())
+            data,err=self.maxmin(999,0,data)
+            if err:
+                self.pattern.test_time_LineEdit.setText(str(data))
+
+            self.cache_steplist.set_Test_time(data)
             self.update_Request=True
+
 
         elif btn_name=="test_sampletime_LineEdit":
-            self.cache_steplist.set_Test_sampletime(float(self._parent.ui.load_pages.test_sampletime_LineEdit.text()))
+            data=float(self._parent.ui.load_pages.test_sampletime_LineEdit.text())
+            data,err=self.maxmin(999,0.01,data)
+            if err:
+                self.pattern.test_sampletime_LineEdit.setText(str(data))
+
+            self.cache_steplist.set_Test_sampletime(data)
             self.update_Request=True
+
 
         elif btn_name=="bg0_time_LineEdit":
-            self.cache_steplist.set_BG0_test_time(float(self._parent.ui.load_pages.bg0_time_LineEdit.text()))
+            data=float(self._parent.ui.load_pages.bg0_time_LineEdit.text())
+            data,err=self.maxmin(999,0,data)
+            if err:
+                self.pattern.bg0_time_LineEdit.setText(str(data))
+
+            self.cache_steplist.set_BG0_test_time(data)
             self.update_Request=True
+
+
 
         elif btn_name=="bg_time_LineEdit":
-            self.cache_steplist.set_BG_test_time(float(self._parent.ui.load_pages.bg_time_LineEdit.text()))
+            data=float(self._parent.ui.load_pages.bg_time_LineEdit.text())
+            data,err=self.maxmin(999,0,data)
+            if err:
+                self.pattern.bg_time_LineEdit.setText(str(data))
+
+            self.cache_steplist.set_BG_test_time(data)
             self.update_Request=True
 
+
         elif btn_name=="bg_sampletime_LineEdit":
-            self.cache_steplist.set_BG_sampletime(float(self._parent.ui.load_pages.bg_sampletime_LineEdit.text()))
+            data=float(self._parent.ui.load_pages.bg_sampletime_LineEdit.text())
+            data,err=self.maxmin(999,0.01,data)
+            if err:
+                self.pattern.bg_sampletime_LineEdit.setText(str(data))
+
+            self.cache_steplist.set_BG_sampletime(data)
             self.update_Request=True
+
 
     def patternFile_Load(self):
 

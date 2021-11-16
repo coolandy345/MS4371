@@ -159,13 +159,24 @@ class PyTestStep(QWidget):
         self.pattern.Valtage_lineEdit.editingFinished.connect(self.modifly_callback)
 
 
+    def maxmin(self,max,min,data):
+        if data>=max:
+            return max,True
+        elif data<=min:
+            return min,True
+        else:
+            return data,False
 
     #When infomation is modifly by user , call back to this function
     def modifly_callback(self):
         if (self.sender()==None):
             return
         
-        self._voltage=float(self.pattern.Valtage_lineEdit.text())
+        data=float(self.pattern.Valtage_lineEdit.text())
+        self._voltage,err=self.maxmin(2000,-2000,data)
+        if err:
+            self.pattern.Valtage_lineEdit.setText(str(self._voltage))
+
         #Call upper mother renew information
         self._parent.testPattern.step_modifly_manager(self._step)
         

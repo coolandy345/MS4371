@@ -11,6 +11,9 @@ class tempUnit():
     def __init__(
         self,
         Step_Type=0,
+        step_time=0,
+        total_time=0,
+
         time_hour=0,
         time_min=0,
         SV=0,
@@ -24,10 +27,9 @@ class tempUnit():
         test_measure_enable=0,
         test_measure_PatternNo=0
         ):
-        self.step_time=0
-        self.total_time=0
+        self.step_time=step_time
+        self.total_time=total_time
 
-        
         self.Step_Type=Step_Type
         self.time_hour=time_hour
         self.time_min=time_min

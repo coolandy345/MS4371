@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1201</width>
+    <width>1157</width>
     <height>707</height>
    </rect>
   </property>
@@ -127,7 +127,7 @@ QLineEdit:read-only {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>948</width>
+            <width>1121</width>
             <height>671</height>
            </rect>
           </property>
@@ -173,8 +173,14 @@ QFrame:focus{
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_9">
-                 <item alignment="Qt::AlignLeft|Qt::AlignTop">
+                 <item alignment="Qt::AlignTop">
                   <widget class="QFrame" name="frame_48">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">QFrame{
 	background-color: rgb(36, 40, 49);
@@ -264,7 +270,7 @@ QFrame:hover{
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>32</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
@@ -290,7 +296,7 @@ background-color: rgb(36, 40, 49);</string>
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>32</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
@@ -492,8 +498,26 @@ QFrame:focus{
                    <layout class="QHBoxLayout" name="horizontalLayout_13"/>
                   </widget>
                  </item>
-                 <item alignment="Qt::AlignLeft|Qt::AlignTop">
+                 <item alignment="Qt::AlignTop">
                   <widget class="QFrame" name="frame_62">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">QFrame{
 	background-color: rgb(36, 40, 49);
@@ -518,13 +542,13 @@ QFrame:hover{
                       <property name="minimumSize">
                        <size>
                         <width>140</width>
-                        <height>0</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
                         <width>140</width>
-                        <height>16777215</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="styleSheet">
@@ -612,13 +636,13 @@ QFrame:hover{
                       <property name="minimumSize">
                        <size>
                         <width>140</width>
-                        <height>0</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
                         <width>140</width>
-                        <height>16777215</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="styleSheet">
@@ -653,13 +677,13 @@ QFrame:hover{
                       <property name="minimumSize">
                        <size>
                         <width>140</width>
-                        <height>0</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
                         <width>140</width>
-                        <height>16777215</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="styleSheet">
@@ -766,13 +790,13 @@ QFrame:hover{
                       <property name="minimumSize">
                        <size>
                         <width>140</width>
-                        <height>0</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
                         <width>140</width>
-                        <height>16777215</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="styleSheet">
@@ -3388,7 +3412,8 @@ border:none;</string>
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgba(0, 0, 0, 80);</string>
+                      <string notr="true">background-color: rgba(0, 0, 0, 80);
+padding:5px</string>
                      </property>
                      <property name="text">
                       <string>抵抗値</string>
@@ -3404,7 +3429,8 @@ border:none;</string>
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgba(0, 0, 0, 80);</string>
+                      <string notr="true">background-color: rgba(0, 0, 0, 80);
+padding:5px</string>
                      </property>
                      <property name="text">
                       <string>電圧</string>
@@ -3420,7 +3446,8 @@ border:none;</string>
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgba(0, 0, 0, 80);</string>
+                      <string notr="true">background-color: rgba(0, 0, 0, 80);
+padding:5px</string>
                      </property>
                      <property name="text">
                       <string>電流</string>
@@ -4934,9 +4961,9 @@ QComboBox:hover {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>1148</width>
-            <height>1622</height>
+            <y>-780</y>
+            <width>1104</width>
+            <height>1612</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -5152,7 +5179,7 @@ QFrame:focus{
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>400</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -5454,7 +5481,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>1090</width>
+                      <width>1046</width>
                       <height>400</height>
                      </rect>
                     </property>
@@ -5521,13 +5548,13 @@ border:none;</string>
                <widget class="QLabel" name="PatternErrorMessagelabel">
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
+                  <width>400</width>
                   <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>400</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -5568,13 +5595,13 @@ color: rgb(221, 0, 0);</string>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_14">
                  <property name="leftMargin">
-                  <number>9</number>
+                  <number>0</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>9</number>
+                  <number>0</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
@@ -5624,6 +5651,9 @@ padding-right:5px;</string>
                       </property>
                       <property name="text">
                        <string>保存</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -5675,6 +5705,9 @@ padding-right:5px;</string>
                       </property>
                       <property name="text">
                        <string>追加</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -5758,6 +5791,9 @@ QFrame:focus{
                       <property name="text">
                        <string>削除</string>
                       </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -5770,13 +5806,13 @@ QFrame:focus{
                <widget class="QLabel" name="Temp_Totaltime_Label">
                 <property name="minimumSize">
                  <size>
-                  <width>150</width>
+                  <width>0</width>
                   <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>150</width>
+                  <width>16777215</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -5798,6 +5834,12 @@ padding-right:5px;</string>
            </item>
            <item>
             <widget class="QFrame" name="frame_34">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -5959,7 +6001,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>1090</width>
+                      <width>1046</width>
                       <height>200</height>
                      </rect>
                     </property>
@@ -6185,33 +6227,14 @@ padding-right:5px;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="4">
-                  <widget class="QLabel" name="Test_Totaltime_Label">
-                   <property name="minimumSize">
-                    <size>
-                     <width>150</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>150</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true"/>
-                   </property>
-                   <property name="text">
-                    <string>合計時間: 0 時間 0 分</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="1" column="3">
                   <widget class="QLineEdit" name="test_commect_lineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>400</width>
@@ -6234,15 +6257,21 @@ padding-right:5px;</string>
                  </item>
                  <item row="0" column="3">
                   <widget class="QComboBox" name="testfile_comboBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>400</width>
-                     <height>32</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>400</width>
+                     <width>16777215</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -6275,15 +6304,40 @@ padding-right:5px;</string>
                    </property>
                   </widget>
                  </item>
+                 <item row="1" column="4">
+                  <widget class="QLabel" name="Test_Totaltime_Label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string>合計時間: 0 時間 0 分</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
-              <item row="0" column="6" rowspan="3">
+              <item row="0" column="6" rowspan="3" alignment="Qt::AlignRight">
                <widget class="QFrame" name="frame_50">
                 <property name="minimumSize">
                  <size>
-                  <width>200</width>
-                  <height>50</height>
+                  <width>0</width>
+                  <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
@@ -6358,6 +6412,9 @@ padding-right:5px;</string>
                       <property name="text">
                        <string>保存</string>
                       </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -6406,6 +6463,9 @@ padding-right:5px;</string>
                       </property>
                       <property name="text">
                        <string>追加</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -6489,6 +6549,9 @@ QFrame:focus{
                       <property name="text">
                        <string>削除</string>
                       </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -6497,7 +6560,7 @@ QFrame:focus{
                 </layout>
                </widget>
               </item>
-              <item row="5" column="0" colspan="2">
+              <item row="5" column="0">
                <widget class="QFrame" name="frame_51">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -6507,13 +6570,13 @@ QFrame:focus{
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
+                  <width>800</width>
                   <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>800</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -6572,16 +6635,22 @@ border:none</string>
                  </item>
                  <item row="1" column="9">
                   <widget class="QLineEdit" name="test_sampletime_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>0</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>16777215</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -6628,16 +6697,22 @@ border:none</string>
                  </item>
                  <item row="0" column="6">
                   <widget class="QLineEdit" name="bg_time_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>0</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>16777215</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -6712,16 +6787,22 @@ border:none</string>
                  </item>
                  <item row="0" column="9">
                   <widget class="QLineEdit" name="test_time_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>0</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>16777215</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -6801,16 +6882,22 @@ QFrame:focus{
                  </item>
                  <item row="0" column="2">
                   <widget class="QLineEdit" name="bg0_time_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>0</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>16777215</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -6857,16 +6944,22 @@ border:none</string>
                  </item>
                  <item row="1" column="6">
                   <widget class="QLineEdit" name="bg_sampletime_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>0</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>16777215</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -6885,16 +6978,22 @@ border:none</string>
                  </item>
                  <item row="0" column="13">
                   <widget class="QLineEdit" name="SUM_filter_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>0</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>16777215</height>
+                     <height>30</height>
                     </size>
                    </property>
                    <property name="styleSheet">
