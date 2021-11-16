@@ -67,9 +67,9 @@ class PyTempStep(QWidget):
     #timeframe_grayout="background-color: rgb(41,45,55);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
     #timeframe_normal="background-color: rgb(30,34,41);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
 
-    step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);border:none;"
-    step_test_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);border:none;"
-    step_end_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
+    #step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);border:none;"
+    #step_test_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);border:none;"
+    #step_end_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
 
     #time_gray_out_style="background-color: rgb(41,45,55);border:none;color: rgb(41,45,55);"
     #time_normal_style="background-color: rgb(30,34,41);border:none;color: rgb(225, 230, 241);"
@@ -79,10 +79,6 @@ class PyTempStep(QWidget):
 
     #line_gray_out_style="background-color: rgba(0, 0, 0,20);    color:  rgba(0, 0, 0,20);    border-width: 1px;    border-style: solid;    border-radius: 5px;    padding-left:5px;    padding-right:5px;    font: 12px \"游ゴシック\";"
     #line_normal_style="background-color: rgba(0, 0, 0,80);    color: rgb(225, 230, 241);    border-width: 1px;    border-style: solid;    border-radius: 5px;    padding-left:5px;    padding-right:5px;    font: 12px \"游ゴシック\";"
-
-    focus_normal_style="border-color: rgb(231, 214, 85);background-color: rgb(44, 49, 60);border-width: 5px;    border-style: solid;    border-radius: 10px;"
-    focus_gray_out_style="border-color: rgb(44, 49, 60);background-color: rgb(44, 49, 60);border-width: 5px;    border-style: solid;    border-radius: 10px;"
-    
 
     def __init__(
         self , 
@@ -130,15 +126,7 @@ class PyTempStep(QWidget):
         self.pattern.setupUi( self.pattern_frame)
         self.pattern.page.setCurrentIndex(self._active)
 
-        self.FocusStyleChange=False
-        self.FocusStyle=self.focus_gray_out_style
 
-        #self.timer=QTimer()
-        #self.timer.timeout.connect(self.focus_Style_Work)
-        #self.timer.start(100)
-
-        
-        
         # icon_bottum_ui_setting
         # ///////////////////////////////////////////////////////////////
         self.icon_bottum_ui_setting()
@@ -158,12 +146,6 @@ class PyTempStep(QWidget):
         self._menu.menu_frame.hide()
         self.type_modifly_callback()
 
-
-
-    def focus_Style_Work(self):
-        if self.FocusStyleChange:
-            #self.pattern.page.setStyleSheet(self.FocusStyle)
-            self.FocusStyleChange=False
 
     def parameter_setting(self):
         self.pattern.Step_label.setText("STEP %d" %self._step)
@@ -237,6 +219,7 @@ class PyTempStep(QWidget):
         self.pattern.gridLayout_6.addWidget(self.menu_icon, Qt.AlignCenter, Qt.AlignCenter)
         self.menu_icon.clicked.connect(self.show_menu)
 
+
         self.pattern.Type_comboBox.currentIndexChanged.connect(self.type_modifly_callback)
         self.pattern.Hour_lineEdit.editingFinished.connect(self.modifly_callback)
         self.pattern.Min_lineEdit.editingFinished.connect(self.modifly_callback)
@@ -295,7 +278,7 @@ class PyTempStep(QWidget):
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":
             
             self._type=self.Temp_Type
-            self.pattern.Step_label.setStyleSheet(self.step_temp_type_style)
+            self.pattern.Step_label.setEnabled(True)
             
             self.pattern.Time_label.setEnabled(True)
             self.pattern.Hour_lineEdit.setEnabled(True)
@@ -342,7 +325,7 @@ class PyTempStep(QWidget):
         elif (self.pattern.Type_comboBox.currentText()) == "測定":
 
             self._type=self.Test_Type
-            self.pattern.Step_label.setStyleSheet(self.step_test_type_style)
+            self.pattern.Step_label.setEnabled(False)
 
             self.pattern.Time_label.setEnabled(True)
             self.pattern.Hour_lineEdit.setEnabled(True)
@@ -388,7 +371,7 @@ class PyTempStep(QWidget):
         elif (self.pattern.Type_comboBox.currentText()) == "END":
 
             self._type=self.End_Type
-            self.pattern.Step_label.setStyleSheet(self.step_end_type_style)
+            self.pattern.Step_label.setEnabled(False)
 
             self.pattern.Time_label.setEnabled(False)
             self.pattern.time_frame.setEnabled(False)
@@ -498,16 +481,10 @@ class PyTempStep(QWidget):
 
     def setFocusStyle(self,enable):
         if enable:
-            self.FocusStyle=self.focus_normal_style
-            self.FocusStyleChange=True
-            self.pattern.frame_6.setEnabled(True)
+            self.pattern.frame_6. setFocus()
 
-            #self.focus_Style_Work()
         else:
-            self.FocusStyle=self.focus_gray_out_style
-            self.FocusStyleChange=True
-            self.pattern.frame_6.setEnabled(False)
-            #self.focus_Style_Work()
+            self.pattern.frame_6.clearFocus()
 
     def enableEndType(self,enable):
         if enable:

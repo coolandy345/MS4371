@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patternJhZgwS.ui'
+## Form generated from reading UI file 'temp_patternvuWGyW.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -29,7 +29,7 @@ class Ui_temp_pattern(object):
 "color: rgb(225, 230, 241);\n"
 "border-radius: 5px;\n"
 "border-style: solid;\n"
-"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"font:12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "")
         self.gridLayout_3 = QGridLayout(temp_pattern)
         self.gridLayout_3.setSpacing(0)
@@ -64,14 +64,17 @@ class Ui_temp_pattern(object):
         self.page2.setStyleSheet(u"QFrame{\n"
 "	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:hover{\n"
 "	border-color: rgb(231, 214, 85);\n"
 "	border-width: 5px;\n"
 "	border-radius: 5px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QFrame:disabled{\n"
-"	border:none;\n"
+"QFrame:focus{\n"
+"	border-color: rgb(231, 214, 85);\n"
+"	border-width: 5px;\n"
+"	border-radius: 5px;\n"
+"	border-style: solid;\n"
 "}\n"
 "\n"
 "QLabel:enabled {\n"
@@ -105,12 +108,12 @@ class Ui_temp_pattern(object):
 "	border-width: 1px;\n"
 "}\n"
 "QComboBox:disabled {\n"
-"	background-color: rgba(0, 0, 0, 0);\n"
+"	background-color: rgb"
+                        "a(0, 0, 0, 0);\n"
 "	color: rgb(44, 49, 60);\n"
 "	border: none;\n"
 "}\n"
-"QComboBox:hover {"
-                        "\n"
+"QComboBox:hover {\n"
 "	background-color: rgba(0, 0, 0,40);\n"
 "}\n"
 "")
@@ -129,9 +132,9 @@ class Ui_temp_pattern(object):
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setMinimumSize(QSize(0, 0))
         self.frame_2.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
@@ -143,14 +146,22 @@ class Ui_temp_pattern(object):
         self.Step_label = QLabel(self.frame_2)
         self.Step_label.setObjectName(u"Step_label")
         self.Step_label.setMinimumSize(QSize(130, 20))
-        self.Step_label.setMaximumSize(QSize(16777215, 16777215))
-        self.Step_label.setAutoFillBackground(False)
-        self.Step_label.setStyleSheet(u"font:17px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(0, 0, 0);\n"
-"padding-left:5px;\n"
-"border-radius: 5px;\n"
-"background-color: rgb(73, 73, 220);\n"
-"border:none;")
+        self.Step_label.setStyleSheet(u"QLabel:enabled {\n"
+"	font:17px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	color: rgb(0, 0, 0);\n"
+"	padding-left:5px;\n"
+"	border-radius: 5px;\n"
+"	background-color: rgb(200, 133, 0);\n"
+"	border:none;\n"
+"}\n"
+"QLabel:disabled {\n"
+"	font:17px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	color: rgb(0, 0, 0);\n"
+"	padding-left:5px;\n"
+"	border-radius: 5px;\n"
+"	background-color: rgb(0, 168, 123);\n"
+"	border:none;\n"
+"}")
 
         self.horizontalLayout_2.addWidget(self.Step_label)
 
@@ -158,9 +169,7 @@ class Ui_temp_pattern(object):
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setMinimumSize(QSize(0, 0))
         self.frame_3.setMaximumSize(QSize(16777215, 16777215))
-        self.frame_3.setStyleSheet(u"\n"
-"border-radius: 2px;\n"
-"")
+        self.frame_3.setStyleSheet(u"")
         self.frame_3.setFrameShape(QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Raised)
         self.gridLayout_6 = QGridLayout(self.frame_3)
@@ -195,9 +204,9 @@ class Ui_temp_pattern(object):
         self.frame_4 = QFrame(self.frame_6)
         self.frame_4.setObjectName(u"frame_4")
         self.frame_4.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_4.setFrameShape(QFrame.StyledPanel)
@@ -232,6 +241,9 @@ class Ui_temp_pattern(object):
 "	\n"
 "	border-width: 1px;\n"
 "}\n"
+"QFrame:focus{\n"
+"	border:none;\n"
+"}\n"
 "\n"
 "QLineEdit:enabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
@@ -262,9 +274,9 @@ class Ui_temp_pattern(object):
 "	border: none;\n"
 "}\n"
 "QLabel:hover {\n"
-"	background-color: rgba(0, 0, 0, 0);\n"
-"	"
-                        "border: none;\n"
+""
+                        "	background-color: rgba(0, 0, 0, 0);\n"
+"	border: none;\n"
 "}")
         self.time_frame.setFrameShape(QFrame.StyledPanel)
         self.time_frame.setFrameShadow(QFrame.Raised)
@@ -305,9 +317,9 @@ class Ui_temp_pattern(object):
         self.frame_8 = QFrame(self.frame_6)
         self.frame_8.setObjectName(u"frame_8")
         self.frame_8.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_8.setFrameShape(QFrame.StyledPanel)
@@ -339,9 +351,9 @@ class Ui_temp_pattern(object):
         self.frame_5 = QFrame(self.frame_6)
         self.frame_5.setObjectName(u"frame_5")
         self.frame_5.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_5.setFrameShape(QFrame.StyledPanel)
@@ -378,9 +390,9 @@ class Ui_temp_pattern(object):
 "	background-color: rgb(141, 145, 156);\n"
 "}\n"
 "QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_14.setFrameShape(QFrame.StyledPanel)
@@ -391,9 +403,9 @@ class Ui_temp_pattern(object):
         self.frame_7 = QFrame(self.frame_6)
         self.frame_7.setObjectName(u"frame_7")
         self.frame_7.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_7.setFrameShape(QFrame.StyledPanel)
@@ -437,9 +449,9 @@ class Ui_temp_pattern(object):
         self.frame_12 = QFrame(self.frame_6)
         self.frame_12.setObjectName(u"frame_12")
         self.frame_12.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_12.setFrameShape(QFrame.StyledPanel)
@@ -483,9 +495,9 @@ class Ui_temp_pattern(object):
         self.frame_9 = QFrame(self.frame_6)
         self.frame_9.setObjectName(u"frame_9")
         self.frame_9.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_9.setFrameShape(QFrame.StyledPanel)
@@ -517,9 +529,9 @@ class Ui_temp_pattern(object):
         self.frame_10 = QFrame(self.frame_6)
         self.frame_10.setObjectName(u"frame_10")
         self.frame_10.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_10.setFrameShape(QFrame.StyledPanel)
@@ -551,9 +563,9 @@ class Ui_temp_pattern(object):
         self.frame_11 = QFrame(self.frame_6)
         self.frame_11.setObjectName(u"frame_11")
         self.frame_11.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_11.setFrameShape(QFrame.StyledPanel)
@@ -585,9 +597,9 @@ class Ui_temp_pattern(object):
         self.frame_17 = QFrame(self.frame_6)
         self.frame_17.setObjectName(u"frame_17")
         self.frame_17.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_17.setFrameShape(QFrame.StyledPanel)
@@ -624,12 +636,11 @@ class Ui_temp_pattern(object):
 "	background-color: rgb(141, 145, 156);\n"
 "}\n"
 "QFrame:hover{\n"
-"	border: none;\n"
-"}\n"
-"QFrame:enabled{\n"
 "	border:none;\n"
 "}\n"
-"")
+"QFrame:focus{\n"
+"	border:none;\n"
+"}")
         self.frame_15.setFrameShape(QFrame.StyledPanel)
         self.frame_15.setFrameShadow(QFrame.Raised)
 
@@ -638,9 +649,9 @@ class Ui_temp_pattern(object):
         self.frame_13 = QFrame(self.frame_6)
         self.frame_13.setObjectName(u"frame_13")
         self.frame_13.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_13.setFrameShape(QFrame.StyledPanel)
@@ -662,9 +673,9 @@ class Ui_temp_pattern(object):
         self.frame_16 = QFrame(self.frame_6)
         self.frame_16.setObjectName(u"frame_16")
         self.frame_16.setStyleSheet(u"QFrame:hover{\n"
-"	border: none;\n"
+"	border:none;\n"
 "}\n"
-"QFrame:enabled{\n"
+"QFrame:focus{\n"
 "	border:none;\n"
 "}")
         self.frame_16.setFrameShape(QFrame.StyledPanel)

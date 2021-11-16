@@ -36,7 +36,7 @@
 color: rgb(225, 230, 241);
 border-radius: 5px;
 border-style: solid;
-font:13px &quot;游ゴシック&quot;;
+font:12px &quot;游ゴシック&quot;;
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
@@ -58,8 +58,7 @@ font:13px &quot;游ゴシック&quot;;
    <item row="0" column="0">
     <widget class="QStackedWidget" name="page">
      <property name="styleSheet">
-      <string notr="true">
-</string>
+      <string notr="true"/>
      </property>
      <property name="currentIndex">
       <number>1</number>
@@ -124,14 +123,17 @@ font:13px &quot;游ゴシック&quot;;
        <string notr="true">QFrame{
 	border:none;
 }
-QFrame:enabled{
+QFrame:hover{
 	border-color: rgb(231, 214, 85);
 	border-width: 5px;
 	border-radius: 5px;
 	border-style: solid;
 }
-QFrame:disabled{
-	border:none;
+QFrame:focus{
+	border-color: rgb(231, 214, 85);
+	border-width: 5px;
+	border-radius: 5px;
+	border-style: solid;
 }
 
 QLabel:enabled {
@@ -221,9 +223,9 @@ QComboBox:hover {
             </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -250,7 +252,7 @@ QFrame:enabled{
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="Step_label">
+              <widget class="QLineEdit" name="Step_label">
                <property name="minimumSize">
                 <size>
                  <width>130</width>
@@ -259,23 +261,44 @@ QFrame:enabled{
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>75</width>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
                <property name="styleSheet">
-                <string notr="true">font:17px &quot;游ゴシック&quot;;
-color: rgb(0, 0, 0);
-padding-left:5px;
-border-radius: 5px;
-background-color: rgb(73, 73, 220);
-border:none;</string>
+                <string notr="true">
+
+QLineEdit:enabled {
+	font:17px &quot;游ゴシック&quot;;
+	color: rgb(0, 0, 0);
+	padding-left:5px;
+	border-radius: 5px;
+	background-color: rgb(200, 133, 0);
+	border:none;
+}
+QLineEdit:read-only {
+	font:17px &quot;游ゴシック&quot;;
+	padding-left:5px;
+	border-radius: 5px;
+	background-color: rgb(73, 73, 220);
+	border:none;
+}
+QLineEdit:disabled {
+	font:17px &quot;游ゴシック&quot;;
+	padding-left:5px;
+	border-radius: 5px;
+	background-color: rgb(0, 168, 123);
+	border:none;
+}</string>
                </property>
                <property name="text">
                 <string>STEP 1</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -294,9 +317,7 @@ border:none;</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-border-radius: 2px;
-</string>
+                <string notr="true"/>
                </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -376,9 +397,9 @@ QFrame:hover{
            <widget class="QFrame" name="frame_4">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -452,6 +473,9 @@ QFrame:hover {
 	background-color: rgba(0, 0, 0,40);
 	
 	border-width: 1px;
+}
+QFrame:focus{
+	border:none;
 }
 
 QLineEdit:enabled {
@@ -566,9 +590,9 @@ QLabel:hover {
            <widget class="QFrame" name="frame_8">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -628,8 +652,7 @@ QFrame:enabled{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>0</string>
@@ -649,9 +672,9 @@ QFrame:enabled{
            <widget class="QFrame" name="frame_5">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -711,8 +734,7 @@ QFrame:enabled{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>0</string>
@@ -747,9 +769,9 @@ QFrame:enabled{
 	background-color: rgb(141, 145, 156);
 }
 QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -765,9 +787,9 @@ QFrame:enabled{
            <widget class="QFrame" name="frame_7">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -881,9 +903,9 @@ QFrame:hover{
            <widget class="QFrame" name="frame_12">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -997,9 +1019,9 @@ QFrame:hover{
            <widget class="QFrame" name="frame_9">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -1059,8 +1081,7 @@ QFrame:enabled{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1080,9 +1101,9 @@ QFrame:enabled{
            <widget class="QFrame" name="frame_10">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -1142,8 +1163,7 @@ QFrame:enabled{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1163,9 +1183,9 @@ QFrame:enabled{
            <widget class="QFrame" name="frame_11">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -1225,8 +1245,7 @@ QFrame:enabled{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1246,9 +1265,9 @@ QFrame:enabled{
            <widget class="QFrame" name="frame_17">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -1308,8 +1327,7 @@ QFrame:enabled{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>0</string>
@@ -1344,12 +1362,11 @@ QFrame:enabled{
 	background-color: rgb(141, 145, 156);
 }
 QFrame:hover{
-	border: none;
-}
-QFrame:enabled{
 	border:none;
 }
-</string>
+QFrame:focus{
+	border:none;
+}</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -1363,9 +1380,9 @@ QFrame:enabled{
            <widget class="QFrame" name="frame_13">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>
@@ -1417,9 +1434,9 @@ QFrame:enabled{
            <widget class="QFrame" name="frame_16">
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
-	border: none;
+	border:none;
 }
-QFrame:enabled{
+QFrame:focus{
 	border:none;
 }</string>
             </property>

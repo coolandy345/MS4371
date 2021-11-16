@@ -78,22 +78,22 @@ if __name__ == "__main__":
     
     databaseLoadThread(MemoryPool)
     ##memoryWriteThread(MemoryPool,QueuePool)
-    #initial_GUI(MemoryPool,QueuePool,EventPool)
+    initial_GUI(MemoryPool,QueuePool,EventPool)
     #gpib_Thread(MemoryPool,QueuePool)
     #operator_thread(MemoryPool,QueuePool,EventPool)
     #run_async_server(MemoryPool,QueuePool)
 
-    with ProcessPoolExecutor(max_workers=10) as executor:
+    #with ProcessPoolExecutor(max_workers=10) as executor:
         
-        executor.submit(csv_manager_thread,MemoryPool,QueuePool,EventPool)
-        executor.submit(run_async_server,MemoryPool,QueuePool)
-        executor.submit(databaseWriteThread,MemoryPool,QueuePool,EventPool)
-        executor.submit(databaseWriteThread_NoModbusLoop,MemoryPool,QueuePool,EventPool)
+    #    executor.submit(csv_manager_thread,MemoryPool,QueuePool,EventPool)
+    #    executor.submit(run_async_server,MemoryPool,QueuePool)
+    #    executor.submit(databaseWriteThread,MemoryPool,QueuePool,EventPool)
+    #    executor.submit(databaseWriteThread_NoModbusLoop,MemoryPool,QueuePool,EventPool)
 
-        executor.submit(operator_thread,MemoryPool,QueuePool,EventPool)
+    #    executor.submit(operator_thread,MemoryPool,QueuePool,EventPool)
 
-        Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool,EventPool)
-        Gui_future.add_done_callback(shotdown_entire_app)
+    #    Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool,EventPool)
+    #    Gui_future.add_done_callback(shotdown_entire_app)
 
 
 
