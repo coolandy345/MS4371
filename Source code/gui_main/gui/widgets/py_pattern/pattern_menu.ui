@@ -26,11 +26,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(40, 44, 54);
-border-color: rgb(30, 34, 41);
-border-width: 1px;
-border-style: solid;
-border-radius: 10px;</string>
+   <string notr="true">background-color: rgb(40, 44, 54);</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -48,7 +44,24 @@ border-radius: 10px;</string>
    <item>
     <widget class="QFrame" name="frame_4">
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">QPushButton:enabled {
+	color: rgb(225, 230, 241);
+	font: 12px  &quot;游ゴシック&quot;;
+	border:none;
+	Text-align:left;
+}
+QPushButton:disabled {
+	color: rgb(99, 99, 99);
+	border:none;
+	Text-align:left;
+}
+QPushButton:hover {
+	background-color: rgb(29, 33, 40);
+}
+
+QPushButton:pressed {
+	background-color: rgb(69, 140, 207);
+}</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -75,19 +88,7 @@ border-radius: 10px;</string>
       <item row="8" column="0">
        <widget class="QPushButton" name="pattern_menu_leftinsertblank_pushButton">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-	color: rgb(225, 230, 241);
-	font: 13px  &quot;游ゴシック&quot;;
-	border:none;
-	Text-align:left;
-}
-QPushButton:hover {
-	background-color: rgb(29, 33, 40);
-}
-
-QPushButton:pressed {
-	background-color: rgb(69, 140, 207);
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>左に新規挿入</string>
@@ -97,19 +98,7 @@ QPushButton:pressed {
       <item row="5" column="0">
        <widget class="QPushButton" name="pattern_menu_leftinsert_pushButton">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-	color: rgb(225, 230, 241);
-	font: 13px  &quot;游ゴシック&quot;;
-	border:none;
-	Text-align:left;
-}
-QPushButton:hover {
-	background-color: rgb(29, 33, 40);
-}
-
-QPushButton:pressed {
-	background-color: rgb(69, 140, 207);
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>左に挿入</string>
@@ -119,19 +108,7 @@ QPushButton:pressed {
       <item row="1" column="0">
        <widget class="QPushButton" name="pattern_menu_copy_pushButton">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-	color: rgb(225, 230, 241);
-	font: 13px  &quot;游ゴシック&quot;;
-	border:none;
-	Text-align:left;
-}
-QPushButton:hover {
-	background-color: rgb(29, 33, 40);
-}
-
-QPushButton:pressed {
-	background-color: rgb(69, 140, 207);
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>コピー</string>
@@ -141,19 +118,7 @@ QPushButton:pressed {
       <item row="7" column="0">
        <widget class="QPushButton" name="pattern_menu_rightinsertblank_pushButton">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-	color: rgb(225, 230, 241);
-	font: 13px  &quot;游ゴシック&quot;;
-	border:none;
-	Text-align:left;
-}
-QPushButton:hover {
-	background-color: rgb(29, 33, 40);
-}
-
-QPushButton:pressed {
-	background-color: rgb(69, 140, 207);
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>右に新規挿入</string>
@@ -165,17 +130,25 @@ QPushButton:pressed {
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>3</height>
+          <height>2</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>3</height>
+          <height>2</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(65, 72, 88);</string>
+         <string notr="true">QFrame{
+	background-color: rgb(141, 145, 156);
+}
+QFrame:hover{
+	border:none;
+}
+QFrame:focus{
+	border:none;
+}</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -190,17 +163,25 @@ QPushButton:pressed {
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>3</height>
+          <height>2</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>3</height>
+          <height>2</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(65, 72, 88);</string>
+         <string notr="true">QFrame{
+	background-color: rgb(141, 145, 156);
+}
+QFrame:hover{
+	border:none;
+}
+QFrame:focus{
+	border:none;
+}</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -213,19 +194,7 @@ QPushButton:pressed {
       <item row="4" column="0">
        <widget class="QPushButton" name="pattern_menu_rightinsert_pushButton">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-	color: rgb(225, 230, 241);
-	font: 13px  &quot;游ゴシック&quot;;
-	border:none;
-	Text-align:left;
-}
-QPushButton:hover {
-	background-color: rgb(29, 33, 40);
-}
-
-QPushButton:pressed {
-	background-color: rgb(69, 140, 207);
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>右に挿入</string>
@@ -237,17 +206,25 @@ QPushButton:pressed {
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>3</height>
+          <height>2</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>3</height>
+          <height>2</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(65, 72, 88);</string>
+         <string notr="true">QFrame{
+	background-color: rgb(141, 145, 156);
+}
+QFrame:hover{
+	border:none;
+}
+QFrame:focus{
+	border:none;
+}</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -260,19 +237,7 @@ QPushButton:pressed {
       <item row="2" column="0">
        <widget class="QPushButton" name="pattern_menu_paste_pushButton">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-	color: rgb(225, 230, 241);
-	font: 13px  &quot;游ゴシック&quot;;
-	border:none;
-	Text-align:left;
-}
-QPushButton:hover {
-	background-color: rgb(29, 33, 40);
-}
-
-QPushButton:pressed {
-	background-color: rgb(69, 140, 207);
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>貼り付け</string>
@@ -282,21 +247,11 @@ QPushButton:pressed {
       <item row="10" column="0">
        <widget class="QPushButton" name="pattern_menu_delete_pushButton">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-	color: rgb(225, 230, 241);
-	font: 13px  &quot;游ゴシック&quot;;
-	border:none;
-	Text-align:left;
-
+         <string notr="true">QPushButton:enabled {
 	color: rgb(255, 88, 105);
-
 }
-QPushButton:hover {
-	background-color: rgb(29, 33, 40);
-}
-
-QPushButton:pressed {
-	background-color: rgb(69, 140, 207);
+QPushButton:disabled {
+	color: rgb(99, 99, 99);
 }</string>
         </property>
         <property name="text">
@@ -307,19 +262,7 @@ QPushButton:pressed {
       <item row="0" column="0">
        <widget class="QPushButton" name="pattern_menu_cut_pushButton">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-	color: rgb(225, 230, 241);
-	font: 13px  &quot;游ゴシック&quot;;
-	border:none;
-	Text-align:left;
-}
-QPushButton:hover {
-	background-color: rgb(29, 33, 40);
-}
-
-QPushButton:pressed {
-	background-color: rgb(69, 140, 207);
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>切り取り</string>

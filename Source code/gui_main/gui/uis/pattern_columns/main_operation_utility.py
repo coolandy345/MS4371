@@ -97,6 +97,8 @@ class Memory_Manager():
             poolNameList=[]
             for item in getItem_list:
                 poolNameList.append(item.pool_name)
+
+
                 #item.registor_name
 
             #Remove Duplicates From poolNameList
@@ -110,7 +112,7 @@ class Memory_Manager():
             for item in getItem_list:
                 sendItem=MemoryUnit(item.pool_name,item.registor_name)
                 self.queuePool["database_Uplaod_Queue"].put(sendItem)
-
+            
 
 
 class Main_utility_manager(QWidget):

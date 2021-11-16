@@ -26,7 +26,7 @@ from . testprofile_function import Testfile_manager
 from . functions_main_window import *
 import sys
 import os
-
+import time
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
 from gui_main.qt_core import *
@@ -218,17 +218,11 @@ class SetupMainWindow:
 
         self.main_namespace.ui.load_pages.stackedWidget.setCurrentWidget(self.main_namespace.ui.load_pages.page_AutoOperate)
 
-
         self.main_namespace.MMG=Memory_Manager(Master_memoryPool=self.Master_memoryPool,queuePool=self.queuePool)
-
         self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,queuePool=self.queuePool)
         self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,queuePool=self.queuePool)
-        
         self.main_namespace.main_utility_manager= Main_utility_manager(self.main_namespace,queuePool=self.queuePool,eventPool=self.eventPool)
-
-
         self.main_namespace.testfile_manager=Testfile_manager(self.main_namespace,queuePool=self.queuePool)
-
         
         
 

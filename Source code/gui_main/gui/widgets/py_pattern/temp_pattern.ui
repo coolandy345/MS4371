@@ -137,6 +137,7 @@ QFrame:focus{
 }
 
 QLabel:enabled {
+	font:12px &quot;游ゴシック&quot;;
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
@@ -144,6 +145,7 @@ QLabel:disabled {
 }
 
 QLineEdit:enabled {
+	font:12px &quot;游ゴシック&quot;;
 	background-color: rgba(0, 0, 0, 80);
 	color: rgb(225, 230, 241);
 	border-width: 1px;
@@ -201,6 +203,9 @@ QComboBox:hover {
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>11</number>
           </property>
@@ -218,7 +223,13 @@ QComboBox:hover {
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>0</height>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -252,23 +263,15 @@ QFrame:focus{
               <number>0</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="Step_label">
+              <widget class="QLabel" name="Step_label">
                <property name="minimumSize">
                 <size>
                  <width>130</width>
                  <height>20</height>
                 </size>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>75</width>
-                 <height>16777215</height>
-                </size>
-               </property>
                <property name="styleSheet">
-                <string notr="true">
-
-QLineEdit:enabled {
+                <string notr="true">QLabel:enabled {
 	font:17px &quot;游ゴシック&quot;;
 	color: rgb(0, 0, 0);
 	padding-left:5px;
@@ -276,15 +279,9 @@ QLineEdit:enabled {
 	background-color: rgb(200, 133, 0);
 	border:none;
 }
-QLineEdit:read-only {
+QLabel:disabled {
 	font:17px &quot;游ゴシック&quot;;
-	padding-left:5px;
-	border-radius: 5px;
-	background-color: rgb(73, 73, 220);
-	border:none;
-}
-QLineEdit:disabled {
-	font:17px &quot;游ゴシック&quot;;
+	color: rgb(0, 0, 0);
 	padding-left:5px;
 	border-radius: 5px;
 	background-color: rgb(0, 168, 123);
@@ -293,12 +290,6 @@ QLineEdit:disabled {
                </property>
                <property name="text">
                 <string>STEP 1</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -395,6 +386,18 @@ QFrame:hover{
           </item>
           <item>
            <widget class="QFrame" name="frame_4">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -588,6 +591,18 @@ QLabel:hover {
           </item>
           <item>
            <widget class="QFrame" name="frame_8">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -670,6 +685,18 @@ QFrame:focus{
           </item>
           <item>
            <widget class="QFrame" name="frame_5">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -785,6 +812,18 @@ QFrame:focus{
           </item>
           <item>
            <widget class="QFrame" name="frame_7">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -901,6 +940,18 @@ QFrame:hover{
           </item>
           <item>
            <widget class="QFrame" name="frame_12">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -1017,6 +1068,18 @@ QFrame:hover{
           </item>
           <item>
            <widget class="QFrame" name="frame_9">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -1099,6 +1162,18 @@ QFrame:focus{
           </item>
           <item>
            <widget class="QFrame" name="frame_10">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -1181,6 +1256,18 @@ QFrame:focus{
           </item>
           <item>
            <widget class="QFrame" name="frame_11">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -1263,6 +1350,18 @@ QFrame:focus{
           </item>
           <item>
            <widget class="QFrame" name="frame_17">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -1378,6 +1477,18 @@ QFrame:focus{
           </item>
           <item>
            <widget class="QFrame" name="frame_13">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;
@@ -1432,6 +1543,18 @@ QFrame:focus{
           </item>
           <item>
            <widget class="QFrame" name="frame_16">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">QFrame:hover{
 	border:none;

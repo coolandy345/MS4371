@@ -80,12 +80,12 @@ class TempPatternWidget(QWidget):
         self.patternFile_Load()
         self.update_Request=True
         
-        #self.timer=QTimer()
-        #self.timer.timeout.connect(self.regularWork)
-        #self.timer.start(10)
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.ultility_Update_Work)
+        self.timer.start(10)
 
-        ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
-        ultility_Update_Thread.start()
+        #ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
+        #ultility_Update_Thread.start()
 
         self.test=0
         self.test1=0
@@ -127,8 +127,8 @@ class TempPatternWidget(QWidget):
         self.graph.showGrid(x=True, y=True)
         self.graph.setMouseEnabled(x=True, y=False)
         self.graph.setLimits(minXRange=9,maxXRange=20)
-        #self.graph.setMinimumSize(QSize(1100, 300))
-
+        #self.graph.setMinimumSize(QSize(500, 300))
+        #self.graph.setFixedSize(500, 300)
 
         self.curve=self.graph.plot(pen=pg.mkPen(225, 230, 241), 
                                    symbolBrush=(0,0,0),
@@ -337,10 +337,10 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         
-        self._parent.ui.load_pages.commect_lineEdit.textEdited.disconnect()
+        self._parent.ui.load_pages.commect_lineEdit.editingFinished.disconnect()
         self._parent.ui.load_pages.commect_lineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.commect_lineEdit.setText(str(self.cache_steplist.comment))
-        self._parent.ui.load_pages.commect_lineEdit.textEdited.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.commect_lineEdit.editingFinished.connect(self.ui_click_callback)
 
 
         hour=self.cache_steplist.total_time//60
@@ -435,7 +435,7 @@ class TempPatternWidget(QWidget):
         
 
         self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.commect_lineEdit.textEdited.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.commect_lineEdit.editingFinished.connect(self.ui_click_callback)
         self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.RT_combobox.currentIndexChanged.connect(self.ui_click_callback)
         
@@ -788,23 +788,23 @@ class TempPatternWidget(QWidget):
         
         #print("self.test1 = ",self.test1)
         #self.test1+=1
-        while 1:
-            time.sleep(0.1)
+        #while 1:
+        #    time.sleep(0.1)
 
             #if time.time()-self.test >0.2 and time.time()-self.test <1000:
             #    print("Temp lag occur time = ",time.time()-self.test)
 
             #self.test=time.time()
 
-            if self.IconButtonUpdate:
-                self.delete_IconButton.set_active(self.delete_IconButtonActiveState)
-                self.add_IconButton.set_active(self.add_IconButtonActiveState)
-                self.save_IconButton.set_active(self.save_IconButtonActiveState)
-                self.IconButtonUpdate=False
+        if self.IconButtonUpdate:
+            self.delete_IconButton.set_active(self.delete_IconButtonActiveState)
+            self.add_IconButton.set_active(self.add_IconButtonActiveState)
+            self.save_IconButton.set_active(self.save_IconButtonActiveState)
+            self.IconButtonUpdate=False
         
-            if self.update_Request:
-                self.update_Request=False
-                self.update()
+        if self.update_Request:
+            self.update_Request=False
+            self.update()
 
     def scroll_adjust_TempPattern(self):
         self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_3.horizontalScrollBar().maximum())

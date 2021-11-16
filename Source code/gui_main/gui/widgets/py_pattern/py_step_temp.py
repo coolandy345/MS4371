@@ -234,14 +234,11 @@ class PyTempStep(QWidget):
         self.pattern.TestPattern_comboBox.currentIndexChanged.connect(self.modifly_callback)
 
         
-    def modifly_callback(self):
-        self.modifly_callbackWorker=modifly_callbackThread(self,self.sender())
-        QThreadPool.globalInstance().start(self.modifly_callbackWorker)
-        #self.modifly_callbackWorker.start()
+
     
     #When infomation is modifly by user , call back to this function
-    def modifly_callbackWork(self,sender):
-        if (sender==None):
+    def modifly_callback(self):
+        if (self.sender==None):
             return
         
         try:

@@ -82,12 +82,12 @@ class TestPatternWidget(QWidget):
         self.patternFile_Load()
         self.update_Request=True
 
-        #self.timer=QTimer()
-        #self.timer.timeout.connect(self.regularWork)
-        #self.timer.start(10)
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.ultility_Update_Work)
+        self.timer.start(10)
 
-        ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
-        ultility_Update_Thread.start()
+        #ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
+        #ultility_Update_Thread.start()
 
         self.test=0
         self.test1=0
@@ -268,8 +268,8 @@ class TestPatternWidget(QWidget):
         #self._parent.ui.load_pages.Test_Totalcount_Label.setText("計測回数：{} 回".format(hour,min))
 
         self.cache_steplist.total_time=self.cache_steplist.BG0_test_time+self.cache_steplist.step_number*self.cache_steplist.test_time+self.cache_steplist.step_number*self.cache_steplist.BG_test_time
-
-        self._parent.ui.load_pages.Test_Totaltime_Label.setText("合計時間：{} 分".format(self.cache_steplist.total_time))
+        
+        self._parent.ui.load_pages.Test_Totaltime_Label.setText("合計時間：{:.2f} 分".format(self.cache_steplist.total_time))
 
         self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.disconnect()
         self._parent.ui.load_pages.testfile_comboBox.setEnabled(self.editorEnable)
@@ -279,40 +279,40 @@ class TestPatternWidget(QWidget):
         self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         
-        self._parent.ui.load_pages.test_commect_lineEdit.textEdited.disconnect()
+        self._parent.ui.load_pages.test_commect_lineEdit.editingFinished.disconnect()
         self._parent.ui.load_pages.test_commect_lineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.test_commect_lineEdit.setText(str(self.cache_steplist.comment))
-        self._parent.ui.load_pages.test_commect_lineEdit.textEdited.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_commect_lineEdit.editingFinished.connect(self.ui_click_callback)
 
-        self._parent.ui.load_pages.test_time_SpinBox.valueChanged.disconnect()
-        self._parent.ui.load_pages.test_time_SpinBox.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.test_time_SpinBox.setValue(self.cache_steplist.test_time)
-        self._parent.ui.load_pages.test_time_SpinBox.valueChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.test_time_LineEdit.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.test_time_LineEdit.setText(str(self.cache_steplist.test_time))
+        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.connect(self.ui_click_callback)
 
 
 
-        self._parent.ui.load_pages.test_sampletime_SpinBox.valueChanged.disconnect()
-        self._parent.ui.load_pages.test_sampletime_SpinBox.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.test_sampletime_SpinBox.setValue(self.cache_steplist.test_sampletime)
-        self._parent.ui.load_pages.test_sampletime_SpinBox.valueChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.test_sampletime_LineEdit.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.test_sampletime_LineEdit.setText(str(self.cache_steplist.test_sampletime))
+        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
 
         
-        self._parent.ui.load_pages.bg0_SpinBox.valueChanged.disconnect()
-        self._parent.ui.load_pages.bg0_SpinBox.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.bg0_SpinBox.setValue(self.cache_steplist.BG0_test_time)
-        self._parent.ui.load_pages.bg0_SpinBox.valueChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.bg0_time_LineEdit.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.bg0_time_LineEdit.setText(str(self.cache_steplist.BG0_test_time))
+        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.connect(self.ui_click_callback)
 
 
-        self._parent.ui.load_pages.bg_testtime_SpinBox.valueChanged.disconnect()
-        self._parent.ui.load_pages.bg_testtime_SpinBox.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.bg_testtime_SpinBox.setValue(self.cache_steplist.BG_test_time)
-        self._parent.ui.load_pages.bg_testtime_SpinBox.valueChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.bg_time_LineEdit.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.bg_time_LineEdit.setText(str(self.cache_steplist.BG_test_time))
+        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.connect(self.ui_click_callback)
 
 
-        self._parent.ui.load_pages.bg_sampletime_SpinBox.valueChanged.disconnect()
-        self._parent.ui.load_pages.bg_sampletime_SpinBox.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.bg_sampletime_SpinBox.setValue(self.cache_steplist.BG_sampletime)
-        self._parent.ui.load_pages.bg_sampletime_SpinBox.valueChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.setText(str(self.cache_steplist.BG_sampletime))
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
 
         
         self.save_IconButtonActiveState=self.content_Change
@@ -443,12 +443,19 @@ class TestPatternWidget(QWidget):
         self.save_IconButton.clicked.connect(self.ui_click_callback)
 
         self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.test_commect_lineEdit.textEdited.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.test_time_SpinBox.valueChanged.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.test_sampletime_SpinBox.valueChanged.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.bg0_SpinBox.valueChanged.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.bg_testtime_SpinBox.valueChanged.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.bg_sampletime_SpinBox.valueChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_commect_lineEdit.editingFinished.connect(self.ui_click_callback)
+
+        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=2))
+        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg0_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=2))
+
         
 
     # update step widge
@@ -481,7 +488,7 @@ class TestPatternWidget(QWidget):
             unit=testUnit()
             unit=self.cache_steplist.getStep(_step)
 
-            self.step_widges_list[_step].pattern.Valtage_lineEdit.setValue(unit.voltage)
+            self.step_widges_list[_step].pattern.Valtage_lineEdit.setText(str(unit.voltage))
 
     # update graph
     # /////////////////////////////
@@ -543,10 +550,6 @@ class TestPatternWidget(QWidget):
                 self.GraphStepLabelList[_step].hide()
 
 
-
-
-
-        
         self.curve.setData(data_array)
         maxpos=max(SV_array)
         minpos=min(SV_array)
@@ -581,6 +584,8 @@ class TestPatternWidget(QWidget):
             self.graph.setLimits(xMin=0,xMax=17.9)
         else:
             self.graph.setLimits(xMin=0.1,xMax=17.9)
+
+        
     
     def lunchOptionDialog(self,message,type):
 
@@ -600,7 +605,7 @@ class TestPatternWidget(QWidget):
     def ui_click_callback(self):
 
         btn_name=self.sender().objectName()
-
+        print(btn_name)
 
         if btn_name=="削除":
             self.patternFile_Delete()
@@ -637,27 +642,28 @@ class TestPatternWidget(QWidget):
             self.cache_steplist.set_Comment(self._parent.ui.load_pages.test_commect_lineEdit.text())
             self.update_Request=True
 
-        elif btn_name=="test_time_SpinBox":
-            self.cache_steplist.set_Test_time(self._parent.ui.load_pages.test_time_SpinBox.value())
+        elif btn_name=="test_time_LineEdit":
+            self.cache_steplist.set_Test_time(float(self._parent.ui.load_pages.test_time_LineEdit.text()))
             self.update_Request=True
 
-        elif btn_name=="test_sampletime_SpinBox":
-            self.cache_steplist.set_Test_sampletime(self._parent.ui.load_pages.test_time_SpinBox.value())
+        elif btn_name=="test_sampletime_LineEdit":
+            self.cache_steplist.set_Test_sampletime(float(self._parent.ui.load_pages.test_sampletime_LineEdit.text()))
             self.update_Request=True
 
-        elif btn_name=="bg0_SpinBox":
-            self.cache_steplist.set_BG0_test_time(self._parent.ui.load_pages.bg0_SpinBox.value())
+        elif btn_name=="bg0_time_LineEdit":
+            self.cache_steplist.set_BG0_test_time(float(self._parent.ui.load_pages.bg0_time_LineEdit.text()))
             self.update_Request=True
 
-        elif btn_name=="bg_testtime_SpinBox":
-            self.cache_steplist.set_BG_test_time(self._parent.ui.load_pages.bg_testtime_SpinBox.value())
+        elif btn_name=="bg_time_LineEdit":
+            self.cache_steplist.set_BG_test_time(float(self._parent.ui.load_pages.bg_time_LineEdit.text()))
             self.update_Request=True
 
-        elif btn_name=="bg_sampletime_SpinBox":
-            self.cache_steplist.set_BG_sampletime(self._parent.ui.load_pages.bg_sampletime_SpinBox.value())
+        elif btn_name=="bg_sampletime_LineEdit":
+            self.cache_steplist.set_BG_sampletime(float(self._parent.ui.load_pages.bg_sampletime_LineEdit.text()))
             self.update_Request=True
 
     def patternFile_Load(self):
+
 
         self.set_memorypool_register("Measurement Pattern","フォーカスPTN番号",self.focus_patternFile_number)
         self.memory_reader()
@@ -721,7 +727,7 @@ class TestPatternWidget(QWidget):
         
         for step in range(1,9):
             self.set_memorypool_register("Measurement Pattern","PTNData_{}_STEP_{}_電圧".format(self.focus_patternFile_number,step),list.units[step].voltage)
-           
+            
         #Reload cache_list from memory
         self.patternFile_Load()
 
@@ -771,23 +777,23 @@ class TestPatternWidget(QWidget):
     def ultility_Update_Work(self):
         #print("self.test1 = ",self.test1)
         #self.test1+=1
-        while 1:
-            time.sleep(0.1)
+        #while 1:
+        #    time.sleep(0.1)
 
             #if time.time()-self.test >0.2 and time.time()-self.test <1000:
             #    print("Temp lag occur time = ",time.time()-self.test)
 
             #self.test=time.time()
 
-            if self.IconButtonUpdate:
-                self.delete_IconButton.set_active(self.delete_IconButtonActiveState)
-                self.add_IconButton.set_active(self.add_IconButtonActiveState)
-                self.save_IconButton.set_active(self.save_IconButtonActiveState)
-                self.IconButtonUpdate=False
+        if self.IconButtonUpdate:
+            self.delete_IconButton.set_active(self.delete_IconButtonActiveState)
+            self.add_IconButton.set_active(self.add_IconButtonActiveState)
+            self.save_IconButton.set_active(self.save_IconButtonActiveState)
+            self.IconButtonUpdate=False
         
-            if self.update_Request:
-                self.update_Request=False
-                self.update()
+        if self.update_Request:
+            self.update_Request=False
+            self.update()
 
     def scroll_adjust_TestPattern(self):
         self._parent.ui.load_pages.scrollArea_4.horizontalScrollBar().setValue(self._parent.ui.load_pages.scrollArea_4.horizontalScrollBar().maximum())
@@ -920,10 +926,10 @@ class TestPatternWidget(QWidget):
 
         self.update_Request=True
 
+
     def update(self):
         self.content_change_check()
         self.updata_step_widge()
         self.update_graph()
         self.utility_update()
-
   

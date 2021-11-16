@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patternvuWGyW.ui'
+## Form generated from reading UI file 'temp_patternLWduFR.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -78,6 +78,7 @@ class Ui_temp_pattern(object):
 "}\n"
 "\n"
 "QLabel:enabled {\n"
+"	font:12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
@@ -85,6 +86,7 @@ class Ui_temp_pattern(object):
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
+"	font:12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "	background-color: rgba(0, 0, 0, 80);\n"
 "	color: rgb(225, 230, 241);\n"
 "	border-width: 1px;\n"
@@ -104,12 +106,12 @@ class Ui_temp_pattern(object):
 "\n"
 "QComboBox:enabled {\n"
 "	background-color: rgba(0, 0, 0, 80);\n"
-"	color: rgb(225, 230, 241);\n"
+"	color:"
+                        " rgb(225, 230, 241);\n"
 "	border-width: 1px;\n"
 "}\n"
 "QComboBox:disabled {\n"
-"	background-color: rgb"
-                        "a(0, 0, 0, 0);\n"
+"	background-color: rgba(0, 0, 0, 0);\n"
 "	color: rgb(44, 49, 60);\n"
 "	border: none;\n"
 "}\n"
@@ -126,11 +128,13 @@ class Ui_temp_pattern(object):
         self.frame_6.setFrameShape(QFrame.StyledPanel)
         self.frame_6.setFrameShadow(QFrame.Raised)
         self.verticalLayout = QVBoxLayout(self.frame_6)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout.setContentsMargins(8, 8, 8, 8)
         self.frame_2 = QFrame(self.frame_6)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setMinimumSize(QSize(0, 0))
+        self.frame_2.setMinimumSize(QSize(0, 25))
+        self.frame_2.setMaximumSize(QSize(16777215, 25))
         self.frame_2.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -189,8 +193,8 @@ class Ui_temp_pattern(object):
         self.Type_comboBox.setObjectName(u"Type_comboBox")
         sizePolicy.setHeightForWidth(self.Type_comboBox.sizePolicy().hasHeightForWidth())
         self.Type_comboBox.setSizePolicy(sizePolicy)
-        self.Type_comboBox.setMinimumSize(QSize(0, 20))
-        self.Type_comboBox.setMaximumSize(QSize(16777215, 20))
+        self.Type_comboBox.setMinimumSize(QSize(0, 25))
+        self.Type_comboBox.setMaximumSize(QSize(16777215, 25))
         self.Type_comboBox.setStyleSheet(u"QFrame{\n"
 "	border:none;\n"
 "}\n"
@@ -203,6 +207,8 @@ class Ui_temp_pattern(object):
 
         self.frame_4 = QFrame(self.frame_6)
         self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setMinimumSize(QSize(0, 22))
+        self.frame_4.setMaximumSize(QSize(16777215, 22))
         self.frame_4.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -316,6 +322,8 @@ class Ui_temp_pattern(object):
 
         self.frame_8 = QFrame(self.frame_6)
         self.frame_8.setObjectName(u"frame_8")
+        self.frame_8.setMinimumSize(QSize(0, 22))
+        self.frame_8.setMaximumSize(QSize(16777215, 22))
         self.frame_8.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -350,6 +358,8 @@ class Ui_temp_pattern(object):
 
         self.frame_5 = QFrame(self.frame_6)
         self.frame_5.setObjectName(u"frame_5")
+        self.frame_5.setMinimumSize(QSize(0, 22))
+        self.frame_5.setMaximumSize(QSize(16777215, 22))
         self.frame_5.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -402,6 +412,8 @@ class Ui_temp_pattern(object):
 
         self.frame_7 = QFrame(self.frame_6)
         self.frame_7.setObjectName(u"frame_7")
+        self.frame_7.setMinimumSize(QSize(0, 22))
+        self.frame_7.setMaximumSize(QSize(16777215, 22))
         self.frame_7.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -448,6 +460,8 @@ class Ui_temp_pattern(object):
 
         self.frame_12 = QFrame(self.frame_6)
         self.frame_12.setObjectName(u"frame_12")
+        self.frame_12.setMinimumSize(QSize(0, 22))
+        self.frame_12.setMaximumSize(QSize(16777215, 22))
         self.frame_12.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -494,6 +508,8 @@ class Ui_temp_pattern(object):
 
         self.frame_9 = QFrame(self.frame_6)
         self.frame_9.setObjectName(u"frame_9")
+        self.frame_9.setMinimumSize(QSize(0, 22))
+        self.frame_9.setMaximumSize(QSize(16777215, 22))
         self.frame_9.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -528,6 +544,8 @@ class Ui_temp_pattern(object):
 
         self.frame_10 = QFrame(self.frame_6)
         self.frame_10.setObjectName(u"frame_10")
+        self.frame_10.setMinimumSize(QSize(0, 22))
+        self.frame_10.setMaximumSize(QSize(16777215, 22))
         self.frame_10.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -562,6 +580,8 @@ class Ui_temp_pattern(object):
 
         self.frame_11 = QFrame(self.frame_6)
         self.frame_11.setObjectName(u"frame_11")
+        self.frame_11.setMinimumSize(QSize(0, 22))
+        self.frame_11.setMaximumSize(QSize(16777215, 22))
         self.frame_11.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -596,6 +616,8 @@ class Ui_temp_pattern(object):
 
         self.frame_17 = QFrame(self.frame_6)
         self.frame_17.setObjectName(u"frame_17")
+        self.frame_17.setMinimumSize(QSize(0, 22))
+        self.frame_17.setMaximumSize(QSize(16777215, 22))
         self.frame_17.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -648,6 +670,8 @@ class Ui_temp_pattern(object):
 
         self.frame_13 = QFrame(self.frame_6)
         self.frame_13.setObjectName(u"frame_13")
+        self.frame_13.setMinimumSize(QSize(0, 22))
+        self.frame_13.setMaximumSize(QSize(16777215, 22))
         self.frame_13.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -672,6 +696,8 @@ class Ui_temp_pattern(object):
 
         self.frame_16 = QFrame(self.frame_6)
         self.frame_16.setObjectName(u"frame_16")
+        self.frame_16.setMinimumSize(QSize(0, 22))
+        self.frame_16.setMaximumSize(QSize(16777215, 22))
         self.frame_16.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"

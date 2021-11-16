@@ -40,35 +40,13 @@ from gui_main.gui.core.functions import *
 
 from .py_pattern_menu import *
 
-class modifly_callbackThread(QRunnable):
-    def __init__(self, parent,sender):
-        super().__init__()
-        self.parent = parent
-        self.sender=sender
 
-    def run(self):
-        self.parent.modifly_callbackWork(self.sender)
 
 class PyTestStep(QWidget):
 
     #clicked = Signal(object)
     #released = Signal(object)
 
-
-    step_bg_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(53 ,206, 220);border:none;"
-    #step_testbg_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);border:none;"
-    step_testbg_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);border:none;"
-    step_end_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
-
-    label_gray_out_style="font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\"; color: rgb(91, 94, 98); border:none;"
-    label_normal_style="font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\"; color: rgb(225, 230, 241); border:none;"
-
-    line_gray_out_style="background-color: rgba(0, 0, 0,20);    color:  rgba(0, 0, 0,20);    border-width: 1px;    border-style: solid;    border-radius: 5px;    padding-left:5px;    padding-right:5px;    font: 12px \"游ゴシック\";"
-    line_normal_style="background-color: rgba(0, 0, 0,80);    color: rgb(225, 230, 241);    border-width: 1px;    border-style: solid;    border-radius: 5px;    padding-left:5px;    padding-right:5px;    font: 12px \"游ゴシック\";"
-
-    focus_normal_style="border-color: rgb(231, 214, 85);background-color: rgb(44, 49, 60);border-width: 5px;    border-style: solid;    border-radius: 10px;"
-    focus_gray_out_style="border-color: rgb(44, 49, 60);background-color: rgb(44, 49, 60);border-width: 5px;    border-style: solid;    border-radius: 10px;"
-    
 
 
     def __init__(
@@ -95,15 +73,9 @@ class PyTestStep(QWidget):
         self.pattern.setupUi( self.pattern_frame)
         self.pattern.page.setCurrentIndex(self._active)
 
-        self.FocusStyleChange=False
-        self.FocusStyle=self.focus_gray_out_style
-        self.timer=QTimer()
-        self.timer.timeout.connect(self.timerCallback)
-        self.timer.start(100)
 
-        # Parameter_setting
-        # ///////////////////////////////////////////////////////////////
-        self.parameter_setting()
+
+        
         # Menu_setting
         # ///////////////////////////////////////////////////////////////
 
@@ -124,18 +96,20 @@ class PyTestStep(QWidget):
         #self._menu.menu_frame.move(60, -50)
         #self._menu.menu_frame.hide()
 
-    def timerCallback(self):
-        if self.FocusStyleChange:
-            self.pattern.page.setStyleSheet(self.FocusStyle)
-            self.FocusStyleChange=False
+
         
 
     def parameter_setting(self):
         
         self.pattern.Step_label.setText("STEP %d" %self._step)
-        self.pattern.Valtage_lineEdit.setValue(self._voltage)
+        self.pattern.Valtage_lineEdit.setText(str(self._voltage))
+        self.pattern.Valtage_lineEdit.setValidator(QDoubleValidator(decimals=1))
 
     def icon_bottum_ui_setting(self):
+        # Parameter_setting
+        # ///////////////////////////////////////////////////////////////
+        self.parameter_setting()
+
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
         self.settings = Settings().items
@@ -180,21 +154,18 @@ class PyTestStep(QWidget):
             )
         self.pattern.gridLayout_6.addWidget(self.menu_icon, Qt.AlignCenter, Qt.AlignCenter)
 
-        self.menu_icon.clicked.connect(self.show_menu)
+        self.menu_icon.clicked.connect(self.delete_step)
 
-        self.pattern.Valtage_lineEdit.valueChanged.connect(self.modifly_callback)
+        self.pattern.Valtage_lineEdit.editingFinished.connect(self.modifly_callback)
 
-    def modifly_callback(self):
-        self.modifly_callbackWorker=modifly_callbackThread(self,self.sender())
-        QThreadPool.globalInstance().start(self.modifly_callbackWorker)
-        #self.modifly_callbackWorker.start()
+
 
     #When infomation is modifly by user , call back to this function
-    def modifly_callbackWork(self,sender):
-        if (sender==None):
+    def modifly_callback(self):
+        if (self.sender()==None):
             return
         
-        self._voltage=self.pattern.Valtage_lineEdit.value()
+        self._voltage=float(self.pattern.Valtage_lineEdit.text())
         #Call upper mother renew information
         self._parent.testPattern.step_modifly_manager(self._step)
         
@@ -204,15 +175,10 @@ class PyTestStep(QWidget):
     def addStepBtn_releasecallback(self):
         self._parent.testPattern.scroll_adjust_TestPattern()
 
-    def show_menu(self):
+    def delete_step(self):
 
         self._parent.testPattern.menu_btn_handler("pattern_menu_delete_pushButton")
 
-        #if self._menu.menu_frame.isVisible():
-        #    self._menu.menu_frame.hide()
-        #else:
-        #    self._menu.paste_SetEnable(self._parent.testPattern.paste_ready,self._parent.testPattern.activeStep_noFull)
-        #    self._menu.menu_frame.show()
 
 
     def enterEvent(self, event):
@@ -230,11 +196,9 @@ class PyTestStep(QWidget):
 
     def setFocusStyle(self,enable):
         if enable:
-            self.FocusStyle=self.focus_normal_style
-            self.FocusStyleChange=True
+            self.pattern.frame_4. setFocus()
         else:
-            self.FocusStyle=self.focus_gray_out_style
-            self.FocusStyleChange=True
+            self.pattern.frame_4. clearFocus()
         
 
 
