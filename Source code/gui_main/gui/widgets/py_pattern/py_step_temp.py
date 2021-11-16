@@ -489,10 +489,8 @@ class PyTempStep(QWidget):
         
     def leaveEvent(self, event):
         if self.pattern.page.currentIndex() ==1:
-            print(self.pattern.PID_muffle_comboBox.hasFocus())
-            if self.pattern.PID_muffle_comboBox.hasFocus():
-                self._parent.tempPattern.un_focus_step(self._step)
-                self._parent.tempPattern.close_one_menu(self._step)
+            self._parent.tempPattern.un_focus_step(self._step)
+            self._parent.tempPattern.close_one_menu(self._step)
 
     def paintEvent(self, event):
         pass
