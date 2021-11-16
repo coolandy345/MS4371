@@ -483,28 +483,28 @@ class TempPatternWidget(QWidget):
             self.step_widges_list[_step].pattern.Type_comboBox.setCurrentIndex(unit.Step_Type)
 
             if unit.Step_Type==tempUnit.temp_unit_type:    #temp unit
-                self.step_widges_list[_step].pattern.Hour_lineEdit.setValue(unit.time_hour)
-                self.step_widges_list[_step].pattern.Min_lineEdit.setValue(unit.time_min)
+                self.step_widges_list[_step].pattern.Hour_lineEdit.setText(str(unit.time_hour))
+                self.step_widges_list[_step].pattern.Min_lineEdit.setText(str(unit.time_min))
 
-                self.step_widges_list[_step].pattern.SV_lineEdit.setValue(unit.SV)
+                self.step_widges_list[_step].pattern.SV_lineEdit.setText(str(unit.SV))
                 self.step_widges_list[_step].pattern.N2_lineEdit.setText("{}".format(unit.N2_flowRate*0.1))
                 self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
                 self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
 
-                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setValue(unit.sp_limit_up)
-                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setValue(unit.sp_limit_down)
-                self.step_widges_list[_step].pattern.Shift_lineEdit.setValue(unit.shift)
+                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setText(str(unit.sp_limit_up))
+                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setText(str(unit.sp_limit_down))
+                self.step_widges_list[_step].pattern.Shift_lineEdit.setText(str(unit.shift))
 
                 pass
             elif unit.Step_Type==tempUnit.test_unit_type:  #test unit
-                self.step_widges_list[_step].pattern.SV_lineEdit.setValue(unit.SV)
+                self.step_widges_list[_step].pattern.SV_lineEdit.setText(str(unit.SV))
                 self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
                 self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
-                self.step_widges_list[_step].pattern.KeepTime_lineEdit.setValue(unit.time_keep)
+                self.step_widges_list[_step].pattern.KeepTime_lineEdit.setText(str(unit.time_keep))
 
-                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setValue(unit.sp_limit_up)
-                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setValue(unit.sp_limit_down)
-                self.step_widges_list[_step].pattern.Shift_lineEdit.setValue(unit.shift)
+                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setText(str(unit.sp_limit_up))
+                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setText(str(unit.sp_limit_down))
+                self.step_widges_list[_step].pattern.Shift_lineEdit.setText(str(unit.shift))
 
                 self.step_widges_list[_step].update_testFileCombobox(unit.test_measure_PatternNo)
                 #self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)

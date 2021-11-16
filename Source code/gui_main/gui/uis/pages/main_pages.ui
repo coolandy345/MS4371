@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1398</width>
-    <height>796</height>
+    <height>707</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -44,7 +44,7 @@
       <string notr="true">background-color: rgb(44, 49, 60);</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -79,8 +79,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>828</width>
-            <height>535</height>
+            <width>1362</width>
+            <height>671</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_12">

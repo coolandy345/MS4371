@@ -20,11 +20,11 @@ class PyGraphRegionItem(pg.LinearRegionItem):
                  hoverBrush=None, hoverPen=None, movable=True, bounds=None, 
                  span=(0, 1), swapMode='sort'):
 
-        #super().__init__(values=values, orientation=orientation, brush=brush, pen=pen,
-        #         hoverBrush=hoverBrush, hoverPen=hoverPen, movable=movable, bounds=bounds, 
-        #         span=span, swapMode=swapMode)
+        super().__init__(values=values, orientation=orientation, brush=brush, pen=pen,
+                 hoverBrush=hoverBrush, hoverPen=hoverPen, movable=movable, bounds=bounds, 
+                 span=span, swapMode=swapMode)
 
-        super().__init__()
+        #super().__init__()
         
         self.parent=parent
         self.app_parent=app_parent
@@ -33,9 +33,9 @@ class PyGraphRegionItem(pg.LinearRegionItem):
 
         self.FocusStyleChange=False
         self.currentBrushFocusStyle=self.brush
-        self.timer=QTimer()
-        self.timer.timeout.connect(self.timerCallback)
-        self.timer.start(100)
+        #self.timer=QTimer()
+        #self.timer.timeout.connect(self.timerCallback)
+        #self.timer.start(100)
 
 
     def timerCallback(self):
@@ -61,6 +61,8 @@ class PyGraphRegionItem(pg.LinearRegionItem):
         if enable:
             self.currentBrushFocusStyle = self.hoverBrush
             self.FocusStyleChange=True
+            self.timerCallback()
         else:
             self.currentBrushFocusStyle = self.brush
             self.FocusStyleChange=True
+            self.timerCallback()

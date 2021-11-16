@@ -64,22 +64,21 @@ class PyTempStep(QWidget):
 
 
 
-    timeframe_grayout="background-color: rgb(41,45,55);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
-    timeframe_normal="background-color: rgb(30,34,41);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
+    #timeframe_grayout="background-color: rgb(41,45,55);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
+    #timeframe_normal="background-color: rgb(30,34,41);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
 
     step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);border:none;"
     step_test_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);border:none;"
-    step_RTtest_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(53 ,206, 220);border:none;"
     step_end_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
 
-    time_gray_out_style="background-color: rgb(41,45,55);border:none;color: rgb(41,45,55);"
-    time_normal_style="background-color: rgb(30,34,41);border:none;color: rgb(225, 230, 241);"
+    #time_gray_out_style="background-color: rgb(41,45,55);border:none;color: rgb(41,45,55);"
+    #time_normal_style="background-color: rgb(30,34,41);border:none;color: rgb(225, 230, 241);"
 
-    label_gray_out_style="font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\"; color: rgb(91, 94, 98); border:none;"
-    label_normal_style="font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\"; color: rgb(225, 230, 241); border:none;"
+    #label_gray_out_style="font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\"; color: rgb(91, 94, 98); border:none;"
+    #label_normal_style="font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\"; color: rgb(225, 230, 241); border:none;"
 
-    line_gray_out_style="background-color: rgba(0, 0, 0,20);    color:  rgba(0, 0, 0,20);    border-width: 1px;    border-style: solid;    border-radius: 5px;    padding-left:5px;    padding-right:5px;    font: 12px \"游ゴシック\";"
-    line_normal_style="background-color: rgba(0, 0, 0,80);    color: rgb(225, 230, 241);    border-width: 1px;    border-style: solid;    border-radius: 5px;    padding-left:5px;    padding-right:5px;    font: 12px \"游ゴシック\";"
+    #line_gray_out_style="background-color: rgba(0, 0, 0,20);    color:  rgba(0, 0, 0,20);    border-width: 1px;    border-style: solid;    border-radius: 5px;    padding-left:5px;    padding-right:5px;    font: 12px \"游ゴシック\";"
+    #line_normal_style="background-color: rgba(0, 0, 0,80);    color: rgb(225, 230, 241);    border-width: 1px;    border-style: solid;    border-radius: 5px;    padding-left:5px;    padding-right:5px;    font: 12px \"游ゴシック\";"
 
     focus_normal_style="border-color: rgb(231, 214, 85);background-color: rgb(44, 49, 60);border-width: 5px;    border-style: solid;    border-radius: 10px;"
     focus_gray_out_style="border-color: rgb(44, 49, 60);background-color: rgb(44, 49, 60);border-width: 5px;    border-style: solid;    border-radius: 10px;"
@@ -133,15 +132,12 @@ class PyTempStep(QWidget):
 
         self.FocusStyleChange=False
         self.FocusStyle=self.focus_gray_out_style
-        self.timer=QTimer()
-        self.timer.timeout.connect(self.focus_Style_Work)
-        self.timer.start(100)
 
+        #self.timer=QTimer()
+        #self.timer.timeout.connect(self.focus_Style_Work)
+        #self.timer.start(100)
 
         
-        # Parameter_setting
-        # ///////////////////////////////////////////////////////////////
-        self.parameter_setting()
         
         # icon_bottum_ui_setting
         # ///////////////////////////////////////////////////////////////
@@ -166,26 +162,35 @@ class PyTempStep(QWidget):
 
     def focus_Style_Work(self):
         if self.FocusStyleChange:
-            self.pattern.page.setStyleSheet(self.FocusStyle)
+            #self.pattern.page.setStyleSheet(self.FocusStyle)
             self.FocusStyleChange=False
 
     def parameter_setting(self):
         self.pattern.Step_label.setText("STEP %d" %self._step)
         self.pattern.Type_comboBox.setCurrentIndex(self._type)
-        self.pattern.Hour_lineEdit.setValue(self._hour)
-        self.pattern.Min_lineEdit.setValue(self._minute)
-        self.pattern.SV_lineEdit.setValue(self._temperature)
+        self.pattern.Hour_lineEdit.setText(str(self._hour))
+        self.pattern.Hour_lineEdit.setValidator(QIntValidator())
+        self.pattern.Min_lineEdit.setText(str(self._minute))
+        self.pattern.Min_lineEdit.setValidator(QIntValidator())
+        self.pattern.SV_lineEdit.setText(str(self._temperature))
+        self.pattern.SV_lineEdit.setValidator(QIntValidator())
         self.pattern.N2_lineEdit.setText("{}".format(self._n2_flowrate*0.1))
         self.pattern.N2_lineEdit.setValidator(QDoubleValidator(decimals=1))
 
         self.pattern.PID_muffle_comboBox.setCurrentIndex(self._PID_muffle_no)
         self.pattern.PID_heater_comboBox.setCurrentIndex(self._PID_heater_no)
 
-        self.pattern.KeepTime_lineEdit.setValue(self._keep_seccond)
+        self.pattern.KeepTime_lineEdit.setText(str(self._keep_seccond))
+        self.pattern.KeepTime_lineEdit.setValidator(QIntValidator())
         self.pattern.TestPattern_comboBox.setCurrentIndex(self._test_pattern)
 
 
     def icon_bottum_ui_setting(self):
+
+        # Parameter_setting
+        # ///////////////////////////////////////////////////////////////
+        self.parameter_setting()
+
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
         self.settings = Settings().items
@@ -233,16 +238,16 @@ class PyTempStep(QWidget):
         self.menu_icon.clicked.connect(self.show_menu)
 
         self.pattern.Type_comboBox.currentIndexChanged.connect(self.type_modifly_callback)
-        self.pattern.Hour_lineEdit.valueChanged.connect(self.modifly_callback)
-        self.pattern.Min_lineEdit.valueChanged.connect(self.modifly_callback)
-        self.pattern.SV_lineEdit.valueChanged.connect(self.modifly_callback)
+        self.pattern.Hour_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.Min_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.SV_lineEdit.editingFinished.connect(self.modifly_callback)
         self.pattern.N2_lineEdit.editingFinished.connect(self.modifly_callback)
         self.pattern.PID_muffle_comboBox.currentIndexChanged.connect(self.modifly_callback)
         self.pattern.PID_heater_comboBox.currentIndexChanged.connect(self.modifly_callback)
-        self.pattern.KeepTime_lineEdit.valueChanged.connect(self.modifly_callback)
-        self.pattern.Sp_limit_up_lineEdit.valueChanged.connect(self.modifly_callback)
-        self.pattern.Sp_limit_down_lineEdit.valueChanged.connect(self.modifly_callback)
-        self.pattern.Shift_lineEdit.valueChanged.connect(self.modifly_callback)
+        self.pattern.KeepTime_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.Sp_limit_up_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.Sp_limit_down_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.Shift_lineEdit.editingFinished.connect(self.modifly_callback)
         self.pattern.TestPattern_comboBox.currentIndexChanged.connect(self.modifly_callback)
 
         
@@ -264,20 +269,20 @@ class PyTempStep(QWidget):
             return
 
         #print("click in side step after modifly STEP ", self._step," name = ",self.sender().objectName())
-        self._hour=self.pattern.Hour_lineEdit.value()
-        self._minute=self.pattern.Min_lineEdit.value()
+        self._hour=int(self.pattern.Hour_lineEdit.text())
+        self._minute=int(self.pattern.Min_lineEdit.text())
 
-        self._temperature=self.pattern.SV_lineEdit.value()
+        self._temperature=int(self.pattern.SV_lineEdit.text())
         self._n2_flowrate=float(self.pattern.N2_lineEdit.text())*10
 
         self._PID_muffle_no=self.pattern.PID_muffle_comboBox.currentIndex()
         self._PID_heater_no=self.pattern.PID_heater_comboBox.currentIndex()
 
-        self._keep_seccond=self.pattern.KeepTime_lineEdit.value()
+        self._keep_seccond=int(self.pattern.KeepTime_lineEdit.text())
 
-        self._sp_limit_up=self.pattern.Sp_limit_up_lineEdit.value()
-        self._sp_limit_down=self.pattern.Sp_limit_down_lineEdit.value()
-        self._shift=self.pattern.Shift_lineEdit.value()
+        self._sp_limit_up=int(self.pattern.Sp_limit_up_lineEdit.text())
+        self._sp_limit_down=int(self.pattern.Sp_limit_down_lineEdit.text())
+        self._shift=int(self.pattern.Shift_lineEdit.text())
 
         self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
         
@@ -291,53 +296,47 @@ class PyTempStep(QWidget):
             
             self._type=self.Temp_Type
             self.pattern.Step_label.setStyleSheet(self.step_temp_type_style)
-
-            self.pattern.Hour_lineEdit.setEnabled(True)
-            self.pattern.Hour_lineEdit.setStyleSheet(self.time_normal_style)
-            self.pattern.Min_lineEdit.setEnabled(True)
-            self.pattern.Min_lineEdit.setStyleSheet(self.time_normal_style)
-            self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
-            self.pattern.Time_label.setStyleSheet(self.label_normal_style)
-            self.pattern.label_4.setStyleSheet(self.time_normal_style)
-            self.pattern.SV_lineEdit.setEnabled(True)
-            self.pattern.SV_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.SV_label.setStyleSheet(self.label_normal_style)
-            self.pattern.N2_lineEdit.setEnabled(True)
-            self.pattern.N2_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.N2_label.setStyleSheet(self.label_normal_style)
-            self.pattern.PID_muffle_comboBox.setEnabled(True)
-            self.pattern.PID_muffle_comboBox.setStyleSheet(self.line_normal_style)
-            self.pattern.PID_heater_comboBox.setEnabled(True)
-            self.pattern.PID_heater_comboBox.setStyleSheet(self.line_normal_style)
-            self.pattern.PID_muffle_label.setStyleSheet(self.label_normal_style)
-            self.pattern.PID_heater_label.setStyleSheet(self.label_normal_style)
-
-            self.pattern.KeepTime_lineEdit.setValue(0)
-            self.pattern.KeepTime_lineEdit.setDisabled(True)
-            self.pattern.KeepTime_lineEdit.setStyleSheet(self.label_normal_style)
-            self.pattern.KeepTime_label.setStyleSheet(self.label_gray_out_style)
-
-
             
+            self.pattern.Time_label.setEnabled(True)
+            self.pattern.Hour_lineEdit.setEnabled(True)
+            self.pattern.Hour_lineEdit.setReadOnly(False)
+            self.pattern.Min_lineEdit.setEnabled(True)
+            self.pattern.Min_lineEdit.setReadOnly(False)
+            self.pattern.time_frame.setEnabled(True)
+
+            self.pattern.SV_label.setEnabled(True)
+            self.pattern.SV_lineEdit.setEnabled(True)
+            self.pattern.SV_lineEdit.setReadOnly(False)
+
+            self.pattern.N2_label.setEnabled(True)
+            self.pattern.N2_lineEdit.setEnabled(True)
+            self.pattern.N2_lineEdit.setReadOnly(False)
+            
+            self.pattern.PID_muffle_label.setEnabled(True)
+            self.pattern.PID_muffle_comboBox.setEnabled(True)
+            self.pattern.PID_heater_label.setEnabled(True)
+            self.pattern.PID_heater_comboBox.setEnabled(True)
+            
+            self.pattern.KeepTime_label.setEnabled(False)
+            self.pattern.KeepTime_lineEdit.setEnabled(False)
+            self.pattern.KeepTime_lineEdit.setReadOnly(False)
+            self.pattern.KeepTime_lineEdit.setText("0")
+            
+            self.pattern.Sp_limit_up_label.setEnabled(True)
             self.pattern.Sp_limit_up_lineEdit.setEnabled(True)
-            self.pattern.Sp_limit_up_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.Sp_limit_up_label.setStyleSheet(self.label_normal_style)
+            self.pattern.Sp_limit_up_lineEdit.setReadOnly(False)
 
+            self.pattern.Sp_limit_down_label.setEnabled(True)
             self.pattern.Sp_limit_down_lineEdit.setEnabled(True)
-            self.pattern.Sp_limit_down_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.Sp_limit_down_label.setStyleSheet(self.label_normal_style)
+            self.pattern.Sp_limit_down_lineEdit.setReadOnly(False)
 
+            self.pattern.Shift_label.setEnabled(True)
             self.pattern.Shift_lineEdit.setEnabled(True)
-            self.pattern.Shift_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.Shift_label.setStyleSheet(self.label_normal_style)
+            self.pattern.Shift_lineEdit.setReadOnly(False)
 
+            self.pattern.TestPattern_label.setEnabled(False)
+            self.pattern.TestPattern_comboBox.setEnabled(False)
 
-
-
-
-            self.pattern.TestPattern_comboBox.setDisabled(True)
-            self.pattern.TestPattern_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.TestPattern_label.setStyleSheet(self.label_gray_out_style)
             self.update_testFileCombobox(0)
             
         elif (self.pattern.Type_comboBox.currentText()) == "測定":
@@ -345,47 +344,45 @@ class PyTempStep(QWidget):
             self._type=self.Test_Type
             self.pattern.Step_label.setStyleSheet(self.step_test_type_style)
 
+            self.pattern.Time_label.setEnabled(True)
             self.pattern.Hour_lineEdit.setEnabled(True)
-            self.pattern.Hour_lineEdit.setStyleSheet(self.time_normal_style)
+            self.pattern.Hour_lineEdit.setReadOnly(False)
             self.pattern.Min_lineEdit.setEnabled(True)
-            self.pattern.Min_lineEdit.setStyleSheet(self.time_normal_style)
-            self.pattern.Time_label.setStyleSheet(self.label_normal_style)
-            self.pattern.time_frame.setStyleSheet(self.timeframe_normal)
-            self.pattern.label_4.setStyleSheet(self.time_normal_style)
-            self.pattern.SV_lineEdit.setEnabled(False)
-            self.pattern.SV_lineEdit.setStyleSheet(self.label_normal_style)
-            self.pattern.SV_label.setStyleSheet(self.label_normal_style)
-            
+            self.pattern.Min_lineEdit.setReadOnly(False)
+            self.pattern.time_frame.setEnabled(True)
+
+            self.pattern.SV_label.setEnabled(True)
+            self.pattern.SV_lineEdit.setEnabled(True)
+            self.pattern.SV_lineEdit.setReadOnly(True)
+
+            self.pattern.N2_label.setEnabled(True)
             self.pattern.N2_lineEdit.setEnabled(True)
-            self.pattern.N2_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.N2_label.setStyleSheet(self.label_normal_style)
+            self.pattern.N2_lineEdit.setReadOnly(False)
+            
+            self.pattern.PID_muffle_label.setEnabled(True)
             self.pattern.PID_muffle_comboBox.setEnabled(True)
-            self.pattern.PID_muffle_comboBox.setStyleSheet(self.line_normal_style)
-            self.pattern.PID_muffle_label.setStyleSheet(self.label_normal_style)
+            self.pattern.PID_heater_label.setEnabled(True)
             self.pattern.PID_heater_comboBox.setEnabled(True)
-            self.pattern.PID_heater_comboBox.setStyleSheet(self.line_normal_style)
-            self.pattern.PID_heater_label.setStyleSheet(self.label_normal_style)
-
-
+            
+            self.pattern.KeepTime_label.setEnabled(True)
             self.pattern.KeepTime_lineEdit.setEnabled(True)
-            self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.KeepTime_label.setStyleSheet(self.label_normal_style)
-
+            self.pattern.KeepTime_lineEdit.setReadOnly(False)
+            
+            self.pattern.Sp_limit_up_label.setEnabled(True)
             self.pattern.Sp_limit_up_lineEdit.setEnabled(True)
-            self.pattern.Sp_limit_up_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.Sp_limit_up_label.setStyleSheet(self.label_normal_style)
+            self.pattern.Sp_limit_up_lineEdit.setReadOnly(False)
 
+            self.pattern.Sp_limit_down_label.setEnabled(True)
             self.pattern.Sp_limit_down_lineEdit.setEnabled(True)
-            self.pattern.Sp_limit_down_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.Sp_limit_down_label.setStyleSheet(self.label_normal_style)
+            self.pattern.Sp_limit_down_lineEdit.setReadOnly(False)
 
+            self.pattern.Shift_label.setEnabled(True)
             self.pattern.Shift_lineEdit.setEnabled(True)
-            self.pattern.Shift_lineEdit.setStyleSheet(self.line_normal_style)
-            self.pattern.Shift_label.setStyleSheet(self.label_normal_style)
+            self.pattern.Shift_lineEdit.setReadOnly(False)
 
+            self.pattern.TestPattern_label.setEnabled(True)
             self.pattern.TestPattern_comboBox.setEnabled(True)
-            self.pattern.TestPattern_comboBox.setStyleSheet(self.line_normal_style)
-            self.pattern.TestPattern_label.setStyleSheet(self.label_normal_style)
+
             self.update_testFileCombobox(0)
 
         elif (self.pattern.Type_comboBox.currentText()) == "END":
@@ -393,55 +390,53 @@ class PyTempStep(QWidget):
             self._type=self.End_Type
             self.pattern.Step_label.setStyleSheet(self.step_end_type_style)
 
-            self.pattern.Hour_lineEdit.setValue(0)
+            self.pattern.Time_label.setEnabled(False)
+            self.pattern.time_frame.setEnabled(False)
             self.pattern.Hour_lineEdit.setEnabled(False)
-            self.pattern.Hour_lineEdit.setStyleSheet(self.time_gray_out_style)
-            self.pattern.Min_lineEdit.setValue(0)
+            self.pattern.Hour_lineEdit.setReadOnly(False)
+            self.pattern.Hour_lineEdit.setText("0")
             self.pattern.Min_lineEdit.setEnabled(False)
-            self.pattern.Min_lineEdit.setStyleSheet(self.time_gray_out_style)
-            self.pattern.Time_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.time_frame.setStyleSheet(self.timeframe_grayout)
-            self.pattern.label_4.setStyleSheet(self.time_gray_out_style)
-            self.pattern.SV_lineEdit.setValue(0)
+            self.pattern.Min_lineEdit.setReadOnly(False)
+            self.pattern.Min_lineEdit.setText("0")
+
+            self.pattern.SV_label.setEnabled(False)
             self.pattern.SV_lineEdit.setEnabled(False)
-            self.pattern.SV_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.SV_label.setStyleSheet(self.label_gray_out_style)
-            self.pattern.N2_lineEdit.setText("0")
+            self.pattern.SV_lineEdit.setReadOnly(False)
+            self.pattern.SV_lineEdit.setText("0")
+
+            self.pattern.N2_label.setEnabled(False)
             self.pattern.N2_lineEdit.setEnabled(False)
-            self.pattern.N2_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.N2_label.setStyleSheet(self.label_gray_out_style)
-
-
+            self.pattern.N2_lineEdit.setReadOnly(False)
+            self.pattern.N2_lineEdit.setText("0")
+            
+            self.pattern.PID_muffle_label.setEnabled(False)
             self.pattern.PID_muffle_comboBox.setEnabled(False)
-            self.pattern.PID_muffle_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.PID_muffle_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.PID_heater_label.setEnabled(False)
             self.pattern.PID_heater_comboBox.setEnabled(False)
-            self.pattern.PID_heater_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.PID_heater_label.setStyleSheet(self.label_gray_out_style)
-
-            self.pattern.KeepTime_lineEdit.setValue(0)
-            self.pattern.KeepTime_lineEdit.setDisabled(False)
-            self.pattern.KeepTime_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.KeepTime_label.setStyleSheet(self.label_gray_out_style)
             
-            self.pattern.Sp_limit_up_lineEdit.setValue(0)
+            self.pattern.KeepTime_label.setEnabled(False)
+            self.pattern.KeepTime_lineEdit.setEnabled(False)
+            self.pattern.KeepTime_lineEdit.setReadOnly(False)
+            self.pattern.KeepTime_lineEdit.setText("0")
+            
+            self.pattern.Sp_limit_up_label.setEnabled(False)
             self.pattern.Sp_limit_up_lineEdit.setEnabled(False)
-            self.pattern.Sp_limit_up_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.Sp_limit_up_label.setStyleSheet(self.label_gray_out_style)
-            
-            self.pattern.Sp_limit_down_lineEdit.setValue(0)
-            self.pattern.Sp_limit_down_lineEdit.setEnabled(False)
-            self.pattern.Sp_limit_down_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.Sp_limit_down_label.setStyleSheet(self.label_gray_out_style)
-            
-            self.pattern.Shift_lineEdit.setValue(0)
-            self.pattern.Shift_lineEdit.setEnabled(False)
-            self.pattern.Shift_lineEdit.setStyleSheet(self.line_gray_out_style)
-            self.pattern.Shift_label.setStyleSheet(self.label_gray_out_style)
+            self.pattern.Sp_limit_up_lineEdit.setReadOnly(False)
+            self.pattern.Sp_limit_up_lineEdit.setText("0")
 
-            self.pattern.TestPattern_comboBox.setDisabled(False)
-            self.pattern.TestPattern_comboBox.setStyleSheet(self.line_gray_out_style)
-            self.pattern.TestPattern_label.setStyleSheet(self.label_gray_out_style) 
+            self.pattern.Sp_limit_down_label.setEnabled(False)
+            self.pattern.Sp_limit_down_lineEdit.setEnabled(False)
+            self.pattern.Sp_limit_down_lineEdit.setReadOnly(False)
+            self.pattern.Sp_limit_down_lineEdit.setText("0")
+
+            self.pattern.Shift_label.setEnabled(False)
+            self.pattern.Shift_lineEdit.setEnabled(False)
+            self.pattern.Shift_lineEdit.setReadOnly(False)
+            self.pattern.Shift_lineEdit.setText("0")
+
+            self.pattern.TestPattern_label.setEnabled(False)
+            self.pattern.TestPattern_comboBox.setEnabled(False)
+
             self.update_testFileCombobox(0)
 
         self.modifly_callback()
@@ -494,8 +489,10 @@ class PyTempStep(QWidget):
         
     def leaveEvent(self, event):
         if self.pattern.page.currentIndex() ==1:
-            self._parent.tempPattern.un_focus_step(self._step)
-            self._parent.tempPattern.close_one_menu(self._step)
+            print(self.pattern.PID_muffle_comboBox.hasFocus())
+            if self.pattern.PID_muffle_comboBox.hasFocus():
+                self._parent.tempPattern.un_focus_step(self._step)
+                self._parent.tempPattern.close_one_menu(self._step)
 
     def paintEvent(self, event):
         pass
@@ -505,10 +502,14 @@ class PyTempStep(QWidget):
         if enable:
             self.FocusStyle=self.focus_normal_style
             self.FocusStyleChange=True
+            self.pattern.frame_6.setEnabled(True)
+
+            #self.focus_Style_Work()
         else:
             self.FocusStyle=self.focus_gray_out_style
             self.FocusStyleChange=True
-        
+            self.pattern.frame_6.setEnabled(False)
+            #self.focus_Style_Work()
 
     def enableEndType(self,enable):
         if enable:
