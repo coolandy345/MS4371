@@ -55,8 +55,8 @@ class modifly_callbackThread(QRunnable):
 
 class PyTempStep(QWidget):
 
-    #clicked = Signal(object)
-    #released = Signal(object)
+    #clicked = pyqtSignal(object)
+    #released = pyqtSignal(object)
 
     Temp_Type  =    0
     Test_Type  =    1

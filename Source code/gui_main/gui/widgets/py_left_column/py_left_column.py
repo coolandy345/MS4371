@@ -32,8 +32,8 @@ from gui_main.gui.uis.columns.ui_left_column import Ui_LeftColumn
 
 class PyLeftColumn(QWidget):
     # SIGNALS
-    clicked = Signal(object)
-    released = Signal(object)
+    clicked = pyqtSignal(object)
+    released = pyqtSignal(object)
 
     def __init__(
         self,

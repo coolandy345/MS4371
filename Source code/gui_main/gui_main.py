@@ -84,12 +84,13 @@ class MainWindow(QMainWindow):
     # Run function when btn is clicked
     # Check funtion by object name / btn_id
     # ///////////////////////////////////////////////////////////////
-    def btn_clicked(self):
+    def btn_clicked(self,btn):
         # GET BT CLICKED
-        btn = SetupMainWindow.setup_btns(self)
+        print("btn_clicked",btn)
+        #btn = SetupMainWindow.setup_btns(self)
+
         # LEFT MENU
         # ///////////////////////////////////////////////////////////////
-
         # OPEN PAGE
         if btn.objectName() == "btn_PrepareMenu":
             # Select menu
@@ -124,18 +125,18 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         
         # SETTINGS TITLE BAR
-        if btn.objectName() == "btn_top_settings":
-            # Toogle Active
-            if not MainFunctions.right_column_is_visible(self):
-                btn.set_active(True)
+        #if btn.objectName() == "btn_top_settings":
+        #    # Toogle Active
+        #    if not MainFunctions.right_column_is_visible(self):
+        #        btn.set_active(True)
 
-                # Show / Hide
-                MainFunctions.toggle_right_column(self)
-            else:
-                btn.set_active(False)
+        #        # Show / Hide
+        #        MainFunctions.toggle_right_column(self)
+        #    else:
+        #        btn.set_active(False)
 
-                # Show / Hide
-                MainFunctions.toggle_right_column(self)
+        #        # Show / Hide
+        #        MainFunctions.toggle_right_column(self)
 
 
 

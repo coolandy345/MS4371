@@ -4,7 +4,7 @@ import time
 
 class workThread(QThread):
 
-    trigger = Signal()
+    trigger = pyqtSignal()
 
     def __int__(self):
         # 初始化函式

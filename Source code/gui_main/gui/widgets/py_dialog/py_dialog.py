@@ -26,9 +26,9 @@ from gui_main.gui.core.functions import *
 # ///////////////////////////////////////////////////////////////
 class PyDialog(QDialog):
 
-    PyYesSignal=Signal()
-    PyNoSignal=Signal()
-    PyCancelSignal=Signal()
+    PyYesSignal=pyqtSignal()
+    PyNoSignal=pyqtSignal()
+    PyCancelSignal=pyqtSignal()
 
     warning_2_type="warning_2_type"
     warning_3_type="warning_3_type"
@@ -83,8 +83,8 @@ class PyDialog(QDialog):
 
 class PyMessageDialog(QDialog):
 
-    PyOkSignal=Signal()
-    PyCancelSignal=Signal()
+    PyOkSignal=pyqtSignal()
+    PyCancelSignal=pyqtSignal()
 
 
     def __init__(self,title,message):

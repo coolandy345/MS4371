@@ -78,7 +78,7 @@ if __name__ == "__main__":
     
     databaseLoadThread(MemoryPool)
     #memoryWriteThread(MemoryPool,QueuePool)
-    #initial_GUI(MemoryPool,QueuePool,EventPool)
+    initial_GUI(MemoryPool,QueuePool,EventPool)
     #gpib_Thread(MemoryPool,QueuePool)
     #operator_thread(MemoryPool,QueuePool,EventPool)
     #run_async_server(MemoryPool,QueuePool)

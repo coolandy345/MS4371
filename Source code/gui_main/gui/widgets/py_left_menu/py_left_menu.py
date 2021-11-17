@@ -31,8 +31,8 @@ from gui_main.gui.core.functions import *
 # ///////////////////////////////////////////////////////////////
 class PyLeftMenu(QWidget):
     # SIGNALS
-    clicked = Signal(object)
-    released = Signal(object)
+    clicked = pyqtSignal(object)
+    released = pyqtSignal(object)
 
     def __init__(
         self,
@@ -170,10 +170,12 @@ class PyLeftMenu(QWidget):
     # LEFT MENU EMIT SIGNALS
     # ///////////////////////////////////////////////////////////////
     def btn_clicked(self):
-        self.clicked.emit(self.menu)
+        #print(self.sender(),self.sender().objectName())
+        #self.main_namespace.btn_clicked(self.sender().objectName())
+        self.clicked.emit(self.sender())
     
     def btn_released(self):
-        self.released.emit(self.menu)
+        self.released.emit(self.sender())
 
     # EXPAND / RETRACT LEF MENU
     # ///////////////////////////////////////////////////////////////

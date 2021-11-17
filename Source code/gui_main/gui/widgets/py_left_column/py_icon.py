@@ -64,7 +64,10 @@ class PyIcon(QWidget):
         self._icon = QPixmap(icon_path)
         self._painter = QPainter(self._icon)
         self._painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
-        self._painter.fillRect(self._icon.rect(), color)       
+        #print("self._icon.rect()",type(self._icon.rect()))
+        #print("color",type(color),color)
+        #print("QColor(color)",type(QColor(color)),QColor(color))
+        self._painter.fillRect(self._icon.rect(), QColor(color))
         self._painter.end()
 
         if self._scale_factor!=20:

@@ -44,8 +44,8 @@ from .py_pattern_menu import *
 
 class PyTestStep(QWidget):
 
-    #clicked = Signal(object)
-    #released = Signal(object)
+    #clicked = pyqtSignal(object)
+    #released = pyqtSignal(object)
 
 
 

@@ -42,11 +42,11 @@ class PyToggle(QCheckBox):
         self.animation.setDuration(500)
         self.stateChanged.connect(self.setup_animation)
 
-    @Property(float)
+    #@Property(float)
     def position(self):
         return self._position
 
-    @position.setter
+    #@position.setter
     def position(self, pos):
         self._position = pos
         self.update()

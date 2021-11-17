@@ -45,8 +45,8 @@ _old_size = QSize()
 # ///////////////////////////////////////////////////////////////
 class PyTitleBar(QWidget):
     # SIGNALS
-    clicked = Signal(object)
-    released = Signal(object)
+    clicked = pyqtSignal(object)
+    released = pyqtSignal(object)
 
     def __init__(
         self,
