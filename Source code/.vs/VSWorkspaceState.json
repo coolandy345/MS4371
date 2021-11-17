@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\gpib_manager",
     "\\gui_main",
     "\\gui_main\\gui",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\uis\\dialogs",
-    "\\gui_main\\gui\\uis\\pages",
+    "\\gui_main\\gui\\uis\\pattern_columns",
     "\\gui_main\\gui\\widgets",
-    "\\gui_main\\gui\\widgets\\py_dialog",
     "\\gui_main\\gui\\widgets\\py_left_menu",
-    "\\gui_main\\gui\\widgets\\py_pattern"
+    "\\gui_main\\gui\\widgets\\py_pattern",
+    "\\main_operator"
   ],
-  "SelectedNode": "\\make_database2.py",
+  "SelectedNode": "\\main_operator\\main_operator.py",
   "PreviewInSolutionExplorer": false
 }

@@ -263,9 +263,9 @@ class Operator():
             self.noise_stop=True
 
     def start_noise_measurement(self):
-        test_voltage=2
-        over_current=5e-1
-        test_time=1
+        test_voltage=1000
+        over_current=5e-12
+        test_time=10
 
         while 1:
             #get event Start Run Auto run
@@ -333,8 +333,8 @@ class Operator():
 
             starttime=time.time()
             while not self.noise_stop:
-
-                if time.time()-starttime>60*test_time:
+                counttime=time.time()-starttime
+                if counttime>60*test_time:
                     self.noise_stop=True
 
 
@@ -360,7 +360,9 @@ class Operator():
                     self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage = {}         \")".format(Quantity(voltage,"V").render(prec=4)))
                     self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
                     self.gpib_2657A.send_Command("node[1].display.settext(\"Current = {}         \")".format(Quantity(current,"A").render(prec=4)))
-
+                    
+                    self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+                    self.gpib_2657A.send_Command("node[2].display.settext(\"time = {} m {} s        \")".format(int(counttime//60),int(counttime%60)))
                     self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
                     if current!=0:
                         self.gpib_2657A.send_Command("node[2].display.settext(\"Resistance = {}         \")".format(Quantity(voltage/current,"ohm").render(prec=6)))
