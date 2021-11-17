@@ -315,10 +315,11 @@ class Operator():
             
             self.gpib_2657A.send_Command("node[2].smua.reset()")
             self.gpib_2657A.send_Command("node[2].smua.source.func = smua.OUTPUT_DCVOLTS")
-            self.gpib_2657A.send_Command("node[2].smua.source.rangev = 2")
+            #self.gpib_2657A.send_Command("node[2].smua.source.rangev = 2")
             self.gpib_2657A.send_Command("node[2].smua.source.levelv = 0")
             self.gpib_2657A.send_Command("node[2].smua.source.limiti = 1e-3")
-            self.gpib_2657A.send_Command("node[2].smua.measure.rangei = 100e-9")
+            self.gpib_2657A.send_Command("node[2].smua.measure.lowrangei = 100e-12")
+            self.gpib_2657A.send_Command("node[2].smua.measure.rangei = 0.0000000001")
             
             self.gpib_2657A.send_Command("node[1].display.clear()")
             self.gpib_2657A.send_Command("node[1].smua.source.output = 1")
@@ -330,7 +331,11 @@ class Operator():
 
             oc=False
             max_current=0
+            
+            self.gpib_2657A.send_Command("node[2].display.smua.measure.func = 0")
+            self.gpib_2657A.send_Command("node[2].display.screen = 0")
 
+            
             starttime=time.time()
             while not self.noise_stop:
                 counttime=time.time()-starttime
@@ -347,7 +352,6 @@ class Operator():
                 current=self.gpib_2657A.read_Command()[0]
 
                 
-
                 if current and voltage:
 
                     current=float(current)
@@ -361,11 +365,11 @@ class Operator():
                     self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
                     self.gpib_2657A.send_Command("node[1].display.settext(\"Current = {}         \")".format(Quantity(current,"A").render(prec=4)))
                     
-                    self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-                    self.gpib_2657A.send_Command("node[2].display.settext(\"time = {} m {} s        \")".format(int(counttime//60),int(counttime%60)))
-                    self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
-                    if current!=0:
-                        self.gpib_2657A.send_Command("node[2].display.settext(\"Resistance = {}         \")".format(Quantity(voltage/current,"ohm").render(prec=6)))
+                    #self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+                    #self.gpib_2657A.send_Command("node[2].display.settext(\"time = {} m {} s        \")".format(int(counttime//60),int(counttime%60)))
+                    #self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
+                    #if current!=0:
+                    #    self.gpib_2657A.send_Command("node[2].display.settext(\"Resistance = {}         \")".format(Quantity(voltage/current,"ohm").render(prec=6)))
 
                     #if current>=over_current:
                     #    self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
@@ -375,17 +379,17 @@ class Operator():
                     #    oc=True
 
 
-                else:
-                    self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-                    self.gpib_2657A.send_Command("node[1].display.settext(\"Eroror\")")
-                    self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
-                    self.gpib_2657A.send_Command("node[1].display.settext(\"Eroror\")")
+                #else:
+                #    self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+                #    self.gpib_2657A.send_Command("node[1].display.settext(\"Eroror\")")
+                #    self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
+                #    self.gpib_2657A.send_Command("node[1].display.settext(\"Eroror\")")
 
                     
-                    self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
-                    self.gpib_2657A.send_Command("node[2].display.settext(\"Eroror                    \")")
+                #    self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
+                #    self.gpib_2657A.send_Command("node[2].display.settext(\"Eroror                    \")")
                     
-                #time.sleep(0.1)
+                time.sleep(0.5)
 
             self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
             self.gpib_2657A.send_Command("node[1].smua.reset()")
