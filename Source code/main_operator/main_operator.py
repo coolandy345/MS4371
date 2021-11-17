@@ -304,6 +304,7 @@ class Operator():
             
             
             self.gpib_2657A.send_Command("node[1].smua.reset()")
+            self.gpib_2657A.send_Command("node[1].smua.measure.nplc = 1")
             self.gpib_2657A.send_Command("node[1].smua.source.func = smua.OUTPUT_DCVOLTS")
             self.gpib_2657A.send_Command("node[1].smua.source.rangev = 1500")
             self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(test_voltage))
@@ -314,19 +315,18 @@ class Operator():
 
             
             self.gpib_2657A.send_Command("node[2].smua.reset()")
+            self.gpib_2657A.send_Command("node[2].smua.measure.nplc = 1")
             self.gpib_2657A.send_Command("node[2].smua.source.func = smua.OUTPUT_DCVOLTS")
-            #self.gpib_2657A.send_Command("node[2].smua.source.rangev = 2")
+            self.gpib_2657A.send_Command("node[2].smua.source.rangev = 200e-3")
             self.gpib_2657A.send_Command("node[2].smua.source.levelv = 0")
-            self.gpib_2657A.send_Command("node[2].smua.source.limiti = 1e-3")
-            self.gpib_2657A.send_Command("node[2].smua.measure.lowrangei = 100e-12")
-            self.gpib_2657A.send_Command("node[2].smua.measure.rangei = 0.0000000001")
-            
-            self.gpib_2657A.send_Command("node[1].display.clear()")
-            self.gpib_2657A.send_Command("node[1].smua.source.output = 1")
-
+            self.gpib_2657A.send_Command("node[2].smua.source.limiti = 1e-9")
+            self.gpib_2657A.send_Command("node[2].smua.measure.rangei = 1e-9")
             
             self.gpib_2657A.send_Command("node[2].display.clear()")
             self.gpib_2657A.send_Command("node[2].smua.source.output = 1")
+
+            self.gpib_2657A.send_Command("node[1].display.clear()")
+            self.gpib_2657A.send_Command("node[1].smua.source.output = 1")
             
 
             oc=False
@@ -350,7 +350,7 @@ class Operator():
                 self.gpib_2657A.send_Command("test2=node[2].smua.measure.i()")
                 self.gpib_2657A.send_Command("print(test2)")
                 current=self.gpib_2657A.read_Command()[0]
-
+                print("voltage:",voltage,"current:",current)
                 
                 if current and voltage:
 
