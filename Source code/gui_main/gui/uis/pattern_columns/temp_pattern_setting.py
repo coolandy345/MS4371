@@ -5,7 +5,7 @@ from gui_main.gui.widgets import *
 from gui_main.gui.core.functions import *
 from gui_main.gui.core.json_settings import Settings
 from gui_main.gui.core.json_themes import Themes
-from PySide6.QtCore import QTimer
+from PyQt5.QtCore import QTimer
 import threading
 
 #from modbus_TcpServer import ModbusRegistorClass
