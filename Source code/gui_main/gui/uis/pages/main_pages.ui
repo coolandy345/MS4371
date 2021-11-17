@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1157</width>
+    <width>1091</width>
     <height>707</height>
    </rect>
   </property>
@@ -127,8 +127,8 @@ QLineEdit:read-only {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1121</width>
-            <height>671</height>
+            <width>828</width>
+            <height>555</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -4961,9 +4961,9 @@ QComboBox:hover {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-780</y>
-            <width>1104</width>
-            <height>1612</height>
+            <y>-900</y>
+            <width>1045</width>
+            <height>1643</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -5100,7 +5100,7 @@ QComboBox:hover {
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">font: 20px &quot;游ゴシック&quot;;
+                    <string notr="true">font: 20px;
 color: rgb(225, 230, 241);
 padding-right:5px;</string>
                    </property>
@@ -5124,7 +5124,7 @@ padding-right:5px;</string>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">font: 20px &quot;游ゴシック&quot;;
+                    <string notr="true">font: 20px;
 color: rgb(225, 230, 241);
 padding-right:5px;</string>
                    </property>
@@ -5399,14 +5399,7 @@ QFrame:focus{
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QFrame{
-	background-color: rgb(25, 28, 34);
-	border-color:rgb(30, 34, 41);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 10px;
-	font: 12px bold italic large &quot;游ゴシック&quot;;
-}</string>
+                 <string notr="true">background-color: rgb(25, 28, 34);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -5460,9 +5453,7 @@ QFrame:focus{
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">
-background-color: rgb(25, 28, 34);
-border:none;</string>
+                    <string notr="true">border:none;</string>
                    </property>
                    <property name="verticalScrollBarPolicy">
                     <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -5481,7 +5472,7 @@ border:none;</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>1046</width>
+                      <width>987</width>
                       <height>400</height>
                      </rect>
                     </property>
@@ -5542,32 +5533,6 @@ border:none;</string>
                   </widget>
                  </item>
                 </layout>
-               </widget>
-              </item>
-              <item row="2" column="8">
-               <widget class="QLabel" name="PatternErrorMessagelabel">
-                <property name="minimumSize">
-                 <size>
-                  <width>400</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>400</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">
-color: rgb(221, 0, 0);</string>
-                </property>
-                <property name="text">
-                 <string>無効入力:</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
                </widget>
               </item>
               <item row="0" column="8" rowspan="2" alignment="Qt::AlignRight">
@@ -5645,9 +5610,7 @@ color: rgb(221, 0, 0);</string>
                     <item>
                      <widget class="QLabel" name="label_7">
                       <property name="styleSheet">
-                       <string notr="true">font: 13px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;</string>
+                       <string notr="true"/>
                       </property>
                       <property name="text">
                        <string>保存</string>
@@ -5699,9 +5662,7 @@ padding-right:5px;</string>
                     <item>
                      <widget class="QLabel" name="label_6">
                       <property name="styleSheet">
-                       <string notr="true">font: 13px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;</string>
+                       <string notr="true"/>
                       </property>
                       <property name="text">
                        <string>追加</string>
@@ -5817,15 +5778,38 @@ QFrame:focus{
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">font:13px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>合計時間: 0 時間 0 分</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="8">
+               <widget class="QLabel" name="PatternErrorMessagelabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(221, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>無効入力:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -5853,7 +5837,7 @@ padding-right:5px;</string>
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 10px;
-	font: 12px bold italic large &quot;游ゴシック&quot;;
+	font: 12px;
 }
 
 QCheckBox{
@@ -5862,7 +5846,7 @@ QCheckBox{
 
 QLabel:enabled {
 	color: rgb(225, 230, 241);
-	font: 12px &quot;游ゴシック&quot;;
+	font: 12px;
 }
 QLabel:disabled {
 	color: rgb(91, 94, 98);
@@ -5908,195 +5892,6 @@ QComboBox:hover {
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_47">
-              <item row="6" column="0" colspan="7">
-               <widget class="QFrame" name="frame_44">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QFrame{
-	background-color: rgb(25, 28, 34);
-	border-color:rgb(30, 34, 41);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 10px;
-	font: 12px bold italic large &quot;游ゴシック&quot;;
-}</string>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_2">
-                 <item>
-                  <widget class="QFrame" name="frame_46">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>300</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">border:None</string>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_11"/>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QScrollArea" name="scrollArea_4">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>200</height>
-                    </size>
-                   </property>
-                   <property name="sizeIncrement">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">
-background-color: rgb(25, 28, 34);
-border:none;</string>
-                   </property>
-                   <property name="verticalScrollBarPolicy">
-                    <enum>Qt::ScrollBarAlwaysOff</enum>
-                   </property>
-                   <property name="horizontalScrollBarPolicy">
-                    <enum>Qt::ScrollBarAsNeeded</enum>
-                   </property>
-                   <property name="sizeAdjustPolicy">
-                    <enum>QAbstractScrollArea::AdjustToContents</enum>
-                   </property>
-                   <property name="widgetResizable">
-                    <bool>true</bool>
-                   </property>
-                   <widget class="QWidget" name="scrollAreaWidgetContents_4">
-                    <property name="geometry">
-                     <rect>
-                      <x>0</x>
-                      <y>0</y>
-                      <width>1046</width>
-                      <height>200</height>
-                     </rect>
-                    </property>
-                    <layout class="QGridLayout" name="gridLayout_41">
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
-                     </property>
-                     <item row="0" column="0" alignment="Qt::AlignLeft">
-                      <widget class="QFrame" name="frame_49">
-                       <property name="minimumSize">
-                        <size>
-                         <width>0</width>
-                         <height>0</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="frameShape">
-                        <enum>QFrame::StyledPanel</enum>
-                       </property>
-                       <property name="frameShadow">
-                        <enum>QFrame::Raised</enum>
-                       </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_6">
-                        <property name="leftMargin">
-                         <number>5</number>
-                        </property>
-                        <property name="topMargin">
-                         <number>0</number>
-                        </property>
-                        <property name="rightMargin">
-                         <number>5</number>
-                        </property>
-                        <property name="bottomMargin">
-                         <number>0</number>
-                        </property>
-                       </layout>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="3" column="0" colspan="7">
-               <widget class="QFrame" name="frame_70">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>3</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>3</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QFrame{
-	background-color: rgb(141, 145, 156);
-}
-QFrame:hover{
-	border:none;
-}
-QFrame:focus{
-	border:none;
-}</string>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-               </widget>
-              </item>
               <item row="5" column="6" alignment="Qt::AlignRight">
                <widget class="QLabel" name="TestPatternErrorMessagelabel">
                 <property name="minimumSize">
@@ -6161,7 +5956,7 @@ QFrame:focus{
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">font:13px &quot;游ゴシック&quot;;
+                    <string notr="true">font:13px;
 color: rgb(225, 230, 241);
 padding-right:5px;</string>
                    </property>
@@ -6218,7 +6013,7 @@ QFrame:focus{
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">font: 13px &quot;游ゴシック&quot;;
+                    <string notr="true">font: 13px;
 color: rgb(225, 230, 241);
 padding-right:5px;</string>
                    </property>
@@ -6295,7 +6090,7 @@ padding-right:5px;</string>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">font: 20px &quot;游ゴシック&quot;;
+                    <string notr="true">font: 20px;
 color: rgb(225, 230, 241);
 padding-right:5px;</string>
                    </property>
@@ -6560,6 +6355,186 @@ QFrame:focus{
                 </layout>
                </widget>
               </item>
+              <item row="6" column="0" colspan="7">
+               <widget class="QFrame" name="frame_44">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(25, 28, 34);</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_2">
+                 <item>
+                  <widget class="QFrame" name="frame_46">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>300</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:None</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_11"/>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QScrollArea" name="scrollArea_4">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>200</height>
+                    </size>
+                   </property>
+                   <property name="sizeIncrement">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border:none;</string>
+                   </property>
+                   <property name="verticalScrollBarPolicy">
+                    <enum>Qt::ScrollBarAlwaysOff</enum>
+                   </property>
+                   <property name="horizontalScrollBarPolicy">
+                    <enum>Qt::ScrollBarAsNeeded</enum>
+                   </property>
+                   <property name="sizeAdjustPolicy">
+                    <enum>QAbstractScrollArea::AdjustToContents</enum>
+                   </property>
+                   <property name="widgetResizable">
+                    <bool>true</bool>
+                   </property>
+                   <widget class="QWidget" name="scrollAreaWidgetContents_4">
+                    <property name="geometry">
+                     <rect>
+                      <x>0</x>
+                      <y>0</y>
+                      <width>987</width>
+                      <height>200</height>
+                     </rect>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_41">
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item row="0" column="0" alignment="Qt::AlignLeft">
+                      <widget class="QFrame" name="frame_49">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true"/>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QHBoxLayout" name="horizontalLayout_6">
+                        <property name="leftMargin">
+                         <number>5</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>5</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="3" column="0" colspan="7">
+               <widget class="QFrame" name="frame_70">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>3</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>3</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QFrame{
+	background-color: rgb(141, 145, 156);
+}
+QFrame:hover{
+	border:none;
+}
+QFrame:focus{
+	border:none;
+}</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+               </widget>
+              </item>
               <item row="5" column="0">
                <widget class="QFrame" name="frame_51">
                 <property name="sizePolicy">
@@ -6570,13 +6545,13 @@ QFrame:focus{
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>800</width>
+                  <width>0</width>
                   <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>800</width>
+                  <width>16777215</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -6605,6 +6580,225 @@ QFrame:focus{
                  <property name="horizontalSpacing">
                   <number>6</number>
                  </property>
+                 <item row="1" column="9">
+                  <widget class="QLineEdit" name="test_sampletime_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                   <property name="readOnly">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="label_61">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string>BG 測定時間(min)</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="2">
+                  <widget class="QLineEdit" name="bg_sampletime_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                   <property name="readOnly">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="9">
+                  <widget class="QLineEdit" name="test_time_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                   <property name="readOnly">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QLineEdit" name="bg_time_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                   <property name="readOnly">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3" rowspan="3">
+                  <widget class="QFrame" name="frame_74">
+                   <property name="minimumSize">
+                    <size>
+                     <width>3</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>3</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QFrame{
+	background-color: rgb(141, 145, 156);
+}
+QFrame:hover{
+	border:none;
+}
+QFrame:focus{
+	border:none;
+}</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="7">
+                  <widget class="QLabel" name="label_59">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string>測定サンプリング周期(s)</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="0" column="7">
                   <widget class="QLabel" name="label_58">
                    <property name="minimumSize">
@@ -6620,10 +6814,7 @@ QFrame:focus{
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">font: 13px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;
-border:none</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string>測定時間(min)</string>
@@ -6633,42 +6824,8 @@ border:none</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="9">
-                  <widget class="QLineEdit" name="test_sampletime_LineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true"/>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <property name="readOnly">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="12">
-                  <widget class="QLabel" name="label_64">
+                  <widget class="QLabel" name="speed_label">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -6679,85 +6836,20 @@ border:none</string>
                     <size>
                      <width>16777215</width>
                      <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">font: 13px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;
-border:none</string>
-                   </property>
-                   <property name="text">
-                    <string>SUMフィルター</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="6">
-                  <widget class="QLineEdit" name="bg_time_LineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>30</height>
                     </size>
                    </property>
                    <property name="styleSheet">
                     <string notr="true"/>
                    </property>
                    <property name="text">
-                    <string>0</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <property name="readOnly">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="5">
-                  <widget class="QLabel" name="label_61">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">font: 13px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;
-border:none</string>
-                   </property>
-                   <property name="text">
-                    <string>BG 測定時間(min)</string>
+                    <string>Speed</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="5">
+                 <item row="2" column="1">
                   <widget class="QLabel" name="label_66">
                    <property name="minimumSize">
                     <size>
@@ -6772,50 +6864,13 @@ border:none</string>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">font: 13px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;
-border:none</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string>BG 測定サンプリング周期(s)</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="9">
-                  <widget class="QLineEdit" name="test_time_LineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true"/>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <property name="readOnly">
-                    <bool>false</bool>
                    </property>
                   </widget>
                  </item>
@@ -6834,10 +6889,7 @@ border:none</string>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">font: 13px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;
-border:none</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string>BG0 測定時間(min)</string>
@@ -6847,7 +6899,41 @@ border:none</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="10" rowspan="2">
+                 <item row="0" column="2">
+                  <widget class="QLineEdit" name="bg0_time_LineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                   <property name="readOnly">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="10" rowspan="3">
                   <widget class="QFrame" name="frame_73">
                    <property name="minimumSize">
                     <size>
@@ -6880,8 +6966,8 @@ QFrame:focus{
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="2">
-                  <widget class="QLineEdit" name="bg0_time_LineEdit">
+                 <item row="0" column="13">
+                  <widget class="QComboBox" name="speed_comboBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -6890,32 +6976,33 @@ QFrame:focus{
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>0</width>
-                     <height>30</height>
+                     <width>150</width>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>30</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="styleSheet">
                     <string notr="true"/>
                    </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <property name="readOnly">
-                    <bool>false</bool>
-                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Normal (1PLC)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Hi Accuracy (10PLC)</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
-                 <item row="1" column="7">
-                  <widget class="QLabel" name="label_59">
+                 <item row="1" column="12">
+                  <widget class="QLabel" name="filter_label">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -6929,21 +7016,18 @@ QFrame:focus{
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">font: 13px &quot;游ゴシック&quot;;
-color: rgb(225, 230, 241);
-padding-right:5px;
-border:none</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
-                    <string>測定サンプリング周期(s)</string>
+                    <string>Filter</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="6">
-                  <widget class="QLineEdit" name="bg_sampletime_LineEdit">
+                 <item row="1" column="13">
+                  <widget class="QComboBox" name="filter_comboBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -6952,32 +7036,58 @@ border:none</string>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>0</width>
-                     <height>30</height>
+                     <width>150</width>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>30</height>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>なし</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>平均(repeating)</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item row="2" column="12">
+                  <widget class="QLabel" name="filter_count_label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="styleSheet">
                     <string notr="true"/>
                    </property>
                    <property name="text">
-                    <string>0</string>
+                    <string>Filter count</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <property name="readOnly">
-                    <bool>false</bool>
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="13">
-                  <widget class="QLineEdit" name="SUM_filter_LineEdit">
+                 <item row="2" column="13">
+                  <widget class="QLineEdit" name="filter_count_LineEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -6986,14 +7096,14 @@ border:none</string>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>0</width>
-                     <height>30</height>
+                     <width>50</width>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
-                     <height>30</height>
+                     <width>50</width>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="styleSheet">

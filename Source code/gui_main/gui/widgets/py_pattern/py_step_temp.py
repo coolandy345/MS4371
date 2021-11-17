@@ -57,6 +57,7 @@ class PyTempStep(QWidget):
 
     #clicked = pyqtSignal(object)
     #released = pyqtSignal(object)
+    
 
     Temp_Type  =    0
     Test_Type  =    1
@@ -67,9 +68,12 @@ class PyTempStep(QWidget):
     #timeframe_grayout="background-color: rgb(41,45,55);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
     #timeframe_normal="background-color: rgb(30,34,41);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
 
-    #step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);border:none;"
-    #step_test_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);border:none;"
-    #step_end_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
+    step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);border:none;"
+    step_test_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);border:none;"
+    step_end_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
+
+    
+
 
     #time_gray_out_style="background-color: rgb(41,45,55);border:none;color: rgb(41,45,55);"
     #time_normal_style="background-color: rgb(30,34,41);border:none;color: rgb(225, 230, 241);"
@@ -86,7 +90,7 @@ class PyTempStep(QWidget):
         active = 1,
         step = 1,
         type = 0,
-        temperature = 25,
+        temperature = 0,
         hour = 0,
         minute = 0,
         keep_seccond = 0,
@@ -166,6 +170,9 @@ class PyTempStep(QWidget):
         self.pattern.KeepTime_lineEdit.setValidator(QIntValidator())
         self.pattern.TestPattern_comboBox.setCurrentIndex(self._test_pattern)
 
+        self.pattern.Sp_limit_up_lineEdit.setValidator(QIntValidator())
+        self.pattern.Sp_limit_down_lineEdit.setValidator(QIntValidator())
+        self.pattern.Shift_lineEdit.setValidator(QIntValidator())
 
     def icon_bottum_ui_setting(self):
 
@@ -221,16 +228,16 @@ class PyTempStep(QWidget):
 
 
         self.pattern.Type_comboBox.currentIndexChanged.connect(self.type_modifly_callback)
-        self.pattern.Hour_lineEdit.editingFinished.connect(self.modifly_callback)
-        self.pattern.Min_lineEdit.editingFinished.connect(self.modifly_callback)
-        self.pattern.SV_lineEdit.editingFinished.connect(self.modifly_callback)
-        self.pattern.N2_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.Hour_lineEdit.textChanged.connect(self.modifly_callback)
+        self.pattern.Min_lineEdit.textChanged.connect(self.modifly_callback)
+        self.pattern.SV_lineEdit.textChanged.connect(self.modifly_callback)
+        self.pattern.N2_lineEdit.textChanged.connect(self.modifly_callback)
         self.pattern.PID_muffle_comboBox.currentIndexChanged.connect(self.modifly_callback)
         self.pattern.PID_heater_comboBox.currentIndexChanged.connect(self.modifly_callback)
-        self.pattern.KeepTime_lineEdit.editingFinished.connect(self.modifly_callback)
-        self.pattern.Sp_limit_up_lineEdit.editingFinished.connect(self.modifly_callback)
-        self.pattern.Sp_limit_down_lineEdit.editingFinished.connect(self.modifly_callback)
-        self.pattern.Shift_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.KeepTime_lineEdit.textChanged.connect(self.modifly_callback)
+        self.pattern.Sp_limit_up_lineEdit.textChanged.connect(self.modifly_callback)
+        self.pattern.Sp_limit_down_lineEdit.textChanged.connect(self.modifly_callback)
+        self.pattern.Shift_lineEdit.textChanged.connect(self.modifly_callback)
         self.pattern.TestPattern_comboBox.currentIndexChanged.connect(self.modifly_callback)
 
         
@@ -314,7 +321,6 @@ class PyTempStep(QWidget):
             if err:
                 self.pattern.Shift_lineEdit.setText(str(self._shift))
 
-        
         elif btn_name=="TestPattern_comboBox":
             self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
         
@@ -327,7 +333,10 @@ class PyTempStep(QWidget):
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":
             
             self._type=self.Temp_Type
-            self.pattern.Step_label.setEnabled(True)
+            #self.pattern.Step_label.setEnabled(True)
+            self.pattern.Step_label.setStyleSheet(self.step_temp_type_style)
+            
+    
             
             self.pattern.Time_label.setEnabled(True)
             self.pattern.Hour_lineEdit.setEnabled(True)
@@ -374,7 +383,10 @@ class PyTempStep(QWidget):
         elif (self.pattern.Type_comboBox.currentText()) == "測定":
 
             self._type=self.Test_Type
-            self.pattern.Step_label.setEnabled(False)
+            #self.pattern.Step_label.setEnabled(False)
+            self.pattern.Step_label.setStyleSheet(self.step_test_type_style)
+            
+    
 
             self.pattern.Time_label.setEnabled(True)
             self.pattern.Hour_lineEdit.setEnabled(True)
@@ -420,7 +432,8 @@ class PyTempStep(QWidget):
         elif (self.pattern.Type_comboBox.currentText()) == "END":
 
             self._type=self.End_Type
-            self.pattern.Step_label.setEnabled(False)
+            #self.pattern.Step_label.setEnabled(False)
+            self.pattern.Step_label.setStyleSheet(self.step_end_type_style)
 
             self.pattern.Time_label.setEnabled(False)
             self.pattern.time_frame.setEnabled(False)

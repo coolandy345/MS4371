@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pageseHGgId.ui'
+## Form generated from reading UI file 'main_pagesRjTkUb.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -17,7 +17,7 @@ class Ui_MainPages(object):
     def setupUi(self, MainPages):
         if not MainPages.objectName():
             MainPages.setObjectName(u"MainPages")
-        MainPages.resize(1157, 707)
+        MainPages.resize(1091, 707)
         MainPages.setMinimumSize(QSize(0, 0))
         MainPages.setStyleSheet(u"font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "color: rgb(225, 230, 241);\n"
@@ -90,7 +90,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1121, 671))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 828, 555))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -2330,7 +2330,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1104, 1612))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -900, 1045, 1643))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -2414,7 +2414,7 @@ class Ui_MainPages(object):
         self.label_65.setObjectName(u"label_65")
         self.label_65.setMinimumSize(QSize(140, 0))
         self.label_65.setMaximumSize(QSize(140, 16777215))
-        self.label_65.setStyleSheet(u"font: 20px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.label_65.setStyleSheet(u"font: 20px;\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
 
@@ -2424,7 +2424,7 @@ class Ui_MainPages(object):
         self.label_29.setObjectName(u"label_29")
         self.label_29.setMinimumSize(QSize(140, 0))
         self.label_29.setMaximumSize(QSize(140, 16777215))
-        self.label_29.setStyleSheet(u"font: 20px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.label_29.setStyleSheet(u"font: 20px;\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
 
@@ -2531,14 +2531,7 @@ class Ui_MainPages(object):
         sizePolicy.setHeightForWidth(self.frame_35.sizePolicy().hasHeightForWidth())
         self.frame_35.setSizePolicy(sizePolicy)
         self.frame_35.setMinimumSize(QSize(0, 0))
-        self.frame_35.setStyleSheet(u"QFrame{\n"
-"	background-color: rgb(25, 28, 34);\n"
-"	border-color:rgb(30, 34, 41);\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-radius: 10px;\n"
-"	font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"}")
+        self.frame_35.setStyleSheet(u"background-color: rgb(25, 28, 34);")
         self.frame_35.setFrameShape(QFrame.StyledPanel)
         self.frame_35.setFrameShadow(QFrame.Raised)
         self.verticalLayout_10 = QVBoxLayout(self.frame_35)
@@ -2561,16 +2554,14 @@ class Ui_MainPages(object):
         self.scrollArea_3.setSizePolicy(sizePolicy)
         self.scrollArea_3.setMinimumSize(QSize(0, 400))
         self.scrollArea_3.setSizeIncrement(QSize(0, 0))
-        self.scrollArea_3.setStyleSheet(u"\n"
-"background-color: rgb(25, 28, 34);\n"
-"border:none;")
+        self.scrollArea_3.setStyleSheet(u"border:none;")
         self.scrollArea_3.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scrollArea_3.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.scrollArea_3.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 1046, 400))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 987, 400))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -2594,16 +2585,6 @@ class Ui_MainPages(object):
 
         self.gridLayout_6.addWidget(self.frame_35, 4, 0, 1, 9)
 
-        self.PatternErrorMessagelabel = QLabel(self.frame_20)
-        self.PatternErrorMessagelabel.setObjectName(u"PatternErrorMessagelabel")
-        self.PatternErrorMessagelabel.setMinimumSize(QSize(400, 0))
-        self.PatternErrorMessagelabel.setMaximumSize(QSize(400, 16777215))
-        self.PatternErrorMessagelabel.setStyleSheet(u"\n"
-"color: rgb(221, 0, 0);")
-        self.PatternErrorMessagelabel.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_6.addWidget(self.PatternErrorMessagelabel, 2, 8, 1, 1)
-
         self.frame_37 = QFrame(self.frame_20)
         self.frame_37.setObjectName(u"frame_37")
         self.frame_37.setMinimumSize(QSize(0, 0))
@@ -2626,9 +2607,7 @@ class Ui_MainPages(object):
         self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
         self.label_7 = QLabel(self.frame_40)
         self.label_7.setObjectName(u"label_7")
-        self.label_7.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;")
+        self.label_7.setStyleSheet(u"")
         self.label_7.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_13.addWidget(self.label_7)
@@ -2648,9 +2627,7 @@ class Ui_MainPages(object):
         self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
         self.label_6 = QLabel(self.frame_39)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;")
+        self.label_6.setStyleSheet(u"")
         self.label_6.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_12.addWidget(self.label_6)
@@ -2703,12 +2680,19 @@ class Ui_MainPages(object):
         self.Temp_Totaltime_Label.setObjectName(u"Temp_Totaltime_Label")
         self.Temp_Totaltime_Label.setMinimumSize(QSize(0, 0))
         self.Temp_Totaltime_Label.setMaximumSize(QSize(16777215, 16777215))
-        self.Temp_Totaltime_Label.setStyleSheet(u"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;")
+        self.Temp_Totaltime_Label.setStyleSheet(u"")
         self.Temp_Totaltime_Label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.gridLayout_6.addWidget(self.Temp_Totaltime_Label, 2, 6, 1, 1)
+
+        self.PatternErrorMessagelabel = QLabel(self.frame_20)
+        self.PatternErrorMessagelabel.setObjectName(u"PatternErrorMessagelabel")
+        self.PatternErrorMessagelabel.setMinimumSize(QSize(0, 0))
+        self.PatternErrorMessagelabel.setMaximumSize(QSize(16777215, 16777215))
+        self.PatternErrorMessagelabel.setStyleSheet(u"color: rgb(221, 0, 0);")
+        self.PatternErrorMessagelabel.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_6.addWidget(self.PatternErrorMessagelabel, 2, 8, 1, 1)
 
 
         self.verticalLayout_3.addWidget(self.frame_20)
@@ -2724,7 +2708,7 @@ class Ui_MainPages(object):
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-radius: 10px;\n"
-"	font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	font: 12px;\n"
 "}\n"
 "\n"
 "QCheckBox{\n"
@@ -2733,7 +2717,7 @@ class Ui_MainPages(object):
 "\n"
 "QLabel:enabled {\n"
 "	color: rgb(225, 230, 241);\n"
-"	font: 12px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	font: 12px;\n"
 "}\n"
 "QLabel:disabled {\n"
 "	color: rgb(91, 94, 98);\n"
@@ -2761,12 +2745,12 @@ class Ui_MainPages(object):
 "	background-color: rgba(0, 0, 0, 80);\n"
 "	color: rgb(225, 230, 241);\n"
 "	padding:5px;\n"
-"	border"
-                        "-width: 1px;\n"
+"	border-width: 1px;\n"
 "}\n"
 "QComboBox:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+""
+                        "	color: rgb(44, 49, 60);\n"
 "	border: none;\n"
 "}\n"
 "QComboBox:hover {\n"
@@ -2776,91 +2760,6 @@ class Ui_MainPages(object):
         self.frame_34.setFrameShadow(QFrame.Raised)
         self.gridLayout_47 = QGridLayout(self.frame_34)
         self.gridLayout_47.setObjectName(u"gridLayout_47")
-        self.frame_44 = QFrame(self.frame_34)
-        self.frame_44.setObjectName(u"frame_44")
-        sizePolicy.setHeightForWidth(self.frame_44.sizePolicy().hasHeightForWidth())
-        self.frame_44.setSizePolicy(sizePolicy)
-        self.frame_44.setMinimumSize(QSize(0, 0))
-        self.frame_44.setStyleSheet(u"QFrame{\n"
-"	background-color: rgb(25, 28, 34);\n"
-"	border-color:rgb(30, 34, 41);\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-radius: 10px;\n"
-"	font: 12px bold italic large \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"}")
-        self.frame_44.setFrameShape(QFrame.StyledPanel)
-        self.frame_44.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_2 = QVBoxLayout(self.frame_44)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.frame_46 = QFrame(self.frame_44)
-        self.frame_46.setObjectName(u"frame_46")
-        self.frame_46.setMinimumSize(QSize(0, 300))
-        self.frame_46.setStyleSheet(u"border:None")
-        self.frame_46.setFrameShape(QFrame.StyledPanel)
-        self.frame_46.setFrameShadow(QFrame.Raised)
-        self.gridLayout_11 = QGridLayout(self.frame_46)
-        self.gridLayout_11.setObjectName(u"gridLayout_11")
-
-        self.verticalLayout_2.addWidget(self.frame_46)
-
-        self.scrollArea_4 = QScrollArea(self.frame_44)
-        self.scrollArea_4.setObjectName(u"scrollArea_4")
-        sizePolicy.setHeightForWidth(self.scrollArea_4.sizePolicy().hasHeightForWidth())
-        self.scrollArea_4.setSizePolicy(sizePolicy)
-        self.scrollArea_4.setMinimumSize(QSize(0, 200))
-        self.scrollArea_4.setSizeIncrement(QSize(0, 0))
-        self.scrollArea_4.setStyleSheet(u"\n"
-"background-color: rgb(25, 28, 34);\n"
-"border:none;")
-        self.scrollArea_4.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.scrollArea_4.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.scrollArea_4.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        self.scrollArea_4.setWidgetResizable(True)
-        self.scrollAreaWidgetContents_4 = QWidget()
-        self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 1046, 200))
-        self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
-        self.gridLayout_41.setObjectName(u"gridLayout_41")
-        self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
-        self.frame_49 = QFrame(self.scrollAreaWidgetContents_4)
-        self.frame_49.setObjectName(u"frame_49")
-        self.frame_49.setMinimumSize(QSize(0, 0))
-        self.frame_49.setMaximumSize(QSize(16777215, 16777215))
-        self.frame_49.setStyleSheet(u"")
-        self.frame_49.setFrameShape(QFrame.StyledPanel)
-        self.frame_49.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_6 = QHBoxLayout(self.frame_49)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalLayout_6.setContentsMargins(5, 0, 5, 0)
-
-        self.gridLayout_41.addWidget(self.frame_49, 0, 0, 1, 1, Qt.AlignLeft)
-
-        self.scrollArea_4.setWidget(self.scrollAreaWidgetContents_4)
-
-        self.verticalLayout_2.addWidget(self.scrollArea_4)
-
-
-        self.gridLayout_47.addWidget(self.frame_44, 6, 0, 1, 7)
-
-        self.frame_70 = QFrame(self.frame_34)
-        self.frame_70.setObjectName(u"frame_70")
-        self.frame_70.setMinimumSize(QSize(0, 3))
-        self.frame_70.setMaximumSize(QSize(16777215, 3))
-        self.frame_70.setStyleSheet(u"QFrame{\n"
-"	background-color: rgb(141, 145, 156);\n"
-"}\n"
-"QFrame:hover{\n"
-"	border:none;\n"
-"}\n"
-"QFrame:focus{\n"
-"	border:none;\n"
-"}")
-        self.frame_70.setFrameShape(QFrame.StyledPanel)
-        self.frame_70.setFrameShadow(QFrame.Raised)
-
-        self.gridLayout_47.addWidget(self.frame_70, 3, 0, 1, 7)
-
         self.TestPatternErrorMessagelabel = QLabel(self.frame_34)
         self.TestPatternErrorMessagelabel.setObjectName(u"TestPatternErrorMessagelabel")
         self.TestPatternErrorMessagelabel.setMinimumSize(QSize(0, 0))
@@ -2882,7 +2781,7 @@ class Ui_MainPages(object):
         self.label_43.setObjectName(u"label_43")
         self.label_43.setMinimumSize(QSize(80, 0))
         self.label_43.setMaximumSize(QSize(80, 16777215))
-        self.label_43.setStyleSheet(u"font:13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.label_43.setStyleSheet(u"font:13px;\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
 
@@ -2910,7 +2809,7 @@ class Ui_MainPages(object):
         self.label_42.setObjectName(u"label_42")
         self.label_42.setMinimumSize(QSize(80, 0))
         self.label_42.setMaximumSize(QSize(80, 16777215))
-        self.label_42.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.label_42.setStyleSheet(u"font: 13px;\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
 
@@ -2940,7 +2839,7 @@ class Ui_MainPages(object):
         self.label_41.setObjectName(u"label_41")
         self.label_41.setMinimumSize(QSize(130, 0))
         self.label_41.setMaximumSize(QSize(130, 16777215))
-        self.label_41.setStyleSheet(u"font: 20px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+        self.label_41.setStyleSheet(u"font: 20px;\n"
 "color: rgb(225, 230, 241);\n"
 "padding-right:5px;")
 
@@ -3049,12 +2948,88 @@ class Ui_MainPages(object):
 
         self.gridLayout_47.addWidget(self.frame_50, 0, 6, 3, 1, Qt.AlignRight)
 
+        self.frame_44 = QFrame(self.frame_34)
+        self.frame_44.setObjectName(u"frame_44")
+        sizePolicy.setHeightForWidth(self.frame_44.sizePolicy().hasHeightForWidth())
+        self.frame_44.setSizePolicy(sizePolicy)
+        self.frame_44.setMinimumSize(QSize(0, 0))
+        self.frame_44.setStyleSheet(u"background-color: rgb(25, 28, 34);")
+        self.frame_44.setFrameShape(QFrame.StyledPanel)
+        self.frame_44.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_2 = QVBoxLayout(self.frame_44)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.frame_46 = QFrame(self.frame_44)
+        self.frame_46.setObjectName(u"frame_46")
+        self.frame_46.setMinimumSize(QSize(0, 300))
+        self.frame_46.setStyleSheet(u"border:None")
+        self.frame_46.setFrameShape(QFrame.StyledPanel)
+        self.frame_46.setFrameShadow(QFrame.Raised)
+        self.gridLayout_11 = QGridLayout(self.frame_46)
+        self.gridLayout_11.setObjectName(u"gridLayout_11")
+
+        self.verticalLayout_2.addWidget(self.frame_46)
+
+        self.scrollArea_4 = QScrollArea(self.frame_44)
+        self.scrollArea_4.setObjectName(u"scrollArea_4")
+        sizePolicy.setHeightForWidth(self.scrollArea_4.sizePolicy().hasHeightForWidth())
+        self.scrollArea_4.setSizePolicy(sizePolicy)
+        self.scrollArea_4.setMinimumSize(QSize(0, 200))
+        self.scrollArea_4.setSizeIncrement(QSize(0, 0))
+        self.scrollArea_4.setStyleSheet(u"border:none;")
+        self.scrollArea_4.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scrollArea_4.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.scrollArea_4.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.scrollArea_4.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_4 = QWidget()
+        self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 987, 200))
+        self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
+        self.gridLayout_41.setObjectName(u"gridLayout_41")
+        self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
+        self.frame_49 = QFrame(self.scrollAreaWidgetContents_4)
+        self.frame_49.setObjectName(u"frame_49")
+        self.frame_49.setMinimumSize(QSize(0, 0))
+        self.frame_49.setMaximumSize(QSize(16777215, 16777215))
+        self.frame_49.setStyleSheet(u"")
+        self.frame_49.setFrameShape(QFrame.StyledPanel)
+        self.frame_49.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_6 = QHBoxLayout(self.frame_49)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(5, 0, 5, 0)
+
+        self.gridLayout_41.addWidget(self.frame_49, 0, 0, 1, 1, Qt.AlignLeft)
+
+        self.scrollArea_4.setWidget(self.scrollAreaWidgetContents_4)
+
+        self.verticalLayout_2.addWidget(self.scrollArea_4)
+
+
+        self.gridLayout_47.addWidget(self.frame_44, 6, 0, 1, 7)
+
+        self.frame_70 = QFrame(self.frame_34)
+        self.frame_70.setObjectName(u"frame_70")
+        self.frame_70.setMinimumSize(QSize(0, 3))
+        self.frame_70.setMaximumSize(QSize(16777215, 3))
+        self.frame_70.setStyleSheet(u"QFrame{\n"
+"	background-color: rgb(141, 145, 156);\n"
+"}\n"
+"QFrame:hover{\n"
+"	border:none;\n"
+"}\n"
+"QFrame:focus{\n"
+"	border:none;\n"
+"}")
+        self.frame_70.setFrameShape(QFrame.StyledPanel)
+        self.frame_70.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_47.addWidget(self.frame_70, 3, 0, 1, 7)
+
         self.frame_51 = QFrame(self.frame_34)
         self.frame_51.setObjectName(u"frame_51")
         sizePolicy.setHeightForWidth(self.frame_51.sizePolicy().hasHeightForWidth())
         self.frame_51.setSizePolicy(sizePolicy)
-        self.frame_51.setMinimumSize(QSize(800, 0))
-        self.frame_51.setMaximumSize(QSize(800, 16777215))
+        self.frame_51.setMinimumSize(QSize(0, 0))
+        self.frame_51.setMaximumSize(QSize(16777215, 16777215))
         self.frame_51.setStyleSheet(u"")
         self.frame_51.setFrameShape(QFrame.StyledPanel)
         self.frame_51.setFrameShadow(QFrame.Raised)
@@ -3062,101 +3037,137 @@ class Ui_MainPages(object):
         self.gridLayout_42.setObjectName(u"gridLayout_42")
         self.gridLayout_42.setHorizontalSpacing(6)
         self.gridLayout_42.setContentsMargins(6, 6, 6, 6)
-        self.label_58 = QLabel(self.frame_51)
-        self.label_58.setObjectName(u"label_58")
-        self.label_58.setMinimumSize(QSize(0, 0))
-        self.label_58.setMaximumSize(QSize(16777215, 16777215))
-        self.label_58.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;\n"
-"border:none")
-        self.label_58.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_42.addWidget(self.label_58, 0, 7, 1, 1)
-
         self.test_sampletime_LineEdit = QLineEdit(self.frame_51)
         self.test_sampletime_LineEdit.setObjectName(u"test_sampletime_LineEdit")
         sizePolicy.setHeightForWidth(self.test_sampletime_LineEdit.sizePolicy().hasHeightForWidth())
         self.test_sampletime_LineEdit.setSizePolicy(sizePolicy)
-        self.test_sampletime_LineEdit.setMinimumSize(QSize(0, 30))
-        self.test_sampletime_LineEdit.setMaximumSize(QSize(16777215, 30))
+        self.test_sampletime_LineEdit.setMinimumSize(QSize(50, 25))
+        self.test_sampletime_LineEdit.setMaximumSize(QSize(16777215, 25))
         self.test_sampletime_LineEdit.setStyleSheet(u"")
         self.test_sampletime_LineEdit.setAlignment(Qt.AlignCenter)
         self.test_sampletime_LineEdit.setReadOnly(False)
 
         self.gridLayout_42.addWidget(self.test_sampletime_LineEdit, 1, 9, 1, 1)
 
-        self.label_64 = QLabel(self.frame_51)
-        self.label_64.setObjectName(u"label_64")
-        self.label_64.setMinimumSize(QSize(0, 0))
-        self.label_64.setMaximumSize(QSize(16777215, 16777215))
-        self.label_64.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;\n"
-"border:none")
-        self.label_64.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_42.addWidget(self.label_64, 0, 12, 1, 1)
-
-        self.bg_time_LineEdit = QLineEdit(self.frame_51)
-        self.bg_time_LineEdit.setObjectName(u"bg_time_LineEdit")
-        sizePolicy.setHeightForWidth(self.bg_time_LineEdit.sizePolicy().hasHeightForWidth())
-        self.bg_time_LineEdit.setSizePolicy(sizePolicy)
-        self.bg_time_LineEdit.setMinimumSize(QSize(0, 30))
-        self.bg_time_LineEdit.setMaximumSize(QSize(16777215, 30))
-        self.bg_time_LineEdit.setStyleSheet(u"")
-        self.bg_time_LineEdit.setAlignment(Qt.AlignCenter)
-        self.bg_time_LineEdit.setReadOnly(False)
-
-        self.gridLayout_42.addWidget(self.bg_time_LineEdit, 0, 6, 1, 1)
-
         self.label_61 = QLabel(self.frame_51)
         self.label_61.setObjectName(u"label_61")
         self.label_61.setMinimumSize(QSize(0, 0))
         self.label_61.setMaximumSize(QSize(16777215, 16777215))
-        self.label_61.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;\n"
-"border:none")
+        self.label_61.setStyleSheet(u"")
         self.label_61.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_42.addWidget(self.label_61, 0, 5, 1, 1)
+        self.gridLayout_42.addWidget(self.label_61, 1, 1, 1, 1)
 
-        self.label_66 = QLabel(self.frame_51)
-        self.label_66.setObjectName(u"label_66")
-        self.label_66.setMinimumSize(QSize(0, 0))
-        self.label_66.setMaximumSize(QSize(16777215, 16777215))
-        self.label_66.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;\n"
-"border:none")
-        self.label_66.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.bg_sampletime_LineEdit = QLineEdit(self.frame_51)
+        self.bg_sampletime_LineEdit.setObjectName(u"bg_sampletime_LineEdit")
+        sizePolicy.setHeightForWidth(self.bg_sampletime_LineEdit.sizePolicy().hasHeightForWidth())
+        self.bg_sampletime_LineEdit.setSizePolicy(sizePolicy)
+        self.bg_sampletime_LineEdit.setMinimumSize(QSize(50, 25))
+        self.bg_sampletime_LineEdit.setMaximumSize(QSize(16777215, 25))
+        self.bg_sampletime_LineEdit.setStyleSheet(u"")
+        self.bg_sampletime_LineEdit.setAlignment(Qt.AlignCenter)
+        self.bg_sampletime_LineEdit.setReadOnly(False)
 
-        self.gridLayout_42.addWidget(self.label_66, 1, 5, 1, 1)
+        self.gridLayout_42.addWidget(self.bg_sampletime_LineEdit, 2, 2, 1, 1)
 
         self.test_time_LineEdit = QLineEdit(self.frame_51)
         self.test_time_LineEdit.setObjectName(u"test_time_LineEdit")
         sizePolicy.setHeightForWidth(self.test_time_LineEdit.sizePolicy().hasHeightForWidth())
         self.test_time_LineEdit.setSizePolicy(sizePolicy)
-        self.test_time_LineEdit.setMinimumSize(QSize(0, 30))
-        self.test_time_LineEdit.setMaximumSize(QSize(16777215, 30))
+        self.test_time_LineEdit.setMinimumSize(QSize(50, 25))
+        self.test_time_LineEdit.setMaximumSize(QSize(16777215, 25))
         self.test_time_LineEdit.setStyleSheet(u"")
         self.test_time_LineEdit.setAlignment(Qt.AlignCenter)
         self.test_time_LineEdit.setReadOnly(False)
 
         self.gridLayout_42.addWidget(self.test_time_LineEdit, 0, 9, 1, 1)
 
+        self.bg_time_LineEdit = QLineEdit(self.frame_51)
+        self.bg_time_LineEdit.setObjectName(u"bg_time_LineEdit")
+        sizePolicy.setHeightForWidth(self.bg_time_LineEdit.sizePolicy().hasHeightForWidth())
+        self.bg_time_LineEdit.setSizePolicy(sizePolicy)
+        self.bg_time_LineEdit.setMinimumSize(QSize(50, 25))
+        self.bg_time_LineEdit.setMaximumSize(QSize(16777215, 25))
+        self.bg_time_LineEdit.setStyleSheet(u"")
+        self.bg_time_LineEdit.setAlignment(Qt.AlignCenter)
+        self.bg_time_LineEdit.setReadOnly(False)
+
+        self.gridLayout_42.addWidget(self.bg_time_LineEdit, 1, 2, 1, 1)
+
+        self.frame_74 = QFrame(self.frame_51)
+        self.frame_74.setObjectName(u"frame_74")
+        self.frame_74.setMinimumSize(QSize(3, 0))
+        self.frame_74.setMaximumSize(QSize(3, 16777215))
+        self.frame_74.setStyleSheet(u"QFrame{\n"
+"	background-color: rgb(141, 145, 156);\n"
+"}\n"
+"QFrame:hover{\n"
+"	border:none;\n"
+"}\n"
+"QFrame:focus{\n"
+"	border:none;\n"
+"}")
+        self.frame_74.setFrameShape(QFrame.StyledPanel)
+        self.frame_74.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_42.addWidget(self.frame_74, 0, 3, 3, 1)
+
+        self.label_59 = QLabel(self.frame_51)
+        self.label_59.setObjectName(u"label_59")
+        self.label_59.setMinimumSize(QSize(0, 0))
+        self.label_59.setMaximumSize(QSize(16777215, 16777215))
+        self.label_59.setStyleSheet(u"")
+        self.label_59.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_42.addWidget(self.label_59, 1, 7, 1, 1)
+
+        self.label_58 = QLabel(self.frame_51)
+        self.label_58.setObjectName(u"label_58")
+        self.label_58.setMinimumSize(QSize(0, 0))
+        self.label_58.setMaximumSize(QSize(16777215, 16777215))
+        self.label_58.setStyleSheet(u"")
+        self.label_58.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_42.addWidget(self.label_58, 0, 7, 1, 1)
+
+        self.speed_label = QLabel(self.frame_51)
+        self.speed_label.setObjectName(u"speed_label")
+        self.speed_label.setMinimumSize(QSize(0, 0))
+        self.speed_label.setMaximumSize(QSize(16777215, 16777215))
+        self.speed_label.setStyleSheet(u"")
+        self.speed_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_42.addWidget(self.speed_label, 0, 12, 1, 1)
+
+        self.label_66 = QLabel(self.frame_51)
+        self.label_66.setObjectName(u"label_66")
+        self.label_66.setMinimumSize(QSize(0, 0))
+        self.label_66.setMaximumSize(QSize(16777215, 16777215))
+        self.label_66.setStyleSheet(u"")
+        self.label_66.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_42.addWidget(self.label_66, 2, 1, 1, 1)
+
         self.label_62 = QLabel(self.frame_51)
         self.label_62.setObjectName(u"label_62")
         self.label_62.setMinimumSize(QSize(0, 0))
         self.label_62.setMaximumSize(QSize(16777215, 16777215))
-        self.label_62.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;\n"
-"border:none")
+        self.label_62.setStyleSheet(u"")
         self.label_62.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_42.addWidget(self.label_62, 0, 1, 1, 1)
+
+        self.bg0_time_LineEdit = QLineEdit(self.frame_51)
+        self.bg0_time_LineEdit.setObjectName(u"bg0_time_LineEdit")
+        sizePolicy.setHeightForWidth(self.bg0_time_LineEdit.sizePolicy().hasHeightForWidth())
+        self.bg0_time_LineEdit.setSizePolicy(sizePolicy)
+        self.bg0_time_LineEdit.setMinimumSize(QSize(50, 25))
+        self.bg0_time_LineEdit.setMaximumSize(QSize(16777215, 25))
+        self.bg0_time_LineEdit.setStyleSheet(u"")
+        self.bg0_time_LineEdit.setAlignment(Qt.AlignCenter)
+        self.bg0_time_LineEdit.setReadOnly(False)
+
+        self.gridLayout_42.addWidget(self.bg0_time_LineEdit, 0, 2, 1, 1)
 
         self.frame_73 = QFrame(self.frame_51)
         self.frame_73.setObjectName(u"frame_73")
@@ -3174,55 +3185,61 @@ class Ui_MainPages(object):
         self.frame_73.setFrameShape(QFrame.StyledPanel)
         self.frame_73.setFrameShadow(QFrame.Raised)
 
-        self.gridLayout_42.addWidget(self.frame_73, 0, 10, 2, 1)
+        self.gridLayout_42.addWidget(self.frame_73, 0, 10, 3, 1)
 
-        self.bg0_time_LineEdit = QLineEdit(self.frame_51)
-        self.bg0_time_LineEdit.setObjectName(u"bg0_time_LineEdit")
-        sizePolicy.setHeightForWidth(self.bg0_time_LineEdit.sizePolicy().hasHeightForWidth())
-        self.bg0_time_LineEdit.setSizePolicy(sizePolicy)
-        self.bg0_time_LineEdit.setMinimumSize(QSize(0, 30))
-        self.bg0_time_LineEdit.setMaximumSize(QSize(16777215, 30))
-        self.bg0_time_LineEdit.setStyleSheet(u"")
-        self.bg0_time_LineEdit.setAlignment(Qt.AlignCenter)
-        self.bg0_time_LineEdit.setReadOnly(False)
+        self.speed_comboBox = QComboBox(self.frame_51)
+        self.speed_comboBox.addItem("")
+        self.speed_comboBox.addItem("")
+        self.speed_comboBox.setObjectName(u"speed_comboBox")
+        sizePolicy.setHeightForWidth(self.speed_comboBox.sizePolicy().hasHeightForWidth())
+        self.speed_comboBox.setSizePolicy(sizePolicy)
+        self.speed_comboBox.setMinimumSize(QSize(150, 0))
+        self.speed_comboBox.setMaximumSize(QSize(16777215, 16777215))
+        self.speed_comboBox.setStyleSheet(u"")
 
-        self.gridLayout_42.addWidget(self.bg0_time_LineEdit, 0, 2, 1, 1)
+        self.gridLayout_42.addWidget(self.speed_comboBox, 0, 13, 1, 1)
 
-        self.label_59 = QLabel(self.frame_51)
-        self.label_59.setObjectName(u"label_59")
-        self.label_59.setMinimumSize(QSize(0, 0))
-        self.label_59.setMaximumSize(QSize(16777215, 16777215))
-        self.label_59.setStyleSheet(u"font: 13px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"color: rgb(225, 230, 241);\n"
-"padding-right:5px;\n"
-"border:none")
-        self.label_59.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.filter_label = QLabel(self.frame_51)
+        self.filter_label.setObjectName(u"filter_label")
+        self.filter_label.setMinimumSize(QSize(0, 0))
+        self.filter_label.setMaximumSize(QSize(16777215, 16777215))
+        self.filter_label.setStyleSheet(u"")
+        self.filter_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_42.addWidget(self.label_59, 1, 7, 1, 1)
+        self.gridLayout_42.addWidget(self.filter_label, 1, 12, 1, 1)
 
-        self.bg_sampletime_LineEdit = QLineEdit(self.frame_51)
-        self.bg_sampletime_LineEdit.setObjectName(u"bg_sampletime_LineEdit")
-        sizePolicy.setHeightForWidth(self.bg_sampletime_LineEdit.sizePolicy().hasHeightForWidth())
-        self.bg_sampletime_LineEdit.setSizePolicy(sizePolicy)
-        self.bg_sampletime_LineEdit.setMinimumSize(QSize(0, 30))
-        self.bg_sampletime_LineEdit.setMaximumSize(QSize(16777215, 30))
-        self.bg_sampletime_LineEdit.setStyleSheet(u"")
-        self.bg_sampletime_LineEdit.setAlignment(Qt.AlignCenter)
-        self.bg_sampletime_LineEdit.setReadOnly(False)
+        self.filter_comboBox = QComboBox(self.frame_51)
+        self.filter_comboBox.addItem("")
+        self.filter_comboBox.addItem("")
+        self.filter_comboBox.setObjectName(u"filter_comboBox")
+        sizePolicy.setHeightForWidth(self.filter_comboBox.sizePolicy().hasHeightForWidth())
+        self.filter_comboBox.setSizePolicy(sizePolicy)
+        self.filter_comboBox.setMinimumSize(QSize(150, 0))
+        self.filter_comboBox.setMaximumSize(QSize(16777215, 16777215))
+        self.filter_comboBox.setStyleSheet(u"")
 
-        self.gridLayout_42.addWidget(self.bg_sampletime_LineEdit, 1, 6, 1, 1)
+        self.gridLayout_42.addWidget(self.filter_comboBox, 1, 13, 1, 1)
 
-        self.SUM_filter_LineEdit = QLineEdit(self.frame_51)
-        self.SUM_filter_LineEdit.setObjectName(u"SUM_filter_LineEdit")
-        sizePolicy.setHeightForWidth(self.SUM_filter_LineEdit.sizePolicy().hasHeightForWidth())
-        self.SUM_filter_LineEdit.setSizePolicy(sizePolicy)
-        self.SUM_filter_LineEdit.setMinimumSize(QSize(0, 30))
-        self.SUM_filter_LineEdit.setMaximumSize(QSize(16777215, 30))
-        self.SUM_filter_LineEdit.setStyleSheet(u"")
-        self.SUM_filter_LineEdit.setAlignment(Qt.AlignCenter)
-        self.SUM_filter_LineEdit.setReadOnly(False)
+        self.filter_count_label = QLabel(self.frame_51)
+        self.filter_count_label.setObjectName(u"filter_count_label")
+        self.filter_count_label.setMinimumSize(QSize(0, 0))
+        self.filter_count_label.setMaximumSize(QSize(16777215, 16777215))
+        self.filter_count_label.setStyleSheet(u"")
+        self.filter_count_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_42.addWidget(self.SUM_filter_LineEdit, 0, 13, 1, 1)
+        self.gridLayout_42.addWidget(self.filter_count_label, 2, 12, 1, 1)
+
+        self.filter_count_LineEdit = QLineEdit(self.frame_51)
+        self.filter_count_LineEdit.setObjectName(u"filter_count_LineEdit")
+        sizePolicy.setHeightForWidth(self.filter_count_LineEdit.sizePolicy().hasHeightForWidth())
+        self.filter_count_LineEdit.setSizePolicy(sizePolicy)
+        self.filter_count_LineEdit.setMinimumSize(QSize(50, 25))
+        self.filter_count_LineEdit.setMaximumSize(QSize(50, 25))
+        self.filter_count_LineEdit.setStyleSheet(u"")
+        self.filter_count_LineEdit.setAlignment(Qt.AlignCenter)
+        self.filter_count_LineEdit.setReadOnly(False)
+
+        self.gridLayout_42.addWidget(self.filter_count_LineEdit, 2, 13, 1, 1)
 
 
         self.gridLayout_47.addWidget(self.frame_51, 5, 0, 1, 1)
@@ -3638,7 +3655,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(2)
         self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 
@@ -3776,11 +3793,11 @@ class Ui_MainPages(object):
         self.RT_combobox.setItemText(1, QCoreApplication.translate("MainPages", u"\u6709\u308a", None))
 
         self.label_25.setText(QCoreApplication.translate("MainPages", u"\u8a3b\u8a18", None))
-        self.PatternErrorMessagelabel.setText(QCoreApplication.translate("MainPages", u"\u7121\u52b9\u5165\u529b:", None))
         self.label_7.setText(QCoreApplication.translate("MainPages", u"\u4fdd\u5b58", None))
         self.label_6.setText(QCoreApplication.translate("MainPages", u"\u8ffd\u52a0", None))
         self.label_3.setText(QCoreApplication.translate("MainPages", u"\u524a\u9664", None))
         self.Temp_Totaltime_Label.setText(QCoreApplication.translate("MainPages", u"\u5408\u8a08\u6642\u9593: 0 \u6642\u9593 0 \u5206", None))
+        self.PatternErrorMessagelabel.setText(QCoreApplication.translate("MainPages", u"\u7121\u52b9\u5165\u529b:", None))
         self.TestPatternErrorMessagelabel.setText(QCoreApplication.translate("MainPages", u"\u7121\u52b9\u5165\u529b:", None))
         self.label_43.setText(QCoreApplication.translate("MainPages", u"\u30d1\u30bf\u30fc\u30f3\u540d", None))
         self.label_42.setText(QCoreApplication.translate("MainPages", u"\u8a3b\u8a18", None))
@@ -3790,18 +3807,26 @@ class Ui_MainPages(object):
         self.label_47.setText(QCoreApplication.translate("MainPages", u"\u4fdd\u5b58", None))
         self.label_46.setText(QCoreApplication.translate("MainPages", u"\u8ffd\u52a0", None))
         self.label_15.setText(QCoreApplication.translate("MainPages", u"\u524a\u9664", None))
-        self.label_58.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u6642\u9593(min)", None))
         self.test_sampletime_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
-        self.label_64.setText(QCoreApplication.translate("MainPages", u"SUM\u30d5\u30a3\u30eb\u30bf\u30fc", None))
-        self.bg_time_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
         self.label_61.setText(QCoreApplication.translate("MainPages", u"BG \u6e2c\u5b9a\u6642\u9593(min)", None))
-        self.label_66.setText(QCoreApplication.translate("MainPages", u"BG \u6e2c\u5b9a\u30b5\u30f3\u30d7\u30ea\u30f3\u30b0\u5468\u671f(s)", None))
+        self.bg_sampletime_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
         self.test_time_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.bg_time_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.label_59.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u30b5\u30f3\u30d7\u30ea\u30f3\u30b0\u5468\u671f(s)", None))
+        self.label_58.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u6642\u9593(min)", None))
+        self.speed_label.setText(QCoreApplication.translate("MainPages", u"Speed", None))
+        self.label_66.setText(QCoreApplication.translate("MainPages", u"BG \u6e2c\u5b9a\u30b5\u30f3\u30d7\u30ea\u30f3\u30b0\u5468\u671f(s)", None))
         self.label_62.setText(QCoreApplication.translate("MainPages", u"BG0 \u6e2c\u5b9a\u6642\u9593(min)", None))
         self.bg0_time_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
-        self.label_59.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u30b5\u30f3\u30d7\u30ea\u30f3\u30b0\u5468\u671f(s)", None))
-        self.bg_sampletime_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
-        self.SUM_filter_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.speed_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"Normal (1PLC)", None))
+        self.speed_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"Hi Accuracy (10PLC)", None))
+
+        self.filter_label.setText(QCoreApplication.translate("MainPages", u"Filter", None))
+        self.filter_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u306a\u3057", None))
+        self.filter_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"\u5e73\u5747(repeating)", None))
+
+        self.filter_count_label.setText(QCoreApplication.translate("MainPages", u"Filter count", None))
+        self.filter_count_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
         self.label_yesr_7.setText(QCoreApplication.translate("MainPages", u"Ethernet \u30a4\u30f3\u30bf\u30fc\u30d5\u30a7\u30fc\u30b9 : Modbus TCP \u30b5\u30fc\u30d0\u30fc", None))
         self.label_yesr_3.setText(QCoreApplication.translate("MainPages", u"192.168.0.105:502", None))
         self.label_yesr_2.setText(QCoreApplication.translate("MainPages", u"IPv4 \u30a2\u30c9\u30ec\u30b9:", None))

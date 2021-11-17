@@ -197,7 +197,7 @@ class SetupMainWindow:
 
         # SET INITIAL PAGE / SET LEFT AND RIGHT COLUMN MENUS
         # ///////////////////////////////////////////////////////////////
-        MainFunctions.set_page(self.main_namespace, self.main_namespace.ui.load_pages.page_3)
+        MainFunctions.set_page(self.main_namespace, self.main_namespace.ui.load_pages.page_1)
         MainFunctions.set_left_column_menu(
             self.main_namespace,
             menu = self.main_namespace.ui.left_column.menus.menu_1,

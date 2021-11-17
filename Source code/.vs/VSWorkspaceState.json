@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\gpib_manager",
     "\\gui_main",
     "\\gui_main\\gui",
+    "\\gui_main\\gui\\uis",
+    "\\gui_main\\gui\\uis\\dialogs",
+    "\\gui_main\\gui\\uis\\pages",
     "\\gui_main\\gui\\widgets",
-    "\\gui_main\\gui\\widgets\\py_graph",
-    "\\gui_main\\gui\\widgets\\py_pattern",
-    "\\main_operator",
-    "\\modbus_TcpServer",
-    "\\registor_manager"
+    "\\gui_main\\gui\\widgets\\py_dialog",
+    "\\gui_main\\gui\\widgets\\py_left_menu",
+    "\\gui_main\\gui\\widgets\\py_pattern"
   ],
-  "SelectedNode": "\\gui_main\\gui\\widgets\\py_graph\\py_graph.py",
+  "SelectedNode": "\\make_database2.py",
   "PreviewInSolutionExplorer": false
 }

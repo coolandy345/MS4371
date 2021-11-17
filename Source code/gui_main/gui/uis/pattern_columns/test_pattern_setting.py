@@ -217,7 +217,10 @@ class TestPatternWidget(QWidget):
                 test_sampletime =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定sampletime".format(file_number)].getValue(),
                 BG0_test_time   =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(file_number)].getValue(),
                 BG_test_time    =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(file_number)].getValue(),
-                BG_sampletime   =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定sampletime".format(file_number)].getValue()
+                BG_sampletime   =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定sampletime".format(file_number)].getValue(),
+                speed   =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_speed".format(file_number)].getValue(),
+                filter_type    =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_filter_type".format(file_number)].getValue(),
+                filter_count   =self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_filter_count".format(file_number)].getValue()
                 )
 
             if pattern.active:
@@ -249,6 +252,9 @@ class TestPatternWidget(QWidget):
             self.set_memorypool_register("Measurement Pattern","PTNData_{}_BG0測定時間".format(file_number),self.patternFiles[file_number].BG0_test_time)
             self.set_memorypool_register("Measurement Pattern","PTNData_{}_BG測定時間".format(file_number),self.patternFiles[file_number].BG_test_time)
             self.set_memorypool_register("Measurement Pattern","PTNData_{}_BG測定sampletime".format(file_number),self.patternFiles[file_number].BG_sampletime)
+            self.set_memorypool_register("Measurement Pattern","PTNData_{}_speed".format(file_number),self.patternFiles[file_number].speed)
+            self.set_memorypool_register("Measurement Pattern","PTNData_{}_filter_type".format(file_number),self.patternFiles[file_number].filter_type)
+            self.set_memorypool_register("Measurement Pattern","PTNData_{}_filter_count".format(file_number),self.patternFiles[file_number].filter_count)
 
             for step_number in range(1,9):
                 step_unit=self.patternFiles[file_number].getStep(step_number)
@@ -280,42 +286,66 @@ class TestPatternWidget(QWidget):
         self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         
-        self._parent.ui.load_pages.test_commect_lineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.test_commect_lineEdit.textChanged.disconnect()
         self._parent.ui.load_pages.test_commect_lineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.test_commect_lineEdit.setText(str(self.cache_steplist.comment))
-        self._parent.ui.load_pages.test_commect_lineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_commect_lineEdit.textChanged.connect(self.ui_click_callback)
 
-        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.test_time_LineEdit.textChanged.disconnect()
         self._parent.ui.load_pages.test_time_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.test_time_LineEdit.setText(str(self.cache_steplist.test_time))
-        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_time_LineEdit.textChanged.connect(self.ui_click_callback)
 
 
 
-        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.test_sampletime_LineEdit.textChanged.disconnect()
         self._parent.ui.load_pages.test_sampletime_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.test_sampletime_LineEdit.setText(str(self.cache_steplist.test_sampletime))
-        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_sampletime_LineEdit.textChanged.connect(self.ui_click_callback)
 
         
-        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.bg0_time_LineEdit.textChanged.disconnect()
         self._parent.ui.load_pages.bg0_time_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.bg0_time_LineEdit.setText(str(self.cache_steplist.BG0_test_time))
-        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg0_time_LineEdit.textChanged.connect(self.ui_click_callback)
 
 
-        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.bg_time_LineEdit.textChanged.disconnect()
         self._parent.ui.load_pages.bg_time_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.bg_time_LineEdit.setText(str(self.cache_steplist.BG_test_time))
-        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_time_LineEdit.textChanged.connect(self.ui_click_callback)
 
 
-        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.textChanged.disconnect()
         self._parent.ui.load_pages.bg_sampletime_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.bg_sampletime_LineEdit.setText(str(self.cache_steplist.BG_sampletime))
-        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.textChanged.connect(self.ui_click_callback)
 
-        
+
+        self._parent.ui.load_pages.speed_comboBox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.speed_comboBox.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.speed_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+
+        self._parent.ui.load_pages.filter_comboBox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.filter_comboBox.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.filter_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+
+        if self.cache_steplist.filter_type:
+            self._parent.ui.load_pages.filter_count_LineEdit.setVisible(True)
+            self._parent.ui.load_pages.filter_count_label.setVisible(True)
+            self._parent.ui.load_pages.filter_count_LineEdit.textChanged.disconnect()
+            self._parent.ui.load_pages.filter_count_LineEdit.setEnabled(self.editorEnable)
+            self._parent.ui.load_pages.filter_count_LineEdit.setText(str(self.cache_steplist.filter_count))
+            self._parent.ui.load_pages.filter_count_LineEdit.textChanged.connect(self.ui_click_callback)
+        else:
+            self._parent.ui.load_pages.filter_count_LineEdit.setVisible(False)
+            self._parent.ui.load_pages.filter_count_label.setVisible(False)
+            self._parent.ui.load_pages.filter_count_LineEdit.textChanged.disconnect()
+            self._parent.ui.load_pages.filter_count_LineEdit.setEnabled(self.editorEnable)
+            self._parent.ui.load_pages.filter_count_LineEdit.setText(str(0))
+            self._parent.ui.load_pages.filter_count_LineEdit.textChanged.connect(self.ui_click_callback)
+
+
         self.save_IconButtonActiveState=self.content_Change
         self.delete_IconButtonActiveState=self.editorEnable
 
@@ -444,19 +474,23 @@ class TestPatternWidget(QWidget):
         self.save_IconButton.clicked.connect(self.ui_click_callback)
 
         self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.test_commect_lineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_commect_lineEdit.textChanged.connect(self.ui_click_callback)
 
-        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_time_LineEdit.textChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.test_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
-        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_sampletime_LineEdit.textChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.test_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=2))
-        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg0_time_LineEdit.textChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.bg0_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
-        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_time_LineEdit.textChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.bg_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
-        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.textChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.bg_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=2))
 
+        self._parent.ui.load_pages.speed_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.filter_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.filter_count_LineEdit.setValidator(QIntValidator())
+        self._parent.ui.load_pages.filter_count_LineEdit.textChanged.connect(self.ui_click_callback)
         
 
     # update step widge
@@ -602,6 +636,14 @@ class TestPatternWidget(QWidget):
     def lunchMessageDialog(self,title,message):
         diag = PyMessageDialog(title,message)
         return(str(diag.exec()))
+
+    def maxmin(self,max,min,data):
+        if data>=max:
+            return max,True
+        elif data<=min:
+            return min,True
+        else:
+            return data,False
     
     def ui_click_callback(self):
 
@@ -692,6 +734,25 @@ class TestPatternWidget(QWidget):
             self.cache_steplist.set_BG_sampletime(data)
             self.update_Request=True
 
+        elif btn_name=="filter_comboBox":
+            self.cache_steplist.filter_type=self._parent.ui.load_pages.filter_comboBox.currentIndex()
+            self.update_Request=True
+
+        elif btn_name=="speed_comboBox":
+            self.cache_steplist.speed=self._parent.ui.load_pages.speed_comboBox.currentIndex()
+            self.update_Request=True
+
+        elif btn_name=="filter_count_LineEdit":
+
+            data=float(self._parent.ui.load_pages.filter_count_LineEdit.text())
+            data,err=self.maxmin(100,0,data)
+            if err:
+                self.pattern.filter_count_LineEdit.setText(str(data))
+
+            self.cache_steplist.filter_count=data
+
+            self.update_Request=True
+
 
     def patternFile_Load(self):
 
@@ -755,6 +816,12 @@ class TestPatternWidget(QWidget):
         self.set_memorypool_register("Measurement Pattern","PTNData_{}_BG0測定時間".format(self.focus_patternFile_number),list.BG0_test_time)
         self.set_memorypool_register("Measurement Pattern","PTNData_{}_BG測定時間".format(self.focus_patternFile_number),list.BG_test_time)
         self.set_memorypool_register("Measurement Pattern","PTNData_{}_BG測定sampletime".format(self.focus_patternFile_number),list.BG_sampletime)
+        self.set_memorypool_register("Measurement Pattern","PTNData_{}_speed".format(self.focus_patternFile_number),list.speed)
+        self.set_memorypool_register("Measurement Pattern","PTNData_{}_filter_type".format(self.focus_patternFile_number),list.filter_type)
+        self.set_memorypool_register("Measurement Pattern","PTNData_{}_filter_count".format(self.focus_patternFile_number),list.filter_count)
+
+
+
         
         for step in range(1,9):
             self.set_memorypool_register("Measurement Pattern","PTNData_{}_STEP_{}_電圧".format(self.focus_patternFile_number,step),list.units[step].voltage)
@@ -931,7 +998,11 @@ class TestPatternWidget(QWidget):
                 self.cache_steplist.test_sampletime != self.patternFiles[self.focus_patternFile_number].test_sampletime or
                 self.cache_steplist.BG0_test_time   != self.patternFiles[self.focus_patternFile_number].BG0_test_time or
                 self.cache_steplist.BG_test_time    != self.patternFiles[self.focus_patternFile_number].BG_test_time or
-                self.cache_steplist.BG_sampletime   != self.patternFiles[self.focus_patternFile_number].BG_sampletime
+                self.cache_steplist.BG_sampletime   != self.patternFiles[self.focus_patternFile_number].BG_sampletime or 
+                self.cache_steplist.speed   != self.patternFiles[self.focus_patternFile_number].speed or 
+                self.cache_steplist.filter_type != self.patternFiles[self.focus_patternFile_number].filter_type or 
+                self.cache_steplist.filter_count    != self.patternFiles[self.focus_patternFile_number].filter_count
+
                 ):
                 self.content_Change=True
 

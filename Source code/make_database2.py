@@ -67,7 +67,28 @@ BG測定sampletime_max=10
 BG測定sampletime_min=0
 BG測定sampletime_comment="NULL"
 
-電圧=19
+speed=19
+speed_name="speed"
+speed_default=0
+speed_max=10
+speed_min=0
+speed_comment="NULL"
+
+filter_type=20
+filter_type_name="filter_type"
+filter_type_default=0
+filter_type_max=10
+filter_type_min=0
+filter_type_comment="NULL"
+
+filter_count=21
+filter_count_name="filter_count"
+filter_count_default=0
+filter_count_max=10
+filter_count_min=0
+filter_count_comment="NULL"
+
+電圧=22
 電圧_name="電圧"
 電圧_default=0
 電圧_max=2000
@@ -119,6 +140,16 @@ for pattern_no in range(1,21):
     test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},'{}')".format(Table_name,Base+BG測定sampletime,pattern_no,BG測定sampletime_name,BG測定sampletime_min,BG測定sampletime_default,BG測定sampletime_max,BG測定sampletime_comment)
     cur.execute(test)
 
+    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},'{}')".format(Table_name,Base+speed,pattern_no,speed_name,speed_min,speed_default,speed_max,speed_comment)
+    cur.execute(test)
+
+    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},'{}')".format(Table_name,Base+filter_type,pattern_no,filter_type_name,filter_type_min,filter_type_default,filter_type_max,filter_type_comment)
+    cur.execute(test)
+
+    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},'{}')".format(Table_name,Base+filter_count,pattern_no,filter_count_name,filter_count_min,filter_count_default,filter_count_max,filter_count_comment)
+    cur.execute(test)
+
+
     sub_base=0
     for step in range(1,9):
         test="INSERT INTO '{}' values({}, 'PTNData_{}_STEP_{}_{}',{},{},{},'{}')".format(Table_name,Base+sub_base+電圧,pattern_no,step,電圧_name,電圧_min,電圧_default,電圧_max,電圧_comment)
@@ -127,6 +158,6 @@ for pattern_no in range(1,21):
 
         sub_base+=1
 
-    Base+=17
+    Base+=20
 
 System_Registor_Database.commit()

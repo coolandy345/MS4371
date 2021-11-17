@@ -101,7 +101,8 @@ class PyMessageDialog(QDialog):
         self.layout = QVBoxLayout()
         self.label = QLabel(message)
         self.message = QLineEdit()
-        self.message.setValidator(QRegularExpressionValidator("[a-zA-z0-9]+$"))
+        ef=QRegExp("[a-zA-z0-9]+$")
+        self.message.setValidator(QRegExpValidator(ef,self))
         self.message.setMaxLength(8)
 
         self.layout.addWidget(self.label)

@@ -20,14 +20,6 @@ from registor_manager import *
 import numpy as np
 import pyqtgraph as pg
 
-class updata_step_widge_Thread(QRunnable):
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-
-    def run(self):
-        self.parent.updata_step_widge_work()
-
 class update_graph_Thread(QRunnable):
     def __init__(self, parent):
         super().__init__()
@@ -176,10 +168,13 @@ class TempPatternWidget(QWidget):
     def new_TempPattern(self):
         self.cache_steplist.setStep(self.cache_steplist.step_number+1,tempUnit())
         self.cache_steplist.step_number+=1
-
-        self.update_Request=True
+        
+        #print("new_TempPattern")
+        #self.update_Request=True
+        self.update()
 
     def memory_reader(self):
+        #print("memory_reader")
         _patternFile_lists=[None]
 
         #Try to get number of PTN list
@@ -254,6 +249,7 @@ class TempPatternWidget(QWidget):
             pattern.units=units
             _patternFile_lists.append(pattern)
         self.patternFiles=_patternFile_lists
+        #print("memory_reader finish")
 
     def memory_writer(self):
 
@@ -341,10 +337,10 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         
-        self._parent.ui.load_pages.commect_lineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.commect_lineEdit.textChanged.disconnect()
         self._parent.ui.load_pages.commect_lineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.commect_lineEdit.setText(str(self.cache_steplist.comment))
-        self._parent.ui.load_pages.commect_lineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.commect_lineEdit.textChanged.connect(self.ui_click_callback)
 
 
         hour=self.cache_steplist.total_time//60
@@ -439,7 +435,7 @@ class TempPatternWidget(QWidget):
         
 
         self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.commect_lineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.commect_lineEdit.textChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.RT_combobox.currentIndexChanged.connect(self.ui_click_callback)
         
@@ -447,13 +443,7 @@ class TempPatternWidget(QWidget):
     # update step widge
     # /////////////////////////////
     def updata_step_widge(self):
-        self.updata_step_widge_Worker=updata_step_widge_Thread(self)
-        QThreadPool.globalInstance().start(self.updata_step_widge_Worker)
-
-        #updata_step_widge_Thread = threading.Thread(target = self.updata_step_widge_work,daemon=True)
-        #updata_step_widge_Thread.start()
-
-    def updata_step_widge_work(self):
+        #print("updata_step_widge_work")
         #adjust the Visible of each step
 
         for _step in range(1,21):
@@ -487,28 +477,27 @@ class TempPatternWidget(QWidget):
             self.step_widges_list[_step].pattern.Type_comboBox.setCurrentIndex(unit.Step_Type)
 
             if unit.Step_Type==tempUnit.temp_unit_type:    #temp unit
-                self.step_widges_list[_step].pattern.Hour_lineEdit.setText(str(unit.time_hour))
-                self.step_widges_list[_step].pattern.Min_lineEdit.setText(str(unit.time_min))
-
-                self.step_widges_list[_step].pattern.SV_lineEdit.setText(str(unit.SV))
+                self.step_widges_list[_step].pattern.Hour_lineEdit.setText("{}".format(unit.time_hour))
+                self.step_widges_list[_step].pattern.Min_lineEdit.setText("{}".format(unit.time_min))
+                self.step_widges_list[_step].pattern.SV_lineEdit.setText("{}".format(unit.SV))
                 self.step_widges_list[_step].pattern.N2_lineEdit.setText("{}".format(unit.N2_flowRate*0.1))
                 self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
                 self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
 
-                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setText(str(unit.sp_limit_up))
-                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setText(str(unit.sp_limit_down))
-                self.step_widges_list[_step].pattern.Shift_lineEdit.setText(str(unit.shift))
+                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setText("{}".format(unit.sp_limit_up))
+                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setText("{}".format(unit.sp_limit_down))
+                self.step_widges_list[_step].pattern.Shift_lineEdit.setText("{}".format(unit.shift))
 
                 pass
             elif unit.Step_Type==tempUnit.test_unit_type:  #test unit
-                self.step_widges_list[_step].pattern.SV_lineEdit.setText(str(unit.SV))
+                self.step_widges_list[_step].pattern.SV_lineEdit.setText("{}".format(unit.SV))
                 self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
                 self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
-                self.step_widges_list[_step].pattern.KeepTime_lineEdit.setText(str(unit.time_keep))
+                self.step_widges_list[_step].pattern.KeepTime_lineEdit.setText("{}".format(unit.time_keep))
 
-                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setText(str(unit.sp_limit_up))
-                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setText(str(unit.sp_limit_down))
-                self.step_widges_list[_step].pattern.Shift_lineEdit.setText(str(unit.shift))
+                self.step_widges_list[_step].pattern.Sp_limit_up_lineEdit.setText("{}".format(unit.sp_limit_up))
+                self.step_widges_list[_step].pattern.Sp_limit_down_lineEdit.setText("{}".format(unit.sp_limit_down))
+                self.step_widges_list[_step].pattern.Shift_lineEdit.setText("{}".format(unit.shift))
 
                 self.step_widges_list[_step].update_testFileCombobox(unit.test_measure_PatternNo)
                 #self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
@@ -517,6 +506,7 @@ class TempPatternWidget(QWidget):
                 pass
         
         
+        #print("updata_step_widge_work finish")
         
     # update graph
     # /////////////////////////////
@@ -590,14 +580,15 @@ class TempPatternWidget(QWidget):
             self.patternFile_New()
 
         elif btn_name=="patternfile_comboBox":
-
+            
             if self.content_Change:
+                
                 result=self.lunchOptionDialog("変更内容は未保存です。内容を保存しますか",PyDialog.warning_3_type)
 
                 if result=="Yes":
                     #User is want to save file
                     self.patternFile_Save_work()
-                
+                    
                 elif result=="No":
                     #User is do not want to save file
                     pass
@@ -609,21 +600,28 @@ class TempPatternWidget(QWidget):
                     self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
                     return
 
-
+            
             self.focus_patternFile_number=self._parent.ui.load_pages.patternfile_comboBox.currentIndex()+1
+            
             self.patternFile_Load()
 
         elif btn_name=="commect_lineEdit":
             self.cache_steplist.set_Comment(self._parent.ui.load_pages.commect_lineEdit.text())
-            self.update_Request=True
+            
+            #self.update_Request=True
+            self.update()
 
         elif btn_name=="gas_Combobox":
             self.cache_steplist.set_gas_condition(self._parent.ui.load_pages.gas_Combobox.currentIndex()+1)
-            self.update_Request=True
+            
+            #self.update_Request=True
+            self.update()
 
         elif btn_name=="RT_combobox":
             self.cache_steplist.set_RT_measure(self._parent.ui.load_pages.RT_combobox.currentIndex()+1)
-            self.update_Request=True
+            
+            #self.update_Request=True
+            self.update()
         
     def patternFile_Load(self):
 
@@ -634,12 +632,17 @@ class TempPatternWidget(QWidget):
         #Reset paste function
         self.paste_ready=False
         if(self.focus_patternFile_number>=1 and self.focus_patternFile_number<=20):
+            
             self.cache_steplist=copy.deepcopy(self.patternFiles[self.focus_patternFile_number])
+            
+            
             self.editorEnable=True
         else:
             self.editorEnable=False
 
-        self.update_Request=True
+        
+        #self.update_Request=True
+        self.update()
 
     def patternFile_Delete(self):
 
@@ -669,6 +672,7 @@ class TempPatternWidget(QWidget):
     def patternFile_Save(self):
         self.patternFile_Save_Worker=patternFile_Save_Thread(self)
         QThreadPool.globalInstance().start(self.patternFile_Save_Worker)
+
 
     def patternFile_Save_work(self):
         #Refresh patternFiles
@@ -884,7 +888,8 @@ class TempPatternWidget(QWidget):
 
 
         self.close_menu()
-        self.update_Request=True
+        #self.update_Request=True
+        self.update()
 
     def focus_step(self,_step):
         self.step_widges_list[_step].setFocusStyle(True)
@@ -966,6 +971,14 @@ class TempPatternWidget(QWidget):
                 cache_stepUnit.time_min                 !=memory_stepUnit.time_min
                 ):
                     self.content_Change=True
+                    #print("------------------------------------------------------------------")
+                    #print()
+                    #print()
+                    #print("cache_stepUnit")
+                    #print(cache_stepUnit.print_unit())
+                    #print()
+                    #print("memory_stepUnit")
+                    #print(memory_stepUnit.print_unit())
 
 
     def step_modifly_manager(self,step):
@@ -988,11 +1001,12 @@ class TempPatternWidget(QWidget):
 
         self.cache_steplist.setStep(step,stepUnit)
         
-        self.update_Request=True
+        #self.update_Request=True
+        self.update()
         
 
     def update(self):
-        
+
         self.content_change_check()
         self.updata_step_widge()
         self.update_graph()

@@ -36,7 +36,7 @@
 color: rgb(225, 230, 241);
 border-radius: 5px;
 border-style: solid;
-font:12px &quot;游ゴシック&quot;;
+font:12px;
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
@@ -145,7 +145,7 @@ QLabel:disabled {
 }
 
 QLineEdit:enabled {
-	font:12px &quot;游ゴシック&quot;;
+	font:12px;
 	background-color: rgba(0, 0, 0, 80);
 	color: rgb(225, 230, 241);
 	border-width: 1px;
@@ -267,12 +267,12 @@ QFrame:focus{
                <property name="minimumSize">
                 <size>
                  <width>130</width>
-                 <height>20</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="styleSheet">
                 <string notr="true">QLabel:enabled {
-	font:17px &quot;游ゴシック&quot;;
+	font:14px;
 	color: rgb(0, 0, 0);
 	padding-left:5px;
 	border-radius: 5px;
@@ -349,13 +349,13 @@ QLabel:disabled {
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>25</height>
+              <height>22</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>25</height>
+              <height>22</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -413,6 +413,9 @@ QFrame:focus{
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -618,6 +621,9 @@ QFrame:focus{
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -712,6 +718,9 @@ QFrame:focus{
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -778,39 +787,6 @@ QFrame:focus{
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_14">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>2</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>2</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QFrame{
-	background-color: rgb(141, 145, 156);
-}
-QFrame:hover{
-	border:none;
-}
-QFrame:focus{
-	border:none;
-}</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QFrame" name="frame_7">
             <property name="minimumSize">
              <size>
@@ -839,6 +815,9 @@ QFrame:focus{
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -894,13 +873,7 @@ QFrame:focus{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QFrame{
-	border:none;
-}
-QFrame:hover{
-	border:none;
-}
-</string>
+                <string notr="true"/>
                </property>
                <property name="currentIndex">
                 <number>0</number>
@@ -967,6 +940,9 @@ QFrame:focus{
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -1022,13 +998,7 @@ QFrame:focus{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QFrame{
-	border:none;
-}
-QFrame:hover{
-	border:none;
-}
-</string>
+                <string notr="true"/>
                </property>
                <property name="currentIndex">
                 <number>0</number>
@@ -1095,6 +1065,9 @@ QFrame:focus{
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -1112,13 +1085,13 @@ QFrame:focus{
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>15</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>15</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -1134,13 +1107,13 @@ QFrame:focus{
                <property name="minimumSize">
                 <size>
                  <width>75</width>
-                 <height>0</height>
+                 <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>75</width>
-                 <height>16777215</height>
+                 <height>20</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -1189,6 +1162,9 @@ QFrame:focus{
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -1283,6 +1259,9 @@ QFrame:focus{
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -1377,6 +1356,9 @@ QFrame:focus{
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -1443,40 +1425,7 @@ QFrame:focus{
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_15">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>2</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>2</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QFrame{
-	background-color: rgb(141, 145, 156);
-}
-QFrame:hover{
-	border:none;
-}
-QFrame:focus{
-	border:none;
-}</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QFrame" name="frame_13">
+           <widget class="QFrame" name="frame_75">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1503,7 +1452,10 @@ QFrame:focus{
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_13">
+            <layout class="QHBoxLayout" name="horizontalLayout_16">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -1521,13 +1473,13 @@ QFrame:focus{
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>0</height>
+                 <height>15</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>16777215</height>
+                 <height>15</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -1538,50 +1490,6 @@ QFrame:focus{
                </property>
               </widget>
              </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QFrame" name="frame_16">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>22</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>22</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QFrame:hover{
-	border:none;
-}
-QFrame:focus{
-	border:none;
-}</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_14">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
              <item>
               <widget class="QComboBox" name="TestPattern_comboBox">
                <property name="sizePolicy">
@@ -1592,23 +1500,18 @@ QFrame:focus{
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>0</width>
+                 <width>110</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>110</width>
                  <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">QFrame{
-	border:none;
-}
-QFrame:hover{
-	border:none;
-}
+                <string notr="true">
 
 </string>
                </property>
@@ -1629,6 +1532,18 @@ QFrame:hover{
            </widget>
           </item>
          </layout>
+         <zorder>frame_75</zorder>
+         <zorder>frame_2</zorder>
+         <zorder>Type_comboBox</zorder>
+         <zorder>frame_4</zorder>
+         <zorder>frame_8</zorder>
+         <zorder>frame_5</zorder>
+         <zorder>frame_7</zorder>
+         <zorder>frame_12</zorder>
+         <zorder>frame_10</zorder>
+         <zorder>frame_11</zorder>
+         <zorder>frame_17</zorder>
+         <zorder>frame_9</zorder>
         </widget>
        </item>
       </layout>

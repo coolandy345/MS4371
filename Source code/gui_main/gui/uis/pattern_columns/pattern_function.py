@@ -13,11 +13,10 @@ class tempUnit():
         Step_Type=0,
         step_time=0,
         total_time=0,
-
         time_hour=0,
         time_min=0,
         SV=0,
-        N2_flowRate=0,
+        N2_flowRate=0.0,
         PID_muffle_No=0,
         PID_heater_No=0,
         time_keep=0,
@@ -341,7 +340,9 @@ class testlist():
         BG0_test_time=0,
         BG_test_time=0,
         BG_sampletime=0,
-
+        speed=0,
+        filter_type=0,
+        filter_count=0,
         ):
         
         self.name=name
@@ -354,6 +355,12 @@ class testlist():
         self.BG0_test_time=BG0_test_time
         self.BG_test_time=BG_test_time
         self.BG_sampletime=BG_sampletime
+
+        self.speed=speed
+        self.filter_type=filter_type
+        self.filter_count=filter_count
+
+
         self.units=[]
         self.units.append(None)
         for _step in range(1,9):
@@ -449,3 +456,6 @@ class testlist():
         print("BG0_test_time = ",self.BG0_test_time)
         print("BG_test_time = ",self.BG_test_time)
         print("BG_sampletime = ",self.BG_sampletime)
+        print("speed = ",self.speed)
+        print("filter_type = ",self.filter_type)
+        print("filter_count = ",self.filter_count)
