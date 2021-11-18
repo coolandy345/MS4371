@@ -159,7 +159,7 @@ class GPIB_Driver():
         self.board_descriptor=self.GPIB.ibfindW(self.send_buffer)
         self.GPIB.ibdma(self.board_descriptor,1)
 
-        self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T30ms, 1, 0)
+        self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T1s, 1, 0)
         self.GPIB.ibclr(self.dev_descriptor[self.getItem.name])
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()

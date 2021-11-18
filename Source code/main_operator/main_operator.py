@@ -265,7 +265,7 @@ class Operator():
     def start_noise_measurement(self):
         test_voltage=1000
         over_current=5e-12
-        test_time=10
+        test_time=1
 
         while 1:
             #get event Start Run Auto run
@@ -305,52 +305,73 @@ class Operator():
             
             self.gpib_2657A.send_Command("node[1].smua.reset()")
             self.gpib_2657A.send_Command("node[1].smua.measure.nplc = 1")
+            self.gpib_2657A.send_Command("node[1].smua.measure.autorangev = smua.AUTORANGE_ON")
+            self.gpib_2657A.send_Command("node[1].smua.measure.count = 1")
+            self.gpib_2657A.send_Command("node[1].smua.measure.delay = 0")
+
+            self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clear()")
+            self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.appendmode = 1")
+            self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.collecttimestamps = 0")
+            self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.fillmode = 0")
+
             self.gpib_2657A.send_Command("node[1].smua.source.func = smua.OUTPUT_DCVOLTS")
             self.gpib_2657A.send_Command("node[1].smua.source.rangev = 1500")
             self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(test_voltage))
-            
-            self.gpib_2657A.send_Command("node[1].smua.source.limitv = 2000")
-            self.gpib_2657A.send_Command("node[1].smua.source.limiti = 1e-3")
-            self.gpib_2657A.send_Command("node[1].smua.measure.rangev = 200")
+            self.gpib_2657A.send_Command("node[1].smua.source.limiti = 1e-6")
 
             
             self.gpib_2657A.send_Command("node[2].smua.reset()")
             self.gpib_2657A.send_Command("node[2].smua.measure.nplc = 1")
-            self.gpib_2657A.send_Command("node[2].smua.source.func = smua.OUTPUT_DCVOLTS")
-            self.gpib_2657A.send_Command("node[2].smua.source.rangev = 200e-3")
-            self.gpib_2657A.send_Command("node[2].smua.source.levelv = 0")
-            self.gpib_2657A.send_Command("node[2].smua.source.limiti = 1e-9")
-            self.gpib_2657A.send_Command("node[2].smua.measure.rangei = 1e-9")
-            
-            self.gpib_2657A.send_Command("node[2].display.clear()")
-            self.gpib_2657A.send_Command("node[2].smua.source.output = 1")
+            self.gpib_2657A.send_Command("node[2].smua.measure.autorangei = smua.AUTORANGE_ON")
+            self.gpib_2657A.send_Command("node[2].smua.measure.count = 1")
+            self.gpib_2657A.send_Command("node[2].smua.measure.delay = 0")
 
-            self.gpib_2657A.send_Command("node[1].display.clear()")
+            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clear()")
+            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.appendmode = 1")
+            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.collecttimestamps = 0")
+            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.fillmode = 0")
+
+
+            self.gpib_2657A.send_Command("node[2].smua.source.func = smua.OUTPUT_DCVOLTS")
+            self.gpib_2657A.send_Command("node[2].smua.source.offmode = smua.OUTPUT_ZERO")
+            self.gpib_2657A.send_Command("node[2].smua.source.levelv = 0")
+            self.gpib_2657A.send_Command("node[2].smua.source.rangev = 200e-3")
+            self.gpib_2657A.send_Command("node[2].smua.source.limiti = 1e-9")
+            
+
+
+            self.gpib_2657A.send_Command("node[2].smua.source.output = 1")
             self.gpib_2657A.send_Command("node[1].smua.source.output = 1")
             
 
             oc=False
             max_current=0
-            
-            self.gpib_2657A.send_Command("node[2].display.smua.measure.func = 0")
-            self.gpib_2657A.send_Command("node[2].display.screen = 0")
 
+            self.gpib_2657A.send_Command("node[1].display.screen = display.SMUA")
+            self.gpib_2657A.send_Command("node[1].display.smua.measure.func = display.MEASURE_DCVOLTS")
             
+            self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")
+            self.gpib_2657A.send_Command("node[2].display.smua.measure.func = display.MEASURE_DCAMPS")
+            
+
             starttime=time.time()
             while not self.noise_stop:
                 counttime=time.time()-starttime
                 if counttime>60*test_time:
                     self.noise_stop=True
 
+                voltage=0
+                current=0
 
-                self.gpib_2657A.send_Command("test1=node[1].smua.measure.v()")
-                self.gpib_2657A.send_Command("print(test1)")
+                self.gpib_2657A.send_Command("data1=node[1].smua.measure.v() print(data1)")
                 voltage=self.gpib_2657A.read_Command()[0]
 
-                self.gpib_2657A.send_Command("test2=node[2].smua.measure.i()")
-                self.gpib_2657A.send_Command("print(test2)")
+                self.gpib_2657A.send_Command("data2=node[2].smua.measure.i() print(data2)")
                 current=self.gpib_2657A.read_Command()[0]
+                
+
                 print("voltage:",voltage,"current:",current)
+                
                 
                 if current and voltage:
 
@@ -360,36 +381,24 @@ class Operator():
                     if current>max_current:
                         max_current=current
 
-                    self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-                    self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage = {}         \")".format(Quantity(voltage,"V").render(prec=4)))
-                    self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
-                    self.gpib_2657A.send_Command("node[1].display.settext(\"Current = {}         \")".format(Quantity(current,"A").render(prec=4)))
-                    
-                    #self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-                    #self.gpib_2657A.send_Command("node[2].display.settext(\"time = {} m {} s        \")".format(int(counttime//60),int(counttime%60)))
-                    #self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
-                    #if current!=0:
-                    #    self.gpib_2657A.send_Command("node[2].display.settext(\"Resistance = {}         \")".format(Quantity(voltage/current,"ohm").render(prec=6)))
-
-                    #if current>=over_current:
-                    #    self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
-                    #    self.gpib_2657A.send_Command("node[1].smua.reset()")
-                    #    print("over current!!!!")
-                    #    self.noise_stop=True
-                    #    oc=True
-
-
-                #else:
                 #    self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-                #    self.gpib_2657A.send_Command("node[1].display.settext(\"Eroror\")")
+                #    self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage = {}         \")".format(Quantity(voltage,"V").render(prec=4)))
                 #    self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
-                #    self.gpib_2657A.send_Command("node[1].display.settext(\"Eroror\")")
-
+                #    self.gpib_2657A.send_Command("node[1].display.settext(\"Current = {}         \")".format(Quantity(current,"A").render(prec=4)))
                     
+                #    self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+                #    self.gpib_2657A.send_Command("node[2].display.settext(\"time = {} m {} s        \")".format(int(counttime//60),int(counttime%60)))
                 #    self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
-                #    self.gpib_2657A.send_Command("node[2].display.settext(\"Eroror                    \")")
-                    
-                time.sleep(0.5)
+                #    if current!=0:
+                #        self.gpib_2657A.send_Command("node[2].display.settext(\"Resistance = {}         \")".format(Quantity(voltage/current,"ohm").render(prec=6)))
+
+                #    if current>=over_current:
+                #        self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
+                #        self.gpib_2657A.send_Command("node[1].smua.reset()")
+                #        print("over current!!!!")
+                #        self.noise_stop=True
+                #        oc=True
+
 
             self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
             self.gpib_2657A.send_Command("node[1].smua.reset()")
