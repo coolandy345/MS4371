@@ -275,6 +275,9 @@ class Operator():
 
             print("start")
             self.noise_stop=False
+            
+            self.gpib_2657A.send_Command("loadscript Noise_Measurement")
+            
 
             self.gpib_2657A.send_Command("reset()")
             self.gpib_2657A.send_Command("tsplink.reset()")
@@ -289,7 +292,8 @@ class Operator():
             self.gpib_2657A.send_Command("node[1].display.settext(\"Noise Test Start\")")
 
             
-            time.sleep(2)
+            self.gpib_2657A.send_Command("delay(1)")
+            
             
             self.gpib_2657A.send_Command("node[1].display.clear()")
             self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
@@ -344,15 +348,28 @@ class Operator():
             self.gpib_2657A.send_Command("node[1].smua.source.output = 1")
             
 
-            oc=False
-            max_current=0
-
             self.gpib_2657A.send_Command("node[1].display.screen = display.SMUA")
             self.gpib_2657A.send_Command("node[1].display.smua.measure.func = display.MEASURE_DCVOLTS")
             
             self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")
             self.gpib_2657A.send_Command("node[2].display.smua.measure.func = display.MEASURE_DCAMPS")
             
+
+            
+            self.gpib_2657A.send_Command("delay(1)")
+
+            
+            self.gpib_2657A.send_Command("delay(1)")
+
+            while expression do
+ block
+end
+
+
+            
+
+            oc=False
+            max_current=0
 
             starttime=time.time()
             while not self.noise_stop:
