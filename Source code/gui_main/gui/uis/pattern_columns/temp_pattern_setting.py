@@ -209,6 +209,7 @@ class TempPatternWidget(QWidget):
                 step_number     =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(ptn_no)].getValue()+1,
                 gas_condition   =gas,
                 RT_measure      =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_RT計測".format(ptn_no)].getValue(),
+                RT_testpattern  =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_RT測定パターン".format(ptn_no)].getValue(),
                 asciicode_0    =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_0".format(ptn_no)].getValue(),
                 asciicode_1    =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_1".format(ptn_no)].getValue(),
                 asciicode_2    =self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_名称_2".format(ptn_no)].getValue(),
@@ -278,6 +279,8 @@ class TempPatternWidget(QWidget):
 
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_測定雰囲気".format(file_number),gas)
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_RT計測".format(file_number),self.patternFiles[file_number].RT_measure)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_RT測定パターン".format(file_number),self.patternFiles[file_number].RT_testpattern)
+
 
             for step in range(1,21):
                 step_unit=self.patternFiles[file_number].getStep(step)
@@ -347,6 +350,24 @@ class TempPatternWidget(QWidget):
         min=self.cache_steplist.total_time%60
         self._parent.ui.load_pages.Temp_Totaltime_Label.setText("合計時間：{} 時間 {} 分".format(hour,min))
         
+        if self.cache_steplist.RT_measure==2 and self.editorEnable:
+
+            self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(self.editorEnable)
+
+            self._parent.ui.load_pages.RT_testpattern_combobox.currentIndexChanged.disconnect()
+            self._parent.ui.load_pages.RT_testpattern_combobox.clear()
+            self._parent.ui.load_pages.RT_testpattern_combobox.addItems(self._parent.testPattern.patternFile_nameList)
+            self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(self.cache_steplist.RT_testpattern-1)
+            self._parent.ui.load_pages.RT_testpattern_combobox.currentIndexChanged.connect(self.ui_click_callback)
+
+        elif self.cache_steplist.RT_measure==1:
+            self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(False)
+            self.cache_steplist.RT_testpattern=0
+        else:
+            self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(False)
+            self.cache_steplist.RT_testpattern=0
+
+
 
 
         self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.disconnect()
@@ -438,6 +459,7 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.commect_lineEdit.textChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.RT_combobox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.RT_testpattern_combobox.currentIndexChanged.connect(self.ui_click_callback)
         
         
     # update step widge
@@ -622,6 +644,12 @@ class TempPatternWidget(QWidget):
             
             #self.update_Request=True
             self.update()
+
+        elif btn_name=="RT_testpattern_combobox": 
+            self.cache_steplist.set_RT_testpattern(self._parent.ui.load_pages.RT_testpattern_combobox.currentIndex()+1)
+            
+            self.update()
+        
         
     def patternFile_Load(self):
 
@@ -705,6 +733,7 @@ class TempPatternWidget(QWidget):
 
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_測定雰囲気".format(self.focus_patternFile_number),gas)
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_RT計測".format(self.focus_patternFile_number),list.RT_measure)
+        self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_RT測定パターン".format(self.focus_patternFile_number),list.RT_testpattern)
         
         for step in range(1,21):
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_STEP_{}_SV値".format(self.focus_patternFile_number,step),list.units[step].SV)
@@ -945,7 +974,9 @@ class TempPatternWidget(QWidget):
                 self.cache_steplist.active          != self.patternFiles[self.focus_patternFile_number].active or
                 self.cache_steplist.step_number     != self.patternFiles[self.focus_patternFile_number].step_number or
                 self.cache_steplist.gas_condition   != self.patternFiles[self.focus_patternFile_number].gas_condition or
-                self.cache_steplist.RT_measure      != self.patternFiles[self.focus_patternFile_number].RT_measure 
+                self.cache_steplist.RT_measure      != self.patternFiles[self.focus_patternFile_number].RT_measure  or
+                self.cache_steplist.RT_testpattern      != self.patternFiles[self.focus_patternFile_number].RT_testpattern 
+                
                 ):
                 self.content_Change=True
 

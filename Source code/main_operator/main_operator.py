@@ -7,6 +7,8 @@ import copy
 from gpib_manager import *
 from registor_manager import *
 from quantiphy import Quantity
+from csv_manager import  *
+import datetime
 
 class Test_folder_package():
 
@@ -20,15 +22,15 @@ class Test_folder_package():
         self.stage=stage
 
 class Test_profile_package():
-
+    
     QC_Test=1
     Costomer_Test=2
 
     def __init__(self,
-                 test_times=0,
-                 file_name="",
                  date="",
-                 condition=1,
+                 folder_name="",
+                 file_name="",
+                 mode=0,
                  number="",
                  costomer="",
                  costomerName="",
@@ -38,11 +40,19 @@ class Test_profile_package():
                  innerDia=0,
                  thinkness=0,
                  gas="",
+                 voltage=0,
+                 time=0,
+                 time_sample=0,
+                 bg_time=0,
+                 bg_time_sample=0,
+                 speed="",
+                 filter="",
+                 filter_count=0,
                  ):
-        self.test_times=test_times
-        self.file_name=file_name
         self.date=date
-        self.condition=condition
+        self.folder_name=folder_name
+        self.file_name=file_name
+        self.mode=mode
         self.number=number
         self.costomer=costomer
         self.costomerName=costomerName
@@ -53,8 +63,17 @@ class Test_profile_package():
         self.thinkness=thinkness
         self.gas=gas
 
+        self.voltage=voltage
+        self.time=time
+        self.time_sample=time_sample
+        self.bg_time=bg_time
+        self.bg_time_sample=bg_time_sample
+        self.speed=speed
+        self.filter=filter
+        self.filter_count=filter_count
 
-        if self.condition==self.QC_Test:
+
+        if self.mode==self.QC_Test:
             self.number=""
             self.costomer=""
             self.costomerName=""
@@ -64,14 +83,14 @@ class Single_data_unitPackage():
     #If count=-1 mean data stream is finish
 
     def __init__(self,
-                 count=0,
                  time=0,
+                 count=0,
                  Temperature=0,
                  voltage=0,
                  current=0
                  ):
-        self.count=count
         self.time=time
+        self.count=count
         self.Temperature=Temperature
         self.voltage=voltage
         self.current=current
@@ -95,6 +114,7 @@ class Operator():
         self.queuePool=queuePool
         self.eventPool=eventPool
         
+        self.csv_manager=Csv_manager(memoryPool,queuePool,eventPool)
 
         #self.gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
         self.gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
@@ -450,65 +470,117 @@ class Operator():
             #clear  Start Run Auto run event
             self.eventPool["Auto Run Start"].clear()
 
-            time.sleep(2)
-
-            self.stop=False
 
             Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
-            self.gpib_2657A.send_Command("reset()")
-            self.gpib_2657A.send_Command("tsplink.reset()")
-            self.gpib_2657A.send_Command("node[1].dataqueue.clear()")
-            self.gpib_2657A.send_Command("node[1].display.clear()")
-            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Prepare\")")
-            self.gpib_2657A.send_Command("node[2].display.clear()")
-            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[2].display.settext(\"Remote\")")
-            time.sleep(2)
-            self.gpib_2657A.send_Command("node[1].display.clear()")
-            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Start\")")
-            time.sleep(2)
-            self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("node[1].display.clear()")
-            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Step 1\")")
-            self.gpib_2657A.send_Command("node[2].display.clear()")
-            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[2].display.settext(\"Step 1\")")
-            time.sleep(0.5)
-            self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("node[1].display.clear()")
-            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Step 2\")")
-            self.gpib_2657A.send_Command("node[2].display.clear()")
-            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[2].display.settext(\"Step 2\")")
-            time.sleep(0.5)
-            self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("node[1].display.clear()")
-            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Step 3\")")
-            self.gpib_2657A.send_Command("node[2].display.clear()")
-            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[2].display.settext(\"Step 3\")")
-            time.sleep(0.5)
-            self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("node[1].display.clear()")
-            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Step 4\")")
-            self.gpib_2657A.send_Command("node[2].display.clear()")
-            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[2].display.settext(\"Step 4\")")
-            time.sleep(0.5)
-            self.gpib_2657A.send_Command("node[1].display.clear()")
-            self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Finish\")")
-            self.gpib_2657A.send_Command("node[2].display.clear()")
-            self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("node[2].display.settext(\"Finish\")")
+            System_memory=self.memoryPool["System memory"]
+            Measurement_Pattern=self.memoryPool["Measurement Pattern"]
             
-            time.sleep(2)
+
+            #Prepare Main Path
+            self.csv_manager.prepare_Mainfolder()
+
+            if System_memory["評価試験"].getValue():
+                mode=Test_profile_package.QC_Test
+            else:
+                mode=Test_profile_package.Costomer_Test
+
+
+            #check pattern & step
+            pattern_number=Modbus_Registor_Pool["実行PTN No."].getValue()
+            step_number=Modbus_Registor_Pool["実行STEP No."].getValue()
+
+            
+
+            folder_name=""
+            if step_number:
+                test_pattern_number=Modbus_Registor_Pool["PTNData_{}_STEP_{}_測定パターン".format(pattern_number,step_number)].getValue()+1
+                folder_name="{}℃".format(Modbus_Registor_Pool["PTNData_{}_STEP_{}_SV値".format(pattern_number,step_number)].getValue())
+            else:
+                test_pattern_number=Modbus_Registor_Pool["PTNData_{}_RT測定パターン".format(pattern_number)].getValue()+1
+                folder_name="RT"
+
+            test_step_count=Measurement_Pattern["PTNData_{}_実行STEP数".format(test_pattern_number)].getValue()
+
+            step_list=[]
+            if Measurement_Pattern["PTNData_{}_BG0測定時間".format(test_pattern_number)].getValue():
+                step_list=range(0,test_step_count+1)
+            else:
+                step_list=range(1,test_step_count+1)
+
+            for step in step_list:
+
+                step_name=""
+                if step==0:
+                    step_name="BG0"
+                    voltage=0
+                    _time=0
+                    bg_time=Measurement_Pattern["PTNData_{}_BG0測定時間".format(test_pattern_number)].getValue()
+
+                else:
+                    step_name="測定NO-{}".format(step)
+                    voltage=Measurement_Pattern["PTNData_{}_STEP_{}_電圧".format(test_pattern_number,step)].getValue()
+                    bg_time=Measurement_Pattern["PTNData_{}_BG測定時間".format(test_pattern_number)].getValue()
+                    _time==Measurement_Pattern["PTNData_{}_測定時間".format(test_pattern_number)].getValue(),
+
+                gas=Modbus_Registor_Pool["PTNData_{}_測定雰囲気".format(pattern_number)].getValue()
+
+                if gas==1:
+                    gas="大気"
+                elif gas==2:
+                    gas="真空"
+                elif gas==4:
+                    gas="N2置換"
+
+                speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue(),
+                if speed==0:
+                    speed="Normal (1PLC)"
+                elif speed==1:
+                    speed="Hi Accuracy (10PLC)"
+
+                filter=Measurement_Pattern["PTNData_{}_filter_type".format(test_pattern_number)].getValue(),
+                if filter==0:
+                    filter="なし"
+                elif filter==1:
+                    filter="平均(repeating)"
+                elif filter==2:
+                    filter="移動平均(moving)"
+                elif filter==3:
+                    filter="中央値(Median)"
+
+
+                profile=Test_profile_package(
+                                    date=datetime.datetime.now(),
+                                    folder_name=folder_name,
+                                    file_name=step_name,
+                                    mode=mode,
+                                    gas=gas,
+                                    number=System_memory["依頼測定番号"].getValue(),
+                                    costomer=System_memory["依頼元"].getValue(),
+                                    costomerName=System_memory["依頼者"].getValue(),
+                                    meterialName=System_memory["試料名称"].getValue(),
+                                    meterial=System_memory["材料"].getValue(),
+                                    mainDia=System_memory["主電極径(mm)"].getValue(),
+                                    innerDia=System_memory["ガード電極の内径(mm)"].getValue(),
+                                    thinkness=System_memory["試料の厚さ(mm)"].getValue(),
+                                    
+                                    voltage=voltage,
+                                    time=_time,
+                                    time_sample=Measurement_Pattern["PTNData_{}_測定sampletime".format(test_pattern_number)].getValue(),
+                                    bg_time=bg_time,
+                                    bg_time_sample=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_number)].getValue(),
+                                    speed=speed,
+                                    filter=filter,
+                                    filter_count=Measurement_Pattern["PTNData_{}_filter_count".format(test_pattern_number)].getValue(),
+
+                                )
+
+                #Prepare Main Path
+                self.csv_manager.prepare_CsvFile(profile)
+
+                #starting listen data arrive
+                #self.csv_manager.startRecord_CsvFile()
+
+
             self.eventPool["Auto Run finish"].set()
 
 

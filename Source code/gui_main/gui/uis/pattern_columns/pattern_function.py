@@ -83,7 +83,7 @@ class templist():
         step_number=0,
         gas_condition=0,
         RT_measure=0,
-
+        RT_testpattern=0,
         ):
 
         self.name=name
@@ -106,6 +106,8 @@ class templist():
         self.step_number=step_number   ####
         self.gas_condition=gas_condition
         self.RT_measure=RT_measure
+        self.RT_testpattern=RT_testpattern
+        
         self.units=[]
         self.units.append(None)
         for _step in range(1,21):
@@ -166,6 +168,11 @@ class templist():
     def set_RT_measure(self,RT_measure):
         if self.RT_measure!=RT_measure:
             self.RT_measure=RT_measure
+        self.check_and_adjust()
+
+    def set_RT_testpattern(self,RT_testpattern):
+        if self.RT_testpattern!=RT_testpattern:
+            self.RT_testpattern=RT_testpattern
         self.check_and_adjust()
 
     def set_Comment(self,comment):

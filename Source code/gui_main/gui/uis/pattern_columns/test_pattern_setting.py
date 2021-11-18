@@ -291,59 +291,61 @@ class TestPatternWidget(QWidget):
         self._parent.ui.load_pages.test_commect_lineEdit.setText(str(self.cache_steplist.comment))
         self._parent.ui.load_pages.test_commect_lineEdit.textChanged.connect(self.ui_click_callback)
 
-        self._parent.ui.load_pages.test_time_LineEdit.textChanged.disconnect()
+        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.disconnect()
         self._parent.ui.load_pages.test_time_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.test_time_LineEdit.setText(str(self.cache_steplist.test_time))
-        self._parent.ui.load_pages.test_time_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.connect(self.ui_click_callback)
 
 
 
-        self._parent.ui.load_pages.test_sampletime_LineEdit.textChanged.disconnect()
+        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.disconnect()
         self._parent.ui.load_pages.test_sampletime_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.test_sampletime_LineEdit.setText(str(self.cache_steplist.test_sampletime))
-        self._parent.ui.load_pages.test_sampletime_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
 
         
-        self._parent.ui.load_pages.bg0_time_LineEdit.textChanged.disconnect()
+        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.disconnect()
         self._parent.ui.load_pages.bg0_time_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.bg0_time_LineEdit.setText(str(self.cache_steplist.BG0_test_time))
-        self._parent.ui.load_pages.bg0_time_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.connect(self.ui_click_callback)
 
 
-        self._parent.ui.load_pages.bg_time_LineEdit.textChanged.disconnect()
+        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.disconnect()
         self._parent.ui.load_pages.bg_time_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.bg_time_LineEdit.setText(str(self.cache_steplist.BG_test_time))
-        self._parent.ui.load_pages.bg_time_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.connect(self.ui_click_callback)
 
 
-        self._parent.ui.load_pages.bg_sampletime_LineEdit.textChanged.disconnect()
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.disconnect()
         self._parent.ui.load_pages.bg_sampletime_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.bg_sampletime_LineEdit.setText(str(self.cache_steplist.BG_sampletime))
-        self._parent.ui.load_pages.bg_sampletime_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
 
 
         self._parent.ui.load_pages.speed_comboBox.currentIndexChanged.disconnect()
         self._parent.ui.load_pages.speed_comboBox.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.speed_comboBox.setCurrentIndex(self.cache_steplist.speed)
         self._parent.ui.load_pages.speed_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         self._parent.ui.load_pages.filter_comboBox.currentIndexChanged.disconnect()
         self._parent.ui.load_pages.filter_comboBox.setEnabled(self.editorEnable)
+        self._parent.ui.load_pages.filter_comboBox.setCurrentIndex(self.cache_steplist.filter_type)
         self._parent.ui.load_pages.filter_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
         if self.cache_steplist.filter_type:
             self._parent.ui.load_pages.filter_count_LineEdit.setVisible(True)
             self._parent.ui.load_pages.filter_count_label.setVisible(True)
-            self._parent.ui.load_pages.filter_count_LineEdit.textChanged.disconnect()
+            self._parent.ui.load_pages.filter_count_LineEdit.editingFinished.disconnect()
             self._parent.ui.load_pages.filter_count_LineEdit.setEnabled(self.editorEnable)
             self._parent.ui.load_pages.filter_count_LineEdit.setText(str(self.cache_steplist.filter_count))
-            self._parent.ui.load_pages.filter_count_LineEdit.textChanged.connect(self.ui_click_callback)
+            self._parent.ui.load_pages.filter_count_LineEdit.editingFinished.connect(self.ui_click_callback)
         else:
             self._parent.ui.load_pages.filter_count_LineEdit.setVisible(False)
             self._parent.ui.load_pages.filter_count_label.setVisible(False)
-            self._parent.ui.load_pages.filter_count_LineEdit.textChanged.disconnect()
+            self._parent.ui.load_pages.filter_count_LineEdit.editingFinished.disconnect()
             self._parent.ui.load_pages.filter_count_LineEdit.setEnabled(self.editorEnable)
             self._parent.ui.load_pages.filter_count_LineEdit.setText(str(0))
-            self._parent.ui.load_pages.filter_count_LineEdit.textChanged.connect(self.ui_click_callback)
+            self._parent.ui.load_pages.filter_count_LineEdit.editingFinished.connect(self.ui_click_callback)
 
 
         self.save_IconButtonActiveState=self.content_Change
@@ -475,22 +477,22 @@ class TestPatternWidget(QWidget):
 
         self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.test_commect_lineEdit.textChanged.connect(self.ui_click_callback)
-
-        self._parent.ui.load_pages.test_time_LineEdit.textChanged.connect(self.ui_click_callback)
+        
+        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.connect(self.ui_click_callback)
         self._parent.ui.load_pages.test_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
-        self._parent.ui.load_pages.test_sampletime_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
         self._parent.ui.load_pages.test_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=2))
-        self._parent.ui.load_pages.bg0_time_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.connect(self.ui_click_callback)
         self._parent.ui.load_pages.bg0_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
-        self._parent.ui.load_pages.bg_time_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.connect(self.ui_click_callback)
         self._parent.ui.load_pages.bg_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
-        self._parent.ui.load_pages.bg_sampletime_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
         self._parent.ui.load_pages.bg_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=2))
 
         self._parent.ui.load_pages.speed_comboBox.currentIndexChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.filter_comboBox.currentIndexChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.filter_count_LineEdit.setValidator(QIntValidator())
-        self._parent.ui.load_pages.filter_count_LineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.filter_count_LineEdit.editingFinished.connect(self.ui_click_callback)
         
 
     # update step widge
@@ -688,7 +690,7 @@ class TestPatternWidget(QWidget):
             data=float(self._parent.ui.load_pages.test_time_LineEdit.text())
             data,err=self.maxmin(999,0,data)
             if err:
-                self.pattern.test_time_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.test_time_LineEdit.setText(str(data))
 
             self.cache_steplist.set_Test_time(data)
             self.update_Request=True
@@ -698,7 +700,7 @@ class TestPatternWidget(QWidget):
             data=float(self._parent.ui.load_pages.test_sampletime_LineEdit.text())
             data,err=self.maxmin(999,0.01,data)
             if err:
-                self.pattern.test_sampletime_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.test_sampletime_LineEdit.setText(str(data))
 
             self.cache_steplist.set_Test_sampletime(data)
             self.update_Request=True
@@ -708,7 +710,7 @@ class TestPatternWidget(QWidget):
             data=float(self._parent.ui.load_pages.bg0_time_LineEdit.text())
             data,err=self.maxmin(999,0,data)
             if err:
-                self.pattern.bg0_time_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.bg0_time_LineEdit.setText(str(data))
 
             self.cache_steplist.set_BG0_test_time(data)
             self.update_Request=True
@@ -719,7 +721,7 @@ class TestPatternWidget(QWidget):
             data=float(self._parent.ui.load_pages.bg_time_LineEdit.text())
             data,err=self.maxmin(999,0,data)
             if err:
-                self.pattern.bg_time_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.bg_time_LineEdit.setText(str(data))
 
             self.cache_steplist.set_BG_test_time(data)
             self.update_Request=True
@@ -729,7 +731,7 @@ class TestPatternWidget(QWidget):
             data=float(self._parent.ui.load_pages.bg_sampletime_LineEdit.text())
             data,err=self.maxmin(999,0.01,data)
             if err:
-                self.pattern.bg_sampletime_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.bg_sampletime_LineEdit.setText(str(data))
 
             self.cache_steplist.set_BG_sampletime(data)
             self.update_Request=True
@@ -747,7 +749,7 @@ class TestPatternWidget(QWidget):
             data=float(self._parent.ui.load_pages.filter_count_LineEdit.text())
             data,err=self.maxmin(100,0,data)
             if err:
-                self.pattern.filter_count_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.filter_count_LineEdit.setText(str(data))
 
             self.cache_steplist.filter_count=data
 

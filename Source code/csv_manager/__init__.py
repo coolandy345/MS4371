@@ -1,1 +1,2 @@
-from .csv_manager import  Csv_manager,csv_manager_thread
+# -*- coding: utf-8 -*-
+from .csv_manager import  Csv_manager

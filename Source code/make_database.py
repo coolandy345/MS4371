@@ -82,6 +82,13 @@ RT計測_max=1
 RT計測_min=0
 RT計測_comment="0/1"
 
+RT測定パターン=15
+RT測定パターン_name="RT測定パターン"
+RT測定パターン_default=0
+RT測定パターン_max=20
+RT測定パターン_min=0
+RT測定パターン_comment=""
+
 SV値=100
 SV値_name="SV値"
 SV値_default=0
@@ -240,6 +247,12 @@ for pattern_no in range(1,21):
     test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+パターン有効,pattern_no,パターン有効_name,パターン有効_min,パターン有効_default,パターン有効_max,パターン有効_default,0,パターン有効_comment)
     cur.execute(test)
 
+    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+註記,pattern_no,註記_name,註記_min,註記_default,註記_max,註記_default,0,註記_comment)
+    cur.execute(test)
+
+    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+運転総時間,pattern_no,運転総時間_name,運転総時間_min,運転総時間_default,運転総時間_max,運転総時間_default,0,運転総時間_comment)
+    cur.execute(test)
+
     test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+実行STEP数,pattern_no,実行STEP数_name,実行STEP数_min,実行STEP数_default,実行STEP数_max,実行STEP数_default,0,実行STEP数_comment)
     cur.execute(test)
 
@@ -249,11 +262,10 @@ for pattern_no in range(1,21):
     test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+RT計測,pattern_no,RT計測_name,RT計測_min,RT計測_default,RT計測_max,RT計測_default,0,RT計測_comment)
     cur.execute(test)
 
-    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+註記,pattern_no,註記_name,註記_min,註記_default,註記_max,註記_default,0,註記_comment)
+    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+RT測定パターン,pattern_no,RT測定パターン_name,RT測定パターン_min,RT測定パターン_default,RT測定パターン_max,RT測定パターン_default,0,RT測定パターン_comment)
     cur.execute(test)
 
-    test="INSERT INTO '{}' values({}, 'PTNData_{}_{}',{},{},{},{},{},'{}')".format(Table_name,Base+運転総時間,pattern_no,運転総時間_name,運転総時間_min,運転総時間_default,運転総時間_max,運転総時間_default,0,運転総時間_comment)
-    cur.execute(test)
+    
 
     sub_base=0
     for step in range(1,21):

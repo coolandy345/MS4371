@@ -297,6 +297,15 @@ class Main_utility_manager(QWidget):
 
 
         
+        elif btn_name == "Test1_pushButton":
+            self.measurement_start=True
+            measurement_finish_wait_Thread = threading.Thread(target = self.measurement_finish_wait_Work,daemon=True)
+            measurement_finish_wait_Thread.start()
+
+        elif btn_name == "Test2_pushButton":
+            pass
+
+
         elif btn_name == "Noisetest_pushButton":
             self.eventPool["Noise Measure Start"].set()
 
@@ -326,7 +335,6 @@ class Main_utility_manager(QWidget):
                 # Prepare folder to recorda
                 # Tell PLC to start pattern
 
-            #self._parent.testfile_manager.prepare_folder()
 
         elif btn_name == "remoteConnect_pushButton":
             
@@ -464,6 +472,10 @@ class Main_utility_manager(QWidget):
 
         
         self._parent.ui.load_pages.Noisetest_pushButton.clicked.connect(self.btn_callback)
+
+        
+        self._parent.ui.load_pages.Test1_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.Test2_pushButton.clicked.connect(self.btn_callback)
 
         
 

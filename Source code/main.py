@@ -18,7 +18,6 @@ from registor_manager import *
 from gui_main import*
 
 from gui_main.qt_core import *
-from csv_manager import *
 
 
 from main_operator import *
@@ -56,7 +55,11 @@ if __name__ == "__main__":
     QueuePool["fileMakeQueue"]=MemoryPoolManager.Queue()
     QueuePool["testDataQueue"]=MemoryPoolManager.Queue()
 
+    QueuePool["dialog comfirmQueue"]=MemoryPoolManager.Queue()
+    QueuePool["dialog resultQueue"]=MemoryPoolManager.Queue()
+
     EventPool={}
+
     EventPool["Auto Run Start"]=MemoryPoolManager.Event()
     EventPool["Auto Run finish"]=MemoryPoolManager.Event()
     
@@ -69,7 +72,7 @@ if __name__ == "__main__":
     EventPool["GUI_Data_arrive"]=MemoryPoolManager.Event()
     
     EventPool["Database_data_Initial"]=MemoryPoolManager.Event()
-    EventPool["CSV stop"]=MemoryPoolManager.Event()
+    EventPool["CSV_Record_stop"]=MemoryPoolManager.Event()
     EventPool["GPIB Stop"]=MemoryPoolManager.Event()
 
     EventPool["Test Event1"]=MemoryPoolManager.Event()
@@ -84,8 +87,6 @@ if __name__ == "__main__":
     #run_async_server(MemoryPool,QueuePool)
 
     with ProcessPoolExecutor(max_workers=10) as executor:
-        
-        executor.submit(csv_manager_thread,MemoryPool,QueuePool,EventPool)
 
         executor.submit(run_async_server,MemoryPool,QueuePool)
         executor.submit(databaseWriteThread,MemoryPool,QueuePool,EventPool)

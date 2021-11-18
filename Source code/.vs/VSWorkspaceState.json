@@ -2,16 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\csv_manager",
+    "\\gpib_manager",
     "\\gui_main",
     "\\gui_main\\gui",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\uis\\pages",
-    "\\gui_main\\gui\\uis\\windows",
-    "\\gui_main\\gui\\uis\\windows\\main_window",
+    "\\gui_main\\gui\\uis\\pattern_columns",
     "\\gui_main\\gui\\widgets",
     "\\gui_main\\gui\\widgets\\py_pattern",
     "\\main_operator"
   ],
-  "SelectedNode": "\\gui_main\\gui\\uis\\windows\\main_window\\setup_main_window.py",
+  "SelectedNode": "\\gui_main\\gui\\uis\\pages\\ui_main_pages.py",
   "PreviewInSolutionExplorer": false
 }

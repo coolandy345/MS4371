@@ -151,6 +151,15 @@ class SetupMainWindow:
         # APP TITLE
         # ///////////////////////////////////////////////////////////////
         self.main_namespace.setWindowTitle(self.main_namespace.settings["app_name"])
+
+        # TITLE BAR / ADD EXTRA BUTTONS
+        # ///////////////////////////////////////////////////////////////
+        # ADD MENUS
+        self.main_namespace.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
+
+        # SET SIGNALS
+        self.main_namespace.ui.title_bar.clicked.connect(self.main_namespace.btn_clicked)
+        self.main_namespace.ui.title_bar.released.connect(self.main_namespace.btn_released)
         
         # REMOVE TITLE BAR
         # ///////////////////////////////////////////////////////////////

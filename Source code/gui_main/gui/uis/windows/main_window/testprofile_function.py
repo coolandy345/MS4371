@@ -36,7 +36,7 @@ from gui_main.gui.widgets.py_left_column.py_icon import *
 
 from gui_main.gui.uis.pattern_columns import *
 
-
+import threading
 import numpy as np
 import pyqtgraph as pg
 
@@ -50,6 +50,7 @@ from registor_manager import *
 
 import csv
 import datetime
+
 
 class Testfile_manager(QWidget):
     
@@ -84,6 +85,34 @@ class Testfile_manager(QWidget):
         self.set_parameter()
         self.utility_setup()
         self.utility_update()
+
+        dialog_thread = threading.Thread(target = self.dialog_work,daemon=True)
+        dialog_thread.start()
+
+        self.dialog_request=False
+
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.ultility_Update_Work)
+        self.timer.start(10)
+
+    def ultility_Update_Work(self):
+
+        if self.dialog_request:
+            self.dialog_request=False
+            if self.dialog_item[0]=="option":
+                result=self.lunchOptionDialog(self.dialog_item[1],self.dialog_item[2])
+            elif self.dialog_item[0]=="Message":
+                result=self.lunchMessageDialog(self.dialog_item[1],self.dialog_item[2])
+                
+            self.queuePool["dialog resultQueue"].put(result)
+
+
+    def dialog_work(self):
+        while 1:
+            self.dialog_item=self.queuePool["dialog comfirmQueue"].get()
+            self.dialog_request=True
+
+            
         
 
     def memory_reader(self):
@@ -285,7 +314,6 @@ class Testfile_manager(QWidget):
             self._Costom_Test=1
             self.set_memorypool_register("System memory","評価試験",self._QC_Test)
             self.set_memorypool_register("System memory","依頼試験",self._Costom_Test)
-            #self.prepare_folder()
 
         elif btn=="lineEdit_year":
             self._year=self._parent.ui.load_pages.lineEdit_year.text()
@@ -401,8 +429,6 @@ class Testfile_manager(QWidget):
 
     def areaVolumeCal(self):
 
-
-
         if self._MeterialMainDie and self._MeterialinnerDie:
             temp=(self._MeterialMainDie+self._MeterialinnerDie)/4
             self.meterial_area=temp*temp*math.pi
@@ -423,59 +449,4 @@ class Testfile_manager(QWidget):
         
         
 
-    def prepare_folder(self):
-
-        path = "C:/高温抵抗測定結果"
-        directory = "{}".format(str(self._year))
-        
-        # Create base Directory
-        try:
-            os.mkdir(path)
-        except FileExistsError:
-            pass
-        
-        # Create target Year Directory
-        try:
-            path = os.path.join(path, directory)
-            os.mkdir(path)
-        except FileExistsError:
-            pass
-        
-        # Create target Directory
-        try:
-            os.mkdir(os.path.join(path, "評価試験"))
-            os.mkdir(os.path.join(path, "依頼測定"))
-        except FileExistsError:
-            pass
-        
-        if self._QC_Test:
-            
-            path=os.path.join(path, "依頼測定")
-
-            timeNow=datetime.datetime.now()
-            path = os.path.join(path,"{}_{}_{}_{}_{}_{}_result".format(timeNow.year,timeNow.month,timeNow.date,timeNow.hour,timeNow.minute,timeNow.second))
-            os.mkdir(path)
-
-        else:
-            
-            try:
-                path_temp=os.path.join(path, "評価試験/{}".format(self._testNumber))
-                os.mkdir(path_temp)
-
-            except FileExistsError:
-                
-                result=self.lunchOptionDialog("依頼番号 \"{}\" フォルダーが存在しています。上書きますか？".format(self._testNumber),PyDialog.warning_2_type)
-                if result=="Yes":
-                    
-                    path=path_temp
-                    os.rmdir(path)
-                    os.mkdir(path)
-
-                elif result=="No":
-                    NameString_fromDialog=self.lunchMessageDialog("依頼番号編集","新規依頼番号入力 :")
-                    path=os.path.join(path, "評価試験/{}".format(NameString_fromDialog))
-                    os.mkdir(path)
-
-            
-
-        self.folder_path=path
+    

@@ -123,19 +123,19 @@ class MainWindow(QMainWindow):
         # TITLE BAR MENU
         # ///////////////////////////////////////////////////////////////
         
-        # SETTINGS TITLE BAR
-        #if btn.objectName() == "btn_top_settings":
-        #    # Toogle Active
-        #    if not MainFunctions.right_column_is_visible(self):
-        #        btn.set_active(True)
+         #SETTINGS TITLE BAR
+        if btn.objectName() == "btn_top_settings":
+            # Toogle Active
+            if not MainFunctions.right_column_is_visible(self):
+                btn.set_active(True)
 
-        #        # Show / Hide
-        #        MainFunctions.toggle_right_column(self)
-        #    else:
-        #        btn.set_active(False)
+                # Show / Hide
+                MainFunctions.toggle_right_column(self)
+            else:
+                btn.set_active(False)
 
-        #        # Show / Hide
-        #        MainFunctions.toggle_right_column(self)
+                # Show / Hide
+                MainFunctions.toggle_right_column(self)
 
 
 
