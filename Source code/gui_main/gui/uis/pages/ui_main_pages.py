@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesRjTkUb.ui'
+## Form generated from reading UI file 'main_pagesvpaaOD.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -90,7 +90,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 828, 555))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1055, 671))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -128,17 +128,64 @@ class Ui_MainPages(object):
         self.gridLayout_7 = QGridLayout(self.frame_48)
         self.gridLayout_7.setObjectName(u"gridLayout_7")
         self.gridLayout_7.setHorizontalSpacing(12)
-        self.label_year = QLabel(self.frame_48)
-        self.label_year.setObjectName(u"label_year")
-        self.label_year.setMinimumSize(QSize(140, 35))
-        self.label_year.setMaximumSize(QSize(140, 35))
-        self.label_year.setMouseTracking(True)
-        self.label_year.setLayoutDirection(Qt.LeftToRight)
-        self.label_year.setStyleSheet(u"")
-        self.label_year.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-        self.label_year.setMargin(0)
+        self.label_4 = QLabel(self.frame_48)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setMinimumSize(QSize(100, 35))
+        self.label_4.setMaximumSize(QSize(100, 35))
+        self.label_4.setStyleSheet(u"")
+        self.label_4.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.gridLayout_7.addWidget(self.label_year, 0, 0, 1, 1)
+        self.gridLayout_7.addWidget(self.label_4, 5, 0, 1, 1)
+
+        self.lineEdit_testNumber = QLineEdit(self.frame_48)
+        self.lineEdit_testNumber.setObjectName(u"lineEdit_testNumber")
+        self.lineEdit_testNumber.setMinimumSize(QSize(200, 0))
+        self.lineEdit_testNumber.setMaximumSize(QSize(16777215, 16777215))
+        self.lineEdit_testNumber.setStyleSheet(u"")
+
+        self.gridLayout_7.addWidget(self.lineEdit_testNumber, 1, 1, 1, 1)
+
+        self.label_5 = QLabel(self.frame_48)
+        self.label_5.setObjectName(u"label_5")
+        sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
+        self.label_5.setSizePolicy(sizePolicy)
+        self.label_5.setMinimumSize(QSize(100, 35))
+        self.label_5.setMaximumSize(QSize(100, 35))
+        self.label_5.setStyleSheet(u"")
+        self.label_5.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_7.addWidget(self.label_5, 6, 0, 1, 1)
+
+        self.Costom_Test_RadioButton = QRadioButton(self.frame_48)
+        self.Costom_Test_RadioButton.setObjectName(u"Costom_Test_RadioButton")
+        self.Costom_Test_RadioButton.setMinimumSize(QSize(100, 35))
+        self.Costom_Test_RadioButton.setMaximumSize(QSize(100, 32))
+        self.Costom_Test_RadioButton.setLayoutDirection(Qt.RightToLeft)
+        self.Costom_Test_RadioButton.setStyleSheet(u"background-color: rgb(36, 40, 49);")
+
+        self.gridLayout_7.addWidget(self.Costom_Test_RadioButton, 3, 0, 1, 1)
+
+        self.label_60 = QLabel(self.frame_48)
+        self.label_60.setObjectName(u"label_60")
+        self.label_60.setMinimumSize(QSize(100, 35))
+        self.label_60.setMaximumSize(QSize(100, 35))
+        self.label_60.setStyleSheet(u"")
+        self.label_60.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_7.addWidget(self.label_60, 1, 0, 1, 1)
+
+        self.QC_Test_RadioButton = QRadioButton(self.frame_48)
+        self.QC_Test_RadioButton.setObjectName(u"QC_Test_RadioButton")
+        sizePolicy.setHeightForWidth(self.QC_Test_RadioButton.sizePolicy().hasHeightForWidth())
+        self.QC_Test_RadioButton.setSizePolicy(sizePolicy)
+        self.QC_Test_RadioButton.setMinimumSize(QSize(100, 35))
+        self.QC_Test_RadioButton.setMaximumSize(QSize(100, 35))
+        self.QC_Test_RadioButton.setLayoutDirection(Qt.RightToLeft)
+        self.QC_Test_RadioButton.setStyleSheet(u"\n"
+"background-color: rgb(36, 40, 49);")
+        self.QC_Test_RadioButton.setChecked(False)
+
+        self.gridLayout_7.addWidget(self.QC_Test_RadioButton, 2, 0, 1, 1)
 
         self.lineEdit_year = QLineEdit(self.frame_48)
         self.lineEdit_year.setObjectName(u"lineEdit_year")
@@ -151,50 +198,17 @@ class Ui_MainPages(object):
 
         self.gridLayout_7.addWidget(self.lineEdit_year, 0, 1, 1, 1)
 
-        self.QC_Test_RadioButton = QRadioButton(self.frame_48)
-        self.QC_Test_RadioButton.setObjectName(u"QC_Test_RadioButton")
-        self.QC_Test_RadioButton.setMinimumSize(QSize(0, 35))
-        self.QC_Test_RadioButton.setMaximumSize(QSize(16777215, 35))
-        self.QC_Test_RadioButton.setStyleSheet(u"padding-left:60px;\n"
-"background-color: rgb(36, 40, 49);")
-        self.QC_Test_RadioButton.setChecked(True)
+        self.label_year = QLabel(self.frame_48)
+        self.label_year.setObjectName(u"label_year")
+        self.label_year.setMinimumSize(QSize(100, 35))
+        self.label_year.setMaximumSize(QSize(100, 35))
+        self.label_year.setMouseTracking(True)
+        self.label_year.setLayoutDirection(Qt.LeftToRight)
+        self.label_year.setStyleSheet(u"")
+        self.label_year.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.label_year.setMargin(0)
 
-        self.gridLayout_7.addWidget(self.QC_Test_RadioButton, 1, 0, 1, 1)
-
-        self.Costom_Test_RadioButton = QRadioButton(self.frame_48)
-        self.Costom_Test_RadioButton.setObjectName(u"Costom_Test_RadioButton")
-        self.Costom_Test_RadioButton.setMinimumSize(QSize(0, 35))
-        self.Costom_Test_RadioButton.setMaximumSize(QSize(16777215, 32))
-        self.Costom_Test_RadioButton.setStyleSheet(u"padding-left:60px;\n"
-"background-color: rgb(36, 40, 49);")
-
-        self.gridLayout_7.addWidget(self.Costom_Test_RadioButton, 2, 0, 1, 1)
-
-        self.label_60 = QLabel(self.frame_48)
-        self.label_60.setObjectName(u"label_60")
-        self.label_60.setMinimumSize(QSize(140, 35))
-        self.label_60.setMaximumSize(QSize(140, 35))
-        self.label_60.setStyleSheet(u"")
-        self.label_60.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_7.addWidget(self.label_60, 3, 0, 1, 1)
-
-        self.lineEdit_testNumber = QLineEdit(self.frame_48)
-        self.lineEdit_testNumber.setObjectName(u"lineEdit_testNumber")
-        self.lineEdit_testNumber.setMinimumSize(QSize(200, 0))
-        self.lineEdit_testNumber.setMaximumSize(QSize(16777215, 16777215))
-        self.lineEdit_testNumber.setStyleSheet(u"")
-
-        self.gridLayout_7.addWidget(self.lineEdit_testNumber, 3, 1, 1, 1)
-
-        self.label_4 = QLabel(self.frame_48)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setMinimumSize(QSize(140, 35))
-        self.label_4.setMaximumSize(QSize(140, 35))
-        self.label_4.setStyleSheet(u"")
-        self.label_4.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_7.addWidget(self.label_4, 4, 0, 1, 1)
+        self.gridLayout_7.addWidget(self.label_year, 0, 0, 1, 1)
 
         self.lineEdit_costomer = QLineEdit(self.frame_48)
         self.lineEdit_costomer.setObjectName(u"lineEdit_costomer")
@@ -202,18 +216,7 @@ class Ui_MainPages(object):
         self.lineEdit_costomer.setMaximumSize(QSize(16777215, 16777215))
         self.lineEdit_costomer.setStyleSheet(u"")
 
-        self.gridLayout_7.addWidget(self.lineEdit_costomer, 4, 1, 1, 1)
-
-        self.label_5 = QLabel(self.frame_48)
-        self.label_5.setObjectName(u"label_5")
-        sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
-        self.label_5.setSizePolicy(sizePolicy)
-        self.label_5.setMinimumSize(QSize(140, 35))
-        self.label_5.setMaximumSize(QSize(140, 35))
-        self.label_5.setStyleSheet(u"")
-        self.label_5.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_7.addWidget(self.label_5, 5, 0, 1, 1)
+        self.gridLayout_7.addWidget(self.lineEdit_costomer, 5, 1, 1, 1)
 
         self.lineEdit_costomerName = QLineEdit(self.frame_48)
         self.lineEdit_costomerName.setObjectName(u"lineEdit_costomerName")
@@ -221,7 +224,7 @@ class Ui_MainPages(object):
         self.lineEdit_costomerName.setMaximumSize(QSize(16777215, 16777215))
         self.lineEdit_costomerName.setStyleSheet(u"")
 
-        self.gridLayout_7.addWidget(self.lineEdit_costomerName, 5, 1, 1, 1)
+        self.gridLayout_7.addWidget(self.lineEdit_costomerName, 6, 1, 1, 1)
 
 
         self.horizontalLayout_9.addWidget(self.frame_48, 0, Qt.AlignTop)
@@ -2330,7 +2333,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -900, 1045, 1643))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1045, 1643))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -3655,7 +3658,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 
@@ -3665,19 +3668,19 @@ class Ui_MainPages(object):
 
     def retranslateUi(self, MainPages):
         MainPages.setWindowTitle(QCoreApplication.translate("MainPages", u"Form", None))
-        self.label_year.setText(QCoreApplication.translate("MainPages", u"\u5e74\u5ea6", None))
-        self.lineEdit_year.setText(QCoreApplication.translate("MainPages", u"2021", None))
-        self.QC_Test_RadioButton.setText(QCoreApplication.translate("MainPages", u"\u8a55\u4fa1\u8a66\u9a13", None))
-        self.Costom_Test_RadioButton.setText(QCoreApplication.translate("MainPages", u"\u4f9d\u983c\u6e2c\u5b9a", None))
-        self.label_60.setText(QCoreApplication.translate("MainPages", u"\u4f9d\u983c\u6e2c\u5b9a\u756a\u53f7", None))
-        self.lineEdit_testNumber.setText(QCoreApplication.translate("MainPages", u"MS-4371", None))
         self.label_4.setText(QCoreApplication.translate("MainPages", u"\u4f9d\u983c\u5143", None))
-        self.lineEdit_costomer.setText(QCoreApplication.translate("MainPages", u"\u682a\u5f0f\u4f1a\u793e\u30e2\u30c8\u30e4\u30de", None))
+        self.lineEdit_testNumber.setText(QCoreApplication.translate("MainPages", u"MS-4371", None))
         self.label_5.setText(QCoreApplication.translate("MainPages", u"\u4f9d\u983c\u8005", None))
+        self.Costom_Test_RadioButton.setText(QCoreApplication.translate("MainPages", u"\u4f9d\u983c\u6e2c\u5b9a", None))
+        self.label_60.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u756a\u53f7", None))
+        self.QC_Test_RadioButton.setText(QCoreApplication.translate("MainPages", u"\u8a55\u4fa1\u8a66\u9a13", None))
+        self.lineEdit_year.setText(QCoreApplication.translate("MainPages", u"2021", None))
+        self.label_year.setText(QCoreApplication.translate("MainPages", u"\u5e74\u5ea6", None))
+        self.lineEdit_costomer.setText(QCoreApplication.translate("MainPages", u"\u682a\u5f0f\u4f1a\u793e\u30e2\u30c8\u30e4\u30de", None))
         self.lineEdit_costomerName.setText(QCoreApplication.translate("MainPages", u"\u9ec4", None))
         self.label_32.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u4f53\u7a4d(mm\u00b3)", None))
         self.lineEdit_testMeterialName.setText(QCoreApplication.translate("MainPages", u"material_1", None))
-        self.lineEdit_meterialArea.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u306e\u539a\u3055(mm)", None))
+        self.lineEdit_meterialArea.setText(QCoreApplication.translate("MainPages", u"2.5", None))
         self.lineEdit_testMeterial.setText(QCoreApplication.translate("MainPages", u"42", None))
         self.label_10.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u306e\u539a\u3055(mm)", None))
         self.lineEdit_thinkness.setText(QCoreApplication.translate("MainPages", u"1.5", None))
@@ -3688,7 +3691,7 @@ class Ui_MainPages(object):
         self.lineEdit_MeterialMainDie.setText(QCoreApplication.translate("MainPages", u"42", None))
         self.label_9.setText(QCoreApplication.translate("MainPages", u"\u30ac\u30fc\u30c9\u96fb\u6975\u306e\u5185\u5f84(mm)", None))
         self.label_22.setText(QCoreApplication.translate("MainPages", u"\u6750\u6599", None))
-        self.lineEdit_meterialVolume.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u306e\u539a\u3055(mm)", None))
+        self.lineEdit_meterialVolume.setText(QCoreApplication.translate("MainPages", u"4.88", None))
         self.lineEdit_PID_0_D.setText(QCoreApplication.translate("MainPages", u"593", None))
         self.lineEdit_PID_0_I.setText(QCoreApplication.translate("MainPages", u"1000", None))
         self.label_121.setText(QCoreApplication.translate("MainPages", u"PID\u8a2d\u5b9a 0", None))

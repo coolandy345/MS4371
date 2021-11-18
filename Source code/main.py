@@ -86,10 +86,10 @@ if __name__ == "__main__":
     with ProcessPoolExecutor(max_workers=10) as executor:
         
         executor.submit(csv_manager_thread,MemoryPool,QueuePool,EventPool)
+
         executor.submit(run_async_server,MemoryPool,QueuePool)
         executor.submit(databaseWriteThread,MemoryPool,QueuePool,EventPool)
         executor.submit(databaseWriteThread_NoModbusLoop,MemoryPool,QueuePool,EventPool)
-
         executor.submit(operator_thread,MemoryPool,QueuePool,EventPool)
 
         Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool,EventPool)

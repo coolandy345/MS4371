@@ -83,6 +83,8 @@ class Testfile_manager(QWidget):
         self.memory_reader()
         self.set_parameter()
         self.utility_setup()
+        self.utility_update()
+        
 
     def memory_reader(self):
 
@@ -147,21 +149,36 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_PID_4_I.setText(str(self.pid_parameter_list[4][1]))
         self._parent.ui.load_pages.lineEdit_PID_4_D.setText(str(self.pid_parameter_list[4][2]))
 
+
+    def utility_update(self):
+
+        if self._Costom_Test:
+            self._parent.ui.load_pages.lineEdit_costomer.setEnabled(True)
+            self._parent.ui.load_pages.lineEdit_costomerName.setEnabled(True)
+            self._parent.ui.load_pages.label_4.setEnabled(True)
+            self._parent.ui.load_pages.label_5.setEnabled(True)
+        else:
+            self._parent.ui.load_pages.lineEdit_costomer.setEnabled(False)
+            self._parent.ui.load_pages.lineEdit_costomerName.setEnabled(False)
+            self._parent.ui.load_pages.label_4.setEnabled(False)
+            self._parent.ui.load_pages.label_5.setEnabled(False)
+
+
     def utility_setup(self):
         self._parent.ui.load_pages.QC_Test_RadioButton.clicked.connect(self.button_callback)
         self._parent.ui.load_pages.Costom_Test_RadioButton.clicked.connect(self.button_callback)
-
+         
         self._parent.ui.load_pages.lineEdit_year.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_testNumber.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_costomer.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_costomerName.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_testMeterialName.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_testMeterial.editingFinished.connect(self.button_callback)
-        self._parent.ui.load_pages.lineEdit_MeterialMainDie.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_MeterialMainDie.textChanged.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_MeterialMainDie.setValidator(QDoubleValidator())
-        self._parent.ui.load_pages.lineEdit_MeterialinnerDie.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_MeterialinnerDie.textChanged.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_MeterialinnerDie.setValidator(QDoubleValidator())
-        self._parent.ui.load_pages.lineEdit_thinkness.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_thinkness.textChanged.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_thinkness.setValidator(QDoubleValidator())
 
         self._parent.ui.load_pages.lineEdit_PID_0_P.editingFinished.connect(self.button_callback)
@@ -268,7 +285,7 @@ class Testfile_manager(QWidget):
             self._Costom_Test=1
             self.set_memorypool_register("System memory","評価試験",self._QC_Test)
             self.set_memorypool_register("System memory","依頼試験",self._Costom_Test)
-            self.prepare_folder()
+            #self.prepare_folder()
 
         elif btn=="lineEdit_year":
             self._year=self._parent.ui.load_pages.lineEdit_year.text()
@@ -378,6 +395,9 @@ class Testfile_manager(QWidget):
         elif btn=="lineEdit_PID_4_D":
             self.PID_4_D=float(self._parent.ui.load_pages.lineEdit_PID_4_D.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_D",self.PID_4_D)
+
+
+        self.utility_update()
 
     def areaVolumeCal(self):
 

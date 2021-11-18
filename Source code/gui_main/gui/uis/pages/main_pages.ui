@@ -52,7 +52,7 @@ border-style: solid;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -127,8 +127,8 @@ QLineEdit:read-only {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>828</width>
-            <height>555</height>
+            <width>1055</width>
+            <height>671</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -188,7 +188,10 @@ QFrame:focus{
 }
 QFrame:hover{
 	border:none;
-}</string>
+}
+
+
+</string>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -200,37 +203,165 @@ QFrame:hover{
                     <property name="horizontalSpacing">
                      <number>12</number>
                     </property>
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="label_year">
+                    <item row="5" column="0">
+                     <widget class="QLabel" name="label_4">
                       <property name="minimumSize">
                        <size>
-                        <width>140</width>
+                        <width>100</width>
                         <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>140</width>
+                        <width>100</width>
                         <height>35</height>
                        </size>
-                      </property>
-                      <property name="mouseTracking">
-                       <bool>true</bool>
-                      </property>
-                      <property name="layoutDirection">
-                       <enum>Qt::LeftToRight</enum>
                       </property>
                       <property name="styleSheet">
                        <string notr="true"/>
                       </property>
                       <property name="text">
-                       <string>年度</string>
+                       <string>依頼元</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                       </property>
-                      <property name="margin">
-                       <number>0</number>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QLineEdit" name="lineEdit_testNumber">
+                      <property name="minimumSize">
+                       <size>
+                        <width>200</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>MS-4371</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="0">
+                     <widget class="QLabel" name="label_5">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>依頼者</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QRadioButton" name="Costom_Test_RadioButton">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>32</height>
+                       </size>
+                      </property>
+                      <property name="layoutDirection">
+                       <enum>Qt::RightToLeft</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(36, 40, 49);</string>
+                      </property>
+                      <property name="text">
+                       <string>依頼測定</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_60">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>測定番号</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QRadioButton" name="QC_Test_RadioButton">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="layoutDirection">
+                       <enum>Qt::RightToLeft</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(36, 40, 49);</string>
+                      </property>
+                      <property name="text">
+                       <string>評価試験</string>
+                      </property>
+                      <property name="checked">
+                       <bool>false</bool>
                       </property>
                      </widget>
                     </item>
@@ -265,128 +396,41 @@ QFrame:hover{
                       </property>
                      </widget>
                     </item>
-                    <item row="1" column="0">
-                     <widget class="QRadioButton" name="QC_Test_RadioButton">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_year">
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
+                        <width>100</width>
                         <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
+                        <width>100</width>
                         <height>35</height>
                        </size>
                       </property>
-                      <property name="styleSheet">
-                       <string notr="true">padding-left:60px;
-background-color: rgb(36, 40, 49);</string>
-                      </property>
-                      <property name="text">
-                       <string>評価試験</string>
-                      </property>
-                      <property name="checked">
+                      <property name="mouseTracking">
                        <bool>true</bool>
                       </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QRadioButton" name="Costom_Test_RadioButton">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>32</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">padding-left:60px;
-background-color: rgb(36, 40, 49);</string>
-                      </property>
-                      <property name="text">
-                       <string>依頼測定</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QLabel" name="label_60">
-                      <property name="minimumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
+                      <property name="layoutDirection">
+                       <enum>Qt::LeftToRight</enum>
                       </property>
                       <property name="styleSheet">
                        <string notr="true"/>
                       </property>
                       <property name="text">
-                       <string>依頼測定番号</string>
+                       <string>年度</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                       </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <widget class="QLineEdit" name="lineEdit_testNumber">
-                      <property name="minimumSize">
-                       <size>
-                        <width>200</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>MS-4371</string>
+                      <property name="margin">
+                       <number>0</number>
                       </property>
                      </widget>
                     </item>
-                    <item row="4" column="0">
-                     <widget class="QLabel" name="label_4">
-                      <property name="minimumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>依頼元</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="1">
+                    <item row="5" column="1">
                      <widget class="QLineEdit" name="lineEdit_costomer">
                       <property name="minimumSize">
                        <size>
@@ -408,38 +452,7 @@ background-color: rgb(36, 40, 49);</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="5" column="0">
-                     <widget class="QLabel" name="label_5">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>依頼者</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="5" column="1">
+                    <item row="6" column="1">
                      <widget class="QLineEdit" name="lineEdit_costomerName">
                       <property name="minimumSize">
                        <size>
@@ -602,7 +615,7 @@ QFrame:hover{
                        <string notr="true"/>
                       </property>
                       <property name="text">
-                       <string>試料の厚さ(mm)</string>
+                       <string>2.5</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -853,7 +866,7 @@ QFrame:hover{
                        <string notr="true"/>
                       </property>
                       <property name="text">
-                       <string>試料の厚さ(mm)</string>
+                       <string>4.88</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -929,7 +942,13 @@ QFrame:focus{
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_10">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
                     <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
                      <number>0</number>
                     </property>
                     <property name="bottomMargin">
@@ -4961,7 +4980,7 @@ QComboBox:hover {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-900</y>
+            <y>0</y>
             <width>1045</width>
             <height>1643</height>
            </rect>
