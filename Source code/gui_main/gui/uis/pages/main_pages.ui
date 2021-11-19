@@ -52,7 +52,7 @@ border-style: solid;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -3998,7 +3998,61 @@ padding-left:10px;
                     <property name="spacing">
                      <number>6</number>
                     </property>
-                    <item row="3" column="0" alignment="Qt::AlignBottom">
+                    <item row="3" column="0">
+                     <widget class="QPushButton" name="Test2_pushButton">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="tabletTracking">
+                       <bool>false</bool>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 10px;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,30);
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(148, 227, 114);
+}
+
+QPushButton:hover {
+	color: rgb(44, 36, 0);
+	background-color: rgb(158, 239, 120);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgb(125, 189, 95);
+}
+</string>
+                      </property>
+                      <property name="text">
+                       <string>data 発信</string>
+                      </property>
+                      <property name="checkable">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="0" alignment="Qt::AlignBottom">
                      <widget class="QFrame" name="frame_5">
                       <property name="minimumSize">
                        <size>
@@ -4089,6 +4143,60 @@ QPushButton:pressed {
                         </widget>
                        </item>
                       </layout>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QPushButton" name="Test1_pushButton">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="tabletTracking">
+                       <bool>false</bool>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 10px;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,30);
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(148, 227, 114);
+}
+
+QPushButton:hover {
+	color: rgb(44, 36, 0);
+	background-color: rgb(158, 239, 120);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgb(125, 189, 95);
+}
+</string>
+                      </property>
+                      <property name="text">
+                       <string>記録開始</string>
+                      </property>
+                      <property name="checkable">
+                       <bool>false</bool>
+                      </property>
                      </widget>
                     </item>
                     <item row="0" column="0">
@@ -4220,7 +4328,7 @@ border:None</string>
                       </layout>
                      </widget>
                     </item>
-                    <item row="5" column="0" alignment="Qt::AlignBottom">
+                    <item row="6" column="0" alignment="Qt::AlignBottom">
                      <widget class="QFrame" name="frame_4">
                       <property name="minimumSize">
                        <size>
@@ -4398,62 +4506,8 @@ QPushButton:pressed {
                       </layout>
                      </widget>
                     </item>
-                    <item row="1" column="0">
-                     <widget class="QPushButton" name="Test1_pushButton">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="tabletTracking">
-                       <bool>false</bool>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(65, 65, 65);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 10px;
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,30);
-}
-QPushButton:checked{
-	color: rgb(44, 36, 0);
-	background-color: rgb(148, 227, 114);
-}
-
-QPushButton:hover {
-	color: rgb(44, 36, 0);
-	background-color: rgb(158, 239, 120);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgb(125, 189, 95);
-}
-</string>
-                      </property>
-                      <property name="text">
-                       <string>Test1</string>
-                      </property>
-                      <property name="checkable">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
                     <item row="2" column="0">
-                     <widget class="QPushButton" name="Test2_pushButton">
+                     <widget class="QPushButton" name="Test3_pushButton">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -4499,7 +4553,7 @@ QPushButton:pressed {
 </string>
                       </property>
                       <property name="text">
-                       <string>Test2</string>
+                       <string>data 停止</string>
                       </property>
                       <property name="checkable">
                        <bool>false</bool>
@@ -5088,7 +5142,7 @@ QComboBox:hover {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-840</y>
+            <y>0</y>
             <width>1045</width>
             <height>1650</height>
            </rect>

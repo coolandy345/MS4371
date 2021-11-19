@@ -78,7 +78,7 @@ class TestPatternWidget(QWidget):
         self.utility_setup()
         self.setup_TempPattern()
         self.setup_TempGraph()
-        #self.memory_reader()
+        self.memory_reader()
         self.patternFile_Load()
         self.update_Request=True
 
@@ -674,7 +674,7 @@ class TestPatternWidget(QWidget):
                 elif result=="Cancel":
                     #User is not want Delete file
                     self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.disconnect()
-                    self._parent.ui.load_pages.testfile_comboBox.setCurrentIndex(self.focus_patternFile_number)
+                    self._parent.ui.load_pages.testfile_comboBox.setCurrentIndex(self.focus_patternFile_number-1)
                     self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
                     return
 
@@ -758,7 +758,7 @@ class TestPatternWidget(QWidget):
 
     def patternFile_Load(self):
 
-
+        
         self.set_memorypool_register("Measurement Pattern","フォーカスPTN番号",self.focus_patternFile_number)
         self.memory_reader()
 
@@ -1006,6 +1006,7 @@ class TestPatternWidget(QWidget):
                 self.cache_steplist.filter_count    != self.patternFiles[self.focus_patternFile_number].filter_count
 
                 ):
+                
                 self.content_Change=True
 
         
@@ -1017,6 +1018,7 @@ class TestPatternWidget(QWidget):
                 if(
                 cache_stepUnit.voltage                !=memory_stepUnit.voltage
                 ):
+                    
                     self.content_Change=True
 
 

@@ -54,6 +54,7 @@ if __name__ == "__main__":
     QueuePool["subFolderMakeQueue"]=MemoryPoolManager.Queue()
     QueuePool["fileMakeQueue"]=MemoryPoolManager.Queue()
     QueuePool["testDataQueue"]=MemoryPoolManager.Queue()
+    QueuePool["GUI_DataQueue"]=MemoryPoolManager.Queue()
 
     QueuePool["dialog comfirmQueue"]=MemoryPoolManager.Queue()
     QueuePool["dialog resultQueue"]=MemoryPoolManager.Queue()
@@ -70,6 +71,11 @@ if __name__ == "__main__":
     EventPool["GPIB_Test_Finish"]=MemoryPoolManager.Event()
     EventPool["CSV_Data_arrive"]=MemoryPoolManager.Event()
     EventPool["GUI_Data_arrive"]=MemoryPoolManager.Event()
+
+    
+    EventPool["data_stream_start"]=MemoryPoolManager.Event()
+    EventPool["data_stream_stop"]=MemoryPoolManager.Event()
+    
     
     EventPool["Database_data_Initial"]=MemoryPoolManager.Event()
     EventPool["CSV_Record_stop"]=MemoryPoolManager.Event()

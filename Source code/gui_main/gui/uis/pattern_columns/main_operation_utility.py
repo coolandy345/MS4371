@@ -152,6 +152,8 @@ class Main_utility_manager(QWidget):
         self.timeMaxRange=10
         self.timeMinRange=1
 
+        self.graph_Update_request=False
+
         self.utility_setup()
         self.graph_setup()
 
@@ -161,9 +163,10 @@ class Main_utility_manager(QWidget):
         self.realTime_Resistor=0
 
         self.measurement_start=False
-        #self.timer=QTimer()
-        #self.timer.timeout.connect(self.ultility_Update_Work)
-        #self.timer.start(10)
+
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.graph_Update_Work)
+        self.timer.start(10)
 
         ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
         ultility_Update_Thread.start()
@@ -288,13 +291,21 @@ class Main_utility_manager(QWidget):
             self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
             
     def btn_callback(self):
+
         btn_name=self.sender().objectName()
         print(btn_name,"is press")
 
         if btn_name == "btn_AutoMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_AutoOperate)
 
-
+        if btn_name == "Resistor_checkBox":
+            pass
+            
+        if btn_name == "Voltage_checkBox":
+            pass
+        
+        if btn_name == "Current_checkBox":
+            pass
 
         
         elif btn_name == "Test1_pushButton":
@@ -303,7 +314,15 @@ class Main_utility_manager(QWidget):
             measurement_finish_wait_Thread.start()
 
         elif btn_name == "Test2_pushButton":
-            pass
+            self.eventPool["data_stream_start"].set()
+
+            self.dataRecord_Start=True
+            data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
+            data_receive_Thread.start()
+
+        elif btn_name == "Test3_pushButton":
+            self.dataRecord_Start=False
+            self.eventPool["data_stream_stop"].set()
 
 
         elif btn_name == "Noisetest_pushButton":
@@ -449,7 +468,32 @@ class Main_utility_manager(QWidget):
                 self.timeLabel="hour"
                 self.timeMaxRange=10
                 self.timeMinRange=1
+    
+    def data_receive_Work(self):
+        
+        self.temp_data_array=[]
+        self.voltage_data_array=[]
+        self.current_data_array=[]
+        self.resistance_data_array=[]
+        print("prepare")
+        while self.dataRecord_Start:
+            try:
+                getItem=self.queuePool["GUI_DataQueue"].get(timeout=0.1)
 
+                self.set_memorypool_register("Modbus Registor Pool - Registor","温度PV値",getItem.Temperature)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","現在電圧値",getItem.voltage)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","現在電流値",getItem.current)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","現在抵抗値",getItem.resistance)
+
+                self.temp_data_array.append(getItem.Temperature)
+                self.voltage_data_array.append(getItem.voltage)
+                self.current_data_array.append(getItem.current)
+                self.resistance_data_array.append(getItem.resistance)
+
+                self.graph_Update_request=True
+
+            except:
+                pass
 
     def utility_update(self):
         pass
@@ -476,7 +520,11 @@ class Main_utility_manager(QWidget):
         
         self._parent.ui.load_pages.Test1_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.Test2_pushButton.clicked.connect(self.btn_callback)
-
+        self._parent.ui.load_pages.Test3_pushButton.clicked.connect(self.btn_callback)
+        
+        self._parent.ui.load_pages.Resistor_checkBox.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.Voltage_checkBox.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.Current_checkBox.clicked.connect(self.btn_callback)
         
 
         
@@ -688,21 +736,36 @@ class Main_utility_manager(QWidget):
                 bg_color_pressed =  "#1e2229",
             )
         self._parent.ui.load_pages.Layout_Status_2635B_GPIBConnecton.addWidget(self._parent.gPIBConnecton_2635B_icon, Qt.AlignCenter, Qt.AlignCenter)
+    
+    def graph_Update_Work(self):
+        if self.graph_Update_request:
+            self.graph_Update_request=False
+            self.graph_update()
 
     def graph_update(self):
         self.measurement_data_array=[]
 
         if self.graph_Item=="Measure_Data":
-            print("Measure_Data")
+            #print("Measure_Data")
             #for data in self._parent.MMG.memoryPool["Read Measurement Data"]:
             #    XYdata={}
             #    XYdata["x"]=data.time/self.timeUnit
             #    XYdata["y"]=data.resistor
             #    self.measurement_data_array.append(XYdata)
-            self.measurement_data_array = 1000 * np.random.random(size=10000)
+
+            #self.measurement_data_array = 1000 * np.random.random(size=10000)
             #self.measurement_data_array =range(1,10000)
 
-            self._parent.curve.setData(self.measurement_data_array)
+            #self.temp_data_array=[]
+            #self.voltage_data_array=[]
+            #self.current_data_array=[]
+            #self.resistance_data_array=[]
+            #print(self.temp_data_array)
+
+            self._parent.voltage_curve.setData(self.voltage_data_array)
+            self._parent.current_curve.setData(self.current_data_array)
+            self._parent.restance_curve.setData(self.resistance_data_array)
+
 
             self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
             self.realTimeData_Graph.setLabel(axis='left', text='抵抗値', units='Ω')
@@ -725,7 +788,7 @@ class Main_utility_manager(QWidget):
             else:
                 self.measurement_data_array=[]
 
-            self._parent.curve.setData(self.measurement_data_array)
+            self._parent.voltage_curve.setData(self.measurement_data_array)
             self.timeUnit=3600
             self.timeLabel="hr"
             self.timeMaxRange=10
@@ -757,15 +820,29 @@ class Main_utility_manager(QWidget):
         #self.realTimeData_Graph.setLimits(minXRange=1,maxXRange=10)
         self.realTimeData_Graph.setLimits(xMin=0,yMin=0)
 
-        self._parent.curve=self.realTimeData_Graph.plot(pen=pg.mkPen(225, 230, 241),
+        self._parent.voltage_curve=self.realTimeData_Graph.plot(pen="r",
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
-                                                        symbolSize=5,
+                                                        symbolSize=1,
+                                                        name="予定パターン",
+                                                        )
+
+        self._parent.current_curve=self.realTimeData_Graph.plot(pen="g",
+                                                        symbolPen='w',
+                                                        symbolBrush=(0,0,0),
+                                                        symbolSize=1,
+                                                        name="予定パターン",
+                                                        )
+
+        self._parent.restance_curve=self.realTimeData_Graph.plot(pen="b",
+                                                        symbolPen='w',
+                                                        symbolBrush=(0,0,0),
+                                                        symbolSize=1,
                                                         name="予定パターン",
                                                         )
         
         self.measurement_data_array=[]
-        self._parent.curve.setData(self.measurement_data_array)
+        self._parent.voltage_curve.setData(self.measurement_data_array)
         self._parent.ui.load_pages.realtime_grapgLayout.addWidget(self.realTimeData_Graph, Qt.AlignCenter, Qt.AlignCenter)
 
     def realtime_data_Update_Work(self):
@@ -773,19 +850,20 @@ class Main_utility_manager(QWidget):
         while 1:
             time.sleep(0.1)
 
+
             if self.realTime_Temp!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue():
                 self.realTime_Temp=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()
                 self._parent.ui.load_pages.realtime_Temp_lineEdit.setText("{}".format(Quantity(self.realTime_Temp,"℃").render(prec=4)))
 
-            elif self.realTime_Voltage!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在電圧値"].getValue():
+            if self.realTime_Voltage!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在電圧値"].getValue():
                 self.realTime_Voltage=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在電圧値"].getValue()
                 self._parent.ui.load_pages.realtime_Voltage_lineEdit.setText("{}".format(Quantity(self.realTime_Voltage,"V").render(prec=4)))
 
-            elif self.realTime_Current!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在電流値"].getValue():
+            if self.realTime_Current!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在電流値"].getValue():
                 self.realTime_Current=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在電流値"].getValue()
                 self._parent.ui.load_pages.realtime_Current_lineEdit.setText("{}".format(Quantity(self.realTime_Current,"A").render(prec=4)))
 
-            elif self.realTime_Resistor!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在抵抗値"].getValue():
+            if self.realTime_Resistor!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在抵抗値"].getValue():
                 self.realTime_Resistor=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["現在抵抗値"].getValue()
                 self._parent.ui.load_pages.realtime_Resistor_lineEdit.setText("{}".format(Quantity(self.realTime_Resistor,"Ω").render(prec=4)))
 
@@ -834,7 +912,6 @@ class Main_utility_manager(QWidget):
         self.eventPool["Auto Run finish"].wait()
         self.eventPool["Auto Run finish"].clear()
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
-        time.sleep(2)
         print("測定終了")
         self.measurement_start=False
 
@@ -880,7 +957,12 @@ class Main_utility_manager(QWidget):
             self.gPIBConnecton_2635B_icon_active=self._parent.MMG.memoryPool["System memory"]["2635B connection"].getValue()
             self.gPIBConnecton_2657A_icon_active=self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue()
 
-
+            self._parent.restance_curve.setVisible (self._parent.ui.load_pages.Resistor_checkBox.isChecked())
+            self._parent.voltage_curve.setVisible (self._parent.ui.load_pages.Voltage_checkBox.isChecked())
+            self._parent.current_curve.setVisible (self._parent.ui.load_pages.Current_checkBox.isChecked())
+            #self._parent.voltage_curve.setData(self.voltage_data_array)
+            #self._parent.current_curve.setData(self.current_data_array)
+            #self._parent.restance_curve.setData(self.resistance_data_array)
 
             if self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue():
                 

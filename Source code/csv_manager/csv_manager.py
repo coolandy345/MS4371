@@ -28,25 +28,46 @@ class Csv_manager():
         self.main_folder_path=""
         self.csvPath=""
 
-        reset_Thread = threading.Thread(target = self.reset_Work,daemon=True)
-        reset_Thread.start()
+        #reset_Thread = threading.Thread(target = self.reset_Work,daemon=True)
+        #reset_Thread.start()
 
 
-    def reset_Work(self):
-        while 1:
-            self.eventPool["CSV_Record_stop"].wait()
-            self.dataRecord_Start=False
+    
 
-    def record_Work(self):
-        while self.dataRecord_Start:
-            self.eventPool["CSV_Record_stop"].wait()
-            self.dataRecord_Start=False
+    
+
 
     def startRecord_CsvFile(self):
+        print("startRecord_CsvFile")
         self.dataRecord_Start=True
         Record_Thread = threading.Thread(target = self.record_Work,daemon=True)
         Record_Thread.start()
-        pass
+
+    def record_Work(self):
+        while self.dataRecord_Start:
+            try:
+                getItem=self.queuePool["testDataQueue"].get(timeout=0.1)
+
+
+
+                with open(self.csv, 'a', newline='') as csvfile:
+                    writer = csv.writer(csvfile)
+                    writer.writerow([   getItem.count,
+                                                getItem.time,
+                                                getItem.Temperature,
+                                                getItem.voltage,
+                                                getItem.current,
+                                                getItem.resistance,
+                                                getItem.resistivity])
+                    
+            except:
+                pass
+
+    def stopRecord_CsvFile(self):
+        #while 1:
+        #    self.eventPool["CSV_Record_stop"].wait()
+        self.dataRecord_Start=False
+
     
     def prepare_Mainfolder(self):
         
@@ -54,6 +75,13 @@ class Csv_manager():
         Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
 
         basepath = "C:/高温抵抗測定結果"
+        try:
+            os.mkdir(basepath)
+        except FileExistsError:
+            pass
+
+
+
         directory = "{}".format(str(System_memory["年度"].getValue()))
         
         
@@ -208,23 +236,22 @@ class Csv_manager():
             writer.writerow(['主測定サンプリング周期(s)', self.profile.time_sample])
             writer.writerow(['BG 測定時間(min)', self.profile.bg_time])
             writer.writerow(['BG 測定サンプリング周期(s)', self.profile.bg_time_sample])
-            writer.writerow(['Speed', self.profile.speed])
-            writer.writerow(['Filter', self.profile.filter])
+            writer.writerow(['Speed', "{}".format(self.profile.speed)])
+            writer.writerow(['Filter', "{}".format(self.profile.filter)])
             writer.writerow(['Filter count', self.profile.filter_count])
 
             
 
 
     def prepare_Record_Header(self,type):
+        print("prepare_Record_Header",self.csv)
 
-        with open(self.csv, 'w', newline='') as csvfile:
+        with open(self.csv, 'a', newline='') as csvfile:
 
             writer = csv.writer(csvfile)
-
             writer.writerow("")
-            writer.writerow(type)
-
-            writer.writerow("測定次数","経過時間(sec)","温度℃","印加電圧(v)","測定電流A","抵抗値(Ω)","体積抵抗率(Ω・cm)")
+            writer.writerow(["{}".format(type)])
+            writer.writerow(["測定次数","経過時間(sec)","温度℃","印加電圧(v)","測定電流A","抵抗値(Ω)","体積抵抗率(Ω・cm)"])
 
 
 

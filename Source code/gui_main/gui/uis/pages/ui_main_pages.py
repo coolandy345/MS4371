@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesyirfPO.ui'
+## Form generated from reading UI file 'main_pageslclUdb.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -1781,6 +1781,42 @@ class Ui_MainPages(object):
         self.gridLayout_16.setSpacing(6)
         self.gridLayout_16.setObjectName(u"gridLayout_16")
         self.gridLayout_16.setContentsMargins(10, 10, 10, 10)
+        self.Test2_pushButton = QPushButton(self.frame_8)
+        self.Test2_pushButton.setObjectName(u"Test2_pushButton")
+        self.Test2_pushButton.setMinimumSize(QSize(0, 0))
+        self.Test2_pushButton.setMaximumSize(QSize(16777215, 16777215))
+        self.Test2_pushButton.setTabletTracking(False)
+        self.Test2_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(65, 65, 65);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 10px;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,30);\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(148, 227, 114);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(158, 239, 120);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(125, 189, 95);\n"
+"}\n"
+"")
+        self.Test2_pushButton.setCheckable(True)
+
+        self.gridLayout_16.addWidget(self.Test2_pushButton, 3, 0, 1, 1)
+
         self.frame_5 = QFrame(self.frame_8)
         self.frame_5.setObjectName(u"frame_5")
         self.frame_5.setMinimumSize(QSize(0, 0))
@@ -1828,7 +1864,43 @@ class Ui_MainPages(object):
         self.gridLayout_12.addWidget(self.gasFreeflow_pushButton, 2, 0, 1, 2)
 
 
-        self.gridLayout_16.addWidget(self.frame_5, 3, 0, 1, 1, Qt.AlignBottom)
+        self.gridLayout_16.addWidget(self.frame_5, 4, 0, 1, 1, Qt.AlignBottom)
+
+        self.Test1_pushButton = QPushButton(self.frame_8)
+        self.Test1_pushButton.setObjectName(u"Test1_pushButton")
+        self.Test1_pushButton.setMinimumSize(QSize(0, 0))
+        self.Test1_pushButton.setMaximumSize(QSize(16777215, 16777215))
+        self.Test1_pushButton.setTabletTracking(False)
+        self.Test1_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(65, 65, 65);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 10px;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,30);\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(148, 227, 114);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(158, 239, 120);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(125, 189, 95);\n"
+"}\n"
+"")
+        self.Test1_pushButton.setCheckable(False)
+
+        self.gridLayout_16.addWidget(self.Test1_pushButton, 1, 0, 1, 1)
 
         self.frame_6 = QFrame(self.frame_8)
         self.frame_6.setObjectName(u"frame_6")
@@ -1984,14 +2056,14 @@ class Ui_MainPages(object):
         self.verticalLayout_7.addWidget(self.eMSstop_pushButton)
 
 
-        self.gridLayout_16.addWidget(self.frame_4, 5, 0, 1, 1, Qt.AlignBottom)
+        self.gridLayout_16.addWidget(self.frame_4, 6, 0, 1, 1, Qt.AlignBottom)
 
-        self.Test1_pushButton = QPushButton(self.frame_8)
-        self.Test1_pushButton.setObjectName(u"Test1_pushButton")
-        self.Test1_pushButton.setMinimumSize(QSize(0, 0))
-        self.Test1_pushButton.setMaximumSize(QSize(16777215, 16777215))
-        self.Test1_pushButton.setTabletTracking(False)
-        self.Test1_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+        self.Test3_pushButton = QPushButton(self.frame_8)
+        self.Test3_pushButton.setObjectName(u"Test3_pushButton")
+        self.Test3_pushButton.setMinimumSize(QSize(0, 0))
+        self.Test3_pushButton.setMaximumSize(QSize(16777215, 16777215))
+        self.Test3_pushButton.setTabletTracking(False)
+        self.Test3_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
 "	color: rgb(202, 206, 216);\n"
 "	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "	background-color: rgb(65, 65, 65);\n"
@@ -2018,45 +2090,9 @@ class Ui_MainPages(object):
 "	background-color: rgb(125, 189, 95);\n"
 "}\n"
 "")
-        self.Test1_pushButton.setCheckable(False)
+        self.Test3_pushButton.setCheckable(False)
 
-        self.gridLayout_16.addWidget(self.Test1_pushButton, 1, 0, 1, 1)
-
-        self.Test2_pushButton = QPushButton(self.frame_8)
-        self.Test2_pushButton.setObjectName(u"Test2_pushButton")
-        self.Test2_pushButton.setMinimumSize(QSize(0, 0))
-        self.Test2_pushButton.setMaximumSize(QSize(16777215, 16777215))
-        self.Test2_pushButton.setTabletTracking(False)
-        self.Test2_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
-"	color: rgb(202, 206, 216);\n"
-"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"	background-color: rgb(65, 65, 65);\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-radius: 10px;\n"
-"}\n"
-"QPushButton:disabled {\n"
-"	color: rgb(70, 80, 95);\n"
-"	background-color: rgba(0, 0, 0,30);\n"
-"}\n"
-"QPushButton:checked{\n"
-"	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(148, 227, 114);\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(158, 239, 120);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(125, 189, 95);\n"
-"}\n"
-"")
-        self.Test2_pushButton.setCheckable(False)
-
-        self.gridLayout_16.addWidget(self.Test2_pushButton, 2, 0, 1, 1)
+        self.gridLayout_16.addWidget(self.Test3_pushButton, 2, 0, 1, 1)
 
 
         self.gridLayout_15.addWidget(self.frame_8, 0, 0, 1, 1)
@@ -2407,7 +2443,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -840, 1045, 1650))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1045, 1650))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -3744,7 +3780,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 
@@ -3845,7 +3881,9 @@ class Ui_MainPages(object):
         self.remoteConnect_pushButton.setText(QCoreApplication.translate("MainPages", u"\u30ea\u30e2\u30fc\u30c8\u63a5\u7d9a", None))
         self.btn_AutoMode.setText(QCoreApplication.translate("MainPages", u"\u81ea\u52d5\u30e2\u30fc\u30c9", None))
         self.btn_ManaualMode.setText(QCoreApplication.translate("MainPages", u"\u624b\u52d5\u30e2\u30fc\u30c9", None))
+        self.Test2_pushButton.setText(QCoreApplication.translate("MainPages", u"data \u767a\u4fe1", None))
         self.gasFreeflow_pushButton.setText(QCoreApplication.translate("MainPages", u"\u5927\u6c17\u5727", None))
+        self.Test1_pushButton.setText(QCoreApplication.translate("MainPages", u"\u8a18\u9332\u958b\u59cb", None))
         self.label_16.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u30d1\u30bf\u30fc\u30f3\u540d", None))
         self.AutoMode_pattern_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"pattern1", None))
         self.AutoMode_pattern_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"pattern2", None))
@@ -3854,8 +3892,7 @@ class Ui_MainPages(object):
         self.autostart_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u958b\u59cb", None))
         self.label_11.setText("")
         self.eMSstop_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u505c\u6b62", None))
-        self.Test1_pushButton.setText(QCoreApplication.translate("MainPages", u"Test1", None))
-        self.Test2_pushButton.setText(QCoreApplication.translate("MainPages", u"Test2", None))
+        self.Test3_pushButton.setText(QCoreApplication.translate("MainPages", u"data \u505c\u6b62", None))
         self.label_20.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u96fb\u5727(V)", None))
         self.label_21.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u30e2\u30fc\u30c9", None))
         self.measurement_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u9023\u7d9a\u4e8c\u56de\u6e2c\u5b9a", None))

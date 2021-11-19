@@ -66,13 +66,24 @@ class Test_profile_package():
 
         self.voltage=voltage
         self.time=time
-        self.time_sample=time_sample
         self.bg_time=bg_time
-        self.bg_time_sample=bg_time_sample
         self.speed=speed
         self.filter=filter
-        self.filter_count=filter_count
 
+        if not self.time:
+            self.time_sample=0
+        else:
+            self.time_sample=time_sample
+
+        if not self.bg_time:
+            self.bg_time_sample=0
+        else:
+            self.bg_time_sample=bg_time_sample
+
+        if self.filter=="なし":
+            self.filter_count=0
+        else:
+            self.filter_count=filter_count
 
         if self.mode==self.QC_Test:
             self.number=""
@@ -90,7 +101,7 @@ class Single_data_unitPackage():
                  voltage=0,
                  current=0,
                  resistance=0,
-                 resistivity=0,
+                 resistivity=0
 
                  ):
         self.time=time
@@ -98,7 +109,9 @@ class Single_data_unitPackage():
         self.Temperature=Temperature
         self.voltage=voltage
         self.current=current
-        self.resistance=voltage/current
+        self.resistance=resistance
+        self.resistivity=resistivity
+
 
 
 
@@ -133,8 +146,6 @@ class Operator():
 
         stop_noise_measurement_Thread = threading.Thread(target = self.stop_noise_measurement,daemon=True)
         stop_noise_measurement_Thread.start()
-
-        
 
 
         test1_Thread=threading.Thread(target = self.test_Work1,daemon=True)
@@ -470,31 +481,47 @@ class Operator():
         while self.data_stream_start:
             #return random.random()
             datapackage=Single_data_unitPackage(
-                
-                
-                
-                
-                
-                
-                
-                
+                    time=random.random(),
+                     count=random.random(),
+                     Temperature=random.random(),
+                     voltage=random.random(),
+                     current=random.random(),
+                     resistance=random.random(),
+                     resistivity=random.random(),
                 )
-
-
-
-
             self.queuePool["testDataQueue"].put(datapackage)
+            self.queuePool["GUI_DataQueue"].put(datapackage)
 
-            time.sleep(0.1)
+            
+
+            time.sleep(0.01)
 
     def stop_data_stream(self):
+        #get event Start Run Auto run
+        self.eventPool["data_stream_stop"].wait()
+        #clear  Start Run Auto run event
+        self.eventPool["data_stream_stop"].clear()
+
+        
+        print("stop_data_stream")
+
         self.data_stream_start=False
 
+        
 
     def start_data_stream(self):
+        #get event Start Run Auto run
+        self.eventPool["data_stream_start"].wait()
+        #clear  Start Run Auto run event
+        self.eventPool["data_stream_start"].clear()
+
+        print("start_data_stream")
+
         self.data_stream_start=True
         data_stream_Thread = threading.Thread(target = self.data_stream_work,daemon=True)
         data_stream_Thread.start()
+
+
 
     def auto_Run_Start_Work(self):
         while 1:
@@ -548,12 +575,14 @@ class Operator():
                     voltage=0
                     _time=0
                     bg_time=Measurement_Pattern["PTNData_{}_BG0測定時間".format(test_pattern_number)].getValue()
+                    measuretype=["BG測定結果"]
 
                 else:
                     step_name="測定NO-{}".format(step)
                     voltage=Measurement_Pattern["PTNData_{}_STEP_{}_電圧".format(test_pattern_number,step)].getValue()
                     bg_time=Measurement_Pattern["PTNData_{}_BG測定時間".format(test_pattern_number)].getValue()
-                    _time==Measurement_Pattern["PTNData_{}_測定時間".format(test_pattern_number)].getValue(),
+                    _time=Measurement_Pattern["PTNData_{}_測定時間".format(test_pattern_number)].getValue()
+                    measuretype=["抵抗測定結果","BG測定結果"]
 
                 gas=Modbus_Registor_Pool["PTNData_{}_測定雰囲気".format(pattern_number)].getValue()
 
@@ -564,13 +593,13 @@ class Operator():
                 elif gas==4:
                     gas="N2置換"
 
-                speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue(),
+                speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue()
                 if speed==0:
                     speed="Normal (1PLC)"
                 elif speed==1:
                     speed="Hi Accuracy (10PLC)"
 
-                filter=Measurement_Pattern["PTNData_{}_filter_type".format(test_pattern_number)].getValue(),
+                filter=Measurement_Pattern["PTNData_{}_filter_type".format(test_pattern_number)].getValue()
                 if filter==0:
                     filter="なし"
                 elif filter==1:
@@ -610,9 +639,21 @@ class Operator():
                 #Prepare Main Path
                 self.csv_manager.prepare_CsvFile(profile)
 
-                #starting listen data arrive
-                #self.csv_manager.startRecord_CsvFile()
+                for type in measuretype:
 
+                    #Prepare CSV Header
+                    self.csv_manager.prepare_Record_Header(type)
+
+                    #starting listen data arrive
+                    self.csv_manager.startRecord_CsvFile()
+
+
+                    self.start_data_stream()
+                    self.stop_data_stream()
+                    
+                    #starting listen data arrive
+                    self.csv_manager.stopRecord_CsvFile()
+                    
 
             self.eventPool["Auto Run finish"].set()
 
