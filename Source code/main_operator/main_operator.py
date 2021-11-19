@@ -9,6 +9,7 @@ from registor_manager import *
 from quantiphy import Quantity
 from csv_manager import  *
 import datetime
+import random
 
 class Test_folder_package():
 
@@ -87,7 +88,10 @@ class Single_data_unitPackage():
                  count=0,
                  Temperature=0,
                  voltage=0,
-                 current=0
+                 current=0,
+                 resistance=0,
+                 resistivity=0,
+
                  ):
         self.time=time
         self.count=count
@@ -461,7 +465,36 @@ class Operator():
 
             self.gpib_2657A.send_Command("Noise_Measurement.run()")
 
+    def data_stream_work(self):
+        #self.data_stream_start=False
+        while self.data_stream_start:
+            #return random.random()
+            datapackage=Single_data_unitPackage(
+                
+                
+                
+                
+                
+                
+                
+                
+                )
 
+
+
+
+            self.queuePool["testDataQueue"].put(datapackage)
+
+            time.sleep(0.1)
+
+    def stop_data_stream(self):
+        self.data_stream_start=False
+
+
+    def start_data_stream(self):
+        self.data_stream_start=True
+        data_stream_Thread = threading.Thread(target = self.data_stream_work,daemon=True)
+        data_stream_Thread.start()
 
     def auto_Run_Start_Work(self):
         while 1:

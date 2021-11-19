@@ -226,13 +226,7 @@ class Csv_manager():
 
             writer.writerow("測定次数","経過時間(sec)","温度℃","印加電圧(v)","測定電流A","抵抗値(Ω)","体積抵抗率(Ω・cm)")
 
-            if type=="BG測定結果":
 
-                writer.writerow(['測定日', profile.date])
-
-            elif type=="抵抗測定結果":
-
-                writer.writerow(['測定日', profile.date])
 
     def testDataQueue_Work(self,title):
 
