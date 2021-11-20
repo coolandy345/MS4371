@@ -48,16 +48,19 @@ class CustomDataBlock(ModbusSparseDataBlock):
     """ A datablock that stores the new value in memory
     and performs a custom action after it has been stored.
     """
-    def __init__(self,memorypool,queuepool):
+    def __init__(self,memorypool,queuepool,eventPool):
         #super().__init__()
         
 
         self.memorypool=memorypool
         self.Modbuspool=self.memorypool["Modbus Registor Pool - Registor"]
         self.queuepool=queuepool
+        self.eventPool=eventPool
         self.register_namedict={}
         self.register_dict={}
         self.register_shift=1
+
+        self.start_upload=False
 
         self.ethernet_connection=False
         self.ethernet_connection_pool=False
@@ -69,6 +72,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
         
         #get dict
         self.get_register_dict()
+
 
         self.Modbus_debug=False
         #print(self.register_dict)
@@ -88,6 +92,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
             self.register_namedict[unit.registor_number+self.register_shift]=unit.name
             self.register_dict[unit.registor_number+self.register_shift]=unit.getModbusValue()
 
+
     def getValues(self, address, count):
         self.ethernet_connection_pool=True
         registor_name=self.register_namedict[address]
@@ -98,6 +103,22 @@ class CustomDataBlock(ModbusSparseDataBlock):
             #registor_name=self.register_namedict[address+add]
             #value_list.append(self.Modbuspool[registor_name].getValue())
             print("modbus read - ","[{}]".format(address-self.register_shift),registor_name,count,self.Modbuspool[registor_name].getValue())
+
+        if address-self.register_shift==0:
+            self.start_upload=True
+            self.eventPool["Setting_upload_toPLC_Start"].set()
+            print("Setting_upload_toPLC_Start")
+
+        elif address-self.register_shift==10000:
+            self.start_upload=False
+
+            self.eventPool["Setting_upload_toPLC_Finish"].set()
+            print("Setting_upload_toPLC_Finish")
+
+        if self.start_upload:
+            print("{:0.2f}%".format(address/100))
+            self.queuepool["Setting_upload_toPLC_Queue"].put(address/100)
+
 
         return super().getValues(address, count)
 
@@ -177,11 +198,11 @@ class CustomDataBlock(ModbusSparseDataBlock):
                     change=True
                 address_temp+=1
             if change:
-                #if self.Modbus_debug:
-                    
-                    #print("modbus write - ","[{}]".format(address-self.register_shift),registor_name,"count - [{}]".format(len(value)),value)
-                    self.MainDatabase_upload_Work()
-                    #self.MainPool_update_Request=True
+                self.MainDatabase_upload_Work()
+                #self.MainPool_update_Request=True
+
+                if self.Modbus_debug:
+                    print("modbus write - ","[{}]".format(address-self.register_shift),registor_name,"count - [{}]".format(len(value)),value)
 
         else:
             change=False
@@ -192,8 +213,8 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 self.MainPool_update_namelist.append(registor_name)
                 change=True
             if change:
-                #if self.Modbus_debug:
-                #    print("modbus write - ","[{}]".format(address-self.register_shift),registor_name,value)
+                if self.Modbus_debug:
+                    print("modbus write - ","[{}]".format(address-self.register_shift),registor_name,value)
                 self.MainDatabase_upload_Work()
                 #self.MainPool_update_Request=True
             
@@ -256,9 +277,9 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
 
 
-def run_async_server(memorypool,queuePool):
+def run_async_server(memorypool,queuePool,eventPool):
     
-    block  = CustomDataBlock(memorypool,queuePool)
+    block  = CustomDataBlock(memorypool,queuePool,eventPool)
     #print(block.getValues(10, count=10))
 
     #block  = ModbusSequentialDataBlock(0, [17]*100)

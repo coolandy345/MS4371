@@ -350,7 +350,7 @@ class TempPatternWidget(QWidget):
         min=self.cache_steplist.total_time%60
         self._parent.ui.load_pages.Temp_Totaltime_Label.setText("合計時間：{} 時間 {} 分".format(hour,min))
         
-        if self.cache_steplist.RT_measure==2 and self.editorEnable:
+        if self.cache_steplist.RT_measure==1 and self.editorEnable:
 
             self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(self.editorEnable)
 
@@ -360,9 +360,9 @@ class TempPatternWidget(QWidget):
             self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(self.cache_steplist.RT_testpattern-1)
             self._parent.ui.load_pages.RT_testpattern_combobox.currentIndexChanged.connect(self.ui_click_callback)
 
-        elif self.cache_steplist.RT_measure==1:
-            self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(False)
-            self.cache_steplist.RT_testpattern=0
+        #elif self.cache_steplist.RT_measure==1:
+        #    self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(False)
+        #    self.cache_steplist.RT_testpattern=0
         else:
             self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(False)
             self.cache_steplist.RT_testpattern=0
@@ -377,7 +377,7 @@ class TempPatternWidget(QWidget):
 
         self._parent.ui.load_pages.RT_combobox.currentIndexChanged.disconnect()
         self._parent.ui.load_pages.RT_combobox.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.RT_combobox.setCurrentIndex(self.cache_steplist.RT_measure-1)
+        self._parent.ui.load_pages.RT_combobox.setCurrentIndex(self.cache_steplist.RT_measure)
         self._parent.ui.load_pages.RT_combobox.currentIndexChanged.connect(self.ui_click_callback)
 
         
@@ -502,7 +502,12 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].pattern.Hour_lineEdit.setText("{}".format(unit.time_hour))
                 self.step_widges_list[_step].pattern.Min_lineEdit.setText("{}".format(unit.time_min))
                 self.step_widges_list[_step].pattern.SV_lineEdit.setText("{}".format(unit.SV))
-                self.step_widges_list[_step].pattern.N2_lineEdit.setText("{}".format(unit.N2_flowRate*0.1))
+
+                if unit.N2_flowRate*0.1==0:
+                    self.step_widges_list[_step].pattern.N2_lineEdit.setText("0")
+                else:
+                    self.step_widges_list[_step].pattern.N2_lineEdit.setText("{}".format(unit.N2_flowRate*0.1))
+
                 self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
                 self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
 
@@ -640,7 +645,7 @@ class TempPatternWidget(QWidget):
             self.update()
 
         elif btn_name=="RT_combobox":
-            self.cache_steplist.set_RT_measure(self._parent.ui.load_pages.RT_combobox.currentIndex()+1)
+            self.cache_steplist.set_RT_measure(self._parent.ui.load_pages.RT_combobox.currentIndex())
             
             #self.update_Request=True
             self.update()

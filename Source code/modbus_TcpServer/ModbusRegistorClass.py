@@ -35,8 +35,12 @@ class ModbusPackage():
 
     def getModbusValue(self):
         if isinstance(self.value, int):
+            if not self.value>=0:
+                return 0
             return self.value
         elif isinstance(self.value, float):
+            if not self.value>=0:
+                return 0
             return int(self.value)
         else:
             if self.value:

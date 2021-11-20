@@ -34,6 +34,8 @@ def shotdown_entire_app(future):
 
 if __name__ == "__main__":
 
+    sys.setrecursionlimit(1500)
+
     MemoryPoolManager=Manager()
     MemoryPool = MemoryPoolManager.dict()
 
@@ -42,6 +44,9 @@ if __name__ == "__main__":
     QueuePool["database_Uplaod_Queue"]=MemoryPoolManager.Queue()
     QueuePool["database_modbusUplaod_Queue"]=MemoryPoolManager.Queue()
 
+
+    
+    QueuePool["Setting_upload_toPLC_Queue"]=MemoryPoolManager.Queue()
     
 
     QueuePool["memory_DownlaodToGUI_request_Queue"]=MemoryPoolManager.Queue()
@@ -60,6 +65,10 @@ if __name__ == "__main__":
     QueuePool["dialog resultQueue"]=MemoryPoolManager.Queue()
 
     EventPool={}
+
+    
+    EventPool["Setting_upload_toPLC_Start"]=MemoryPoolManager.Event()
+    EventPool["Setting_upload_toPLC_Finish"]=MemoryPoolManager.Event()
 
     EventPool["Auto Run Start"]=MemoryPoolManager.Event()
     EventPool["Auto Run finish"]=MemoryPoolManager.Event()
@@ -97,7 +106,7 @@ if __name__ == "__main__":
 
     with ProcessPoolExecutor(max_workers=10) as executor:
 
-        executor.submit(run_async_server,MemoryPool,QueuePool)
+        executor.submit(run_async_server,MemoryPool,QueuePool,EventPool)
         executor.submit(databaseWriteThread,MemoryPool,QueuePool,EventPool)
         executor.submit(databaseWriteThread_NoModbusLoop,MemoryPool,QueuePool,EventPool)
         executor.submit(operator_thread,MemoryPool,QueuePool,EventPool)

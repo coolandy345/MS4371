@@ -4,14 +4,13 @@
     "\\gui_main",
     "\\gui_main\\gui",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\uis\\pages",
-    "\\gui_main\\gui\\uis\\windows",
-    "\\gui_main\\gui\\uis\\windows\\main_window",
+    "\\gui_main\\gui\\uis\\pattern_columns",
     "\\gui_main\\gui\\widgets",
-    "\\gui_main\\gui\\widgets\\py_dialog",
     "\\gui_main\\gui\\widgets\\py_pattern",
-    "\\main_operator"
+    "\\gui_main\\gui\\widgets\\py_title_bar",
+    "\\main_operator",
+    "\\modbus_TcpServer"
   ],
-  "SelectedNode": "\\gui_main\\gui\\uis\\pattern_columns\\main_operation_utility.py",
+  "SelectedNode": "\\gui_main\\gui\\widgets\\py_title_bar\\py_title_bar.py",
   "PreviewInSolutionExplorer": false
 }

@@ -284,7 +284,7 @@ class PyTempStep(QWidget):
 
         elif btn_name=="N2_lineEdit":
             data=float(self.pattern.N2_lineEdit.text())*10
-            self._n2_flowrate,err=self.maxmin(1000,0,data)
+            self._n2_flowrate,err=self.maxmin(1000,0,int(data))
             if err:
                 self.pattern.N2_lineEdit.setText(str(self._n2_flowrate))
 

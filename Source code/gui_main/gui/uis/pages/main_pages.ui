@@ -5157,7 +5157,7 @@ QComboBox:hover {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-60</y>
+            <y>0</y>
             <width>1045</width>
             <height>1650</height>
            </rect>
@@ -5435,7 +5435,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>987</width>
+                      <width>100</width>
                       <height>400</height>
                      </rect>
                     </property>
@@ -6664,7 +6664,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>987</width>
+                      <width>100</width>
                       <height>200</height>
                      </rect>
                     </property>
