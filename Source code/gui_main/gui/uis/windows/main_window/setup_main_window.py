@@ -184,6 +184,8 @@ class SetupMainWindow:
         # ADD MENUS
         self.main_namespace.ui.left_menu.add_menus(SetupMainWindow.add_left_menus)
 
+        
+
         # SET SIGNALS
         self.main_namespace.ui.left_menu.clicked.connect(self.main_namespace.btn_clicked)
         self.main_namespace.ui.left_menu.released.connect(self.main_namespace.btn_released)

@@ -156,14 +156,52 @@ class PyTitleBar(QWidget):
         self.maximize_restore_button.released.connect(lambda: self.maximize_restore())
         self.close_button.released.connect(lambda: parent.close())
 
+        self.transferLabel = QLabel("設定転送中")
+        self.transferLabel.setFixedSize(70,20)
+        self.bg_layout.addWidget(self.transferLabel)
+
+        self.blankLabel = QLabel("")
+        self.blankLabel.setFixedSize(10,20)
+        self.bg_layout.addWidget(self.blankLabel)
+
+        self.circularProgress = QProgressBar()
+        self.circularProgress.setTextVisible(False)
+        self.circularProgress.setFixedSize(150,20)
+        self.circularProgress.setValue(100)
+        self.bg_layout.addWidget(self.circularProgress)
+
+        self.blankLabel_2 = QLabel("")
+        self.blankLabel_2.setFixedSize(10,20)
+        self.bg_layout.addWidget(self.blankLabel_2)
+
+        self.transferLabel.setVisible(False)
+        self.circularProgress.setVisible(False)
+        self.blankLabel.setVisible(False)
+
+        
         # Extra BTNs layout
         self.bg_layout.addLayout(self.custom_buttons_layout)
 
+        
         # ADD Buttons
         if is_custom_title_bar:            
             self.bg_layout.addWidget(self.minimize_button)
             self.bg_layout.addWidget(self.maximize_restore_button)
             self.bg_layout.addWidget(self.close_button)
+
+
+    def set_setting_Transfer(self,enable=False,value=0):
+        
+        print("set_setting_Transfer",enable,value)
+        self.transferLabel.setVisible(enable)
+        self.circularProgress.setVisible(enable)
+        self.blankLabel.setVisible(enable)
+        self.blankLabel_2.setVisible(enable)
+        
+        if enable:
+            self.circularProgress.setValue(value)
+        else:
+            self.circularProgress.setValue(value)
 
     # ADD BUTTONS TO TITLE BAR
     # Add btns and emit signals

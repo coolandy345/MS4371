@@ -266,7 +266,7 @@ class Operator():
         self.GPIB_device_ScriptPrepare(voltage,test_time,sample_time)
 
         #Wait PLC tell us if we can start to test
-        while not self.eventPool["Test approve"].wait(0.1):
+        while not self.eventPool["Test approve"].wait(timeout=0.1):
             #If we got stop signal
             if self.stop:
                 return False
@@ -282,7 +282,7 @@ class Operator():
         GPIB_data_retrive_Thread = threading.Thread(target = self.GPIB_data_retrive_Work,daemon=True)
         GPIB_data_retrive_Thread.start()
 
-        while not self.eventPool["GPIB_Test_Finish"].wait(0.1):
+        while not self.eventPool["GPIB_Test_Finish"].wait(timeout=0.1):
             #If we got stop signal
             if self.stop:
                 return False

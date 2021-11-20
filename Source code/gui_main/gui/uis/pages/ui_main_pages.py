@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesmYoYYT.ui'
+## Form generated from reading UI file 'main_pagesqFHijT.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -90,7 +90,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 810, 555))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1055, 671))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -2446,7 +2446,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -60, 1045, 1650))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1045, 1650))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -2594,7 +2594,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 987, 400))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 100, 400))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -3108,7 +3108,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 987, 200))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 100, 200))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -3783,7 +3783,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(1)
+        self.pages.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
 

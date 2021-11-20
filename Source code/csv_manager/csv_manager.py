@@ -189,7 +189,7 @@ class Csv_manager():
 
         while 1:
             try:
-                getItem=self.queuePool["fileMakeQueue"].get(0.1)
+                getItem=self.queuePool["fileMakeQueue"].get(timeout=0.1)
 
                 self.prepare_CsvFile(getItem)
                 if self.subFoldergetItem.stage[0]==Test_profile_package.Temp_stage:
@@ -266,7 +266,7 @@ class Csv_manager():
             process=True
             while 1:
                 try:
-                    getItem=self.queuePool["testDataQueue"].get(0.1)
+                    getItem=self.queuePool["testDataQueue"].get(timeout=0.1)
                     process=True
                 except :
                     process=False

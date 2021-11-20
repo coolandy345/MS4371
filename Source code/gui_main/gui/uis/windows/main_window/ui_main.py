@@ -289,6 +289,9 @@ class UI_MainWindow(object):
         #  ADD TO LAYOUT
         self.credits_layout.addWidget(self.credits)
 
+        
+
+
         # ADD WIDGETS TO RIGHT LAYOUT
         # ///////////////////////////////////////////////////////////////
         self.right_app_layout.addWidget(self.title_bar_frame)

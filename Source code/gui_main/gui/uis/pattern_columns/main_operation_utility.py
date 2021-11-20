@@ -28,6 +28,8 @@ class Memory_Manager():
         main_MemoryDownLoad_Thread = threading.Thread(target = self.main_MemoryDownLoad_Work,daemon=True)
         main_MemoryDownLoad_Thread.start()
 
+        
+
 
 
     def memory_Reload(self):
@@ -169,6 +171,12 @@ class Main_utility_manager(QWidget):
 
         self.measurement_start=False
 
+
+        self.set_setting_Transfer_request=False
+        self.set_setting_Transfer_enable=False
+        self.set_setting_Transfer_value=0
+
+
         self.timer=QTimer()
         self.timer.timeout.connect(self.graph_Update_Work)
         self.timer.start(100)
@@ -179,6 +187,8 @@ class Main_utility_manager(QWidget):
         realtime_data_Update_Thread = threading.Thread(target = self.realtime_data_Update_Work,daemon=True)
         realtime_data_Update_Thread.start()
 
+        setting_transfer_Thread = threading.Thread(target = self.setting_transfer_Work,daemon=True)
+        setting_transfer_Thread.start()
         
 
     def autoRun_logic(self):
@@ -286,7 +296,39 @@ class Main_utility_manager(QWidget):
 
 
 
-    
+    def setting_transfer_Work(self):
+        while 1:
+            self.eventPool["Setting_upload_toPLC_Start"].wait()
+            self.eventPool["Setting_upload_toPLC_Start"].clear()
+            
+            self.set_setting_Transfer_enable=True
+            self.set_setting_Transfer_value=0
+            self.set_setting_Transfer_request=True
+
+            start_time=time.time()
+            finish=False
+            while not finish:
+                if self.eventPool["Setting_upload_toPLC_Finish"].wait(timeout=0.05):
+                    self.eventPool["Setting_upload_toPLC_Finish"].clear()
+                    finish=True
+
+                try:
+                    getitem=self.queuePool["Setting_upload_toPLC_Queue"].get(timeout=0.05)
+                    if getitem:
+                        self.set_setting_Transfer_enable=True
+                        self.set_setting_Transfer_value=getitem
+                        self.set_setting_Transfer_request=True
+                except :
+                    pass
+
+                if time.time()-start_time>10:
+                    finish=True
+                
+            
+
+            self.set_setting_Transfer_enable=False
+            self.set_setting_Transfer_value=0
+            self.set_setting_Transfer_request=True
             
     def set_memorypool_register(self,pool_name,registor_name,value):
         
@@ -589,6 +631,7 @@ class Main_utility_manager(QWidget):
     def utility_setup(self):
 
         self.graph_setup()
+        
 
         self._parent.ui.load_pages.btn_AutoMode.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.btn_ManaualMode.clicked.connect(self.btn_callback)
@@ -824,6 +867,10 @@ class Main_utility_manager(QWidget):
         if self.graph_Update_request:
             self.graph_Update_request=False
             self.graph_update()
+
+        if self.set_setting_Transfer_request:
+            self.set_setting_Transfer_request=False
+            self._parent.ui.title_bar.set_setting_Transfer(enable=self.set_setting_Transfer_enable,value=self.set_setting_Transfer_value)
 
     def check_buttom_axix(self):
 
