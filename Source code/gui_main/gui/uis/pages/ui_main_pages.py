@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pageslclUdb.ui'
+## Form generated from reading UI file 'main_pagesmYoYYT.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -90,7 +90,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1055, 671))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 810, 555))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -1046,7 +1046,7 @@ class Ui_MainPages(object):
         self.gridLayout_4.setContentsMargins(5, 5, 5, 5)
         self.gridFrame_2 = QFrame(self.page_2)
         self.gridFrame_2.setObjectName(u"gridFrame_2")
-        self.gridFrame_2.setMinimumSize(QSize(0, 0))
+        self.gridFrame_2.setMinimumSize(QSize(0, 240))
         self.gridFrame_2.setMaximumSize(QSize(16777215, 240))
         self.gridFrame_2.setStyleSheet(u"QFrame{\n"
 "	background-color: rgb(30, 34, 41);\n"
@@ -1439,6 +1439,17 @@ class Ui_MainPages(object):
         self.gridLayout = QGridLayout(self.frame)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(6, 6, 6, 6)
+        self.frame_76 = QFrame(self.frame)
+        self.frame_76.setObjectName(u"frame_76")
+        self.frame_76.setMinimumSize(QSize(0, 0))
+        self.frame_76.setFrameShape(QFrame.StyledPanel)
+        self.frame_76.setFrameShadow(QFrame.Raised)
+        self.realtime_grapgLayout = QGridLayout(self.frame_76)
+        self.realtime_grapgLayout.setObjectName(u"realtime_grapgLayout")
+        self.realtime_grapgLayout.setContentsMargins(-1, -1, 25, -1)
+
+        self.gridLayout.addWidget(self.frame_76, 1, 0, 1, 1)
+
         self.frame_65 = QFrame(self.frame)
         self.frame_65.setObjectName(u"frame_65")
         self.frame_65.setFrameShape(QFrame.StyledPanel)
@@ -1500,6 +1511,9 @@ class Ui_MainPages(object):
         self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.addItem("")
+        self.timeUnit_comboBox.addItem("")
+        self.timeUnit_comboBox.addItem("")
+        self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.setObjectName(u"timeUnit_comboBox")
         self.timeUnit_comboBox.setMinimumSize(QSize(0, 0))
         self.timeUnit_comboBox.setMaximumSize(QSize(16777215, 16777215))
@@ -1547,17 +1561,6 @@ class Ui_MainPages(object):
 
 
         self.gridLayout.addWidget(self.frame_65, 0, 0, 1, 1, Qt.AlignLeft|Qt.AlignTop)
-
-        self.frame_2 = QFrame(self.frame)
-        self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setMinimumSize(QSize(0, 0))
-        self.frame_2.setFrameShape(QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QFrame.Raised)
-        self.realtime_grapgLayout = QGridLayout(self.frame_2)
-        self.realtime_grapgLayout.setObjectName(u"realtime_grapgLayout")
-        self.realtime_grapgLayout.setContentsMargins(-1, -1, 25, -1)
-
-        self.gridLayout.addWidget(self.frame_2, 2, 0, 1, 1)
 
 
         self.gridLayout_3.addWidget(self.frame, 0, 0, 1, 1)
@@ -2443,7 +2446,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1045, 1650))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -60, 1045, 1650))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -3871,8 +3874,11 @@ class Ui_MainPages(object):
 
         self.timeUnit_Label.setText(QCoreApplication.translate("MainPages", u"\u6642\u9593\u5358\u4f4d", None))
         self.timeUnit_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"1s/div", None))
-        self.timeUnit_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"1min/div", None))
-        self.timeUnit_comboBox.setItemText(2, QCoreApplication.translate("MainPages", u"1h/div", None))
+        self.timeUnit_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"10s/div", None))
+        self.timeUnit_comboBox.setItemText(2, QCoreApplication.translate("MainPages", u"30s/div", None))
+        self.timeUnit_comboBox.setItemText(3, QCoreApplication.translate("MainPages", u"1min/div", None))
+        self.timeUnit_comboBox.setItemText(4, QCoreApplication.translate("MainPages", u"10min/div", None))
+        self.timeUnit_comboBox.setItemText(5, QCoreApplication.translate("MainPages", u"1h/div", None))
 
         self.Resistor_checkBox.setText(QCoreApplication.translate("MainPages", u"\u62b5\u6297\u5024", None))
         self.Voltage_checkBox.setText(QCoreApplication.translate("MainPages", u"\u96fb\u5727", None))

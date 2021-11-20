@@ -108,14 +108,14 @@ class SetupMainWindow:
             "show_top" : True,
             "is_active" : False
         },
-        {
-            "btn_icon" : "fi-rr-link.svg",
-            "btn_id" : "btn_ConnectionMenu",
-            "btn_text" : "通信接続設定",
-            "btn_tooltip" : "通信接続設定",
-            "show_top" : True,
-            "is_active" : False
-        }
+        #{
+        #    "btn_icon" : "fi-rr-link.svg",
+        #    "btn_id" : "btn_ConnectionMenu",
+        #    "btn_text" : "通信接続設定",
+        #    "btn_tooltip" : "通信接続設定",
+        #    "show_top" : True,
+        #    "is_active" : False
+        #}
     ]
 
      # ADD TITLE BAR MENUS

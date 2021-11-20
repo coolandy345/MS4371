@@ -443,7 +443,7 @@ QFrame:focus{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">color: rgb(255, 0, 0);</string>
                </property>
                <property name="text">
                 <string>時：分</string>
@@ -1511,9 +1511,7 @@ QFrame:focus{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-
-</string>
+                <string notr="true"/>
                </property>
                <property name="currentIndex">
                 <number>0</number>

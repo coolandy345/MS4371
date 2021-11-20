@@ -978,7 +978,7 @@ class TempPatternWidget(QWidget):
                 self.cache_steplist.RT_testpattern      != self.patternFiles[self.focus_patternFile_number].RT_testpattern 
                 
                 ):
-                print("A")
+                #print("A")
                 self.content_Change=True
 
         
@@ -1002,16 +1002,16 @@ class TempPatternWidget(QWidget):
                 cache_stepUnit.shift                !=memory_stepUnit.shift or
                 cache_stepUnit.time_min                 !=memory_stepUnit.time_min
                 ):
-                    print("B")
+                    #print("B")
                     self.content_Change=True
-                    print("------------------------------------------------------------------")
-                    print()
-                    print()
-                    print("cache_stepUnit")
-                    print(cache_stepUnit.print_unit())
-                    print()
-                    print("memory_stepUnit")
-                    print(memory_stepUnit.print_unit())
+                    #print("------------------------------------------------------------------")
+                    #print()
+                    #print()
+                    #print("cache_stepUnit")
+                    #print(cache_stepUnit.print_unit())
+                    #print()
+                    #print("memory_stepUnit")
+                    #print(memory_stepUnit.print_unit())
 
 
     def step_modifly_manager(self,step):

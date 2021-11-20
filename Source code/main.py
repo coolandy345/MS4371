@@ -84,6 +84,9 @@ if __name__ == "__main__":
     EventPool["Test Event1"]=MemoryPoolManager.Event()
     EventPool["Test Event2"]=MemoryPoolManager.Event()
 
+    #dsf=list(range(1,101))
+    #print(dsf,dsf[-10::2])
+
     
     databaseLoadThread(MemoryPool)
     #memoryWriteThread(MemoryPool,QueuePool)

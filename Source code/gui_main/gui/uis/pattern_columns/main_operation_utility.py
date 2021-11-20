@@ -151,22 +151,27 @@ class Main_utility_manager(QWidget):
         self.timeLabel="s"
         self.timeMaxRange=10
         self.timeMinRange=1
+        self.divider=1
 
         self.graph_Update_request=False
 
         self.utility_setup()
-        self.graph_setup()
 
         self.realTime_Temp=0
         self.realTime_Voltage=0
         self.realTime_Current=0
         self.realTime_Resistor=0
 
+        self.temp_data_array=[]
+        self.voltage_data_array=[]
+        self.current_data_array=[]
+        self.resistance_data_array=[]
+
         self.measurement_start=False
 
         self.timer=QTimer()
         self.timer.timeout.connect(self.graph_Update_Work)
-        self.timer.start(10)
+        self.timer.start(100)
 
         ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
         ultility_Update_Thread.start()
@@ -299,14 +304,13 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_AutoOperate)
 
         if btn_name == "Resistor_checkBox":
-            pass
+            self.graph_Update_request=True
             
         if btn_name == "Voltage_checkBox":
-            pass
+            self.graph_Update_request=True
         
         if btn_name == "Current_checkBox":
-            pass
-
+            self.graph_Update_request=True
         
         elif btn_name == "Test1_pushButton":
             self.measurement_start=True
@@ -451,31 +455,88 @@ class Main_utility_manager(QWidget):
                 
             
         elif btn_name == "timeUnit_comboBox":
+            self.starttime=time.time()
+
+            #self.temp_data_array=[{"x":0,"y":0}]
+            #self.voltage_data_array=[{"x":0,"y":0}]
+            #self.current_data_array=[{"x":0,"y":0}]
+            #self.resistance_data_array=[{"x":0,"y":0}]
+
+            self.temp_data_array=[]
+            self.voltage_data_array=[]
+            self.current_data_array=[]
+            self.resistance_data_array=[]
 
             index=self._parent.ui.load_pages.timeUnit_comboBox.currentText()
             if index=="1s/div":
                 self.timeUnit=1
                 self.timeLabel="s"
                 self.timeMaxRange=10
-                self.timeMinRange=1
+                self.divider=1
+                
+                
+                
+                self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+            elif index=="10s/div":
+                self.timeUnit=1
+                self.timeLabel="s"
+                self.timeMaxRange=100
+                self.divider=1
+                
+                self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+            elif index=="30s/div":
+                self.timeUnit=1
+                self.timeLabel="s"
+                self.timeMaxRange=300
+                self.divider=3
+                
+                self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
             elif index=="1min/div":
                 self.timeUnit=60
                 self.timeLabel="min"
                 self.timeMaxRange=10
-                self.timeMinRange=1
+                self.divider=6
+                
+                self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+
+                self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+
+            elif index=="10min/div":
+                self.timeUnit=60
+                self.timeLabel="min"
+                self.timeMaxRange=100
+                self.divider=60
+                
+                self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
             elif index=="1h/div":
                 self.timeUnit=3600
                 self.timeLabel="hour"
-                self.timeMaxRange=10
-                self.timeMinRange=1
+                self.timeMaxRange=3
+                self.divider=360
+                
+                self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
     
+            self.check_buttom_axix()
+
     def data_receive_Work(self):
         
-        self.temp_data_array=[]
-        self.voltage_data_array=[]
-        self.current_data_array=[]
-        self.resistance_data_array=[]
-        print("prepare")
+        
+
+        self.starttime=time.time()
         while self.dataRecord_Start:
             try:
                 getItem=self.queuePool["GUI_DataQueue"].get(timeout=0.1)
@@ -485,10 +546,33 @@ class Main_utility_manager(QWidget):
                 self.set_memorypool_register("Modbus Registor Pool - Registor","現在電流値",getItem.current)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","現在抵抗値",getItem.resistance)
 
-                self.temp_data_array.append(getItem.Temperature)
-                self.voltage_data_array.append(getItem.voltage)
-                self.current_data_array.append(getItem.current)
-                self.resistance_data_array.append(getItem.resistance)
+                timenow=time.time()-self.starttime
+
+                XYdata={}
+                XYdata["x"]=timenow/self.timeUnit
+                XYdata["y"]=getItem.Temperature*800
+                self.temp_data_array.append(XYdata)
+                XYdata={}
+                XYdata["x"]=timenow/self.timeUnit
+                XYdata["y"]=(getItem.voltage-0.5)*(1e-4)
+                self.voltage_data_array.append(XYdata)
+                XYdata={}
+                XYdata["x"]=timenow/self.timeUnit
+                XYdata["y"]=getItem.current*(1e-15)
+                self.current_data_array.append(XYdata)
+                XYdata={}
+                XYdata["x"]=timenow/self.timeUnit
+                XYdata["y"]=getItem.resistance*(1e+6)
+                self.resistance_data_array.append(XYdata)
+                
+                if len(self.temp_data_array)>1000:
+                    self.voltage_data_array.pop(0)
+
+                if len(self.temp_data_array)>1000:
+                    self.current_data_array.pop(0)
+
+                if len(self.temp_data_array)>1000:
+                    self.resistance_data_array.pop(0)
 
                 self.graph_Update_request=True
 
@@ -738,37 +822,100 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.Layout_Status_2635B_GPIBConnecton.addWidget(self._parent.gPIBConnecton_2635B_icon, Qt.AlignCenter, Qt.AlignCenter)
     
     def graph_Update_Work(self):
+        print("graph_Update_Work",self.graph_Update_request)
         if self.graph_Update_request:
             self.graph_Update_request=False
             self.graph_update()
+
+    def check_buttom_axix(self):
+
+        if self.realTime_Resistance_Graph_set:
+            self.realTime_Resistance_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
+            self.realTime_Voltage_Graph.showLabel("bottom", show=False)
+            self.realTime_Current_Graph.showLabel("bottom", show=False)
+        else:
+            if self.realTime_Current_Graph_set:
+                self.realTime_Current_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
+                self.realTime_Voltage_Graph.showLabel("bottom", show=False)
+                self.realTime_Resistance_Graph.showLabel("bottom", show=False)
+
+            else:
+                if self.realTime_Voltage_Graph_set:
+                    self.realTime_Voltage_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
+                    self.realTime_Current_Graph.showLabel("bottom", show=False)
+                    self.realTime_Resistance_Graph.showLabel("bottom", show=False)
+
+                else:
+                    
+                    self.realTime_Voltage_Graph.showLabel("bottom", show=False)
+                    self.realTime_Current_Graph.showLabel("bottom", show=False)
+                    self.realTime_Resistance_Graph.showLabel("bottom", show=False)
 
     def graph_update(self):
         self.measurement_data_array=[]
 
         if self.graph_Item=="Measure_Data":
-            #print("Measure_Data")
-            #for data in self._parent.MMG.memoryPool["Read Measurement Data"]:
-            #    XYdata={}
-            #    XYdata["x"]=data.time/self.timeUnit
-            #    XYdata["y"]=data.resistor
-            #    self.measurement_data_array.append(XYdata)
-
-            #self.measurement_data_array = 1000 * np.random.random(size=10000)
-            #self.measurement_data_array =range(1,10000)
-
-            #self.temp_data_array=[]
-            #self.voltage_data_array=[]
-            #self.current_data_array=[]
-            #self.resistance_data_array=[]
-            #print(self.temp_data_array)
-
-            self._parent.voltage_curve.setData(self.voltage_data_array)
-            self._parent.current_curve.setData(self.current_data_array)
-            self._parent.restance_curve.setData(self.resistance_data_array)
 
 
-            self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
-            self.realTimeData_Graph.setLabel(axis='left', text='抵抗値', units='Ω')
+            #self.realTime_Voltage_Graph.setVisible (self._parent.ui.load_pages.Resistor_checkBox.isChecked())
+            #self.realTime_Current_Graph.setVisible (self._parent.ui.load_pages.Voltage_checkBox.isChecked())
+            #self.realTime_Resistance_Graph.setVisible (self._parent.ui.load_pages.Current_checkBox.isChecked())
+
+            #self._parent.ui.load_pages.frame_75.setVisible (self._parent.ui.load_pages.Resistor_checkBox.isChecked())
+            #self._parent.ui.load_pages.frame_76.setVisible (self._parent.ui.load_pages.Voltage_checkBox.isChecked())
+            #self._parent.ui.load_pages.frame_2.setVisible (self._parent.ui.load_pages.Current_checkBox.isChecked())
+
+            
+            if self._parent.ui.load_pages.Voltage_checkBox.isChecked():
+                if not self.realTime_Voltage_Graph_set:
+                    self.realTime_Voltage_Graph_set=True
+                    self.win.addItem(self.realTime_Voltage_Graph,row=0,col=0)
+                    self.check_buttom_axix()
+            else:
+                if self.realTime_Voltage_Graph_set:
+                    self.realTime_Voltage_Graph_set=False
+                    self.win.removeItem(self.realTime_Voltage_Graph)
+                    self.check_buttom_axix()
+
+            if self._parent.ui.load_pages.Current_checkBox.isChecked():
+                if not self.realTime_Current_Graph_set:
+                    self.realTime_Current_Graph_set=True
+                    self.win.addItem(self.realTime_Current_Graph,row=1,col=0)
+                    self.check_buttom_axix()
+            else:
+                if self.realTime_Current_Graph_set:
+                    self.realTime_Current_Graph_set=False
+                    self.win.removeItem(self.realTime_Current_Graph)
+                    self.check_buttom_axix()
+
+            if self._parent.ui.load_pages.Resistor_checkBox.isChecked():
+                if not self.realTime_Resistance_Graph_set:
+                    self.realTime_Resistance_Graph_set=True
+                    self.win.addItem(self.realTime_Resistance_Graph,row=2,col=0)
+                    self.check_buttom_axix()
+            else:
+                if self.realTime_Resistance_Graph_set:
+                    self.realTime_Resistance_Graph_set=False
+                    self.win.removeItem(self.realTime_Resistance_Graph)
+                    self.check_buttom_axix()
+                
+            self._parent.voltage_curve.setData(self.voltage_data_array[0::self.divider])
+            self._parent.current_curve.setData(self.current_data_array[0::self.divider])
+            self._parent.resistance_curve.setData(self.resistance_data_array[0::self.divider])
+
+            if self.voltage_data_array:
+                self.realTime_Voltage_Graph.setXRange(min=self.voltage_data_array[-1]["x"]-self.timeMaxRange, max=self.voltage_data_array[-1]["x"])
+                print("voltage_data_array")
+
+            if self.current_data_array:
+                self.realTime_Current_Graph.setXRange(min=self.current_data_array[-1]["x"]-self.timeMaxRange, max=self.current_data_array[-1]["x"])
+
+            if self.resistance_data_array:
+                self.realTime_Resistance_Graph.setXRange(min=self.resistance_data_array[-1]["x"]-self.timeMaxRange, max=self.resistance_data_array[-1]["x"])
+
+
+            #self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
+            #self.realTimeData_Graph.setLabel(axis='left', text='抵抗値', units='Ω')
             #self.realTimeData_Graph.setLimits(minXRange=0)
 
 
@@ -798,52 +945,67 @@ class Main_utility_manager(QWidget):
             self.realTimeData_Graph.setLabel(axis='left', text='温度', units='℃')
             #self.realTimeData_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
 
-        
 
     def graph_setup(self):
 
-        self.realTimeData_Graph =pg.PlotWidget(background=None,title="測定抵抗値")
-        self.realTimeData_Graph.setLabel(axis='left', text='抵抗値', units='Ω')
-        self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units='s')
+        pg.setConfigOptions(background=None)
+        self.win = pg.GraphicsLayoutWidget(show=True,parent=self._parent)
 
-        self._parent.Xaxis = self.realTimeData_Graph.getAxis('bottom')
+        self.row_count=0
         
-        self._parent.Xaxis.enableAutoSIPrefix(False)
-        self.realTimeData_Graph.setAxisItems({'bottom':self._parent.Xaxis})
+        self.realTime_Voltage_Graph = self.win.addPlot(row=1, col=0,autoDownsample=True,downsampleMethod="subsample",clipToView=True)
+        self.realTime_Voltage_Graph.setLabel(axis='left', text='電圧', units='V')
+        self.realTime_Voltage_Graph.setMouseEnabled(x=False, y=False)
+        self.realTime_Voltage_Graph.showGrid(x=True, y=True)
+        self.realTime_Current_Graph = self.win.addPlot(row=2, col=0,autoDownsample=True,downsampleMethod="subsample",clipToView=True)
+        self.realTime_Current_Graph.setLabel(axis='left', text='電流', units='A')
+        self.realTime_Current_Graph.setMouseEnabled(x=False, y=False)
+        self.realTime_Current_Graph.showGrid(x=True, y=True)
+        self.realTime_Resistance_Graph = self.win.addPlot(row=3, col=0,autoDownsample=True,downsampleMethod="subsample",clipToView=True)
+        self.realTime_Resistance_Graph.setLabel(axis='left', text='抵抗', units='Ω')
+        self.realTime_Resistance_Graph.setMouseEnabled(x=False, y=False)
+        self.realTime_Resistance_Graph.showGrid(x=True, y=True)
+
+        self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+        self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+        self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+
         
-        self._parent.Yaxis = self.realTimeData_Graph.getAxis('left')
-        self._parent.Yaxis.enableAutoSIPrefix(True)
-
-
-        self.realTimeData_Graph.showGrid(x=True, y=True)
-        self.realTimeData_Graph.setMouseEnabled(x=True, y=True)
-        #self.realTimeData_Graph.setLimits(minXRange=1,maxXRange=10)
-        self.realTimeData_Graph.setLimits(xMin=0,yMin=0)
-
-        self._parent.voltage_curve=self.realTimeData_Graph.plot(pen="r",
+        self._parent.voltage_curve=self.realTime_Voltage_Graph.plot(pen=pg.mkColor(200, 133, 0),
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
                                                         name="予定パターン",
                                                         )
 
-        self._parent.current_curve=self.realTimeData_Graph.plot(pen="g",
-                                                        symbolPen='w',
-                                                        symbolBrush=(0,0,0),
-                                                        symbolSize=1,
-                                                        name="予定パターン",
-                                                        )
+        
 
-        self._parent.restance_curve=self.realTimeData_Graph.plot(pen="b",
+        self._parent.current_curve=self.realTime_Current_Graph.plot(pen=pg.mkColor(132, 220, 244),
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
                                                         name="予定パターン",
                                                         )
         
-        self.measurement_data_array=[]
-        self._parent.voltage_curve.setData(self.measurement_data_array)
-        self._parent.ui.load_pages.realtime_grapgLayout.addWidget(self.realTimeData_Graph, Qt.AlignCenter, Qt.AlignCenter)
+
+        self._parent.resistance_curve=self.realTime_Resistance_Graph.plot(pen=pg.mkColor(131, 255, 145),
+                                                        symbolPen='w',
+                                                        symbolBrush=(0,0,0),
+                                                        symbolSize=1,
+                                                        name="予定パターン",
+                                                        )
+
+        
+        self._parent.ui.load_pages.realtime_grapgLayout.addWidget(self.win, Qt.AlignCenter, Qt.AlignCenter)
+        self.realTime_Voltage_Graph_set=False
+        self.win.removeItem(self.realTime_Voltage_Graph)
+        self.realTime_Current_Graph_set=False
+        self.win.removeItem(self.realTime_Current_Graph)
+        self.realTime_Resistance_Graph_set=False
+        self.win.removeItem(self.realTime_Resistance_Graph)
+
+        self.graph_Update_request=False
+
 
     def realtime_data_Update_Work(self):
         #print("realtime_data_Update_Work")
@@ -957,12 +1119,7 @@ class Main_utility_manager(QWidget):
             self.gPIBConnecton_2635B_icon_active=self._parent.MMG.memoryPool["System memory"]["2635B connection"].getValue()
             self.gPIBConnecton_2657A_icon_active=self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue()
 
-            self._parent.restance_curve.setVisible (self._parent.ui.load_pages.Resistor_checkBox.isChecked())
-            self._parent.voltage_curve.setVisible (self._parent.ui.load_pages.Voltage_checkBox.isChecked())
-            self._parent.current_curve.setVisible (self._parent.ui.load_pages.Current_checkBox.isChecked())
-            #self._parent.voltage_curve.setData(self.voltage_data_array)
-            #self._parent.current_curve.setData(self.current_data_array)
-            #self._parent.restance_curve.setData(self.resistance_data_array)
+            
 
             if self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue():
                 

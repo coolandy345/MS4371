@@ -50,7 +50,7 @@ class PyDialog(QDialog):
             self.setWindowIcon(QIcon("error.ico"))
             QBtn = QDialogButtonBox.Ok
 
-
+        self.returnMessage="No"
         self.buttonBox = QDialogButtonBox(QBtn)
         self.buttonBox.clicked.connect(self.dialogCallback)
 

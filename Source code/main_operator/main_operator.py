@@ -492,8 +492,6 @@ class Operator():
             self.queuePool["testDataQueue"].put(datapackage)
             self.queuePool["GUI_DataQueue"].put(datapackage)
 
-            
-
             time.sleep(0.01)
 
     def stop_data_stream(self):

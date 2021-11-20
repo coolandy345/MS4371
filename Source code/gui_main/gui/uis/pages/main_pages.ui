@@ -127,8 +127,8 @@ QLineEdit:read-only {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1055</width>
-            <height>671</height>
+            <width>810</width>
+            <height>555</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -2249,7 +2249,7 @@ QComboBox:hover {
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>240</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -3217,6 +3217,27 @@ QFrame:hover{
              <property name="bottomMargin">
               <number>6</number>
              </property>
+             <item row="1" column="0">
+              <widget class="QFrame" name="frame_76">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="realtime_grapgLayout">
+                <property name="rightMargin">
+                 <number>25</number>
+                </property>
+               </layout>
+              </widget>
+             </item>
              <item row="0" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
               <widget class="QFrame" name="frame_65">
                <property name="frameShape">
@@ -3365,7 +3386,22 @@ QFrame:focus{
                      </item>
                      <item>
                       <property name="text">
+                       <string>10s/div</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>30s/div</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
                        <string>1min/div</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>10min/div</string>
                       </property>
                      </item>
                      <item>
@@ -3455,27 +3491,6 @@ padding:5px</string>
                   </layout>
                  </widget>
                 </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QFrame" name="frame_2">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="realtime_grapgLayout">
-                <property name="rightMargin">
-                 <number>25</number>
-                </property>
                </layout>
               </widget>
              </item>
@@ -5142,7 +5157,7 @@ QComboBox:hover {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-60</y>
             <width>1045</width>
             <height>1650</height>
            </rect>
