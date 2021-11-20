@@ -298,7 +298,7 @@ class Operator():
             self.noise_stop=True
 
     def start_noise_measurement(self):
-        test_voltage=1000
+        test_voltage=1
         over_current=5e-12
         test_time=1
 

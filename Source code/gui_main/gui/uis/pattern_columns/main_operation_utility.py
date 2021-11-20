@@ -298,7 +298,6 @@ class Main_utility_manager(QWidget):
     def btn_callback(self):
 
         btn_name=self.sender().objectName()
-        print(btn_name,"is press")
 
         if btn_name == "btn_AutoMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_AutoOperate)
@@ -822,7 +821,6 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.Layout_Status_2635B_GPIBConnecton.addWidget(self._parent.gPIBConnecton_2635B_icon, Qt.AlignCenter, Qt.AlignCenter)
     
     def graph_Update_Work(self):
-        print("graph_Update_Work",self.graph_Update_request)
         if self.graph_Update_request:
             self.graph_Update_request=False
             self.graph_update()
@@ -905,7 +903,6 @@ class Main_utility_manager(QWidget):
 
             if self.voltage_data_array:
                 self.realTime_Voltage_Graph.setXRange(min=self.voltage_data_array[-1]["x"]-self.timeMaxRange, max=self.voltage_data_array[-1]["x"])
-                print("voltage_data_array")
 
             if self.current_data_array:
                 self.realTime_Current_Graph.setXRange(min=self.current_data_array[-1]["x"]-self.timeMaxRange, max=self.current_data_array[-1]["x"])
