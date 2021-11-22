@@ -372,57 +372,57 @@ class Testfile_manager(QWidget):
             if float(self._parent.ui.load_pages.lineEdit_PID_1_P.text())<0.1:
                 self._parent.ui.load_pages.lineEdit_PID_1_P.setText(str("{:0.01f}".format(0.1)))
             self.PID_1_P=float(self._parent.ui.load_pages.lineEdit_PID_1_P.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_P",100*self.PID_1_P)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_P",100*self.PID_1_P)
 
         elif btn=="lineEdit_PID_1_I":
             self.PID_1_I=float(self._parent.ui.load_pages.lineEdit_PID_1_I.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_I",self.PID_1_I)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_I",self.PID_1_I)
 
         elif btn=="lineEdit_PID_1_D":
             self.PID_1_D=float(self._parent.ui.load_pages.lineEdit_PID_1_D.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_0_D",self.PID_1_D)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_D",self.PID_1_D)
 
         elif btn=="lineEdit_PID_2_P":
             if float(self._parent.ui.load_pages.lineEdit_PID_2_P.text())<0.1:
                 self._parent.ui.load_pages.lineEdit_PID_2_P.setText(str("{:0.01f}".format(0.1)))
             self.PID_2_P=float(self._parent.ui.load_pages.lineEdit_PID_2_P.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_P",100*self.PID_2_P)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_P",100*self.PID_2_P)
 
         elif btn=="lineEdit_PID_2_I":
             self.PID_2_I=float(self._parent.ui.load_pages.lineEdit_PID_2_I.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_I",self.PID_2_I)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_I",self.PID_2_I)
 
         elif btn=="lineEdit_PID_2_D":
             self.PID_2_D=float(self._parent.ui.load_pages.lineEdit_PID_2_D.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_1_D",self.PID_2_D)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_D",self.PID_2_D)
 
         elif btn=="lineEdit_PID_3_P":
             if float(self._parent.ui.load_pages.lineEdit_PID_3_P.text())<0.1:
                 self._parent.ui.load_pages.lineEdit_PID_3_P.setText(str("{:0.01f}".format(0.1)))
             self.PID_3_P=float(self._parent.ui.load_pages.lineEdit_PID_3_P.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_P",100*self.PID_3_P)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_P",100*self.PID_3_P)
 
         elif btn=="lineEdit_PID_3_I":
             self.PID_3_I=float(self._parent.ui.load_pages.lineEdit_PID_3_I.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_I",self.PID_3_I)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_I",self.PID_3_I)
 
         elif btn=="lineEdit_PID_3_D":
             self.PID_3_D=float(self._parent.ui.load_pages.lineEdit_PID_3_D.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_2_D",self.PID_3_D)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_D",self.PID_3_D)
 
         elif btn=="lineEdit_PID_4_P":
             if float(self._parent.ui.load_pages.lineEdit_PID_4_P.text())<0.1:
                 self._parent.ui.load_pages.lineEdit_PID_4_P.setText(str("{:0.01f}".format(0.1)))
             self.PID_4_P=float(self._parent.ui.load_pages.lineEdit_PID_4_P.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_P",100*self.PID_4_P)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_4_P",100*self.PID_4_P)
 
         elif btn=="lineEdit_PID_4_I":
             self.PID_4_I=float(self._parent.ui.load_pages.lineEdit_PID_4_I.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_I",self.PID_4_I)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_4_I",self.PID_4_I)
 
         elif btn=="lineEdit_PID_4_D":
             self.PID_4_D=float(self._parent.ui.load_pages.lineEdit_PID_4_D.text())
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_3_D",self.PID_4_D)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_4_D",self.PID_4_D)
 
 
         self.utility_update()
