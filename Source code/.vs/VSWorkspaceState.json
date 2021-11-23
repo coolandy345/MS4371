@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\csv_manager",
+    "\\gpib_manager",
     "\\gui_main",
     "\\gui_main\\gui",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\uis\\pattern_columns",
-    "\\gui_main\\gui\\widgets",
-    "\\gui_main\\gui\\widgets\\py_icon_button",
-    "\\gui_main\\gui\\widgets\\py_pattern",
-    "\\gui_main\\gui\\widgets\\py_title_bar",
+    "\\gui_main\\gui\\uis\\pages",
+    "\\gui_main\\gui\\uis\\windows",
+    "\\gui_main\\gui\\uis\\windows\\main_window",
     "\\modbus_TcpServer"
   ],
-  "SelectedNode": "\\main_operator\\main_operator.py",
+  "SelectedNode": "\\modbus_TcpServer\\modbus_TcpServer.py",
   "PreviewInSolutionExplorer": false
 }

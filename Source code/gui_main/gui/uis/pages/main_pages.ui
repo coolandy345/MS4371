@@ -5236,7 +5236,7 @@ padding-left:10px;
                 <string notr="true">background-color: rgb(30, 34, 41);</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="page_AutoOperate">
                 <layout class="QGridLayout" name="gridLayout_15">
@@ -5989,7 +5989,7 @@ QComboBox:hover {
                     <item row="3" column="0">
                      <widget class="QStackedWidget" name="stackedWidget_2">
                       <property name="currentIndex">
-                       <number>1</number>
+                       <number>0</number>
                       </property>
                       <widget class="QWidget" name="page">
                        <property name="minimumSize">
