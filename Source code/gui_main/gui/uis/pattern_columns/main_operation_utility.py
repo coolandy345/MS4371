@@ -434,7 +434,7 @@ class Main_utility_manager(QWidget):
 
 
         #elif btn_name == "test_pushButton_3":
-        #    self.eventPool["Noise Measure Stop"].set()
+        #    self.eventPool["Measure Stop"].set()
 
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
@@ -492,7 +492,7 @@ class Main_utility_manager(QWidget):
             
         elif btn_name == "outputStop_pushButton":
         
-            self.eventPool["Noise Measure Stop"].set()
+            self.eventPool["Measure Stop"].set()
 
 
 
@@ -1193,26 +1193,38 @@ class Main_utility_manager(QWidget):
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定開始"].getValue():
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
-                print("測定開始　信号到達")
-                #if not self.measurement_start:
-                #    self.measurement_start=True
-                #    measurement_finish_wait_Thread = threading.Thread(target = self.measurement_finish_wait_Work,daemon=True)
-                #    measurement_finish_wait_Thread.start()
+                print("測定開始　信号到達",self.measurement_start)
+                if not self.measurement_start:
+                    self.measurement_start=True
+                    measurement_finish_wait_Thread = threading.Thread(target = self.measurement_finish_wait_Work,daemon=True)
+                    measurement_finish_wait_Thread.start()
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転開始RST"].getValue():
+                self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始RST",0)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定終了RST"].getValue():
+                
+                self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了RST",0)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No.変更RST"].getValue():
+                
+                self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更RST",0)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["大気圧RST"].getValue():
+                self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧RST",0)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転停止RST"].getValue():
+                self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",0)
+                self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止RST",0)
 
 
 

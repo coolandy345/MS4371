@@ -184,49 +184,52 @@ class Csv_manager():
             
         test_number_folder_ready=False
         test_number=System_memory["依頼測定番号"].getValue()
-
+        print("A")
         while not test_number_folder_ready:
             try:
                 path_temp=os.path.join(path, "{}".format(str(test_number)))
+                print("B")
                 os.mkdir(path_temp)
+                print("C")
 
             except FileExistsError:
+                pass
                 
                 #result=self.lunchOptionDialog("依頼番号 \"{}\" フォルダーが存在しています。上書きますか？".format(test_number),PyDialog.warning_2_type)
                 
-                item=["option","依頼番号 \"{}\" フォルダーが存在しています。上書きますか？".format(test_number),PyDialog.warning_2_type]
-                self.queuePool["dialog comfirmQueue"].put(item)
-                result=self.queuePool["dialog resultQueue"].get()
+                #item=["option","依頼番号 \"{}\" フォルダーが存在しています。上書きますか？".format(test_number),PyDialog.warning_2_type]
+                #self.queuePool["dialog comfirmQueue"].put(item)
+                #result=self.queuePool["dialog resultQueue"].get()
 
-                if result=="Yes":
+                #if result=="Yes":
 
-                    path=path_temp
-                    #os.rmdir(path)
+                #    path=path_temp
+                #    #os.rmdir(path)
                     
-                    import shutil
-                    try:
-                        shutil.rmtree(path)
-                    except:
-                        pass
+                #    import shutil
+                #    try:
+                #        shutil.rmtree(path)
+                #    except:
+                #        pass
 
-                    try:
-                        os.mkdir(path)
-                    except:
-                        pass
+                #    try:
+                #        os.mkdir(path)
+                #    except:
+                #        pass
                     
-                    test_number_folder_ready=True
-                    break
+                #    test_number_folder_ready=True
+                #    break
 
-                elif result=="No":
-                    #NameString_fromDialog=self.lunchMessageDialog("依頼番号編集","新規依頼番号入力 :")
+                #elif result=="No":
+                #    #NameString_fromDialog=self.lunchMessageDialog("依頼番号編集","新規依頼番号入力 :")
 
-                    item=["Message","依頼番号編集","新規依頼番号入力 :"]
-                    self.queuePool["dialog comfirmQueue"].put(item)
-                    NameString_fromDialog=self.queuePool["dialog resultQueue"].get()
-                    self.set_memorypool_register("System memory","依頼測定番号",NameString_fromDialog)
+                #    item=["Message","依頼番号編集","新規依頼番号入力 :"]
+                #    self.queuePool["dialog comfirmQueue"].put(item)
+                #    NameString_fromDialog=self.queuePool["dialog resultQueue"].get()
+                #    self.set_memorypool_register("System memory","依頼測定番号",NameString_fromDialog)
 
-                    test_number=NameString_fromDialog
-
+                #    test_number=NameString_fromDialog
+                test_number_folder_ready=True
             else:
                 path = path_temp
                 test_number_folder_ready=True

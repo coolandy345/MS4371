@@ -74,7 +74,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
         self.get_register_dict()
 
 
-        self.Modbus_debug=False
+        self.Modbus_debug=True
         #print(self.register_dict)
 
         super().__init__(self.register_dict)
@@ -98,11 +98,12 @@ class CustomDataBlock(ModbusSparseDataBlock):
         registor_name=self.register_namedict[address]
 
         if self.Modbus_debug:
+            pass
             #value_list=[]
             #if add in range(0,count):
             #registor_name=self.register_namedict[address+add]
             #value_list.append(self.Modbuspool[registor_name].getValue())
-            print("modbus read - ","[{}]".format(address-self.register_shift),registor_name,count,self.Modbuspool[registor_name].getValue())
+            #print("modbus read - ","[{}]".format(address-self.register_shift),registor_name,count,self.Modbuspool[registor_name].getValue())
 
         if address-self.register_shift==0:
             self.start_upload=True
@@ -227,7 +228,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
         super(CustomDataBlock, self).setValues(address, value)
         if self.Modbus_debug:
             registor_name=self.register_namedict[address]
-            print("modbus write - ","[{}]".format(address-self.register_shift),registor_name,"-",value)
+            #print("modbus write - ","[{}]".format(address-self.register_shift),registor_name,"-",value)
 
         # whatever you want to do with the written value is done here,
         # however make sure not to do too much work here or it will
