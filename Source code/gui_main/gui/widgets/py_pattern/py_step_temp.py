@@ -202,6 +202,9 @@ class PyTempStep(QWidget):
                 bg_color_pressed = "rgb(112, 125, 153)"
             )
 
+        
+        self.icon.setCursor(QCursor(Qt.PointingHandCursor))
+
         self.pattern.gridLayout_2.addWidget(self.icon, Qt.AlignCenter, Qt.AlignCenter)
 
         self.icon.clicked.connect(self.addStepBtn_presscallback)
@@ -216,13 +219,15 @@ class PyTempStep(QWidget):
                 icon_deactive = "fi-rr-menu-dots-vertical.svg",
                 btn_id = "ステップ {} menu編集".format(self._step),
                 tooltip_text = "編集",
-                width = 30,
-                height = 30,
+                width = 25,
+                height = 25,
                 bg_color = "rgb(44, 49, 60)",
                 bg_color_hover = "rgb(63, 70, 86)",
                 bg_color_pressed = "rgb(112, 125, 153)"
 
             )
+        
+        self.menu_icon.setCursor(QCursor(Qt.PointingHandCursor))
         self.pattern.gridLayout_6.addWidget(self.menu_icon, Qt.AlignCenter, Qt.AlignCenter)
         self.menu_icon.clicked.connect(self.show_menu)
 

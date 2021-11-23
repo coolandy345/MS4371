@@ -421,6 +421,8 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.verticalLayout_11.addWidget(self.delete_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.delete_IconButton.clicked.connect(self.ui_click_callback)
 
+        self.delete_IconButton.setCursor(QCursor(Qt.PointingHandCursor))
+
         self.add_IconButton = PyIconButton_simple(
                 icon = "fi-rr-file-add.svg",
                 icon_active = "fi-rr-file-add.svg",
@@ -438,6 +440,9 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.verticalLayout_12.addWidget(self.add_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.add_IconButton.clicked.connect(self.ui_click_callback)
 
+        
+        self.add_IconButton.setCursor(QCursor(Qt.PointingHandCursor))
+
         self.save_IconButton = PyIconButton_simple(
                 icon = "fi-rr-edit.svg",
                 icon_active = "fi-rr-edit.svg",
@@ -453,6 +458,9 @@ class TempPatternWidget(QWidget):
             )
         self._parent.ui.load_pages.verticalLayout_13.addWidget(self.save_IconButton, Qt.AlignCenter, Qt.AlignCenter)
         self.save_IconButton.clicked.connect(self.ui_click_callback)
+
+        
+        self.save_IconButton.setCursor(QCursor(Qt.PointingHandCursor))
         
 
         self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)

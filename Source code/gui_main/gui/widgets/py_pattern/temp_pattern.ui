@@ -879,31 +879,56 @@ QFrame:focus{
                 <number>0</number>
                </property>
                <property name="maxVisibleItems">
-                <number>5</number>
+                <number>10</number>
                </property>
                <item>
                 <property name="text">
-                 <string>No.0</string>
+                 <string>PID設定 0</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>No.1</string>
+                 <string>PID設定 1</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>No.2</string>
+                 <string>PID設定 2</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>No.3</string>
+                 <string>PID設定 3</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>No.4</string>
+                 <string>PID設定 4</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 5</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 6</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 7</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 8</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 9</string>
                 </property>
                </item>
               </widget>
@@ -1004,31 +1029,56 @@ QFrame:focus{
                 <number>0</number>
                </property>
                <property name="maxVisibleItems">
-                <number>5</number>
+                <number>10</number>
                </property>
                <item>
                 <property name="text">
-                 <string>No.0</string>
+                 <string>PID設定 0</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>No.1</string>
+                 <string>PID設定 1</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>No.2</string>
+                 <string>PID設定 2</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>No.3</string>
+                 <string>PID設定 3</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>No.4</string>
+                 <string>PID設定 4</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 5</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 6</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 7</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 8</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PID設定 9</string>
                 </property>
                </item>
               </widget>

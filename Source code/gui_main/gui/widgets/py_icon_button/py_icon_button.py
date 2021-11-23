@@ -55,7 +55,7 @@ class PyIconButton_simple(QPushButton):
             self.setMinimumSize(QSize(width, height))
             self.setMaximumSize(QSize(width, height))
 
-
+            
 
             self.btn_id=btn_id
 
@@ -144,6 +144,7 @@ class PyIconButton_simple(QPushButton):
                 self._is_active=enable
                 self.change_style(self._is_active)
                 self.setEnabled(enable)
+
 
 
 class PyIconButton(QPushButton):

@@ -66,7 +66,6 @@ if __name__ == "__main__":
 
     EventPool={}
 
-    
     EventPool["Setting_upload_toPLC_Start"]=MemoryPoolManager.Event()
     EventPool["Setting_upload_toPLC_Finish"]=MemoryPoolManager.Event()
 

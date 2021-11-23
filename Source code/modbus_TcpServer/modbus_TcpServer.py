@@ -113,6 +113,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
             self.eventPool["Setting_upload_toPLC_Finish"].set()
 
         if self.start_upload:
+            print(address/100)
             self.queuepool["Setting_upload_toPLC_Queue"].put(address/100)
 
 

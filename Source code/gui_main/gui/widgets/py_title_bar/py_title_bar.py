@@ -168,6 +168,7 @@ class PyTitleBar(QWidget):
         self.circularProgress.setTextVisible(False)
         self.circularProgress.setFixedSize(150,20)
         self.circularProgress.setValue(100)
+        self.circularProgress.setStyleSheet("background-color: rgba(0, 0, 0, 80);")
         self.bg_layout.addWidget(self.circularProgress)
 
         self.blankLabel_2 = QLabel("")

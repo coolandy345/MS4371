@@ -116,9 +116,6 @@ class GPIB_Driver():
     def __init__(self,memoryPool,queuePool):
         self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
 
-
-        
-        
         self.memoryPool=memoryPool
         self.queuePool=queuePool
         self.dev_descriptor={}
@@ -158,9 +155,11 @@ class GPIB_Driver():
         self.send_buffer= ctypes.create_string_buffer(byte_string)
         self.board_descriptor=self.GPIB.ibfindW(self.send_buffer)
         self.GPIB.ibdma(self.board_descriptor,1)
-
+        
         self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T1s, 1, 0)
-        self.GPIB.ibclr(self.dev_descriptor[self.getItem.name])
+        #self.GPIB.ibclr(self.dev_descriptor[self.getItem.name])
+        self.GPIB.ibsic(self.dev_descriptor[self.getItem.name],0)
+        self.GPIB.ibsre(self.dev_descriptor[self.getItem.name],0)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
@@ -228,9 +227,11 @@ class GPIB_device():
         self.test=0
         
         self.set_memorypool_register("System memory","{} connection".format(self.name),0)
+
+        self.initiail_GPIB_device()
         
-        connnection_check_Thread = threading.Thread(target = self.connnection_check_Work,daemon=True)
-        connnection_check_Thread.start()
+        #connnection_check_Thread = threading.Thread(target = self.connnection_check_Work,daemon=True)
+        #connnection_check_Thread.start()
 
     def initiail_GPIB_device(self):
 
@@ -240,27 +241,28 @@ class GPIB_device():
                 name=self.name,
                 address=self.address
             )
-        
         self.queuePool["GPIB_send_queue"].put(sendItem)
         getItem=self.queuePool["GPIB_{}_queue".format(self.name)].get()
 
         #If we have any error code
         if len(getItem.error_message):
             self.connect_action(False)
-            #print("Fail init device at adress {} Error is {}".format(self.address,getItem.error_message))
+            print("Fail init device at adress {} Error is {}".format(self.address,getItem.error_message))
             return getItem.error_message
         else:
             print("secess init GPIB device at {}".format(self.name))
             self.connect_action(True)
-            self.send_Command("reset()")
+            self.send_Command("*RST")
             self.send_Command("*CLS")
-            self.send_Command("beeper.beep(0.1, 2400)")
+            self.send_Command("node[1].beeper.beep(0.1, 2400)")
+
+
             return None
 
     
     def connect_action(self,connect):
 
-        self.connection=connect
+        #self.connection=connect
         #self.set_memorypool_register("System memory","{} connection".format(self.name),self.connection)
         self.set_memorypool_register("System memory","2635B connection".format(self.name),self.connection)
         self.set_memorypool_register("System memory","2657A connection".format(self.name),self.connection)
@@ -301,8 +303,8 @@ class GPIB_device():
             time.sleep(1)
 
     def  send_Command(self,messgae):
-        if not self.connection:
-            return "No connection"
+        #if not self.connection:
+        #    return "No connection"
 
         sendItem=GPIB_package(
                 type=GPIB_package.send_type,
@@ -323,8 +325,8 @@ class GPIB_device():
         return getItem.error_message
 
     def  read_Command(self):
-        if not self.connection:
-            return "","No connection"
+        #if not self.connection:
+        #    return "","No connection"
 
         sendItem=GPIB_package(
                 type=GPIB_package.read_type,

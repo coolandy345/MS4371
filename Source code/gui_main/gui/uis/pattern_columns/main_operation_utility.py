@@ -293,24 +293,34 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
 
 
+    def wait_transferFinish_Work(self):
+        self.eventPool["Setting_upload_toPLC_Finish"].wait()
+        self.eventPool["Setting_upload_toPLC_Finish"].clear()
 
+        self.set_setting_Transfer_enable=True
+        self.set_setting_Transfer_value=100
+        self.set_setting_Transfer_request=True
+
+        self.transfer_finish=True
 
 
     def setting_transfer_Work(self):
         while 1:
             self.eventPool["Setting_upload_toPLC_Start"].wait()
             self.eventPool["Setting_upload_toPLC_Start"].clear()
+
+            self.transfer_finish=False
+
+            wait_transferFinish_Thread = threading.Thread(target = self.wait_transferFinish_Work,daemon=True)
+            wait_transferFinish_Thread.start()
             
             self.set_setting_Transfer_enable=True
             self.set_setting_Transfer_value=0
             self.set_setting_Transfer_request=True
 
             start_time=time.time()
-            finish=False
-            while not finish:
-                if self.eventPool["Setting_upload_toPLC_Finish"].wait(timeout=0.05):
-                    self.eventPool["Setting_upload_toPLC_Finish"].clear()
-                    finish=True
+
+            while not self.transfer_finish:
 
                 try:
                     getitem=self.queuePool["Setting_upload_toPLC_Queue"].get(timeout=0.05)
@@ -322,9 +332,11 @@ class Main_utility_manager(QWidget):
                     pass
 
                 if time.time()-start_time>10:
-                    finish=True
+                    self.transfer_finish=True
                 
             
+
+            time.sleep(1.5)
 
             self.set_setting_Transfer_enable=False
             self.set_setting_Transfer_value=0
@@ -336,7 +348,15 @@ class Main_utility_manager(QWidget):
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
             self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
-            
+
+    def maxmin(self,max,min,data):
+        if data>=max:
+            return max,True
+        elif data<=min:
+            return min,True
+        else:
+            return data,False
+
     def btn_callback(self):
 
         btn_name=self.sender().objectName()
@@ -372,6 +392,42 @@ class Main_utility_manager(QWidget):
 
         elif btn_name == "Noisetest_pushButton":
             self.eventPool["Noise Measure Start"].set()
+            self.dataRecord_Start=True
+            data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
+            data_receive_Thread.start()
+
+        elif btn_name == "manaualMode_comboBox":
+            index=self._parent.ui.load_pages.manaualMode_comboBox.currentIndex()
+            self._parent.ui.load_pages.stackedWidget_2.setCurrentIndex(index)
+            #self.eventPool["Noise Measure Start"].set()
+
+        elif btn_name == "noiseMeasurement_Voltage_lineEdit":
+            data=float(self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.text())
+            data,err=self.maxmin(1000,0,data)
+            if err:
+                self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setText(str(data))
+
+            self.set_memorypool_register("System memory","Noise_Measurement_Voltage",data)
+            self.noise_Measurement_Voltage=data
+
+        elif btn_name == "noiseMeasurement_Time_lineEdit":
+            data=float(self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.text())
+            data,err=self.maxmin(10,1,data)
+            if err:
+                self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setText(str(data))
+
+            self.set_memorypool_register("System memory","Noise_Measurement_Time",data)
+            self.noise_Measurement_Time=data
+
+
+        elif btn_name == "noiseMeasurement_Current_lineEdit":
+            data=float(self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.text())
+            data,err=self.maxmin(1000,0,data)
+            if err:
+                self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setText(str(data))
+
+            self.set_memorypool_register("System memory","Noise_Measurement_Current",data)
+            self.noise_Measurement_Current=data
 
 
 
@@ -432,9 +488,13 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
             #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
             
+        elif btn_name == "outputStop_pushButton":
+        
+            self.eventPool["Noise Measure Stop"].set()
 
 
-        elif btn_name == "eMSstop_pushButton" or btn_name == "outputStop_pushButton":
+
+        elif btn_name == "eMSstop_pushButton":
             self.stop_signal=True
             self.eventPool["GPIB Stop"].set()
 
@@ -443,7 +503,6 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
 
-            
             #Stop Auto sequence
                 #if we ok to process
                     #Lock auto start check box
@@ -574,10 +633,13 @@ class Main_utility_manager(QWidget):
             self.check_buttom_axix()
 
     def data_receive_Work(self):
-        
-        
+
+        self.voltage_data_array=[]
+        self.current_data_array=[]
+        self.resistance_data_array=[]
 
         self.starttime=time.time()
+        self.timeUnit=1
         while self.dataRecord_Start:
             try:
                 getItem=self.queuePool["GUI_DataQueue"].get(timeout=0.1)
@@ -586,6 +648,8 @@ class Main_utility_manager(QWidget):
                 self.set_memorypool_register("Modbus Registor Pool - Registor","現在電圧値",getItem.voltage)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","現在電流値",getItem.current)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","現在抵抗値",getItem.resistance)
+
+                #print("aaa",getItem.current)
 
                 timenow=time.time()-self.starttime
 
@@ -599,20 +663,20 @@ class Main_utility_manager(QWidget):
                 self.voltage_data_array.append(XYdata)
                 XYdata={}
                 XYdata["x"]=timenow/self.timeUnit
-                XYdata["y"]=getItem.current*(1e-15)
+                XYdata["y"]=float(getItem.current)
                 self.current_data_array.append(XYdata)
                 XYdata={}
                 XYdata["x"]=timenow/self.timeUnit
                 XYdata["y"]=getItem.resistance*(1e+6)
                 self.resistance_data_array.append(XYdata)
                 
-                if len(self.temp_data_array)>1000:
+                if len(self.voltage_data_array)>10000:
                     self.voltage_data_array.pop(0)
 
-                if len(self.temp_data_array)>1000:
+                if len(self.current_data_array)>10000:
                     self.current_data_array.pop(0)
 
-                if len(self.temp_data_array)>1000:
+                if len(self.resistance_data_array)>10000:
                     self.resistance_data_array.pop(0)
 
                 self.graph_Update_request=True
@@ -643,6 +707,23 @@ class Main_utility_manager(QWidget):
         
         self._parent.ui.load_pages.Noisetest_pushButton.clicked.connect(self.btn_callback)
 
+
+
+        self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setValidator(QDoubleValidator())
+        data=self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()
+        self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setText("{}".format(data))
+        self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.textChanged.connect(self.btn_callback)
+        self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setValidator(QDoubleValidator())
+        data=self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_Time"].getValue()
+        self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setText("{}".format(data))
+        self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.textChanged.connect(self.btn_callback)
+        self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setValidator(QDoubleValidator())
+        data=self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_Current"].getValue()
+        self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setText("{}".format(data))
+        self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.textChanged.connect(self.btn_callback)
+
+
+
         
         self._parent.ui.load_pages.Test1_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.Test2_pushButton.clicked.connect(self.btn_callback)
@@ -652,7 +733,8 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.Voltage_checkBox.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.Current_checkBox.clicked.connect(self.btn_callback)
         
-
+        
+        self._parent.ui.load_pages.manaualMode_comboBox.currentIndexChanged.connect(self.btn_callback)
         
         self._parent.ui.load_pages.remoteConnect_pushButton.clicked.connect(self.btn_callback)
 
