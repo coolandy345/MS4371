@@ -130,7 +130,7 @@ class Testfile_manager(QWidget):
         self._thinkness=self._parent.MMG.memoryPool["System memory"]["試料の厚さ(mm)"].getValue()
 
         self.pid_parameter_list=[]
-        for pid_number in range(0,5):
+        for pid_number in range(0,10):
             pid=["P","I","D"]
             pid_parameter=[]
             for K in pid:
@@ -177,6 +177,26 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_PID_4_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[4][0])))
         self._parent.ui.load_pages.lineEdit_PID_4_I.setText(str(self.pid_parameter_list[4][1]))
         self._parent.ui.load_pages.lineEdit_PID_4_D.setText(str(self.pid_parameter_list[4][2]))
+
+        self._parent.ui.load_pages.lineEdit_PID_5_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[5][0])))
+        self._parent.ui.load_pages.lineEdit_PID_5_I.setText(str(self.pid_parameter_list[5][1]))
+        self._parent.ui.load_pages.lineEdit_PID_5_D.setText(str(self.pid_parameter_list[5][2]))
+
+        self._parent.ui.load_pages.lineEdit_PID_6_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[6][0])))
+        self._parent.ui.load_pages.lineEdit_PID_6_I.setText(str(self.pid_parameter_list[6][1]))
+        self._parent.ui.load_pages.lineEdit_PID_6_D.setText(str(self.pid_parameter_list[6][2]))
+
+        self._parent.ui.load_pages.lineEdit_PID_7_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[7][0])))
+        self._parent.ui.load_pages.lineEdit_PID_7_I.setText(str(self.pid_parameter_list[7][1]))
+        self._parent.ui.load_pages.lineEdit_PID_7_D.setText(str(self.pid_parameter_list[7][2]))
+
+        self._parent.ui.load_pages.lineEdit_PID_8_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[8][0])))
+        self._parent.ui.load_pages.lineEdit_PID_8_I.setText(str(self.pid_parameter_list[8][1]))
+        self._parent.ui.load_pages.lineEdit_PID_8_D.setText(str(self.pid_parameter_list[8][2]))
+
+        self._parent.ui.load_pages.lineEdit_PID_9_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[9][0])))
+        self._parent.ui.load_pages.lineEdit_PID_9_I.setText(str(self.pid_parameter_list[9][1]))
+        self._parent.ui.load_pages.lineEdit_PID_9_D.setText(str(self.pid_parameter_list[9][2]))
 
 
     def utility_update(self):
@@ -244,6 +264,41 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_PID_4_I.setValidator(QIntValidator())
         self._parent.ui.load_pages.lineEdit_PID_4_D.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_4_D.setValidator(QIntValidator())
+
+        self._parent.ui.load_pages.lineEdit_PID_5_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_5_P.setValidator(QDoubleValidator(decimals=2))
+        self._parent.ui.load_pages.lineEdit_PID_5_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_5_I.setValidator(QIntValidator())
+        self._parent.ui.load_pages.lineEdit_PID_5_D.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_5_D.setValidator(QIntValidator())
+
+        self._parent.ui.load_pages.lineEdit_PID_6_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_6_P.setValidator(QDoubleValidator(decimals=2))
+        self._parent.ui.load_pages.lineEdit_PID_6_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_6_I.setValidator(QIntValidator())
+        self._parent.ui.load_pages.lineEdit_PID_6_D.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_6_D.setValidator(QIntValidator())
+
+        self._parent.ui.load_pages.lineEdit_PID_7_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_7_P.setValidator(QDoubleValidator(decimals=2))
+        self._parent.ui.load_pages.lineEdit_PID_7_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_7_I.setValidator(QIntValidator())
+        self._parent.ui.load_pages.lineEdit_PID_7_D.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_7_D.setValidator(QIntValidator())
+
+        self._parent.ui.load_pages.lineEdit_PID_8_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_8_P.setValidator(QDoubleValidator(decimals=2))
+        self._parent.ui.load_pages.lineEdit_PID_8_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_8_I.setValidator(QIntValidator())
+        self._parent.ui.load_pages.lineEdit_PID_8_D.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_8_D.setValidator(QIntValidator())
+
+        self._parent.ui.load_pages.lineEdit_PID_9_P.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_9_P.setValidator(QDoubleValidator(decimals=2))
+        self._parent.ui.load_pages.lineEdit_PID_9_I.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_9_I.setValidator(QIntValidator())
+        self._parent.ui.load_pages.lineEdit_PID_9_D.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.lineEdit_PID_9_D.setValidator(QIntValidator())
         
         self.areaVolumeCal()
         
@@ -282,6 +337,26 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_PID_4_P.setEnabled(enable)
         self._parent.ui.load_pages.lineEdit_PID_4_I.setEnabled(enable)
         self._parent.ui.load_pages.lineEdit_PID_4_D.setEnabled(enable)
+
+        self._parent.ui.load_pages.lineEdit_PID_5_P.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_5_I.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_5_D.setEnabled(enable)
+
+        self._parent.ui.load_pages.lineEdit_PID_6_P.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_6_I.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_6_D.setEnabled(enable)
+
+        self._parent.ui.load_pages.lineEdit_PID_7_P.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_7_I.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_7_D.setEnabled(enable)
+
+        self._parent.ui.load_pages.lineEdit_PID_8_P.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_8_I.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_8_D.setEnabled(enable)
+
+        self._parent.ui.load_pages.lineEdit_PID_9_P.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_9_I.setEnabled(enable)
+        self._parent.ui.load_pages.lineEdit_PID_9_D.setEnabled(enable)
 
     def lunchOptionDialog(self,message,type):
 
@@ -423,6 +498,77 @@ class Testfile_manager(QWidget):
         elif btn=="lineEdit_PID_4_D":
             self.PID_4_D=float(self._parent.ui.load_pages.lineEdit_PID_4_D.text())
             self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_4_D",self.PID_4_D)
+
+        elif btn=="lineEdit_PID_5_P":   
+            if float(self._parent.ui.load_pages.lineEdit_PID_5_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_5_P.setText(str("{:0.01f}".format(0.1)))
+            self.PID_5_P=float(self._parent.ui.load_pages.lineEdit_PID_5_P.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_5_P",100*self.PID_5_P)
+
+        elif btn=="lineEdit_PID_5_I":
+            self.PID_5_I=float(self._parent.ui.load_pages.lineEdit_PID_5_I.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_5_I",self.PID_5_I)
+
+        elif btn=="lineEdit_PID_5_D":
+            self.PID_5_D=float(self._parent.ui.load_pages.lineEdit_PID_5_D.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_5_D",self.PID_5_D)
+
+        elif btn=="lineEdit_PID_6_P":   
+            if float(self._parent.ui.load_pages.lineEdit_PID_6_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_6_P.setText(str("{:0.01f}".format(0.1)))
+            self.PID_6_P=float(self._parent.ui.load_pages.lineEdit_PID_6_P.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_6_P",100*self.PID_6_P)
+
+        elif btn=="lineEdit_PID_6_I":
+            self.PID_6_I=float(self._parent.ui.load_pages.lineEdit_PID_6_I.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_6_I",self.PID_6_I)
+
+        elif btn=="lineEdit_PID_6_D":
+            self.PID_6_D=float(self._parent.ui.load_pages.lineEdit_PID_6_D.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_6_D",self.PID_6_D)
+
+        elif btn=="lineEdit_PID_7_P":   
+            if float(self._parent.ui.load_pages.lineEdit_PID_7_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_7_P.setText(str("{:0.01f}".format(0.1)))
+            self.PID_7_P=float(self._parent.ui.load_pages.lineEdit_PID_7_P.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_7_P",100*self.PID_7_P)
+
+        elif btn=="lineEdit_PID_7_I":
+            self.PID_7_I=float(self._parent.ui.load_pages.lineEdit_PID_7_I.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_7_I",self.PID_7_I)
+
+        elif btn=="lineEdit_PID_7_D":
+            self.PID_7_D=float(self._parent.ui.load_pages.lineEdit_PID_7_D.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_7_D",self.PID_7_D)
+
+        elif btn=="lineEdit_PID_8_P":   
+            if float(self._parent.ui.load_pages.lineEdit_PID_8_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_8_P.setText(str("{:0.01f}".format(0.1)))
+            self.PID_8_P=float(self._parent.ui.load_pages.lineEdit_PID_8_P.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_8_P",100*self.PID_8_P)
+
+        elif btn=="lineEdit_PID_8_I":
+            self.PID_8_I=float(self._parent.ui.load_pages.lineEdit_PID_8_I.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_8_I",self.PID_8_I)
+
+        elif btn=="lineEdit_PID_8_D":
+            self.PID_8_D=float(self._parent.ui.load_pages.lineEdit_PID_8_D.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_8_D",self.PID_8_D)
+
+        elif btn=="lineEdit_PID_9_P":   
+            if float(self._parent.ui.load_pages.lineEdit_PID_9_P.text())<0.1:
+                self._parent.ui.load_pages.lineEdit_PID_9_P.setText(str("{:0.01f}".format(0.1)))
+            self.PID_9_P=float(self._parent.ui.load_pages.lineEdit_PID_9_P.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_9_P",100*self.PID_9_P)
+
+        elif btn=="lineEdit_PID_9_I":
+            self.PID_9_I=float(self._parent.ui.load_pages.lineEdit_PID_9_I.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_9_I",self.PID_9_I)
+
+        elif btn=="lineEdit_PID_9_D":
+            self.PID_9_D=float(self._parent.ui.load_pages.lineEdit_PID_9_D.text())
+            self.set_memorypool_register("Modbus Registor Pool - Registor","PID_No_9_D",self.PID_9_D)
+
 
 
         self.utility_update()
