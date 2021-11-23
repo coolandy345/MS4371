@@ -981,11 +981,19 @@ class Main_utility_manager(QWidget):
             self.realTime_Resistance_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
             self.realTime_Voltage_Graph.showLabel("bottom", show=False)
             self.realTime_Current_Graph.showLabel("bottom", show=False)
+
+            self.realTime_Voltage_Graph.setXLink(self.realTime_Voltage_Graph)
+            self.realTime_Current_Graph.setXLink(self.realTime_Voltage_Graph)
+            self.realTime_Resistance_Graph.setXLink(self.realTime_Voltage_Graph)
         else:
             if self.realTime_Current_Graph_set:
                 self.realTime_Current_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
                 self.realTime_Voltage_Graph.showLabel("bottom", show=False)
                 self.realTime_Resistance_Graph.showLabel("bottom", show=False)
+
+                self.realTime_Voltage_Graph.setXLink(self.realTime_Current_Graph)
+                self.realTime_Current_Graph.setXLink(self.realTime_Current_Graph)
+                self.realTime_Resistance_Graph.setXLink(self.realTime_Current_Graph)
 
             else:
                 if self.realTime_Voltage_Graph_set:
@@ -993,11 +1001,17 @@ class Main_utility_manager(QWidget):
                     self.realTime_Current_Graph.showLabel("bottom", show=False)
                     self.realTime_Resistance_Graph.showLabel("bottom", show=False)
 
+                    self.realTime_Voltage_Graph.setXLink(self.realTime_Voltage_Graph)
+                    self.realTime_Current_Graph.setXLink(self.realTime_Voltage_Graph)
+                    self.realTime_Resistance_Graph.setXLink(self.realTime_Voltage_Graph)
+
                 else:
                     
                     self.realTime_Voltage_Graph.showLabel("bottom", show=False)
                     self.realTime_Current_Graph.showLabel("bottom", show=False)
                     self.realTime_Resistance_Graph.showLabel("bottom", show=False)
+                    
+                    
 
     def graph_update(self):
         self.measurement_data_array=[]
@@ -1109,6 +1123,8 @@ class Main_utility_manager(QWidget):
         self.realTime_Resistance_Graph.setLabel(axis='left', text='抵抗', units='Ω')
         self.realTime_Resistance_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Resistance_Graph.showGrid(x=True, y=True)
+
+        
 
         self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
         self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)

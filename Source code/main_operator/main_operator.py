@@ -306,23 +306,20 @@ class Operator():
         self.eventPool["GPIB_Test_Finish"].clear()
 
     def stop_noise_measurement(self):
+        self.noise_stop=False
         #get event Start Run Auto run
         self.eventPool["Noise Measure Stop"].wait()
         #clear  Start Run Auto run event
         self.eventPool["Noise Measure Stop"].clear()
-        print("stop_noise_measurement")
 
         
-        self.gpib_2657A.send_Command("exit()")
+        #self.gpib_2657A.send_Command("exit()")
         
 
         self.noise_stop=True
 
     def start_noise_measurement(self):
         
-        
-
-
         while 1:
             #get event Start Run Auto run
             self.eventPool["Noise Measure Start"].wait()
@@ -429,15 +426,19 @@ class Operator():
             
             self.gpib_2657A.send_Command("test_time={}".format(self.noise_measurement_time))
             self.gpib_2657A.send_Command("over_current={}".format(self.noise_measurement_current))
+            self.gpib_2657A.send_Command("under_current={}".format(-1*self.noise_measurement_current))
             self.gpib_2657A.send_Command("max_current=0")
+            self.gpib_2657A.send_Command("min_current=0")
 
-            
             self.gpib_2657A.send_Command("search_count=0")
             self.gpib_2657A.send_Command("search_index=1")
-            self.gpib_2657A.send_Command("search_burst=6")
+            self.gpib_2657A.send_Command("search_burst=2")
 
             self.gpib_2657A.send_Command("loop_start=true")
             self.gpib_2657A.send_Command("overcurrent=false")
+            self.gpib_2657A.send_Command("undercurrent=false")
+
+            
             self.gpib_2657A.send_Command("time_up=false")
             
             
@@ -447,11 +448,9 @@ class Operator():
             self.gpib_2657A.send_Command("while loop_start do")
 
             #Measurement Current & Voltage
-            #self.gpib_2657A.send_Command("  voltage_data=node[1].smua.measure.v()")
-            #self.gpib_2657A.send_Command("  current_data=node[2].smua.measure.i()")
-
             self.gpib_2657A.send_Command("  node[1].smua.measure.overlappedv(node[1].smua.nvbuffer1)")
             self.gpib_2657A.send_Command("  node[2].smua.measure.overlappedi(node[2].smua.nvbuffer1)")
+            #Waitting Measurement complete
             self.gpib_2657A.send_Command("  waitcomplete()")
             self.gpib_2657A.send_Command("  voltage_data=node[1].smua.nvbuffer1.readings[node[1].smua.nvbuffer1.n]")
             self.gpib_2657A.send_Command("  current_data=node[2].smua.nvbuffer1.readings[node[2].smua.nvbuffer1.n]")
@@ -459,8 +458,6 @@ class Operator():
 
 
             #Times up Check
-            #search_count
-            #search_index
             self.gpib_2657A.send_Command("  if search_count>=search_burst then")
             self.gpib_2657A.send_Command("      printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
             self.gpib_2657A.send_Command("      search_index=node[2].smua.nvbuffer1.n+1")
@@ -468,24 +465,31 @@ class Operator():
             self.gpib_2657A.send_Command("  else")   #70
             self.gpib_2657A.send_Command("      search_count=search_count+1")
             self.gpib_2657A.send_Command("  end")
-
-            
-            #self.gpib_2657A.send_Command("  print(current_data)")
-
-            #self.gpib_2657A.send_Command("  print(current_data,current_time)")
-
-            #Waitting Measurement complete
             
             #Max Current record
             self.gpib_2657A.send_Command("  if current_data>max_current then")   #60
             self.gpib_2657A.send_Command("      max_current=current_data")
             self.gpib_2657A.send_Command("  end")
 
+            #Min Current record
+            self.gpib_2657A.send_Command("  if current_data<min_current then")   #60
+            self.gpib_2657A.send_Command("      min_current=current_data")
+            self.gpib_2657A.send_Command("  end")
+
+            
+
             #Over current Check
             self.gpib_2657A.send_Command("  if current_data>over_current then")
             self.gpib_2657A.send_Command("      overcurrent=true")
             self.gpib_2657A.send_Command("  else")
             self.gpib_2657A.send_Command("      overcurrent=false")
+            self.gpib_2657A.send_Command("  end")
+
+            #Under current Check
+            self.gpib_2657A.send_Command("  if current_data<under_current then")
+            self.gpib_2657A.send_Command("      undercurrent=true")
+            self.gpib_2657A.send_Command("  else")
+            self.gpib_2657A.send_Command("      undercurrent=false")
             self.gpib_2657A.send_Command("  end")
 
             #Times up Check
@@ -495,7 +499,12 @@ class Operator():
             self.gpib_2657A.send_Command("      time_up=false")
             self.gpib_2657A.send_Command("  end")
 
-            self.gpib_2657A.send_Command("  if overcurrent or time_up then")
+            self.gpib_2657A.send_Command("  if overcurrent or undercurrent or time_up then")
+
+            
+            self.gpib_2657A.send_Command("      if search_count>0 then")
+            self.gpib_2657A.send_Command("          printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
+            self.gpib_2657A.send_Command("      end")
             self.gpib_2657A.send_Command("      break")
             self.gpib_2657A.send_Command("  end")
 
@@ -512,7 +521,7 @@ class Operator():
 
             
 
-            #check overcurrent is happened or not
+            #check overcurrent or  undercurrent is happened or not
             self.gpib_2657A.send_Command("if overcurrent then")
                 #Over current Fail
             self.gpib_2657A.send_Command("  node[1].display.clear()")
@@ -521,6 +530,17 @@ class Operator():
             self.gpib_2657A.send_Command("  node[2].display.clear()")
             self.gpib_2657A.send_Command("  node[2].display.setcursor(1, 1)")
             self.gpib_2657A.send_Command("  node[2].display.settext(\"Fail \")")
+
+            
+            self.gpib_2657A.send_Command("elseif undercurrent then")
+                #under current Fail
+            self.gpib_2657A.send_Command("  node[1].display.clear()")
+            self.gpib_2657A.send_Command("  node[1].display.setcursor(1, 1)")   #80
+            self.gpib_2657A.send_Command("  node[1].display.settext(\"Fail \")")
+            self.gpib_2657A.send_Command("  node[2].display.clear()")
+            self.gpib_2657A.send_Command("  node[2].display.setcursor(1, 1)")
+            self.gpib_2657A.send_Command("  node[2].display.settext(\"Fail \")")
+
 
             self.gpib_2657A.send_Command("else")
                 #Time up Success
@@ -534,9 +554,23 @@ class Operator():
             self.gpib_2657A.send_Command("end")
 
             self.gpib_2657A.send_Command("print(\"finish\")")
+            
+            self.gpib_2657A.send_Command("if overcurrent or undercurrent then")
+            self.gpib_2657A.send_Command("  print(\"fail\",max_current,min_current)")
+            self.gpib_2657A.send_Command("else")
+            self.gpib_2657A.send_Command("  print(\"pass\",max_current,min_current)")
+            self.gpib_2657A.send_Command("end")
+
 
             self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
-            self.gpib_2657A.send_Command("text=string.format(\"Max current = %e A\",max_current)")
+
+            self.gpib_2657A.send_Command("bigger=max_current+min_current")
+            self.gpib_2657A.send_Command("if bigger>=0 then")
+            self.gpib_2657A.send_Command("  text=string.format(\"Max current = %e A\",max_current)")
+            self.gpib_2657A.send_Command("else")
+            self.gpib_2657A.send_Command("  text=string.format(\"Max current = %e A\",min_current)")
+            self.gpib_2657A.send_Command("end")
+
             self.gpib_2657A.send_Command("node[1].display.settext(text)")
             self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
             self.gpib_2657A.send_Command("node[2].display.settext(text)")
@@ -558,11 +592,14 @@ class Operator():
             stop_noise_measurement_Thread = threading.Thread(target = self.data_retrive_Work,daemon=True)
             stop_noise_measurement_Thread.start()
 
-            
-            
-
     def data_retrive_Work(self):
         time.sleep(1)
+
+        pass_="不合格"
+        max_current=0
+        min_current=0
+
+
         
         self.csv_manager.prepare_NoiseTestfolder()
 
@@ -582,13 +619,37 @@ class Operator():
         
         while True:
 
+            if self.noise_stop:
+                
+                print("stop_noise_measurement")
+                self.gpib_2657A.send_Command("abort")
+                self.gpib_2657A.send_Command("reset()")
+                self.gpib_2657A.send_Command("node[1].smua.reset()")
+                self.gpib_2657A.send_Command("node[2].smua.reset()")
+
+                self.gpib_2657A.send_Command("node[2].smua.source.output = 0")
+                self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
+                self.gpib_2657A.send_Command("*CLS")
+                
+                return 
+
             #self.gpib_2657A.send_Command("print(dataqueue.next())")
             text=self.gpib_2657A.read_Command()
             #print(text)
 
             if text[0]=="finish":
                 self.gpib_2657A.send_Command("reset()")
+                text=self.gpib_2657A.read_Command()
+
+                data_list=[]
+                for data in text[0].split("\t"):
+                    data_list.append(data)
+
+                self.csv_manager.result_NoiseTestCsvFile(data_list[0],data_list[1],data_list[2])
+                
+
                 print("finish data_retrive_Work")
+                print(data_list)
                 return
             elif text[0]:
                 #print(text[0])

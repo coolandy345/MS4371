@@ -33,9 +33,6 @@ class Csv_manager():
         #reset_Thread.start()
 
 
-    
-
-    
 
 
     def startRecord_CsvFile(self):
@@ -74,8 +71,6 @@ class Csv_manager():
         self.profile=profile
 
         self.csv = os.path.join(self.main_folder_path, "ノイズ測定結果データ.csv")
-
-
         with open(self.csv, 'w', newline='') as csvfile:
 
             writer = csv.writer(csvfile)
@@ -84,7 +79,28 @@ class Csv_manager():
             writer.writerow(['測定電圧(V)', self.profile.ノイズ測定電圧])
             writer.writerow(['測定判定基準電流(A)', self.profile.ノイズ測定判定基準])
             writer.writerow(['測定時間(min)', self.profile.ノイズ測定時間])
+
+
+    def result_NoiseTestCsvFile(self,text,max,min):
+        print("result_NoiseTestCsvFile",text,max,min)
+        temp_list=[]
+        with open(self.csv) as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                temp_list.append(row)
+
+        with open(self.csv, 'w', newline='') as csvfile:
+
+            writer = csv.writer(csvfile)
+            writer.writerow(['合格判定',str(text)])
+            writer.writerow(['最大電流(A)',str(max)])
+            writer.writerow(['最小電流(A)',str(min)])
             writer.writerow("")
+
+            for row in temp_list:
+                writer.writerow(row)
+
+
 
     
     def prepare_NoiseTestfolder(self):
@@ -298,7 +314,6 @@ class Csv_manager():
             writer.writerow("")
             writer.writerow(["{}".format(type)])
             writer.writerow(["測定次数","経過時間(sec)","温度℃","印加電圧(v)","測定電流A","抵抗値(Ω)","体積抵抗率(Ω・cm)"])
-
 
 
     def testDataQueue_Work(self,title):
