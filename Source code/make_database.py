@@ -322,19 +322,7 @@ for pattern_no in range(1,21):
     Base+=500
 
 
-Base=10000
-for pid_no in range(0,5):
 
-    test="INSERT INTO '{}' values({}, 'PID_No_{}_P',{},{},{},{},{},'{}')".format(Table_name,Base+PID_P,pid_no,PID_P_min,PID_P_default,PID_P_max,PID_P_default,0,PID_P_comment)
-    cur.execute(test)
-
-    test="INSERT INTO '{}' values({}, 'PID_No_{}_I',{},{},{},{},{},'{}')".format(Table_name,Base+PID_I,pid_no,PID_I_min,PID_I_default,PID_I_max,PID_I_default,0,PID_I_comment)
-    cur.execute(test)
-
-    test="INSERT INTO '{}' values({}, 'PID_No_{}_D',{},{},{},{},{},'{}')".format(Table_name,Base+PID_D,pid_no,PID_D_min,PID_D_default,PID_D_max,PID_D_default,0,PID_D_comment)
-    cur.execute(test)
-
-    Base+=3
 
 test="INSERT INTO '{}' values({}, '現在電圧値',{},{},{},{},{},'{}')".format(Table_name,10016,"NULL",0,"NULL",0,1,"NULL")
 cur.execute(test)
@@ -441,7 +429,19 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, '運転停止',{},{},{},{},{},'{}')".format(Table_name,10174,0,0,1,0,1,"エッジ(PLC側でRST)")
 cur.execute(test)
 
+Base=10200
+for pid_no in range(0,10):
 
+    test="INSERT INTO '{}' values({}, 'PID_No_{}_P',{},{},{},{},{},'{}')".format(Table_name,Base+PID_P,pid_no,PID_P_min,PID_P_default,PID_P_max,PID_P_default,0,PID_P_comment)
+    cur.execute(test)
+
+    test="INSERT INTO '{}' values({}, 'PID_No_{}_I',{},{},{},{},{},'{}')".format(Table_name,Base+PID_I,pid_no,PID_I_min,PID_I_default,PID_I_max,PID_I_default,0,PID_I_comment)
+    cur.execute(test)
+
+    test="INSERT INTO '{}' values({}, 'PID_No_{}_D',{},{},{},{},{},'{}')".format(Table_name,Base+PID_D,pid_no,PID_D_min,PID_D_default,PID_D_max,PID_D_default,0,PID_D_comment)
+    cur.execute(test)
+
+    Base+=3
 
 #test="INSERT INTO '{}' values({}, '変更レジスター番号',{},{},{},{},{},'{}')".format(Table_name,10191,0,0,65535,0,1,"変更したレジスター番号はここ記入")
 #cur.execute(test)
