@@ -254,7 +254,8 @@ class GPIB_device():
             self.connect_action(True)
             self.send_Command("*RST")
             self.send_Command("*CLS")
-            self.send_Command("node[1].beeper.beep(0.1, 2400)")
+            self.send_Command("tsplink.reset()")
+            self.send_Command("beeper.beep(0.1, 2400)")
 
 
             return None
@@ -262,7 +263,7 @@ class GPIB_device():
     
     def connect_action(self,connect):
 
-        #self.connection=connect
+        self.connection=connect
         #self.set_memorypool_register("System memory","{} connection".format(self.name),self.connection)
         self.set_memorypool_register("System memory","2635B connection".format(self.name),self.connection)
         self.set_memorypool_register("System memory","2657A connection".format(self.name),self.connection)

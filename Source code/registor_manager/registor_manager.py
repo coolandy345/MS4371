@@ -100,7 +100,7 @@ def databaseLoadThread(memoryPool):
 
     pool={}
     
-    full_Range_list=list(range(0,10201))
+    full_Range_list=list(range(0,10300))
     for row in cur.execute('SELECT * FROM "Modbus Registor Pool - Registor" '):
 
         register=ModbusRegistorClass.ModbusPackage(number       =row[0],

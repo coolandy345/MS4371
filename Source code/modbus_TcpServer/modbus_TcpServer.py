@@ -113,7 +113,6 @@ class CustomDataBlock(ModbusSparseDataBlock):
             self.eventPool["Setting_upload_toPLC_Finish"].set()
 
         if self.start_upload:
-            print(address/100)
             self.queuepool["Setting_upload_toPLC_Queue"].put(address/100)
 
 
@@ -301,7 +300,7 @@ def run_async_server(memorypool,queuePool,eventPool):
     # ----------------------------------------------------------------------- # 
     # TCP Server
     local_IP_address=socket.gethostbyname(socket.gethostname())
-    StartTcpServer(context, identity=identity, address=(local_IP_address, 502))
+    StartTcpServer(context, identity=identity, address=(local_IP_address, 506))
     
 
 if __name__ == "__main__":

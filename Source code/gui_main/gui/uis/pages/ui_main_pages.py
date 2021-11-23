@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesMhlguX.ui'
+## Form generated from reading UI file 'main_pagesdWKOKb.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -2507,7 +2507,7 @@ class Ui_MainPages(object):
 "}\n"
 "QComboBox:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QComboBox:hover {\n"
@@ -4547,7 +4547,7 @@ class Ui_MainPages(object):
         self.retranslateUi(MainPages)
 
         self.pages.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
         self.stackedWidget_2.setCurrentIndex(1)
 

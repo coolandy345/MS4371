@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patternPgbSsQ.ui'
+## Form generated from reading UI file 'temp_patternySkRqZ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -435,7 +435,7 @@ class Ui_temp_pattern(object):
         self.PID_muffle_comboBox.setSizePolicy(sizePolicy)
         self.PID_muffle_comboBox.setMinimumSize(QSize(75, 0))
         self.PID_muffle_comboBox.setMaximumSize(QSize(75, 16777215))
-        self.PID_muffle_comboBox.setStyleSheet(u"")
+        self.PID_muffle_comboBox.setStyleSheet(u"font:12px;")
         self.PID_muffle_comboBox.setMaxVisibleItems(10)
 
         self.horizontalLayout_7.addWidget(self.PID_muffle_comboBox)
@@ -483,7 +483,7 @@ class Ui_temp_pattern(object):
         self.PID_heater_comboBox.setSizePolicy(sizePolicy)
         self.PID_heater_comboBox.setMinimumSize(QSize(75, 0))
         self.PID_heater_comboBox.setMaximumSize(QSize(75, 16777215))
-        self.PID_heater_comboBox.setStyleSheet(u"")
+        self.PID_heater_comboBox.setStyleSheet(u"font:12px;")
         self.PID_heater_comboBox.setMaxVisibleItems(10)
 
         self.horizontalLayout_8.addWidget(self.PID_heater_comboBox)
@@ -519,7 +519,7 @@ class Ui_temp_pattern(object):
         self.KeepTime_lineEdit.setObjectName(u"KeepTime_lineEdit")
         self.KeepTime_lineEdit.setMinimumSize(QSize(75, 20))
         self.KeepTime_lineEdit.setMaximumSize(QSize(75, 20))
-        self.KeepTime_lineEdit.setStyleSheet(u"")
+        self.KeepTime_lineEdit.setStyleSheet(u"font:12px;")
         self.KeepTime_lineEdit.setAlignment(Qt.AlignCenter)
         self.KeepTime_lineEdit.setReadOnly(False)
 

@@ -11,6 +11,7 @@ from main_operator import *
 from gui_main.qt_core import *
 from gui_main.gui.widgets.py_dialog import *
 from registor_manager import *
+import datetime
 
 
 class Csv_manager():
@@ -68,7 +69,52 @@ class Csv_manager():
         #    self.eventPool["CSV_Record_stop"].wait()
         self.dataRecord_Start=False
 
+    def prepare_NoiseTestCsvFile(self,profile):
+
+        self.profile=profile
+
+        self.csv = os.path.join(self.main_folder_path, "ノイズ測定結果データ.csv")
+
+
+        with open(self.csv, 'w', newline='') as csvfile:
+
+            writer = csv.writer(csvfile)
+
+            writer.writerow(['測定実施時刻', self.profile.date])
+            writer.writerow(['測定電圧(V)', self.profile.ノイズ測定電圧])
+            writer.writerow(['測定判定基準電流(A)', self.profile.ノイズ測定判定基準])
+            writer.writerow(['測定時間(min)', self.profile.ノイズ測定時間])
+            writer.writerow("")
+
     
+    def prepare_NoiseTestfolder(self):
+
+        System_memory=self.memoryPool["System memory"]
+        Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
+
+        basepath = "C:/高温抵抗測定結果"
+        try:
+            os.mkdir(basepath)
+        except FileExistsError:
+            pass
+
+        # Create target Year Directory
+        try:
+            path = os.path.join(basepath, "ノイズ測定結果")
+            os.mkdir(path)
+        except FileExistsError:
+            pass
+
+        now=datetime.datetime.now()
+        try:
+            path = os.path.join(path, str("{}_{}_{}_{}_{}_{}".format(now.year,now.month,now.day,now.hour,now.minute,now.second)))
+            os.mkdir(path)
+        except FileExistsError:
+            pass
+
+        self.main_folder_path=path
+
+
     def prepare_Mainfolder(self):
         
         System_memory=self.memoryPool["System memory"]

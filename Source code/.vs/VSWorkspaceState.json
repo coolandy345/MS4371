@@ -8,8 +8,8 @@
     "\\gui_main\\gui\\widgets",
     "\\gui_main\\gui\\widgets\\py_icon_button",
     "\\gui_main\\gui\\widgets\\py_pattern",
-    "\\gui_main\\gui\\widgets\\py_push_button",
-    "\\main_operator"
+    "\\gui_main\\gui\\widgets\\py_title_bar",
+    "\\modbus_TcpServer"
   ],
   "SelectedNode": "\\main_operator\\main_operator.py",
   "PreviewInSolutionExplorer": false

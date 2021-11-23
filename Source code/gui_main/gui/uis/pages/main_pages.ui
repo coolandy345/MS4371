@@ -5549,7 +5549,7 @@ QComboBox:enabled {
 }
 QComboBox:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QComboBox:hover {

@@ -873,7 +873,7 @@ QFrame:focus{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">font:12px;</string>
                </property>
                <property name="currentIndex">
                 <number>0</number>
@@ -1023,7 +1023,7 @@ QFrame:focus{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">font:12px;</string>
                </property>
                <property name="currentIndex">
                 <number>0</number>
@@ -1167,7 +1167,7 @@ QFrame:focus{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">font:12px;</string>
                </property>
                <property name="text">
                 <string>0</string>

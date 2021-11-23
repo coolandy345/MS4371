@@ -193,7 +193,6 @@ class PyTitleBar(QWidget):
 
     def set_setting_Transfer(self,enable=False,value=0):
         
-        print("set_setting_Transfer",enable,value)
         self.transferLabel.setVisible(enable)
         self.circularProgress.setVisible(enable)
         self.blankLabel.setVisible(enable)

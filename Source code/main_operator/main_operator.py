@@ -49,6 +49,11 @@ class Test_profile_package():
                  speed="",
                  filter="",
                  filter_count=0,
+
+                 ノイズ測定判定基準=0,
+                 ノイズ測定時間=0,
+                 ノイズ測定電圧=0
+
                  ):
         self.date=date
         self.folder_name=folder_name
@@ -69,6 +74,11 @@ class Test_profile_package():
         self.bg_time=bg_time
         self.speed=speed
         self.filter=filter
+
+        self.ノイズ測定判定基準=ノイズ測定判定基準
+        self.ノイズ測定時間=ノイズ測定時間
+        self.ノイズ測定電圧=ノイズ測定電圧
+
 
         if not self.time:
             self.time_sample=0
@@ -130,6 +140,8 @@ class Operator():
         self.memoryPool=memoryPool
         self.queuePool=queuePool
         self.eventPool=eventPool
+
+        self.temperature=0
         
         self.csv_manager=Csv_manager(memoryPool,queuePool,eventPool)
 
@@ -144,7 +156,8 @@ class Operator():
         start_noise_measurement_Thread = threading.Thread(target = self.start_noise_measurement,daemon=True)
         start_noise_measurement_Thread.start()
 
-        
+        get_temp_Thread = threading.Thread(target = self.get_temp_Work,daemon=True)
+        get_temp_Thread.start()
 
 
         test1_Thread=threading.Thread(target = self.test_Work1,daemon=True)
@@ -169,6 +182,11 @@ class Operator():
     #    self.
     #    pass
         
+
+    def get_temp_Work(self):
+        while 1:
+            time.sleep(0.2)
+            self.temperature=self.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()
 
     def test_Work1(self):
         
@@ -311,16 +329,20 @@ class Operator():
             #clear  Start Run Auto run event
             self.eventPool["Noise Measure Start"].clear()
 
-            test_voltage=self.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()
-            over_current=self.memoryPool["System memory"]["Noise_Measurement_Current"].getValue()
-            test_time=60*self.memoryPool["System memory"]["Noise_Measurement_Time"].getValue()
+            self.noise_measurement_voltage=self.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()
+            self.noise_measurement_current=1e-12*self.memoryPool["System memory"]["Noise_Measurement_Current"].getValue()
+            self.noise_measurement_time=60*self.memoryPool["System memory"]["Noise_Measurement_Time"].getValue()
 
-            print("start_noise_measurement",test_voltage,over_current,test_time)
+            print("start_noise_measurement",self.noise_measurement_voltage,self.noise_measurement_current,self.noise_measurement_time)
 
             stop_noise_measurement_Thread = threading.Thread(target = self.stop_noise_measurement,daemon=True)
             stop_noise_measurement_Thread.start()
 
             self.noise_stop=False
+            
+            self.gpib_2657A.send_Command("*CLS")
+            self.gpib_2657A.send_Command("reset()")
+            
 
             self.gpib_2657A.send_Command("node[2].display.clear()")
             self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
@@ -329,9 +351,7 @@ class Operator():
             self.gpib_2657A.send_Command("node[1].display.clear()")
             self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
             self.gpib_2657A.send_Command("node[1].display.settext(\"Uploading script\")")
-
             
-            self.gpib_2657A.send_Command("delay(1)")   #10
             
             self.gpib_2657A.send_Command("loadscript Noise_Measurement")
             
@@ -355,7 +375,7 @@ class Operator():
             self.gpib_2657A.send_Command("node[1].display.settext(\"Setting...\")")
             
             self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage... {}\")".format(Quantity(float(test_voltage),"V").render(prec=4)))
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage... {}\")".format(Quantity(float(self.noise_measurement_voltage),"V").render(prec=4)))
 
             self.gpib_2657A.send_Command("node[2].display.clear()")
             self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
@@ -370,13 +390,13 @@ class Operator():
 
             self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clear()")
             self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.appendmode = 1")
-            self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.collecttimestamps = 0")
+            self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.collecttimestamps = 1")
             self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.fillmode = 0")
 
             self.gpib_2657A.send_Command("node[1].smua.source.func = smua.OUTPUT_DCVOLTS")
             self.gpib_2657A.send_Command("node[1].smua.source.offmode = smua.OUTPUT_ZERO")
             self.gpib_2657A.send_Command("node[1].smua.source.rangev = 1500")    #30
-            self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(test_voltage))
+            self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(self.noise_measurement_voltage))
             self.gpib_2657A.send_Command("node[1].smua.source.limiti = 1e-6")
 
             
@@ -388,7 +408,7 @@ class Operator():
             
             self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clear()")
             self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.appendmode = 1")
-            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.collecttimestamps = 0")   #40
+            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.collecttimestamps = 1")   #40
             self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.fillmode = 0")
 
 
@@ -407,32 +427,52 @@ class Operator():
             self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")
             self.gpib_2657A.send_Command("node[2].display.smua.measure.func = display.MEASURE_DCAMPS")   #50
             
-            self.gpib_2657A.send_Command("test_time={}".format(test_time))
-            self.gpib_2657A.send_Command("over_current={}".format(over_current))
+            self.gpib_2657A.send_Command("test_time={}".format(self.noise_measurement_time))
+            self.gpib_2657A.send_Command("over_current={}".format(self.noise_measurement_current))
             self.gpib_2657A.send_Command("max_current=0")
 
+            
+            self.gpib_2657A.send_Command("search_count=0")
+            self.gpib_2657A.send_Command("search_index=1")
+            self.gpib_2657A.send_Command("search_burst=6")
 
             self.gpib_2657A.send_Command("loop_start=true")
             self.gpib_2657A.send_Command("overcurrent=false")
             self.gpib_2657A.send_Command("time_up=false")
             
-            self.gpib_2657A.send_Command("timer.reset()")
+            
+            self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clear()")
+            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clear()")
             #While loop
             self.gpib_2657A.send_Command("while loop_start do")
-
-            
 
             #Measurement Current & Voltage
             #self.gpib_2657A.send_Command("  voltage_data=node[1].smua.measure.v()")
             #self.gpib_2657A.send_Command("  current_data=node[2].smua.measure.i()")
-            #self.gpib_2657A.send_Command("  print(current_data)")
 
             self.gpib_2657A.send_Command("  node[1].smua.measure.overlappedv(node[1].smua.nvbuffer1)")
             self.gpib_2657A.send_Command("  node[2].smua.measure.overlappedi(node[2].smua.nvbuffer1)")
             self.gpib_2657A.send_Command("  waitcomplete()")
             self.gpib_2657A.send_Command("  voltage_data=node[1].smua.nvbuffer1.readings[node[1].smua.nvbuffer1.n]")
             self.gpib_2657A.send_Command("  current_data=node[2].smua.nvbuffer1.readings[node[2].smua.nvbuffer1.n]")
-            self.gpib_2657A.send_Command("  print(current_data)")
+            self.gpib_2657A.send_Command("  current_time=node[2].smua.nvbuffer1.timestamps[node[2].smua.nvbuffer1.n]")
+
+
+            #Times up Check
+            #search_count
+            #search_index
+            self.gpib_2657A.send_Command("  if search_count>=search_burst then")
+            self.gpib_2657A.send_Command("      printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
+            self.gpib_2657A.send_Command("      search_index=node[2].smua.nvbuffer1.n+1")
+            self.gpib_2657A.send_Command("      search_count=0")
+            self.gpib_2657A.send_Command("  else")   #70
+            self.gpib_2657A.send_Command("      search_count=search_count+1")
+            self.gpib_2657A.send_Command("  end")
+
+            
+            #self.gpib_2657A.send_Command("  print(current_data)")
+
+            #self.gpib_2657A.send_Command("  print(current_data,current_time)")
 
             #Waitting Measurement complete
             
@@ -449,7 +489,7 @@ class Operator():
             self.gpib_2657A.send_Command("  end")
 
             #Times up Check
-            self.gpib_2657A.send_Command("  if timer.measure.t()>test_time then")
+            self.gpib_2657A.send_Command("  if current_time>test_time then")
             self.gpib_2657A.send_Command("      time_up=true")
             self.gpib_2657A.send_Command("  else")   #70
             self.gpib_2657A.send_Command("      time_up=false")
@@ -493,9 +533,7 @@ class Operator():
 
             self.gpib_2657A.send_Command("end")
 
-            
             self.gpib_2657A.send_Command("print(\"finish\")")
-
 
             self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
             self.gpib_2657A.send_Command("text=string.format(\"Max current = %e A\",max_current)")
@@ -503,12 +541,14 @@ class Operator():
             self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
             self.gpib_2657A.send_Command("node[2].display.settext(text)")
 
-
             self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
             self.gpib_2657A.send_Command("delay(0.3)")
             self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")   #100
             self.gpib_2657A.send_Command("delay(0.3)")
             self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
+
+            
+            self.gpib_2657A.send_Command("delay(5)")   #10
 
             self.gpib_2657A.send_Command("endscript")
 
@@ -523,30 +563,77 @@ class Operator():
 
     def data_retrive_Work(self):
         time.sleep(1)
-        print("data_retrive_Work")
+        
+        self.csv_manager.prepare_NoiseTestfolder()
+
+        profile=Test_profile_package(
+                                    date=datetime.datetime.now(),
+                                    ノイズ測定判定基準=self.noise_measurement_current,
+                                     ノイズ測定時間=self.noise_measurement_time/60,
+                                     ノイズ測定電圧=self.noise_measurement_voltage,
+                                )
+        
+        #Prepare Main Path
+        self.csv_manager.prepare_NoiseTestCsvFile(profile)
+        
+        self.csv_manager.prepare_Record_Header("ノイズ測定")
+        self.csv_manager.startRecord_CsvFile()
+        
+        
         while True:
 
             #self.gpib_2657A.send_Command("print(dataqueue.next())")
             text=self.gpib_2657A.read_Command()
-            print(text)
+            #print(text)
 
             if text[0]=="finish":
+                self.gpib_2657A.send_Command("reset()")
+                print("finish data_retrive_Work")
                 return
             elif text[0]:
                 #print(text[0])
-                datapackage=Single_data_unitPackage(
-                    time=0,
-                     count=0,
-                     Temperature=0,
-                     voltage=0,
-                     current=text[0],
-                     resistance=0,
-                     resistivity=0,
-                )
-                #self.queuePool["testDataQueue"].put(datapackage)
-                self.queuePool["GUI_DataQueue"].put(datapackage)
+                data_list=[]
+
+                data_package_list=[]
+
+                for data in text[0].split(","):
+                    data_list.append(float(data))
+
+                index =0
+
+                for count in range(0,int(len(data_list)/6)):
+                    voltage_timestemp=data_list[index]
+                    voltage_status=data_list[index+1]
+                    voltage_value=data_list[index+2]
+                    current_timestemp=data_list[index+3]
+                    current_status=data_list[index+4]
+                    current_value=data_list[index+5]
+
+                    index+=6
+                    if current_value!=0:
+                        resistance=voltage_value/current_value
+                    else:
+                        resistance=0
+
+                    datapackage=Single_data_unitPackage(
+                        time=current_timestemp,
+                         count=0,
+                         Temperature=self.temperature,
+                         voltage=voltage_value,
+                         current=current_value,
+                         resistance=resistance,
+                         resistivity=0,
+                    )
+
+                    data_package_list.append(datapackage)
+                    
                 
+                self.queuePool["testDataQueue"].put(datapackage)
+                self.queuePool["GUI_DataQueue"].put(data_package_list)
                 time.sleep(0.001)
+
+            #if text[0]:
+            #    time.sleep(0.001)
             else:
                 time.sleep(0.2)
 
@@ -603,7 +690,7 @@ class Operator():
             #clear  Start Run Auto run event
             self.eventPool["Auto Run Start"].clear()
 
-
+            print("Auto Run Start")
             Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
             System_memory=self.memoryPool["System memory"]
             Measurement_Pattern=self.memoryPool["Measurement Pattern"]
@@ -611,6 +698,8 @@ class Operator():
 
             #Prepare Main Path
             self.csv_manager.prepare_Mainfolder()
+            
+            
 
             if System_memory["評価試験"].getValue():
                 mode=Test_profile_package.QC_Test
@@ -837,9 +926,10 @@ class Operator():
 
         self.gpib_2657A.send_Command("node[1].smua.reset()")
         self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clear()")
+        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.collectsourcevalues = 1")
         self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.collecttimestamps = 1")
         self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.timestampresolution=0.000001")     #if total time is short then 70minute
-        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.timestampresolution=0.000010")     #if total time is bigger then 70minute
+        #self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.timestampresolution=0.000010")     #if total time is bigger then 70minute
         self.gpib_2657A.send_Command("node[1].smua.trigger.initiate()")
         self.gpib_2657A.send_Command("node[1].smua.trigger.autoclear = 1")
         self.gpib_2657A.send_Command("node[1].smua.trigger.measure.i(smua.nvbuffer1)")
@@ -848,9 +938,10 @@ class Operator():
             
         self.gpib_2657A.send_Command("node[2].smua.reset()")
         self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clear()")
+        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.collectsourcevalues = 1")
         self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.collecttimestamps = 1")
         self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.timestampresolution=0.000001")     #if total time is short then 70minute
-        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.timestampresolution=0.000010")    #if total time is bigger then 70minute
+        #self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.timestampresolution=0.000010")    #if total time is bigger then 70minute
         self.gpib_2657A.send_Command("node[2].smua.trigger.initiate()")
         self.gpib_2657A.send_Command("node[2].smua.trigger.autoclear = 1")
         self.gpib_2657A.send_Command("node[2].smua.trigger.measure.v(smua.nvbuffer1)")
