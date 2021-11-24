@@ -253,10 +253,10 @@ class GPIB_device():
             print("secess init GPIB device at {}".format(self.name))
             self.connect_action(True)
             self.send_Command("abort")
+            self.send_Command("*CLS")
             self.send_Command("reset()")
             self.send_Command("node[1].smua.reset()")
             self.send_Command("node[2].smua.reset()")
-            self.send_Command("*CLS")
 
             self.send_Command("tsplink.reset()")
             self.send_Command("beeper.beep(0.1, 2400)")

@@ -331,11 +331,13 @@ class Operator():
             stop_noise_measurement_Thread.start()
 
             self.script_stop=False
-            
+
+            self.gpib_2657A.send_Command("abort")
             self.gpib_2657A.send_Command("*CLS")
             self.gpib_2657A.send_Command("reset()")
+            self.gpib_2657A.send_Command("node[1].smua.reset()")
+            self.gpib_2657A.send_Command("node[2].smua.reset()")
             
-
             self.gpib_2657A.send_Command("node[2].display.clear()")
             self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
             self.gpib_2657A.send_Command("node[2].display.settext(\"Uploading script\")")
@@ -519,32 +521,40 @@ class Operator():
             #check overcurrent or  undercurrent is happened or not
             self.gpib_2657A.send_Command("if overcurrent then")
                 #Over current Fail
+            self.gpib_2657A.send_Command("  text=string.format(\"Fail | %.4e A\",max_current)")
             self.gpib_2657A.send_Command("  node[1].display.clear()")
             self.gpib_2657A.send_Command("  node[1].display.setcursor(1, 1)")   #80
-            self.gpib_2657A.send_Command("  node[1].display.settext(\"Fail \")")
+            self.gpib_2657A.send_Command("  node[1].display.settext(text)")
             self.gpib_2657A.send_Command("  node[2].display.clear()")
             self.gpib_2657A.send_Command("  node[2].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("  node[2].display.settext(\"Fail \")")
+            self.gpib_2657A.send_Command("  node[2].display.settext(text)")
 
-            
             self.gpib_2657A.send_Command("elseif undercurrent then")
                 #under current Fail
+            self.gpib_2657A.send_Command("  text=string.format(\"Fail | %.4e A\",min_current)")
             self.gpib_2657A.send_Command("  node[1].display.clear()")
             self.gpib_2657A.send_Command("  node[1].display.setcursor(1, 1)")   #80
-            self.gpib_2657A.send_Command("  node[1].display.settext(\"Fail \")")
+            self.gpib_2657A.send_Command("  node[1].display.settext(text)")
             self.gpib_2657A.send_Command("  node[2].display.clear()")
             self.gpib_2657A.send_Command("  node[2].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("  node[2].display.settext(\"Fail \")")
+            self.gpib_2657A.send_Command("  node[2].display.settext(text)")
 
 
             self.gpib_2657A.send_Command("else")
                 #Time up Success
+            self.gpib_2657A.send_Command("  bigger=max_current+min_current")
+            self.gpib_2657A.send_Command("  if bigger>=0 then")
+            self.gpib_2657A.send_Command("      text=string.format(\"Pass | %.4e A\",max_current)")
+            self.gpib_2657A.send_Command("  else")
+            self.gpib_2657A.send_Command("      text=string.format(\"Pass | %.4e A\",min_current)")
+            self.gpib_2657A.send_Command("  end")
+
             self.gpib_2657A.send_Command("  node[1].display.clear()")
             self.gpib_2657A.send_Command("  node[1].display.setcursor(1, 1)")
-            self.gpib_2657A.send_Command("  node[1].display.settext(\"Pass \")")
+            self.gpib_2657A.send_Command("  node[1].display.settext(text)")
             self.gpib_2657A.send_Command("  node[2].display.clear()")
             self.gpib_2657A.send_Command("  node[2].display.setcursor(1, 1)")   #90
-            self.gpib_2657A.send_Command("  node[2].display.settext(\"Pass \")")
+            self.gpib_2657A.send_Command("  node[2].display.settext(text)")
 
             self.gpib_2657A.send_Command("end")
 
@@ -557,18 +567,10 @@ class Operator():
             self.gpib_2657A.send_Command("end")
 
 
+
             self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Please press TRG confirm\")")
 
-            self.gpib_2657A.send_Command("bigger=max_current+min_current")
-            self.gpib_2657A.send_Command("if bigger>=0 then")
-            self.gpib_2657A.send_Command("  text=string.format(\"Max current = %e A\",max_current)")
-            self.gpib_2657A.send_Command("else")
-            self.gpib_2657A.send_Command("  text=string.format(\"Max current = %e A\",min_current)")
-            self.gpib_2657A.send_Command("end")
-
-            self.gpib_2657A.send_Command("node[1].display.settext(text)")
-            self.gpib_2657A.send_Command("node[2].display.setcursor(2, 1)")
-            self.gpib_2657A.send_Command("node[2].display.settext(text)")
 
             self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
             self.gpib_2657A.send_Command("delay(0.3)")
@@ -577,7 +579,18 @@ class Operator():
             self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
 
             
-            self.gpib_2657A.send_Command("delay(5)")   #10
+            self.gpib_2657A.send_Command("node[1].display.trigger.wait(300)")   #10
+            self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
+
+            self.gpib_2657A.send_Command("node[1].display.screen = display.SMUA")
+            self.gpib_2657A.send_Command("node[1].display.smua.measure.func = display.MEASURE_DCVOLTS")
+            
+            self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")
+            self.gpib_2657A.send_Command("node[2].display.smua.measure.func = display.MEASURE_DCAMPS")   #50
+            
+            self.gpib_2657A.send_Command("reset()")
+            self.gpib_2657A.send_Command("node[1].smua.reset()")
+            self.gpib_2657A.send_Command("node[2].smua.reset()")
 
             self.gpib_2657A.send_Command("endscript")
 
@@ -626,7 +639,10 @@ class Operator():
 
                 self.csv_manager.result_NoiseTestCsvFile(data_list[0],data_list[1],data_list[2])
                 
-                break
+
+
+                print("stop_measurement")
+                return
             elif text[0]:
                 #print(text[0])
                 data_list=[]
@@ -671,15 +687,40 @@ class Operator():
             else:
                 time.sleep(0.2)
 
-        print("stop_measurement")
         self.gpib_2657A.send_Command("abort")
+
+        self.gpib_2657A.send_Command("node[1].display.clear()")
+        self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+        self.gpib_2657A.send_Command("node[1].display.settext(\"Stop\")")
+
+        self.gpib_2657A.send_Command("node[2].display.clear()")
+        self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+        self.gpib_2657A.send_Command("node[2].display.settext(\"Stop\")")
+
+        
+        self.gpib_2657A.send_Command("*CLS")
+
+        
+        time.sleep(0.1)
+
+        self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")
+        time.sleep(0.1)
+        self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
+        time.sleep(0.1)
+        self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
+        time.sleep(0.1)
+
+        time.sleep(1)
+
         self.gpib_2657A.send_Command("reset()")
         self.gpib_2657A.send_Command("node[1].smua.reset()")
         self.gpib_2657A.send_Command("node[2].smua.reset()")
 
-        self.gpib_2657A.send_Command("node[2].smua.source.output = 0")
-        self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
-        self.gpib_2657A.send_Command("*CLS")
+        self.gpib_2657A.send_Command("node[1].display.screen = display.SMUA")
+        self.gpib_2657A.send_Command("node[1].display.smua.measure.func = display.MEASURE_DCVOLTS")
+            
+        self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")
+        self.gpib_2657A.send_Command("node[2].display.smua.measure.func = display.MEASURE_DCAMPS")   #50
 
     def data_stream_work(self):
         #self.data_stream_start=False

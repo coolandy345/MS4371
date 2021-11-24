@@ -1,10 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\csv_manager",
+    "\\gpib_manager",
     "\\gui_main",
     "\\gui_main\\gui",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\uis\\pattern_columns",
     "\\gui_main\\gui\\uis\\windows",
     "\\gui_main\\gui\\uis\\windows\\main_window",
     "\\gui_main\\gui\\widgets",
@@ -12,6 +13,6 @@
     "\\main_operator",
     "\\modbus_TcpServer"
   ],
-  "SelectedNode": "\\gui_main\\gui\\widgets\\py_pattern\\py_step_test.py",
+  "SelectedNode": "\\main_operator\\main_operator.py",
   "PreviewInSolutionExplorer": false
 }
