@@ -223,13 +223,13 @@ QComboBox:hover {
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>25</height>
+              <height>22</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>25</height>
+              <height>22</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -339,49 +339,96 @@ QLabel:disabled {
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="Type_comboBox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QFrame" name="frame_13">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>22</height>
+              <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>22</height>
+              <height>25</height>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QFrame{
+             <string notr="true">QFrame:hover{
+	border:none;
+}
+QFrame:focus{
+	border:none;
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QComboBox" name="Type_comboBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QFrame{
 	border:none;
 }
 QFrame:hover{
 	border:none;
 }
 </string>
-            </property>
-            <item>
-             <property name="text">
-              <string>昇降温</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>測定</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>END</string>
-             </property>
-            </item>
+               </property>
+               <item>
+                <property name="text">
+                 <string>昇降温</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>測定</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>END</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -791,13 +838,13 @@ QFrame:focus{
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>22</height>
+              <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>22</height>
+              <height>25</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -862,13 +909,13 @@ QFrame:focus{
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>75</width>
+                 <width>90</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>75</width>
+                 <width>90</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -941,13 +988,13 @@ QFrame:focus{
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>22</height>
+              <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>22</height>
+              <height>25</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -1012,13 +1059,13 @@ QFrame:focus{
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>75</width>
+                 <width>90</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>75</width>
+                 <width>90</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -1148,7 +1195,7 @@ QFrame:focus{
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>キープ時間(s)</string>
+                <string>キープ時間(min)</string>
                </property>
               </widget>
              </item>
@@ -1157,13 +1204,13 @@ QFrame:focus{
                <property name="minimumSize">
                 <size>
                  <width>75</width>
-                 <height>20</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>75</width>
-                 <height>20</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -1479,13 +1526,13 @@ QFrame:focus{
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>22</height>
+              <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>22</height>
+              <height>25</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -1582,7 +1629,6 @@ QFrame:focus{
          </layout>
          <zorder>frame_75</zorder>
          <zorder>frame_2</zorder>
-         <zorder>Type_comboBox</zorder>
          <zorder>frame_4</zorder>
          <zorder>frame_8</zorder>
          <zorder>frame_5</zorder>
@@ -1592,6 +1638,7 @@ QFrame:focus{
          <zorder>frame_11</zorder>
          <zorder>frame_17</zorder>
          <zorder>frame_9</zorder>
+         <zorder>frame_13</zorder>
         </widget>
        </item>
       </layout>

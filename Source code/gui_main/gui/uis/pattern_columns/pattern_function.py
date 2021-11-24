@@ -309,8 +309,8 @@ class templist():
 
     def getStep(self,step):
 
-        #return copy.deepcopy(self.units[step])
-        return self.units[step]
+        return copy.deepcopy(self.units[step])
+        #return self.units[step]
     def print_list(self):
         print("name = ",self.name)
         print("comment = ",self.comment)

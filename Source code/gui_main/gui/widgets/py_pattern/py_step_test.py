@@ -103,7 +103,7 @@ class PyTestStep(QWidget):
         
         self.pattern.Step_label.setText("STEP %d" %self._step)
         self.pattern.Valtage_lineEdit.setText(str(self._voltage))
-        self.pattern.Valtage_lineEdit.setValidator(QDoubleValidator(decimals=1))
+        self.pattern.Valtage_lineEdit.setValidator(QDoubleValidator(decimals=2))
 
     def icon_bottum_ui_setting(self):
         # Parameter_setting
@@ -171,7 +171,7 @@ class PyTestStep(QWidget):
     def modifly_callback(self):
         if (self.sender()==None):
             return
-        
+        print("Valtage_lineEdit")
         data=float(self.pattern.Valtage_lineEdit.text())
         self._voltage,err=self.maxmin(2000,-2000,data)
         if err:

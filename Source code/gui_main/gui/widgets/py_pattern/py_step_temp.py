@@ -130,6 +130,7 @@ class PyTempStep(QWidget):
         self.pattern.setupUi( self.pattern_frame)
         self.pattern.page.setCurrentIndex(self._active)
 
+        self.callback_stop=False
 
         # icon_bottum_ui_setting
         # ///////////////////////////////////////////////////////////////
@@ -160,7 +161,7 @@ class PyTempStep(QWidget):
         self.pattern.Min_lineEdit.setValidator(QIntValidator())
         self.pattern.SV_lineEdit.setText(str(self._temperature))
         self.pattern.SV_lineEdit.setValidator(QIntValidator())
-        self.pattern.N2_lineEdit.setText("{}".format(self._n2_flowrate*0.1))
+        self.pattern.N2_lineEdit.setText("{}".format(self._n2_flowrate))
         self.pattern.N2_lineEdit.setValidator(QDoubleValidator(decimals=1))
 
         self.pattern.PID_muffle_comboBox.setCurrentIndex(self._PID_muffle_no)
@@ -233,16 +234,16 @@ class PyTempStep(QWidget):
 
 
         self.pattern.Type_comboBox.currentIndexChanged.connect(self.type_modifly_callback)
-        self.pattern.Hour_lineEdit.textChanged.connect(self.modifly_callback)
-        self.pattern.Min_lineEdit.textChanged.connect(self.modifly_callback)
-        self.pattern.SV_lineEdit.textChanged.connect(self.modifly_callback)
-        self.pattern.N2_lineEdit.textChanged.connect(self.modifly_callback)
+        self.pattern.Hour_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.Min_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.SV_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.N2_lineEdit.editingFinished.connect(self.modifly_callback)
         self.pattern.PID_muffle_comboBox.currentIndexChanged.connect(self.modifly_callback)
         self.pattern.PID_heater_comboBox.currentIndexChanged.connect(self.modifly_callback)
-        self.pattern.KeepTime_lineEdit.textChanged.connect(self.modifly_callback)
-        self.pattern.Sp_limit_up_lineEdit.textChanged.connect(self.modifly_callback)
-        self.pattern.Sp_limit_down_lineEdit.textChanged.connect(self.modifly_callback)
-        self.pattern.Shift_lineEdit.textChanged.connect(self.modifly_callback)
+        self.pattern.KeepTime_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.Sp_limit_up_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.Sp_limit_down_lineEdit.editingFinished.connect(self.modifly_callback)
+        self.pattern.Shift_lineEdit.editingFinished.connect(self.modifly_callback)
         self.pattern.TestPattern_comboBox.currentIndexChanged.connect(self.modifly_callback)
 
         
@@ -259,101 +260,107 @@ class PyTempStep(QWidget):
     def modifly_callback(self):
         if (self.sender==None):
             return
-        
-        try:
-            #Close menu any way
-            self._parent.tempPattern.close_menu()
 
-        except AttributeError: #When self._parent.tempPattern is not initial yet
-            return
+        if not self.callback_stop:
+            try:
+                #Close menu any way
+                self._parent.tempPattern.close_menu()
 
-        btn_name=self.sender().objectName()
-        
-        if btn_name=="Hour_lineEdit":
-            data=int(self.pattern.Hour_lineEdit.text())
-            self._hour,err=self.maxmin(59,0,data)
-            if err:
-                self.pattern.Hour_lineEdit.setText(str(self._hour))
+            except AttributeError: #When self._parent.tempPattern is not initial yet
+                return
+
+            btn_name=self.sender().objectName()
             
-        elif btn_name=="Min_lineEdit":
-            data=int(self.pattern.Min_lineEdit.text())
-            self._minute,err=self.maxmin(59,0,data)
-            if err:
-                self.pattern.Min_lineEdit.setText(str(self._minute))
-
-        elif btn_name=="SV_lineEdit":
-            data=int(self.pattern.SV_lineEdit.text())
-            self._temperature,err=self.maxmin(800,0,data)
-            if err:
-                self.pattern.SV_lineEdit.setText(str(self._temperature))
-
-        elif btn_name=="N2_lineEdit":
-            data=float(self.pattern.N2_lineEdit.text())*10
-            self._n2_flowrate,err=self.maxmin(1000,0,int(data))
-            if err:
-                self.pattern.N2_lineEdit.setText(str(self._n2_flowrate))
-
-
-        elif btn_name=="PID_muffle_comboBox":
-            self._PID_muffle_no=self.pattern.PID_muffle_comboBox.currentIndex()
-
-        elif btn_name=="PID_heater_comboBox":
-            self._PID_heater_no=self.pattern.PID_heater_comboBox.currentIndex()
-
-        elif btn_name=="KeepTime_lineEdit":
-            data=int(self.pattern.KeepTime_lineEdit.text())
-            self._keep_seccond,err=self.maxmin(1000,0,data)
-            if err:
-                self.pattern.KeepTime_lineEdit.setText(str(self._keep_seccond))
-
-
-
-        elif btn_name=="Sp_limit_up_lineEdit":
-            data=int(self.pattern.Sp_limit_up_lineEdit.text())
-            self._sp_limit_up,err=self.maxmin(1000,0,data)
-            if err:
-                self.pattern.Sp_limit_up_lineEdit.setText(str(self._sp_limit_up))
-
-        elif btn_name=="Sp_limit_down_lineEdit":
-            data=int(self.pattern.Sp_limit_down_lineEdit.text())
-            self._sp_limit_down,err=self.maxmin(1000,0,data)
-            if err:
-                self.pattern.Sp_limit_down_lineEdit.setText(str(self._sp_limit_down))
-
-        elif btn_name=="Shift_lineEdit":
-            data=int(self.pattern.Shift_lineEdit.text())
-            self._shift,err=self.maxmin(1000,0,data)
-            if err:
-                self.pattern.Shift_lineEdit.setText(str(self._shift))
-
-        elif btn_name=="TestPattern_comboBox":
-            self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
-
-
-        if (self.pattern.Type_comboBox.currentText()) == "測定":
-
-            pattern=self._test_pattern+1
+            if btn_name=="Hour_lineEdit":
+                data=int(self.pattern.Hour_lineEdit.text())
+                self._hour,err=self.maxmin(59,0,data)
+                if err:
+                    self.pattern.Hour_lineEdit.setText(str(self._hour))
             
-            BG0_test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(pattern)].getValue()
-            step_number=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_実行STEP数".format(pattern)].getValue()
-            test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(pattern)].getValue()
-            BG_test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(pattern)].getValue()
+            elif btn_name=="Min_lineEdit":
+                data=int(self.pattern.Min_lineEdit.text())
+                self._minute,err=self.maxmin(59,0,data)
+                if err:
+                    self.pattern.Min_lineEdit.setText(str(self._minute))
 
-            total_time=self._keep_seccond/60+BG0_test_time+step_number*test_time+step_number*BG_test_time
-            if (self._hour*60)+self._minute<total_time:
-                self.pattern.Time_label.setStyleSheet("color: rgb(255, 0, 0)")
+            elif btn_name=="SV_lineEdit":
+                data=int(self.pattern.SV_lineEdit.text())
+                self._temperature,err=self.maxmin(800,0,data)
+                if err:
+                    self.pattern.SV_lineEdit.setText(str(self._temperature))
+
+            elif btn_name=="N2_lineEdit":
+                data=float(self.pattern.N2_lineEdit.text())
+                self._n2_flowrate,err=self.maxmin(10,0.1,data)
+                if err:
+                    self.pattern.N2_lineEdit.setText(str(self._n2_flowrate))
+
+
+            elif btn_name=="PID_muffle_comboBox":
+                self._PID_muffle_no=self.pattern.PID_muffle_comboBox.currentIndex()
+
+            elif btn_name=="PID_heater_comboBox":
+                self._PID_heater_no=self.pattern.PID_heater_comboBox.currentIndex()
+
+            elif btn_name=="KeepTime_lineEdit":
+                data=int(self.pattern.KeepTime_lineEdit.text())
+                self._keep_seccond,err=self.maxmin(1000,0,data)
+                if err:
+                    self.pattern.KeepTime_lineEdit.setText(str(self._keep_seccond))
+
+
+
+            elif btn_name=="Sp_limit_up_lineEdit":
+                data=int(self.pattern.Sp_limit_up_lineEdit.text())
+                self._sp_limit_up,err=self.maxmin(1000,0,data)
+                if err:
+                    self.pattern.Sp_limit_up_lineEdit.setText(str(self._sp_limit_up))
+
+            elif btn_name=="Sp_limit_down_lineEdit":
+                data=int(self.pattern.Sp_limit_down_lineEdit.text())
+                self._sp_limit_down,err=self.maxmin(1000,0,data)
+                if err:
+                    self.pattern.Sp_limit_down_lineEdit.setText(str(self._sp_limit_down))
+
+            elif btn_name=="Shift_lineEdit":
+                data=int(self.pattern.Shift_lineEdit.text())
+                self._shift,err=self.maxmin(1000,0,data)
+                if err:
+                    self.pattern.Shift_lineEdit.setText(str(self._shift))
+
+            elif btn_name=="TestPattern_comboBox":
+                self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
+
+
+            if (self.pattern.Type_comboBox.currentText()) == "測定":
+
+                pattern=self._test_pattern+1
+
+                if pattern>=1 and pattern<=20:
+                    BG0_test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(pattern)].getValue()
+                    step_number=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_実行STEP数".format(pattern)].getValue()
+                    test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(pattern)].getValue()
+                    BG_test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(pattern)].getValue()
+
+                    total_time=self._keep_seccond/60+BG0_test_time+step_number*test_time+step_number*BG_test_time
+                    if (self._hour*60)+self._minute<total_time:
+                        self.pattern.Time_label.setStyleSheet("color: rgb(255, 0, 0)")
+                    else:
+                        self.pattern.Time_label.setStyleSheet("")
+
             else:
                 self.pattern.Time_label.setStyleSheet("")
-
-        else:
-            self.pattern.Time_label.setStyleSheet("")
         
-        #Call upper mother renew information
-        self._parent.tempPattern.step_modifly_manager(self._step)
-    
+            try:
+                #Call upper mother renew information
+                self._parent.tempPattern.step_modifly_manager(self._step)
+
+            except AttributeError: #When self._parent.tempPattern is not initial yet
+                return
         
 
     def type_modifly_callback(self):
+        
         if (self.pattern.Type_comboBox.currentText()) == "昇降温":
             
             self._type=self.Temp_Type
@@ -508,8 +515,14 @@ class PyTempStep(QWidget):
 
             self.update_testFileCombobox(0)
 
-        self.modifly_callback()
+        if not self.callback_stop:
+            try:
+                #Call upper mother renew information
+                self._parent.tempPattern.step_modifly_manager(self._step)
 
+            except AttributeError: #When self._parent.tempPattern is not initial yet
+                return
+        
 
     def update_testFileCombobox(self,number=None):
         
