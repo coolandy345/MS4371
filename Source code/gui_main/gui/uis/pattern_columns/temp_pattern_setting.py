@@ -665,6 +665,11 @@ class TempPatternWidget(QWidget):
 
         elif btn_name=="RT_combobox":
             self.cache_steplist.set_RT_measure(self._parent.ui.load_pages.RT_combobox.currentIndex())
+
+            if self.cache_steplist.RT_measure:
+                self.cache_steplist.RT_testpattern=self._parent.ui.load_pages.RT_testpattern_combobox.currentIndex()+1
+            else:
+                self.cache_steplist.RT_testpattern=-1
             
             self.update()
 

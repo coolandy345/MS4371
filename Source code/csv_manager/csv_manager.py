@@ -12,6 +12,7 @@ from gui_main.qt_core import *
 from gui_main.gui.widgets.py_dialog import *
 from registor_manager import *
 import datetime
+import shutil
 
 
 class Csv_manager():
@@ -60,7 +61,7 @@ class Csv_manager():
                     
             except:
                 pass
-
+        print("record_Work has stop")
     def stopRecord_CsvFile(self):
         #while 1:
         #    self.eventPool["CSV_Record_stop"].wait()
@@ -184,13 +185,11 @@ class Csv_manager():
             
         test_number_folder_ready=False
         test_number=System_memory["依頼測定番号"].getValue()
-        print("A")
         while not test_number_folder_ready:
             try:
                 path_temp=os.path.join(path, "{}".format(str(test_number)))
-                print("B")
                 os.mkdir(path_temp)
-                print("C")
+
 
             except FileExistsError:
                 pass
@@ -230,6 +229,7 @@ class Csv_manager():
 
                 #    test_number=NameString_fromDialog
                 test_number_folder_ready=True
+                path = path_temp
             else:
                 path = path_temp
                 test_number_folder_ready=True
@@ -278,6 +278,7 @@ class Csv_manager():
             os.mkdir(self.csvPath)
         except FileExistsError:
             pass
+
         self.csv = os.path.join(self.csvPath, "{}.csv".format(self.profile.file_name))
 
 
@@ -309,7 +310,6 @@ class Csv_manager():
 
 
     def prepare_Record_Header(self,type):
-        print("prepare_Record_Header",self.csv)
 
         with open(self.csv, 'a', newline='') as csvfile:
 

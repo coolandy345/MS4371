@@ -5522,13 +5522,13 @@ border:none;
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
-                           <height>0</height>
+                           <height>30</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
-                           <height>16777215</height>
+                           <height>30</height>
                           </size>
                          </property>
                          <property name="baseSize">
@@ -7076,7 +7076,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>987</width>
                       <height>400</height>
                      </rect>
                     </property>
@@ -8305,7 +8305,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>987</width>
                       <height>200</height>
                      </rect>
                     </property>

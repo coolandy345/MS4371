@@ -747,7 +747,7 @@ class TestPatternWidget(QWidget):
         elif btn_name=="filter_count_LineEdit":
 
             data=float(self._parent.ui.load_pages.filter_count_LineEdit.text())
-            data,err=self.maxmin(100,0,data)
+            data,err=self.maxmin(100,1,data)
             if err:
                 self._parent.ui.load_pages.filter_count_LineEdit.setText(str(data))
 

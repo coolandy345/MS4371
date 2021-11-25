@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesdWKOKb.ui'
+## Form generated from reading UI file 'main_pageseFooFR.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -2493,8 +2493,8 @@ class Ui_MainPages(object):
         self.AutoMode_pattern_comboBox.addItem("")
         self.AutoMode_pattern_comboBox.addItem("")
         self.AutoMode_pattern_comboBox.setObjectName(u"AutoMode_pattern_comboBox")
-        self.AutoMode_pattern_comboBox.setMinimumSize(QSize(0, 0))
-        self.AutoMode_pattern_comboBox.setMaximumSize(QSize(16777215, 16777215))
+        self.AutoMode_pattern_comboBox.setMinimumSize(QSize(0, 30))
+        self.AutoMode_pattern_comboBox.setMaximumSize(QSize(16777215, 30))
         self.AutoMode_pattern_comboBox.setBaseSize(QSize(0, 30))
         self.AutoMode_pattern_comboBox.setStyleSheet(u"\n"
 "\n"
@@ -3357,7 +3357,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 100, 400))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 987, 400))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -3871,7 +3871,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 100, 200))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 987, 200))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -4549,7 +4549,7 @@ class Ui_MainPages(object):
         self.pages.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
-        self.stackedWidget_2.setCurrentIndex(1)
+        self.stackedWidget_2.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainPages)

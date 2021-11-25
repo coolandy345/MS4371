@@ -147,10 +147,11 @@ class templist():
             if(self.units[self.step_number].Step_Type!=PyTempStep.End_Type):
                 errorRule+="Endステップ未設定"
 
-            if not self.RT_measure:
-                if errorRule:
-                    errorRule+=" | "
-                errorRule+="RT測定未選択"
+            if self.RT_measure:
+                if not self.RT_testpattern>0:
+                    if errorRule:
+                        errorRule+=" | "
+                    errorRule+="RT測定パターン未選択"
 
             if not self.gas_condition:
                 if errorRule:
