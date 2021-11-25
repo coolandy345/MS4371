@@ -538,11 +538,11 @@ class PyTempStep(QWidget):
             else:
                 self._test_pattern=number
 
-        self.pattern.TestPattern_comboBox.currentIndexChanged.disconnect()
+        self.pattern.TestPattern_comboBox.blockSignals(True)
         self.pattern.TestPattern_comboBox.clear()
         self.pattern.TestPattern_comboBox.addItems(self._parent.testPattern.patternFile_nameList)
         self.pattern.TestPattern_comboBox.setCurrentIndex(self._test_pattern)
-        self.pattern.TestPattern_comboBox.currentIndexChanged.connect(self.modifly_callback)
+        self.pattern.TestPattern_comboBox.blockSignals(False)
 
 
     def addStepBtn_presscallback(self):

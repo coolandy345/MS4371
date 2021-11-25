@@ -278,74 +278,74 @@ class TestPatternWidget(QWidget):
         
         self._parent.ui.load_pages.Test_Totaltime_Label.setText("合計時間：{:.2f} 分".format(self.cache_steplist.total_time))
 
-        self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.testfile_comboBox.blockSignals(True)
         self._parent.ui.load_pages.testfile_comboBox.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.testfile_comboBox.clear()
         self._parent.ui.load_pages.testfile_comboBox.addItems(self.patternFile_nameList)
         self._parent.ui.load_pages.testfile_comboBox.setCurrentIndex(self.focus_patternFile_number-1)
-        self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.testfile_comboBox.blockSignals(False)
 
         
-        self._parent.ui.load_pages.test_commect_lineEdit.textChanged.disconnect()
+        self._parent.ui.load_pages.test_commect_lineEdit.blockSignals(True)
         self._parent.ui.load_pages.test_commect_lineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.test_commect_lineEdit.setText(str(self.cache_steplist.comment))
-        self._parent.ui.load_pages.test_commect_lineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_commect_lineEdit.blockSignals(False)
 
-        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.test_time_LineEdit.blockSignals(True)
         self._parent.ui.load_pages.test_time_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.test_time_LineEdit.setText(str(self.cache_steplist.test_time))
-        self._parent.ui.load_pages.test_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_time_LineEdit.blockSignals(False)
 
 
 
-        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.test_sampletime_LineEdit.blockSignals(True)
         self._parent.ui.load_pages.test_sampletime_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.test_sampletime_LineEdit.setText(str(self.cache_steplist.test_sampletime))
-        self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.test_sampletime_LineEdit.blockSignals(False)
 
         
-        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.bg0_time_LineEdit.blockSignals(True)
         self._parent.ui.load_pages.bg0_time_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.bg0_time_LineEdit.setText(str(self.cache_steplist.BG0_test_time))
-        self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg0_time_LineEdit.blockSignals(False)
 
 
-        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.bg_time_LineEdit.blockSignals(True)
         self._parent.ui.load_pages.bg_time_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.bg_time_LineEdit.setText(str(self.cache_steplist.BG_test_time))
-        self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_time_LineEdit.blockSignals(False)
 
 
-        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.disconnect()
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.blockSignals(True)
         self._parent.ui.load_pages.bg_sampletime_LineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.bg_sampletime_LineEdit.setText(str(self.cache_steplist.BG_sampletime))
-        self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.blockSignals(False)
 
 
-        self._parent.ui.load_pages.speed_comboBox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.speed_comboBox.blockSignals(True)
         self._parent.ui.load_pages.speed_comboBox.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.speed_comboBox.setCurrentIndex(self.cache_steplist.speed)
-        self._parent.ui.load_pages.speed_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.speed_comboBox.blockSignals(False)
 
-        self._parent.ui.load_pages.filter_comboBox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.filter_comboBox.blockSignals(True)
         self._parent.ui.load_pages.filter_comboBox.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.filter_comboBox.setCurrentIndex(self.cache_steplist.filter_type)
-        self._parent.ui.load_pages.filter_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.filter_comboBox.blockSignals(False)
 
         if self.cache_steplist.filter_type:
             self._parent.ui.load_pages.filter_count_LineEdit.setVisible(True)
             self._parent.ui.load_pages.filter_count_label.setVisible(True)
-            self._parent.ui.load_pages.filter_count_LineEdit.editingFinished.disconnect()
+            self._parent.ui.load_pages.filter_count_LineEdit.blockSignals(True)
             self._parent.ui.load_pages.filter_count_LineEdit.setEnabled(self.editorEnable)
             self._parent.ui.load_pages.filter_count_LineEdit.setText(str(self.cache_steplist.filter_count))
-            self._parent.ui.load_pages.filter_count_LineEdit.editingFinished.connect(self.ui_click_callback)
+            self._parent.ui.load_pages.filter_count_LineEdit.blockSignals(False)
         else:
             self._parent.ui.load_pages.filter_count_LineEdit.setVisible(False)
             self._parent.ui.load_pages.filter_count_label.setVisible(False)
-            self._parent.ui.load_pages.filter_count_LineEdit.editingFinished.disconnect()
+            self._parent.ui.load_pages.filter_count_LineEdit.blockSignals(True)
             self._parent.ui.load_pages.filter_count_LineEdit.setEnabled(self.editorEnable)
             self._parent.ui.load_pages.filter_count_LineEdit.setText(str(0))
-            self._parent.ui.load_pages.filter_count_LineEdit.editingFinished.connect(self.ui_click_callback)
+            self._parent.ui.load_pages.filter_count_LineEdit.blockSignals(False)
 
 
         self.save_IconButtonActiveState=self.content_Change
@@ -673,9 +673,9 @@ class TestPatternWidget(QWidget):
 
                 elif result=="Cancel":
                     #User is not want Delete file
-                    self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.disconnect()
+                    self._parent.ui.load_pages.testfile_comboBox.blockSignals(True)
                     self._parent.ui.load_pages.testfile_comboBox.setCurrentIndex(self.focus_patternFile_number-1)
-                    self._parent.ui.load_pages.testfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+                    self._parent.ui.load_pages.testfile_comboBox.blockSignals(False)
                     return
 
 

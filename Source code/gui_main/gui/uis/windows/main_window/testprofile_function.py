@@ -202,15 +202,24 @@ class Testfile_manager(QWidget):
     def utility_update(self):
 
         if self._Costom_Test:
-            self._parent.ui.load_pages.lineEdit_costomer.setEnabled(True)
-            self._parent.ui.load_pages.lineEdit_costomerName.setEnabled(True)
-            self._parent.ui.load_pages.label_4.setEnabled(True)
-            self._parent.ui.load_pages.label_5.setEnabled(True)
+
+            self._parent.ui.load_pages.frame_2.setVisible(True)
+            #self._parent.ui.load_pages.lineEdit_costomerName.setVisible(True)
+            #self._parent.ui.load_pages.label_4.setVisible(True)
+            #self._parent.ui.load_pages.label_5.setVisible(True)
+
+
+
+            #self._parent.ui.load_pages.lineEdit_costomer.setEnabled(True)
+            #self._parent.ui.load_pages.lineEdit_costomerName.setEnabled(True)
+            #self._parent.ui.load_pages.label_4.setEnabled(True)
+            #self._parent.ui.load_pages.label_5.setEnabled(True)
         else:
-            self._parent.ui.load_pages.lineEdit_costomer.setEnabled(False)
-            self._parent.ui.load_pages.lineEdit_costomerName.setEnabled(False)
-            self._parent.ui.load_pages.label_4.setEnabled(False)
-            self._parent.ui.load_pages.label_5.setEnabled(False)
+            self._parent.ui.load_pages.frame_2.setVisible(False)
+            #self._parent.ui.load_pages.lineEdit_costomer.setVisible(False)
+            #self._parent.ui.load_pages.lineEdit_costomerName.setVisible(False)
+            #self._parent.ui.load_pages.label_4.setVisible(False)
+            #self._parent.ui.load_pages.label_5.setVisible(False)
 
 
     def utility_setup(self):

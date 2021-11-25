@@ -66,8 +66,11 @@ text="INSERT INTO '{}' values('Main_FolderPath','{}','{}')".format(Table_name,0,
 cur.execute(text)
 
 
+text="INSERT INTO '{}' values('Manual_Measurement_status','{}','{}')".format(Table_name,0,"NULL")
+cur.execute(text)
 
-
+text="INSERT INTO '{}' values('Manual_Measurement_trigger','{}','{}')".format(Table_name,0,"NULL")
+cur.execute(text)
 
 text="INSERT INTO '{}' values('Manual_Measurement_Voltage','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(text)
@@ -86,17 +89,6 @@ cur.execute(text)
 
 text="INSERT INTO '{}' values('Noise_Measurement_Current','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(text)
-
-
-#pid=["P","I","D"]
-#pidname=["ヒーター","マッフル"]
-
-#for name in pidname:
-#    for number in range(1,5):
-#        for K in pid:
-#            text="INSERT INTO '{}' values('{}_PID設定_{}_{}','{}','{}')".format(Table_name,name,number,K,1,"NULL")
-#            cur.execute(text)
-
 
 
 System_Registor_Database.commit()

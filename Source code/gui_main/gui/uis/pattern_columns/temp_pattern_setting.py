@@ -80,9 +80,6 @@ class TempPatternWidget(QWidget):
         self.test=0
         self.test1=0
 
-    
-
-    
         
     def setup_TempPattern(self):
         self.step_widges_list=[None]
@@ -191,11 +188,11 @@ class TempPatternWidget(QWidget):
 
             
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_測定雰囲気".format(ptn_no)].getValue()==1:
-                gas=1
+                gas=0
             elif self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_測定雰囲気".format(ptn_no)].getValue()==2:
-                gas=2
+                gas=1
             elif self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_測定雰囲気".format(ptn_no)].getValue()==4:
-                gas=3
+                gas=2
             else:
                 gas=0
 
@@ -262,11 +259,11 @@ class TempPatternWidget(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_実行STEP数".format(file_number),self.patternFiles[file_number].step_number-1)
 
             
-            if self.patternFiles[file_number].gas_condition==1:
+            if self.patternFiles[file_number].gas_condition==0:
                 gas=1
-            elif self.patternFiles[file_number].gas_condition==2:
+            elif self.patternFiles[file_number].gas_condition==1:
                 gas=2
-            elif self.patternFiles[file_number].gas_condition==3:
+            elif self.patternFiles[file_number].gas_condition==2:
                 gas=4
             else:
                 gas=0
@@ -328,18 +325,18 @@ class TempPatternWidget(QWidget):
 
 
         #Scan Avilible pattern import to patternfile_comboBox
-        self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.patternfile_comboBox.blockSignals(True)
         self._parent.ui.load_pages.patternfile_comboBox.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.patternfile_comboBox.clear()
         self._parent.ui.load_pages.patternfile_comboBox.addItems(self.patternFile_nameList)
         self._parent.ui.load_pages.patternfile_comboBox.setCurrentIndex(self.focus_patternFile_number-1)
-        self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.patternfile_comboBox.blockSignals(False)
 
         
-        self._parent.ui.load_pages.commect_lineEdit.textChanged.disconnect()
+        self._parent.ui.load_pages.commect_lineEdit.blockSignals(True)
         self._parent.ui.load_pages.commect_lineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.commect_lineEdit.setText(str(self.cache_steplist.comment))
-        self._parent.ui.load_pages.commect_lineEdit.textChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.commect_lineEdit.blockSignals(False)
 
 
         hour=self.cache_steplist.total_time//60
@@ -350,11 +347,11 @@ class TempPatternWidget(QWidget):
 
             self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(self.editorEnable)
 
-            self._parent.ui.load_pages.RT_testpattern_combobox.currentIndexChanged.disconnect()
+            self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(True)
             self._parent.ui.load_pages.RT_testpattern_combobox.clear()
             self._parent.ui.load_pages.RT_testpattern_combobox.addItems(self._parent.testPattern.patternFile_nameList)
             self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(self.cache_steplist.RT_testpattern-1)
-            self._parent.ui.load_pages.RT_testpattern_combobox.currentIndexChanged.connect(self.ui_click_callback)
+            self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(False)
 
         #elif self.cache_steplist.RT_measure==1:
         #    self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(False)
@@ -366,15 +363,15 @@ class TempPatternWidget(QWidget):
 
 
 
-        self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.gas_Combobox.blockSignals(True)
         self._parent.ui.load_pages.gas_Combobox.setEnabled(self.editorEnable)
-        self._parent.ui.load_pages.gas_Combobox.setCurrentIndex(self.cache_steplist.gas_condition-1)
-        self._parent.ui.load_pages.gas_Combobox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.gas_Combobox.setCurrentIndex(self.cache_steplist.gas_condition)
+        self._parent.ui.load_pages.gas_Combobox.blockSignals(False)
 
-        self._parent.ui.load_pages.RT_combobox.currentIndexChanged.disconnect()
+        self._parent.ui.load_pages.RT_combobox.blockSignals(True)
         self._parent.ui.load_pages.RT_combobox.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.RT_combobox.setCurrentIndex(self.cache_steplist.RT_measure)
-        self._parent.ui.load_pages.RT_combobox.currentIndexChanged.connect(self.ui_click_callback)
+        self._parent.ui.load_pages.RT_combobox.blockSignals(False)
 
         
 
@@ -644,7 +641,7 @@ class TempPatternWidget(QWidget):
 
                 elif result=="Cancel":
                     #User is not want Delete file
-                    self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.disconnect()
+                    self._parent.ui.load_pages.patternfile_comboBox.blockSignals(True)
                     self._parent.ui.load_pages.patternfile_comboBox.setCurrentIndex(self.focus_patternFile_number-1)
                     self._parent.ui.load_pages.patternfile_comboBox.currentIndexChanged.connect(self.ui_click_callback)
 
@@ -659,7 +656,7 @@ class TempPatternWidget(QWidget):
             self.update()
 
         elif btn_name=="gas_Combobox":
-            self.cache_steplist.set_gas_condition(self._parent.ui.load_pages.gas_Combobox.currentIndex()+1)
+            self.cache_steplist.set_gas_condition(self._parent.ui.load_pages.gas_Combobox.currentIndex())
             
             self.update()
 
@@ -742,11 +739,11 @@ class TempPatternWidget(QWidget):
         self.set_memorypool_register("Modbus Registor Pool - Registor","PTNData_{}_実行STEP数".format(self.focus_patternFile_number),list.step_number-1)
 
 
-        if list.gas_condition==1:
+        if list.gas_condition==0:
             gas=1
-        elif list.gas_condition==2:
+        elif list.gas_condition==1:
             gas=2
-        elif list.gas_condition==3:
+        elif list.gas_condition==2:
             gas=4
         else:
             gas=0

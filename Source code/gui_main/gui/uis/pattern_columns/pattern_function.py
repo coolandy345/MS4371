@@ -153,10 +153,6 @@ class templist():
                         errorRule+=" | "
                     errorRule+="RT測定パターン未選択"
 
-            if not self.gas_condition:
-                if errorRule:
-                    errorRule+=" | "
-                errorRule+="雰囲気未選択"
 
 
         return errorRule

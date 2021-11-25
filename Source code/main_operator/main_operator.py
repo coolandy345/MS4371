@@ -291,7 +291,7 @@ class Operator():
         #Get PLC approve to process
         #print("PLC allow us to start measurment")
         self.eventPool["Test approve"].clear()
-        set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
+        #set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
         
         #               - send trigger to GPIB device to start script
         self.GPIB_device_startScript()
@@ -321,16 +321,18 @@ class Operator():
             #clear  Start Run Auto run event
             self.eventPool["Noise Measure Start"].clear()
 
+            self.set_memorypool_register("System memory","Noise_Measurement_status",1)
+            
+
             self.noise_measurement_voltage=self.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()
             self.noise_measurement_current=1e-12*self.memoryPool["System memory"]["Noise_Measurement_Current"].getValue()
             self.noise_measurement_time=60*self.memoryPool["System memory"]["Noise_Measurement_Time"].getValue()
 
-            print("start_noise_measurement",self.noise_measurement_voltage,self.noise_measurement_current,self.noise_measurement_time)
+            #print("start_noise_measurement",self.noise_measurement_voltage,self.noise_measurement_current,self.noise_measurement_time)
 
             stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
             stop_noise_measurement_Thread.start()
 
-            self.script_stop=False
 
             self.gpib_2657A.send_Command("abort")
             self.gpib_2657A.send_Command("*CLS")
@@ -569,7 +571,7 @@ class Operator():
 
 
             self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Please press TRG confirm\")")
+            self.gpib_2657A.send_Command("node[1].display.settext(\"Please press 'TRIG' confirm\")")
 
 
             self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
@@ -721,6 +723,8 @@ class Operator():
             
         self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")
         self.gpib_2657A.send_Command("node[2].display.smua.measure.func = display.MEASURE_DCAMPS")   #50
+
+        self.set_memorypool_register("System memory","Noise_Measurement_status",0)
 
     def data_stream_work(self):
         #self.data_stream_start=False
