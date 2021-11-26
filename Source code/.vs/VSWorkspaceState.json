@@ -4,14 +4,14 @@
     "\\gui_main",
     "\\gui_main\\gui",
     "\\gui_main\\gui\\uis",
-    "\\gui_main\\gui\\uis\\pattern_columns",
     "\\gui_main\\gui\\uis\\windows",
     "\\gui_main\\gui\\uis\\windows\\main_window",
     "\\gui_main\\gui\\widgets",
     "\\gui_main\\gui\\widgets\\py_pattern",
     "\\main_operator",
-    "\\modbus_TcpServer"
+    "\\modbus_TcpServer",
+    "\\registor_manager"
   ],
-  "SelectedNode": "\\gui_main\\gui\\uis\\pattern_columns\\test_pattern_setting.py",
+  "SelectedNode": "\\main_operator\\main_operator.py",
   "PreviewInSolutionExplorer": false
 }
