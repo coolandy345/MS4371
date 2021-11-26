@@ -352,7 +352,6 @@ class Operator():
             
             self.gpib_2657A.send_Command("loadscript Noise_Measurement")
             
-
             self.gpib_2657A.send_Command("reset()")
             self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
 
@@ -364,8 +363,7 @@ class Operator():
             self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
             self.gpib_2657A.send_Command("node[1].display.settext(\"Noise Test Start\")")
 
-            self.gpib_2657A.send_Command("delay(1)")
-            
+            self.gpib_2657A.send_Command("delay(0.3)")
             
             self.gpib_2657A.send_Command("node[1].display.clear()")   #10
             self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
@@ -377,7 +375,6 @@ class Operator():
             self.gpib_2657A.send_Command("node[2].display.clear()")
             self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
             self.gpib_2657A.send_Command("node[2].display.settext(\"Setting...\")")
-            
             
             self.gpib_2657A.send_Command("node[1].smua.reset()")
             self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clear()")
@@ -391,8 +388,8 @@ class Operator():
             self.gpib_2657A.send_Command("node[1].smua.measure.autorangev = smua.AUTORANGE_ON")
             self.gpib_2657A.send_Command("node[1].smua.measure.count = 1")
             self.gpib_2657A.send_Command("node[1].smua.measure.delay = 0")
-            self.gpib_2657A.send_Command("node[1].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID")   #30
-            self.gpib_2657A.send_Command("node[1].smua.trigger.measure.v(node[1].smua.nvbuffer1)")
+            self.gpib_2657A.send_Command("node[1].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID") 
+            self.gpib_2657A.send_Command("node[1].smua.trigger.measure.v(node[1].smua.nvbuffer1)")  #30
             self.gpib_2657A.send_Command("node[1].smua.trigger.arm.count = 0")
             self.gpib_2657A.send_Command("node[1].smua.trigger.measure.action = 1")
 
@@ -402,11 +399,9 @@ class Operator():
             self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(self.noise_measurement_voltage))
             self.gpib_2657A.send_Command("node[1].smua.source.limiti = 1e-6")
             
-
-
             self.gpib_2657A.send_Command("node[2].smua.reset()")
-            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clear()")   #40
-            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.appendmode = 1")
+            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clear()")
+            self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.appendmode = 1")   #40
             self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.cachemode = 0")
             self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clearcache()")
             self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.collecttimestamps = 1")   
@@ -415,9 +410,9 @@ class Operator():
             self.gpib_2657A.send_Command("node[2].smua.measure.nplc = 1")
             self.gpib_2657A.send_Command("node[2].smua.measure.autorangei = smua.AUTORANGE_ON")
             self.gpib_2657A.send_Command("node[2].smua.measure.count = 1")
-            self.gpib_2657A.send_Command("node[2].smua.measure.delay = 0")   #50
+            self.gpib_2657A.send_Command("node[2].smua.measure.delay = 0") 
             self.gpib_2657A.send_Command("node[2].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID")
-            self.gpib_2657A.send_Command("node[2].smua.trigger.measure.i(node[2].smua.nvbuffer1)")
+            self.gpib_2657A.send_Command("node[2].smua.trigger.measure.i(node[2].smua.nvbuffer1)")  #50
             self.gpib_2657A.send_Command("node[2].smua.trigger.arm.count = 0")
             self.gpib_2657A.send_Command("node[2].smua.trigger.measure.action = 1")
             
@@ -427,11 +422,10 @@ class Operator():
             self.gpib_2657A.send_Command("node[2].smua.source.levelv = 0")
             self.gpib_2657A.send_Command("node[2].smua.source.limiti = 1e-9")
 
-            
-            self.gpib_2657A.send_Command("node[1].display.screen = display.SMUA")   #60
+            self.gpib_2657A.send_Command("node[1].display.screen = display.SMUA") 
             self.gpib_2657A.send_Command("node[1].display.smua.measure.func = display.MEASURE_DCVOLTS")
             
-            self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")
+            self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")  #60
             self.gpib_2657A.send_Command("node[2].display.smua.measure.func = display.MEASURE_DCAMPS")   
             
             self.gpib_2657A.send_Command("test_time={}".format(self.noise_measurement_time))
@@ -440,15 +434,12 @@ class Operator():
             self.gpib_2657A.send_Command("max_current=0")
             self.gpib_2657A.send_Command("min_current=0")
             self.gpib_2657A.send_Command("voltage_time=0")
-            self.gpib_2657A.send_Command("current_data=0")
+            self.gpib_2657A.send_Command("current_data=0") 
             self.gpib_2657A.send_Command("voltage_data=0")
 
-            
-            
-
-            self.gpib_2657A.send_Command("search_count=0")
-            self.gpib_2657A.send_Command("search_index=1")   #70
-            self.gpib_2657A.send_Command("search_burst=2")
+            self.gpib_2657A.send_Command("search_count=0") #70
+            self.gpib_2657A.send_Command("search_index=1") 
+            self.gpib_2657A.send_Command("search_burst=1")
 
             self.gpib_2657A.send_Command("loop_start=true")
             self.gpib_2657A.send_Command("overcurrent=false")
@@ -457,14 +448,11 @@ class Operator():
             self.gpib_2657A.send_Command("node[1].smua.source.output = 1")
             self.gpib_2657A.send_Command("node[2].smua.source.output = 1")
 
-            
-            
-            self.gpib_2657A.send_Command("time_up=false")
+            self.gpib_2657A.send_Command("time_up=false")  
 
-            
             self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].reset()")
-            self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].clear()")
-            self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].mode = 1")   #80
+            self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].clear()") #80
+            self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].mode = 1")
             self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].stimulus = trigger.timer[1].EVENT_ID")
             
             self.gpib_2657A.send_Command("node[2].tsplink.trigger[2].reset()")
@@ -473,13 +461,13 @@ class Operator():
 
             self.gpib_2657A.send_Command("trigger.timer[1].reset()")
             self.gpib_2657A.send_Command("trigger.timer[1].clear()")
-            self.gpib_2657A.send_Command("trigger.timer[1].count = 0")
+            self.gpib_2657A.send_Command("trigger.timer[1].count = 0") 
             self.gpib_2657A.send_Command("trigger.timer[1].delay = 0.05")
-            self.gpib_2657A.send_Command("trigger.timer[1].passthrough = true")
+            self.gpib_2657A.send_Command("trigger.timer[1].passthrough = true") #90
             
             self.gpib_2657A.send_Command("trigger.timer[1].stimulus = tsplink.trigger[1].EVENT_ID")
 
-            self.gpib_2657A.send_Command("tsplink.trigger[1].reset()")   #90
+            self.gpib_2657A.send_Command("tsplink.trigger[1].reset()") 
             self.gpib_2657A.send_Command("tsplink.trigger[1].clear()")
             self.gpib_2657A.send_Command("tsplink.trigger[1].mode = 1")
 
@@ -489,46 +477,21 @@ class Operator():
             self.gpib_2657A.send_Command("tsplink.trigger[1].assert()")
 
             #While loop
-            self.gpib_2657A.send_Command("while loop_start do")
+            self.gpib_2657A.send_Command("while loop_start do") 
                     
             self.gpib_2657A.send_Command("  trigger.timer[1].wait(10) ")
             
-            #self.gpib_2657A.send_Command("  node[2].smua.trigger.measure.set()")
-            #self.gpib_2657A.send_Command("  node[2].smua.measure.overlappedi(node[2].smua.nvbuffer1)")
-            #self.gpib_2657A.send_Command("  delay(0.01) ")
-
-            #Measurement Current & Voltage
-            #self.gpib_2657A.send_Command("  if node[1].smua.nvbuffer1.n>=1 then")
-            #self.gpib_2657A.send_Command("      voltage_data=node[1].smua.nvbuffer1.readings[node[1].smua.nvbuffer1.n]")
-            #self.gpib_2657A.send_Command("      voltage_time=node[1].smua.nvbuffer1.timestamps[node[1].smua.nvbuffer1.n]")   #100
-            #self.gpib_2657A.send_Command("  else")   
-            #self.gpib_2657A.send_Command("      voltage_data=0")
-            #self.gpib_2657A.send_Command("      voltage_time=0")
-            #self.gpib_2657A.send_Command("  end")
-
-            #self.gpib_2657A.send_Command("  if node[2].smua.nvbuffer1.n>=1 then")
-            #self.gpib_2657A.send_Command("      current_data=node[2].smua.nvbuffer1.readings[node[2].smua.nvbuffer1.n]")
-            #self.gpib_2657A.send_Command("  else")   
-            #self.gpib_2657A.send_Command("      current_data=0")
-            #self.gpib_2657A.send_Command("  end")
-            
-            #Times up Check
-
-            #self.gpib_2657A.send_Command("      text=string.format(\"%d %d\",node[1].smua.nvbuffer1.n,node[2].smua.nvbuffer1.n)")
-            #self.gpib_2657A.send_Command("      print(text)")
-
-            
-            self.gpib_2657A.send_Command("  if node[2].smua.nvbuffer1.n>0 then")#110
+            self.gpib_2657A.send_Command("  if node[2].smua.nvbuffer1.n>0 then")#100
             self.gpib_2657A.send_Command("      voltage_data=node[1].smua.nvbuffer1.readings[search_index]")
-            self.gpib_2657A.send_Command("      voltage_time=node[1].smua.nvbuffer1.timestamps[search_index]")   #100
+            self.gpib_2657A.send_Command("      voltage_time=node[1].smua.nvbuffer1.timestamps[search_index]")
             self.gpib_2657A.send_Command("      current_data=node[2].smua.nvbuffer1.readings[search_index]")
-            self.gpib_2657A.send_Command("      if search_count>=search_burst then")#110
+            self.gpib_2657A.send_Command("      if search_count>=search_burst then")
             self.gpib_2657A.send_Command("          printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
             self.gpib_2657A.send_Command("          search_index=node[2].smua.nvbuffer1.n+1")
             self.gpib_2657A.send_Command("          search_count=1")
-            self.gpib_2657A.send_Command("      else")   
+            self.gpib_2657A.send_Command("      else")  
             self.gpib_2657A.send_Command("          search_count=search_count+1")
-            self.gpib_2657A.send_Command("      end")
+            self.gpib_2657A.send_Command("      end") #110
             self.gpib_2657A.send_Command("  end")
             
             self.gpib_2657A.send_Command("  if current_data>max_current then")   
@@ -539,8 +502,6 @@ class Operator():
             self.gpib_2657A.send_Command("  if current_data<min_current then")   #120
             self.gpib_2657A.send_Command("      min_current=current_data")
             self.gpib_2657A.send_Command("  end")
-
-            
 
             #Over current Check
             self.gpib_2657A.send_Command("  if current_data>over_current then")
@@ -566,26 +527,19 @@ class Operator():
             self.gpib_2657A.send_Command("  end")
 
             self.gpib_2657A.send_Command("  if overcurrent or undercurrent or time_up then")
-            self.gpib_2657A.send_Command("      if search_count>0 then")
-            self.gpib_2657A.send_Command("          printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
-            self.gpib_2657A.send_Command("      end")
             self.gpib_2657A.send_Command("      break")
             self.gpib_2657A.send_Command("  end")
 
             self.gpib_2657A.send_Command("end")
 
-
             #While loop end
+            self.gpib_2657A.send_Command("node[1].smua.abort() ")
+            self.gpib_2657A.send_Command("node[2].smua.abort() ")
 
             self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
             self.gpib_2657A.send_Command("node[1].smua.reset()")
             self.gpib_2657A.send_Command("node[2].smua.source.output = 0")
             self.gpib_2657A.send_Command("node[2].smua.reset()")
-
-
-            #self.gpib_2657A.send_Command("printbuffer(1, node[2].smua.nvbuffer1.n, node[2].smua.nvbuffer1) ")
-
-            
 
             #check overcurrent or  undercurrent is happened or not
             self.gpib_2657A.send_Command("if overcurrent then")
@@ -635,11 +589,8 @@ class Operator():
             self.gpib_2657A.send_Command("  print(\"pass\",max_current,min_current)")
             self.gpib_2657A.send_Command("end")
 
-
-
             self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
             self.gpib_2657A.send_Command("node[1].display.settext(\"Please press 'TRIG' confirm\")")
-
 
             self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
             self.gpib_2657A.send_Command("delay(0.3)")
@@ -647,7 +598,6 @@ class Operator():
             self.gpib_2657A.send_Command("delay(0.3)")
             self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
 
-            
             self.gpib_2657A.send_Command("node[1].display.trigger.wait(300)")   #10
             self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
 

@@ -1000,9 +1000,13 @@ class Main_utility_manager(QWidget):
                     self.win.removeItem(self.realTime_Resistance_Graph)
                     self.check_buttom_axix()
                 
-            self._parent.voltage_curve.setData(self.voltage_data_array[0::self.divider])
-            self._parent.current_curve.setData(self.current_data_array[0::self.divider])
-            self._parent.resistance_curve.setData(self.resistance_data_array[0::self.divider])
+            #self._parent.voltage_curve.setData(self.voltage_data_array[0::self.divider])
+            #self._parent.current_curve.setData(self.current_data_array[0::self.divider])
+            #self._parent.resistance_curve.setData(self.resistance_data_array[0::self.divider])
+
+            self._parent.voltage_curve.setData(self.voltage_data_array)
+            self._parent.current_curve.setData(self.current_data_array)
+            self._parent.resistance_curve.setData(self.resistance_data_array)
 
             if self.voltage_data_array:
                 self.realTime_Voltage_Graph.setXRange(min=self.voltage_data_array[-1]["x"]-self.timeMaxRange, max=self.voltage_data_array[-1]["x"])
@@ -1051,20 +1055,20 @@ class Main_utility_manager(QWidget):
         self.win = pg.GraphicsLayoutWidget(show=True,parent=self._parent)
 
         self.row_count=0
-        
-        self.realTime_Voltage_Graph = self.win.addPlot(row=1, col=0,autoDownsample=True,downsampleMethod="subsample",clipToView=True)
+        #autoDownsample=True,downsampleMethod="subsample",
+        self.realTime_Voltage_Graph = self.win.addPlot(row=1, col=0,clipToView=True)
         self.realTime_Voltage_Graph.setLabel(axis='left', text='電圧', units='V')
         self.realTime_Voltage_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Voltage_Graph.showGrid(x=True, y=True)
-        self.realTime_Current_Graph = self.win.addPlot(row=2, col=0,autoDownsample=True,downsampleMethod="subsample",clipToView=True)
+        self.realTime_Current_Graph = self.win.addPlot(row=2, col=0,clipToView=True)
         self.realTime_Current_Graph.setLabel(axis='left', text='電流', units='A')
         self.realTime_Current_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Current_Graph.showGrid(x=True, y=True)
-        self.realTime_Resistance_Graph = self.win.addPlot(row=3, col=0,autoDownsample=True,downsampleMethod="subsample",clipToView=True)
+        self.realTime_Resistance_Graph = self.win.addPlot(row=3, col=0,clipToView=True)
         self.realTime_Resistance_Graph.setLabel(axis='left', text='抵抗', units='Ω')
         self.realTime_Resistance_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Resistance_Graph.showGrid(x=True, y=True)
-        self.realTime_Temperature_Graph = self.win.addPlot(row=4, col=0,autoDownsample=True,downsampleMethod="subsample",clipToView=True)
+        self.realTime_Temperature_Graph = self.win.addPlot(row=4, col=0,clipToView=True)
         self.realTime_Temperature_Graph.setLabel(axis='left', text='温度', units='℃')
         self.realTime_Temperature_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Temperature_Graph.showGrid(x=True, y=True)
