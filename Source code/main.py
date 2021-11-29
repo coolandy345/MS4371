@@ -44,7 +44,6 @@ if __name__ == "__main__":
     QueuePool["database_Uplaod_Queue"]=MemoryPoolManager.Queue()
     QueuePool["database_modbusUplaod_Queue"]=MemoryPoolManager.Queue()
 
-
     
     QueuePool["Setting_upload_toPLC_Queue"]=MemoryPoolManager.Queue()
     

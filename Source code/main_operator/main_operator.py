@@ -32,11 +32,11 @@ class Test_profile_package():
                  folder_name="",
                  file_name="",
                  mode=0,
-                 number="",
-                 costomer="",
-                 costomerName="",
-                 meterialName="",
-                 meterial="",
+                 number=0,
+                 costomer=0,
+                 costomerName=0,
+                 meterialName=0,
+                 meterial=0,
                  mainDia=0,
                  innerDia=0,
                  thinkness=0,
@@ -46,8 +46,8 @@ class Test_profile_package():
                  time_sample=0,
                  bg_time=0,
                  bg_time_sample=0,
-                 speed="",
-                 filter="",
+                 speed=0,
+                 filter=0,
                  filter_count=0,
 
                  ノイズ測定判定基準=0,
@@ -60,6 +60,9 @@ class Test_profile_package():
         self.file_name=file_name
         self.mode=mode
         self.number=number
+        print("number",number)
+        print("self.number",self.number)
+
         self.costomer=costomer
         self.costomerName=costomerName
         self.meterialName=meterialName
@@ -96,9 +99,29 @@ class Test_profile_package():
             self.filter_count=filter_count
 
         if self.mode==self.QC_Test:
-            self.number=""
             self.costomer=""
             self.costomerName=""
+
+    def print(self):
+        print("self.date ", self.date)
+        print("self.folder_name ", self.folder_name)
+        print("self.file_name ", self.file_name)
+        print("self.mode ",self.mode )
+        print(" self.number", self.number)
+        print("self.costomer ", self.costomer)
+        print("self.costomerName ", self.costomerName)
+        print(" self.meterialName",self.meterialName )
+        print("self.meterial ",self.meterial )
+        print("self.mainDia ",self.mainDia )
+        print("self.innerDia ",self.innerDia )
+        print("self.thinkness ",self.thinkness )
+        print("self.gas ",self.gas )
+        print(" self.voltage", self.voltage)
+        print("self.time ",self.time )
+        print("self.time ",self.time )
+        print("self.bg_time ",self.bg_time )
+        print("self.speed ",self.speed )
+        print("self.filter ",self.filter )
 
 class Single_data_unitPackage():
 
@@ -620,7 +643,6 @@ class Operator():
             stop_noise_measurement_Thread.start()
 
     def data_retrive_Work(self):
-        time.sleep(1)
 
         pass_="不合格"
         max_current=0
@@ -708,7 +730,7 @@ class Operator():
                 time.sleep(0.001)
             
             else:
-                time.sleep(0.2)
+                time.sleep(0.1)
 
         
 
@@ -837,443 +859,439 @@ class Operator():
             else:
                 step_list=range(1,test_step_count+1)
             
+
+            self.script_stop=False
+
+
+
             for step in step_list:
+                if not self.script_stop:
+                    script_voltage=0
+                    script_time=0
+                    script_sample_time=0
+                    step_name=""
+
+                    if step==0:
+                        step_name="BG0"
+                        voltage=0
+                        _time=0
+                        bg_time=Measurement_Pattern["PTNData_{}_BG0測定時間".format(test_pattern_number)].getValue()
+                        measuretype=["BG測定結果"]
+
+                    else:
+                        step_name="測定NO-{}".format(step)
+                        voltage=Measurement_Pattern["PTNData_{}_STEP_{}_電圧".format(test_pattern_number,step)].getValue()
+                        bg_time=Measurement_Pattern["PTNData_{}_BG測定時間".format(test_pattern_number)].getValue()
+                        _time=Measurement_Pattern["PTNData_{}_測定時間".format(test_pattern_number)].getValue()
+                        measuretype=["抵抗測定結果","BG測定結果"]
                 
-                script_voltage=0
-                script_time=0
-                script_sample_time=0
-                step_name=""
+                    gas=Modbus_Registor_Pool["PTNData_{}_測定雰囲気".format(pattern_number)].getValue()
 
-                if step==0:
-                    step_name="BG0"
-                    voltage=0
-                    _time=0
-                    bg_time=Measurement_Pattern["PTNData_{}_BG0測定時間".format(test_pattern_number)].getValue()
-                    measuretype=["BG測定結果"]
-
-                else:
-                    step_name="測定NO-{}".format(step)
-                    voltage=Measurement_Pattern["PTNData_{}_STEP_{}_電圧".format(test_pattern_number,step)].getValue()
-                    bg_time=Measurement_Pattern["PTNData_{}_BG測定時間".format(test_pattern_number)].getValue()
-                    _time=Measurement_Pattern["PTNData_{}_測定時間".format(test_pattern_number)].getValue()
-                    measuretype=["抵抗測定結果","BG測定結果"]
-                
-                gas=Modbus_Registor_Pool["PTNData_{}_測定雰囲気".format(pattern_number)].getValue()
-
-                if gas==1:
-                    gas="大気"
-                elif gas==2:
-                    gas="真空"
-                elif gas==4:
-                    gas="N2置換"
-
-                speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue()
-                if speed==0:
-                    speed="Normal (1PLC)"
-                elif speed==1:
-                    speed="Hi Accuracy (10PLC)"
-
-                filter=Measurement_Pattern["PTNData_{}_filter_type".format(test_pattern_number)].getValue()
-                if filter==0:
-                    filter="なし"
-                elif filter==1:
-                    filter="平均(repeating)"
-                elif filter==2:
-                    filter="移動平均(moving)"
-                elif filter==3:
-                    filter="中央値(Median)"
-
-                profile=Test_profile_package(
-                                    date=datetime.datetime.now(),
-                                    folder_name=folder_name,
-                                    file_name=step_name,
-                                    mode=mode,
-                                    gas=gas,
-                                    number=System_memory["依頼測定番号"].getValue(),
-                                    costomer=System_memory["依頼元"].getValue(),
-                                    costomerName=System_memory["依頼者"].getValue(),
-                                    meterialName=System_memory["試料名称"].getValue(),
-                                    meterial=System_memory["材料"].getValue(),
-                                    mainDia=System_memory["主電極径(mm)"].getValue(),
-                                    innerDia=System_memory["ガード電極の内径(mm)"].getValue(),
-                                    thinkness=System_memory["試料の厚さ(mm)"].getValue(),
-                                    
-                                    voltage=voltage,
-                                    time=_time,
-                                    time_sample=Measurement_Pattern["PTNData_{}_測定sampletime".format(test_pattern_number)].getValue(),
-                                    bg_time=bg_time,
-                                    bg_time_sample=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_number)].getValue(),
-                                    speed=speed,
-                                    filter=filter,
-                                    filter_count=Measurement_Pattern["PTNData_{}_filter_count".format(test_pattern_number)].getValue(),
-
-                                )
-                #Prepare Main Path
-                self.csv_manager.prepare_CsvFile(profile)
-                stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
-                stop_noise_measurement_Thread.start()
-                for type in measuretype:
-                    #Prepare CSV Header
-                    self.csv_manager.prepare_Record_Header(type)
-
-                    #starting listen data arrive
-                    self.csv_manager.startRecord_CsvFile()
-                    
-                    if type=="抵抗測定結果":
-                        script_voltage=voltage
-                        script_time=_time
-                        script_sample_time=Measurement_Pattern["PTNData_{}_測定sampletime".format(test_pattern_number)].getValue()
-                    elif type=="BG測定結果":
-                        script_voltage=0
-                        script_time=bg_time
-                        script_sample_time=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_number)].getValue()
+                    if gas==1:
+                        gas="大気"
+                    elif gas==2:
+                        gas="真空"
+                    elif gas==4:
+                        gas="N2置換"
 
                     speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue()
-                    if speed==1:
-                        speed=10
-                    else:
-                        speed=1
+                    if speed==0:
+                        speed="Normal (1PLC)"
+                    elif speed==1:
+                        speed="Hi Accuracy (10PLC)"
 
-                    filter_enable=False
-                    filter_type=Measurement_Pattern["PTNData_{}_filter_type".format(test_pattern_number)].getValue()
-                    if filter_type==0:
-                        filter_type-=1
-                    else:
-                        filter_enable=True
-                        filter_type-=1
+                    filter=Measurement_Pattern["PTNData_{}_filter_type".format(test_pattern_number)].getValue()
+                    if filter==0:
+                        filter="なし"
+                    elif filter==1:
+                        filter="平均(repeating)"
+                    elif filter==2:
+                        filter="移動平均(moving)"
+                    elif filter==3:
+                        filter="中央値(Median)"
 
-                    filter_count=Measurement_Pattern["PTNData_{}_filter_count".format(test_pattern_number)].getValue()
-                    #------------------------------------------------------------------------------------------------------
-                    print("start_normal_measurement",script_voltage,script_time,script_sample_time)
+                    profile=Test_profile_package(
+                                        date=datetime.datetime.now(),
+                                        folder_name=folder_name,
+                                        file_name=step_name,
+                                        mode=mode,
+                                        gas=gas,
+                                        number=str(System_memory["依頼測定番号"].getValue()),
+                                        costomer=str(System_memory["依頼元"].getValue()),
+                                        costomerName=str(System_memory["依頼者"].getValue()),
+                                        meterialName=str(System_memory["試料名称"].getValue()),
+                                        meterial=str(System_memory["材料"].getValue()),
+                                        mainDia=str(System_memory["主電極径(mm)"].getValue()),
+                                        innerDia=str(System_memory["ガード電極の内径(mm)"].getValue()),
+                                        thinkness=str(System_memory["試料の厚さ(mm)"].getValue()),
+                                    
+                                        voltage=voltage,
+                                        time=_time,
+                                        time_sample=Measurement_Pattern["PTNData_{}_測定sampletime".format(test_pattern_number)].getValue(),
+                                        bg_time=bg_time,
+                                        bg_time_sample=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_number)].getValue(),
+                                        speed=speed,
+                                        filter=filter,
+                                        filter_count=Measurement_Pattern["PTNData_{}_filter_count".format(test_pattern_number)].getValue(),
 
+                                    )
+                
+
+                    #Prepare Main Path
+                    self.csv_manager.prepare_CsvFile(profile)
+                    stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
+                    stop_noise_measurement_Thread.start()
+                    for mode_type in measuretype:
+                        #Prepare CSV Header
+                        self.csv_manager.prepare_Record_Header(mode_type)
+
+                        #starting listen data arrive
+                        self.csv_manager.startRecord_CsvFile()
                     
+                        if mode_type=="抵抗測定結果":
+                            script_voltage=voltage
+                            script_time=_time
+                            script_sample_time=Measurement_Pattern["PTNData_{}_測定sampletime".format(test_pattern_number)].getValue()
+                        elif mode_type=="BG測定結果":
+                            script_voltage=0
+                            script_time=bg_time
+                            script_sample_time=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_number)].getValue()
 
-                    
-
-                    self.script_stop=False
-            
-                    self.gpib_2657A.send_Command("abort")
-                    self.gpib_2657A.send_Command("reset()")
-                    self.gpib_2657A.send_Command("node[1].smua.reset()")
-                    self.gpib_2657A.send_Command("node[2].smua.reset()")
-                    self.gpib_2657A.send_Command("*CLS")
-
-                    self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
-            
-                    self.gpib_2657A.send_Command("node[2].display.clear()")
-                    self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-                    self.gpib_2657A.send_Command("node[2].display.settext(\"Uploading script\")")
-
-                    self.gpib_2657A.send_Command("node[1].display.clear()")
-                    self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-                    self.gpib_2657A.send_Command("node[1].display.settext(\"Uploading script\")")
-            
-            
-                    self.gpib_2657A.send_Command("loadscript Restance_Measurement")
-            
-                    self.gpib_2657A.send_Command("reset()")
-                    self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
-
-                    self.gpib_2657A.send_Command("node[2].display.clear()")
-                    self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-                    self.gpib_2657A.send_Command("node[2].display.settext(\"Measure Start\")")
-
-                    self.gpib_2657A.send_Command("node[1].display.clear()")
-                    self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-                    self.gpib_2657A.send_Command("node[1].display.settext(\"Measure Start\")")
-                    
-                    self.gpib_2657A.send_Command("delay(0.3)")
-
-                    
-            
-                    self.gpib_2657A.send_Command("node[1].display.clear()")
-                    self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
-                    self.gpib_2657A.send_Command("node[1].display.settext(\"Setting...\")")
-            
-                    self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
-                    self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage... {}\")".format(Quantity(float(10),"V").render(prec=4)))
-
-                    self.gpib_2657A.send_Command("node[2].display.clear()")
-                    self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
-                    self.gpib_2657A.send_Command("node[2].display.settext(\"Setting...\")")
-                    
-                    self.gpib_2657A.send_Command("node[1].smua.reset()")
-                    self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clear()")
-                    self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.appendmode = 1")
-                    self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.cachemode = 1")
-                    self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clearcache()")
-                    self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.collecttimestamps = 1")   #40
-                    self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.fillmode = 0")
-                    
-                    #script_voltage,script_time,script_sample_time
-                    self.gpib_2657A.send_Command("node[1].smua.measure.autorangev = smua.AUTORANGE_ON")
-                    self.gpib_2657A.send_Command("node[1].smua.measure.count = 1")
-                    self.gpib_2657A.send_Command("node[1].smua.measure.delay = 0")
-                    self.gpib_2657A.send_Command("node[1].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID") 
-                    self.gpib_2657A.send_Command("node[1].smua.trigger.measure.v(node[1].smua.nvbuffer1)")  #30
-                    self.gpib_2657A.send_Command("node[1].smua.trigger.arm.count = 0")
-                    self.gpib_2657A.send_Command("node[1].smua.trigger.measure.action = 1")
-                    self.gpib_2657A.send_Command("node[1].smua.measure.nplc = {}".format(float(1)))   #20
-                    filter_enable=False
-                    if filter_enable:
-                        self.gpib_2657A.send_Command("node[1].smua.measure.filter.enable = smua.FILTER_ON")
-                        self.gpib_2657A.send_Command("node[1].smua.measure.filter.type = {}".format(int(filter_type)))
-                        self.gpib_2657A.send_Command("node[1].smua.measure.filter.count = {}".format(int(filter_count)))
-                    else:
-                        self.gpib_2657A.send_Command("node[1].smua.measure.filter.enable = smua.FILTER_OFF")
-
-
-                    
-
-                    self.gpib_2657A.send_Command("node[1].smua.source.func = smua.OUTPUT_DCVOLTS")
-                    self.gpib_2657A.send_Command("node[1].smua.source.offmode = smua.OUTPUT_ZERO")
-                    self.gpib_2657A.send_Command("node[1].smua.source.rangev = 1500")    #30
-                    self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(10))
-                    self.gpib_2657A.send_Command("node[1].smua.source.limiti = 20e-3")
-
-                    
-            
-                    self.gpib_2657A.send_Command("node[2].smua.reset()")
-                    self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clear()")
-                    self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.appendmode = 1")
-                    self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.cachemode = 1")
-                    self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clearcache()")
-                    self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.collecttimestamps = 1")   #40
-                    self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.fillmode = 0")
-
-                    self.gpib_2657A.send_Command("node[2].smua.measure.autorangei = smua.AUTORANGE_ON")
-                    self.gpib_2657A.send_Command("node[2].smua.measure.count = 1")
-                    self.gpib_2657A.send_Command("node[2].smua.measure.delay = 0")
-                    self.gpib_2657A.send_Command("node[2].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID")
-                    self.gpib_2657A.send_Command("node[2].smua.trigger.measure.i(node[2].smua.nvbuffer1)")  #50
-                    self.gpib_2657A.send_Command("node[2].smua.trigger.arm.count = 0")
-                    self.gpib_2657A.send_Command("node[2].smua.trigger.measure.action = 1")
-                    self.gpib_2657A.send_Command("node[2].smua.measure.nplc = {}".format(float(1)))   #20
-                    if filter_enable:
-                        self.gpib_2657A.send_Command("node[2].smua.measure.filter.enable = smua.FILTER_ON")
-                        self.gpib_2657A.send_Command("node[2].smua.measure.filter.type = {}".format(int(filter_type)))
-                        self.gpib_2657A.send_Command("node[2].smua.measure.filter.count = {}".format(int(filter_count)))
-                    else:
-                        self.gpib_2657A.send_Command("node[2].smua.measure.filter.enable = smua.FILTER_OFF")
-
-                    self.gpib_2657A.send_Command("node[2].smua.source.func = smua.OUTPUT_DCVOLTS")
-                    self.gpib_2657A.send_Command("node[2].smua.source.offmode = smua.OUTPUT_ZERO")
-                    self.gpib_2657A.send_Command("node[2].smua.source.rangev = 200e-3")
-                    self.gpib_2657A.send_Command("node[2].smua.source.levelv = 0")
-                    self.gpib_2657A.send_Command("node[2].smua.source.limiti = 1e-9")
-
-            
-                    self.gpib_2657A.send_Command("node[1].display.screen = display.SMUA")
-                    self.gpib_2657A.send_Command("node[1].display.smua.measure.func = display.MEASURE_DCVOLTS")
-            
-                    self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")
-                    self.gpib_2657A.send_Command("node[2].display.smua.measure.func = display.MEASURE_DCAMPS")   #50
-                    
-                    self.gpib_2657A.send_Command("node[2].smua.source.output = 1")
-                    self.gpib_2657A.send_Command("node[1].smua.source.output = 1")
-                    #script_voltage
-                    #script_time
-                    #script_sample_time
-                    #speed
-                    #filter_enable
-                    #filter_type
-                    #filter_count
-            
-                    self.gpib_2657A.send_Command("test_time={}".format(float(10)))
-
-                    self.gpib_2657A.send_Command("search_count=0")
-                    self.gpib_2657A.send_Command("search_index=1")
-                    self.gpib_2657A.send_Command("search_burst=2")
-                    
-                    self.gpib_2657A.send_Command("voltage_data=0")
-                    self.gpib_2657A.send_Command("voltage_time=0")
-                    self.gpib_2657A.send_Command("current_data=0")
-                    
-                    
-                    
-
-                    self.gpib_2657A.send_Command("loop_start=true")
-
-            
-            
-                    self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].reset()")
-                    self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].clear()") #80
-                    self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].mode = 1")
-                    self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].stimulus = trigger.timer[1].EVENT_ID")
-            
-                    self.gpib_2657A.send_Command("node[2].tsplink.trigger[2].reset()")
-                    self.gpib_2657A.send_Command("node[2].tsplink.trigger[2].clear()")
-                    self.gpib_2657A.send_Command("node[2].tsplink.trigger[2].mode = 1")
-
-                    self.gpib_2657A.send_Command("trigger.timer[1].reset()")
-                    self.gpib_2657A.send_Command("trigger.timer[1].clear()")
-                    self.gpib_2657A.send_Command("trigger.timer[1].count = 0") 
-                    self.gpib_2657A.send_Command("trigger.timer[1].delay = 0.05")
-                    self.gpib_2657A.send_Command("trigger.timer[1].passthrough = true") #90
-            
-                    self.gpib_2657A.send_Command("trigger.timer[1].stimulus = tsplink.trigger[1].EVENT_ID")
-
-                    self.gpib_2657A.send_Command("tsplink.trigger[1].reset()") 
-                    self.gpib_2657A.send_Command("tsplink.trigger[1].clear()")
-                    self.gpib_2657A.send_Command("tsplink.trigger[1].mode = 1")
-
-            
-                    self.gpib_2657A.send_Command("node[1].smua.trigger.initiate()")
-                    self.gpib_2657A.send_Command("node[2].smua.trigger.initiate()")
-                    self.gpib_2657A.send_Command("tsplink.trigger[1].assert()")
-                    
-                    
-                    #While loop
-                    self.gpib_2657A.send_Command("while loop_start do")
-                    
-                    self.gpib_2657A.send_Command("  trigger.timer[1].wait(10) ")
-                    
-
-                    self.gpib_2657A.send_Command("  if node[2].smua.nvbuffer1.n>0 then")#100
-                    self.gpib_2657A.send_Command("      voltage_data=node[1].smua.nvbuffer1.readings[search_index]")
-                    self.gpib_2657A.send_Command("      voltage_time=node[1].smua.nvbuffer1.timestamps[search_index]")
-                    self.gpib_2657A.send_Command("      current_data=node[2].smua.nvbuffer1.readings[search_index]")
-                    self.gpib_2657A.send_Command("      if search_count>=search_burst then")
-                    self.gpib_2657A.send_Command("          printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
-                    self.gpib_2657A.send_Command("          search_index=node[2].smua.nvbuffer1.n+1")
-                    self.gpib_2657A.send_Command("          search_count=1")
-                    self.gpib_2657A.send_Command("      else")  
-                    self.gpib_2657A.send_Command("          search_count=search_count+1")
-                    self.gpib_2657A.send_Command("      end") #110
-                    self.gpib_2657A.send_Command("  end")
-
-                    #self.gpib_2657A.send_Command("  printbuffer(1,node[2].smua.nvbuffer1.n,node[2].smua.nvbuffer1.readings) ")
-                    
-                    
-                    #self.gpib_2657A.send_Command("  print(current_data,node[1].smua.nvbuffer1.n,node[2].smua.nvbuffer1.n)")
-
-                    #Times up Check
-                    self.gpib_2657A.send_Command("  if search_count>=search_burst then")
-                    self.gpib_2657A.send_Command("      print()")
-
-                    self.gpib_2657A.send_Command("      printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
-                    self.gpib_2657A.send_Command("      search_index=node[2].smua.nvbuffer1.n+1")
-                    self.gpib_2657A.send_Command("      search_count=0")
-                    self.gpib_2657A.send_Command("  else")   #70
-                    self.gpib_2657A.send_Command("      search_count=search_count+1")
-                    self.gpib_2657A.send_Command("  end")
-            
-
-                    #Times up Check
-                    self.gpib_2657A.send_Command("  if voltage_time>test_time then")
-                    self.gpib_2657A.send_Command("      time_up=true")
-                    self.gpib_2657A.send_Command("  else")   #70
-                    self.gpib_2657A.send_Command("      time_up=false")
-                    self.gpib_2657A.send_Command("  end")
-
-                    self.gpib_2657A.send_Command("  if time_up then")
-                    self.gpib_2657A.send_Command("      if search_count>0 then")
-                    self.gpib_2657A.send_Command("          printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
-                    self.gpib_2657A.send_Command("      end")
-                    self.gpib_2657A.send_Command("      break")
-                    self.gpib_2657A.send_Command("  end")
-
-                    self.gpib_2657A.send_Command("end")
-                    #While loop end
-                    
-                    self.gpib_2657A.send_Command("node[1].smua.abort() ")
-                    self.gpib_2657A.send_Command("node[2].smua.abort() ")
-                    self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
-                    self.gpib_2657A.send_Command("node[1].smua.reset()")
-                    self.gpib_2657A.send_Command("node[2].smua.source.output = 0")
-                    self.gpib_2657A.send_Command("node[2].smua.reset()")
-
-                    self.gpib_2657A.send_Command("print(\"finish\")")
-            
-
-
-                    self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
-                    self.gpib_2657A.send_Command("delay(0.3)")
-
-            
-
-                    self.gpib_2657A.send_Command("endscript")
-
-                    if not self.script_stop:
-                        print("run script")
-                        self.gpib_2657A.send_Command("Restance_Measurement.run()")
-
-
-                    #------------------------------------------------------------------------------------------------------
-                    time.sleep(1)
-                    data_count=1
-                    while not self.script_stop:
-
-                        
-
-                        text=self.gpib_2657A.read_Command()
-                        print(text)
-                        if text[0]=="finish":
-                            print("finish")
-                            self.gpib_2657A.send_Command("reset()")
-
-                            break
-                        elif text[0]:
-                            
-                            data_list=[]
-
-                            data_package_list=[]
-
-                            for data in text[0].split(","):
-                                data_list.append(float(data))
-
-                            index =0
-
-                            for count in range(0,int(len(data_list)/6)):
-                                voltage_timestemp=data_list[index]
-                                voltage_status=data_list[index+1]
-                                voltage_value=data_list[index+2]
-                                current_timestemp=data_list[index+3]
-                                current_status=data_list[index+4]
-                                current_value=data_list[index+5]
-
-                                index+=6
-                                if current_value!=0:
-                                    resistance=voltage_value/current_value
-                                else:
-                                    resistance=0
-
-                                datapackage=Single_data_unitPackage(
-                                    time=voltage_timestemp,
-                                     count=data_count,
-                                     Temperature=self.temperature,
-                                     voltage=voltage_value,
-                                     current=current_value,
-                                     resistance=resistance,
-                                     resistivity=0,
-                                )
-
-                                data_package_list.append(datapackage)
-                                data_count+=1
-                                self.queuePool["testDataQueue"].put(datapackage)
-                    
-                            print("Receive",len(data_package_list),text[0])
-                            self.queuePool["GUI_DataQueue"].put(data_package_list)
-                            time.sleep(0.01)
+                        speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue()
+                        if speed==1:
+                            speed=10
                         else:
-                            time.sleep(0.2)
+                            speed=1
 
-                    print("stop_measurement")
-                    self.gpib_2657A.send_Command("abort")
-                    
-                    self.gpib_2657A.send_Command("node[1].smua.abort() ")
-                    self.gpib_2657A.send_Command("node[2].smua.abort() ")
-                    self.gpib_2657A.send_Command("reset()")
-                    self.gpib_2657A.send_Command("node[1].smua.reset()")
-                    self.gpib_2657A.send_Command("node[2].smua.reset()")
+                        filter_enable=False
+                        filter_type=Measurement_Pattern["PTNData_{}_filter_type".format(test_pattern_number)].getValue()
+                        if filter_type==0:
+                            filter_type-=1
+                        else:
+                            filter_enable=True
+                            filter_type-=1
 
-                    self.gpib_2657A.send_Command("node[2].smua.source.output = 0")
-                    self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
-                    self.gpib_2657A.send_Command("*CLS")
+                        filter_count=Measurement_Pattern["PTNData_{}_filter_count".format(test_pattern_number)].getValue()
+                        #------------------------------------------------------------------------------------------------------
+                        print("start_normal_measurement",script_voltage,script_time,script_sample_time)
+
+                    
+
+                    
+
+                    
+            
+                        self.gpib_2657A.send_Command("node[1].smua.abort() ")
+                        self.gpib_2657A.send_Command("node[2].smua.abort() ")
+
+                        self.gpib_2657A.send_Command("reset()")
+                        self.gpib_2657A.send_Command("node[1].smua.reset()")
+                        self.gpib_2657A.send_Command("node[2].smua.reset()")
+                        self.gpib_2657A.send_Command("*CLS")
+
+                        self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
+            
+                        self.gpib_2657A.send_Command("node[2].display.clear()")
+                        self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+                        self.gpib_2657A.send_Command("node[2].display.settext(\"Uploading script\")")
+
+                        self.gpib_2657A.send_Command("node[1].display.clear()")
+                        self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+                        self.gpib_2657A.send_Command("node[1].display.settext(\"Uploading script\")")
+            
+            
+                        self.gpib_2657A.send_Command("loadscript Restance_Measurement")
+            
+                        self.gpib_2657A.send_Command("reset()")
+                        self.gpib_2657A.send_Command("node[1].beeper.beep(0.1, 2400)")
+
+                        self.gpib_2657A.send_Command("node[2].display.clear()")
+                        self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+                        self.gpib_2657A.send_Command("node[2].display.settext(\"Measure Start\")")
+
+                        self.gpib_2657A.send_Command("node[1].display.clear()")
+                        self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+                        self.gpib_2657A.send_Command("node[1].display.settext(\"Measure Start\")")
+                    
+                        self.gpib_2657A.send_Command("delay(0.3)")
+
+                    
+            
+                        self.gpib_2657A.send_Command("node[1].display.clear()")
+                        self.gpib_2657A.send_Command("node[1].display.setcursor(1, 1)")
+                        self.gpib_2657A.send_Command("node[1].display.settext(\"Setting...\")")
+            
+                        self.gpib_2657A.send_Command("node[1].display.setcursor(2, 1)")
+                        self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage... {}\")".format(Quantity(float(10),"V").render(prec=4)))
+
+                        self.gpib_2657A.send_Command("node[2].display.clear()")
+                        self.gpib_2657A.send_Command("node[2].display.setcursor(1, 1)")
+                        self.gpib_2657A.send_Command("node[2].display.settext(\"Setting...\")")
+                    
+                        self.gpib_2657A.send_Command("node[1].smua.reset()")
+                        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clear()")
+                        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.appendmode = 1")
+                        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.cachemode = 1")
+                        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.clearcache()")
+                        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.collecttimestamps = 1")   #40
+                        self.gpib_2657A.send_Command("node[1].smua.nvbuffer1.fillmode = 0")
+                    
+                        #script_voltage,script_time,script_sample_time
+                        self.gpib_2657A.send_Command("node[1].smua.measure.autorangev = smua.AUTORANGE_ON")
+                        self.gpib_2657A.send_Command("node[1].smua.measure.count = 1")
+                        self.gpib_2657A.send_Command("node[1].smua.measure.delay = 0")
+                        self.gpib_2657A.send_Command("node[1].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID") 
+                        self.gpib_2657A.send_Command("node[1].smua.trigger.measure.v(node[1].smua.nvbuffer1)")  #30
+                        self.gpib_2657A.send_Command("node[1].smua.trigger.arm.count = 0")
+                        self.gpib_2657A.send_Command("node[1].smua.trigger.measure.action = 1")
+                        self.gpib_2657A.send_Command("node[1].smua.measure.nplc = {}".format(float(speed)))   #20
+                        if filter_enable:
+                            self.gpib_2657A.send_Command("node[1].smua.measure.filter.enable = smua.FILTER_ON")
+                            self.gpib_2657A.send_Command("node[1].smua.measure.filter.type = {}".format(int(filter_type)))
+                            self.gpib_2657A.send_Command("node[1].smua.measure.filter.count = {}".format(int(filter_count)))
+                        else:
+                            self.gpib_2657A.send_Command("node[1].smua.measure.filter.enable = smua.FILTER_OFF")
+
+
+                    
+
+                        self.gpib_2657A.send_Command("node[1].smua.source.func = smua.OUTPUT_DCVOLTS")
+                        self.gpib_2657A.send_Command("node[1].smua.source.offmode = smua.OUTPUT_ZERO")
+                        self.gpib_2657A.send_Command("node[1].smua.source.rangev = 1500")    #30
+                        self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(float(script_voltage)))
+                        self.gpib_2657A.send_Command("node[1].smua.source.limiti = 20e-3")
+
+                    
+            
+                        self.gpib_2657A.send_Command("node[2].smua.reset()")
+                        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clear()")
+                        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.appendmode = 1")
+                        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.cachemode = 1")
+                        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.clearcache()")
+                        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.collecttimestamps = 1")   #40
+                        self.gpib_2657A.send_Command("node[2].smua.nvbuffer1.fillmode = 0")
+
+                        self.gpib_2657A.send_Command("node[2].smua.measure.autorangei = smua.AUTORANGE_ON")
+                        self.gpib_2657A.send_Command("node[2].smua.measure.count = 1")
+                        self.gpib_2657A.send_Command("node[2].smua.measure.delay = 0")
+                        self.gpib_2657A.send_Command("node[2].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID")
+                        self.gpib_2657A.send_Command("node[2].smua.trigger.measure.i(node[2].smua.nvbuffer1)")  #50
+                        self.gpib_2657A.send_Command("node[2].smua.trigger.arm.count = 0")
+                        self.gpib_2657A.send_Command("node[2].smua.trigger.measure.action = 1")
+                        self.gpib_2657A.send_Command("node[2].smua.measure.nplc = {}".format(float(speed)))   #20
+                        if filter_enable:
+                            self.gpib_2657A.send_Command("node[2].smua.measure.filter.enable = smua.FILTER_ON")
+                            self.gpib_2657A.send_Command("node[2].smua.measure.filter.type = {}".format(int(filter_type)))
+                            self.gpib_2657A.send_Command("node[2].smua.measure.filter.count = {}".format(int(filter_count)))
+                        else:
+                            self.gpib_2657A.send_Command("node[2].smua.measure.filter.enable = smua.FILTER_OFF")
+
+                        self.gpib_2657A.send_Command("node[2].smua.source.func = smua.OUTPUT_DCVOLTS")
+                        self.gpib_2657A.send_Command("node[2].smua.source.offmode = smua.OUTPUT_ZERO")
+                        self.gpib_2657A.send_Command("node[2].smua.source.rangev = 200e-3")
+                        self.gpib_2657A.send_Command("node[2].smua.source.levelv = 0")
+                        self.gpib_2657A.send_Command("node[2].smua.source.limiti = 1e-9")
+
+            
+                        self.gpib_2657A.send_Command("node[1].display.screen = display.SMUA")
+                        self.gpib_2657A.send_Command("node[1].display.smua.measure.func = display.MEASURE_DCVOLTS")
+            
+                        self.gpib_2657A.send_Command("node[2].display.screen = display.SMUA")
+                        self.gpib_2657A.send_Command("node[2].display.smua.measure.func = display.MEASURE_DCAMPS")   #50
+                    
+                        self.gpib_2657A.send_Command("node[2].smua.source.output = 1")
+                        self.gpib_2657A.send_Command("node[1].smua.source.output = 1")
+            
+                        self.gpib_2657A.send_Command("test_time={}".format(float(60)))
+                    
+                        self.gpib_2657A.send_Command("time_up=false")  
+
+                        self.gpib_2657A.send_Command("search_count=0")
+                        self.gpib_2657A.send_Command("search_index=1")
+                        self.gpib_2657A.send_Command("search_burst=2")
+                    
+                        self.gpib_2657A.send_Command("voltage_data=0")
+                        self.gpib_2657A.send_Command("voltage_time=0")
+                        self.gpib_2657A.send_Command("current_data=0")
+
+                        self.gpib_2657A.send_Command("loop_start=true")
+
+            
+                        self.gpib_2657A.send_Command("print(\"start\")")
+            
+                        self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].reset()")
+                        self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].clear()") #80
+                        self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].mode = 1")
+                        self.gpib_2657A.send_Command("node[1].tsplink.trigger[2].stimulus = trigger.timer[1].EVENT_ID")
+            
+                        self.gpib_2657A.send_Command("node[2].tsplink.trigger[2].reset()")
+                        self.gpib_2657A.send_Command("node[2].tsplink.trigger[2].clear()")
+                        self.gpib_2657A.send_Command("node[2].tsplink.trigger[2].mode = 1")
+
+                        self.gpib_2657A.send_Command("trigger.timer[1].reset()")
+                        self.gpib_2657A.send_Command("trigger.timer[1].clear()")
+                        self.gpib_2657A.send_Command("trigger.timer[1].count = 0") 
+                        #self.gpib_2657A.send_Command("trigger.timer[1].delay = 0.1")
+                    
+                        print("script_sample_time",type(script_sample_time),script_sample_time)
+                        self.gpib_2657A.send_Command("trigger.timer[1].delay = {}".format(float(script_sample_time)))
+                        self.gpib_2657A.send_Command("trigger.timer[1].passthrough = true") #90
+            
+                        self.gpib_2657A.send_Command("trigger.timer[1].stimulus = tsplink.trigger[1].EVENT_ID")
+
+                        self.gpib_2657A.send_Command("tsplink.trigger[1].reset()") 
+                        self.gpib_2657A.send_Command("tsplink.trigger[1].clear()")
+                        self.gpib_2657A.send_Command("tsplink.trigger[1].mode = 1")
+
+            
+                        self.gpib_2657A.send_Command("node[1].smua.trigger.initiate()")
+                        self.gpib_2657A.send_Command("node[2].smua.trigger.initiate()")
+                        self.gpib_2657A.send_Command("tsplink.trigger[1].assert()")
+                    
+                        self.gpib_2657A.send_Command("print(\"start\")")
+                        #While loop
+                        self.gpib_2657A.send_Command("while loop_start do")
+                    
+                        self.gpib_2657A.send_Command("  trigger.timer[1].wait(10) ")
+
+                    
+                        #self.gpib_2657A.send_Command("  delay(0.1) ")
+                    
+                        #self.gpib_2657A.send_Command("  print(\"start 1\")")
+                        self.gpib_2657A.send_Command("  if node[2].smua.nvbuffer1.n>0 then")#100
+                    
+                        #self.gpib_2657A.send_Command("      print(\"start 1\")")
+                        self.gpib_2657A.send_Command("      voltage_data=node[1].smua.nvbuffer1.readings[search_index]")
+                        self.gpib_2657A.send_Command("      voltage_time=node[1].smua.nvbuffer1.timestamps[search_index]")
+                        self.gpib_2657A.send_Command("      current_data=node[2].smua.nvbuffer1.readings[search_index]")
+                        #self.gpib_2657A.send_Command("      printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
+                        #self.gpib_2657A.send_Command("      search_index=node[2].smua.nvbuffer1.n+1")
+
+                        self.gpib_2657A.send_Command("      if search_count>=search_burst then")
+                        self.gpib_2657A.send_Command("          printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
+                        self.gpib_2657A.send_Command("          search_index=node[2].smua.nvbuffer1.n+1")
+                        self.gpib_2657A.send_Command("          search_count=1")
+                        self.gpib_2657A.send_Command("      else")  
+                        self.gpib_2657A.send_Command("          search_count=search_count+1")
+                        self.gpib_2657A.send_Command("      end") #110
+                        self.gpib_2657A.send_Command("  end")
+
+                    
+
+            
+
+                        #Times up Check
+                        self.gpib_2657A.send_Command("  eta_time=voltage_time-test_time ")
+                        self.gpib_2657A.send_Command("  if eta_time>=0 then")
+                        self.gpib_2657A.send_Command("      time_up=true")
+                        self.gpib_2657A.send_Command("  else")   #70
+                        self.gpib_2657A.send_Command("      time_up=false")
+                        self.gpib_2657A.send_Command("  end")
+
+                        self.gpib_2657A.send_Command("  if time_up then")
+                        self.gpib_2657A.send_Command("      if search_count>0 then")
+                        self.gpib_2657A.send_Command("          printbuffer(search_index,node[2].smua.nvbuffer1.n,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings) ")
+                        self.gpib_2657A.send_Command("      end")
+                        self.gpib_2657A.send_Command("      break")
+                        self.gpib_2657A.send_Command("  end")
+
+                        self.gpib_2657A.send_Command("end")
+
+                        #While loop end
+                        self.gpib_2657A.send_Command("node[1].smua.abort() ")
+                        self.gpib_2657A.send_Command("node[2].smua.abort() ")
+
+                        self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
+                        self.gpib_2657A.send_Command("node[1].smua.reset()")
+                        self.gpib_2657A.send_Command("node[2].smua.source.output = 0")
+                        self.gpib_2657A.send_Command("node[2].smua.reset()")
+
+                        self.gpib_2657A.send_Command("print(\"finish\")")
+            
+                        self.gpib_2657A.send_Command("beeper.beep(0.2, 2400)")
+                        self.gpib_2657A.send_Command("delay(0.3)")
+
+                        self.gpib_2657A.send_Command("endscript")
+
+                        if not self.script_stop:
+                            print("run script")
+                            self.gpib_2657A.send_Command("Restance_Measurement.run()")
+
+
+                        #------------------------------------------------------------------------------------------------------
+                    
+                        data_count=1
+                        while not self.script_stop:
+                            text=self.gpib_2657A.read_Command()
+                            print(text)
+                            if text[0]=="finish":
+                                print("finish")
+                                self.gpib_2657A.send_Command("reset()")
+
+                                break
+                            elif text[0].find('start') != -1:
+                                print("!!!!!!!!!!!!!")
+
+                            elif text[0]:
+                            
+                                data_list=[]
+
+                                data_package_list=[]
+
+                                for data in text[0].split(","):
+                                    data_list.append(float(data))
+
+                                index =0
+
+                                for count in range(0,int(len(data_list)/6)):
+                                    voltage_timestemp=data_list[index]
+                                    voltage_status=data_list[index+1]
+                                    voltage_value=data_list[index+2]
+                                    current_timestemp=data_list[index+3]
+                                    current_status=data_list[index+4]
+                                    current_value=data_list[index+5]
+
+                                    index+=6
+                                    if current_value!=0:
+                                        resistance=voltage_value/current_value
+                                    else:
+                                        resistance=0
+
+                                    datapackage=Single_data_unitPackage(
+                                        time=voltage_timestemp,
+                                         count=data_count,
+                                         Temperature=self.temperature,
+                                         voltage=voltage_value,
+                                         current=current_value,
+                                         resistance=resistance,
+                                         resistivity=0,
+                                    )
+
+                                    data_package_list.append(datapackage)
+                                    data_count+=1
+                                    self.queuePool["testDataQueue"].put(datapackage)
+                    
+                                print("Receive",len(data_package_list),text[0])
+                                self.queuePool["GUI_DataQueue"].put(data_package_list)
+                                time.sleep(0.01)
+                            else:
+                                time.sleep(0.1)
+
+                        print("stop_measurement")
+                    
+                        self.gpib_2657A.send_Command("node[1].smua.abort() ")
+                        self.gpib_2657A.send_Command("node[2].smua.abort() ")
+                        self.gpib_2657A.send_Command("*CLS")
+                        self.gpib_2657A.send_Command("reset()")
+                        self.gpib_2657A.send_Command("node[1].smua.reset()")
+                        self.gpib_2657A.send_Command("node[2].smua.reset()")
+
+                        self.gpib_2657A.send_Command("node[2].smua.source.output = 0")
+                        self.gpib_2657A.send_Command("node[1].smua.source.output = 0")
                     
                     
-                    #starting listen data arrive
-                    self.csv_manager.stopRecord_CsvFile()
+                        #starting listen data arrive
+                        self.csv_manager.stopRecord_CsvFile()
                     
 
             self.eventPool["Auto Run finish"].set()

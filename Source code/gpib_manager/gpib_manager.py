@@ -201,7 +201,7 @@ class GPIB_Driver():
 
     def get_Value(self):
 
-        read_buffer= ctypes.create_string_buffer(1000)
+        read_buffer= ctypes.create_string_buffer(5000)
         self.GPIB.ibrd(self.dev_descriptor[self.getItem.name],read_buffer,read_buffer._length_)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()

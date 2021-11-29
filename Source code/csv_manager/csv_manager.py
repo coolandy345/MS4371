@@ -287,9 +287,10 @@ class Csv_manager():
             writer = csv.writer(csvfile)
 
             writer.writerow(['測定日', self.profile.date])
-            writer.writerow(['依頼測定番号', self.profile.number])
-            writer.writerow(['依頼元', self.profile.costomer])
-            writer.writerow(['依頼者', self.profile.costomerName])
+            writer.writerow(['測定番号', self.profile.number])
+            if self.profile.mode==2:
+                writer.writerow(['依頼元', self.profile.costomer])
+                writer.writerow(['依頼者', self.profile.costomerName])
             writer.writerow(['試料名称', self.profile.meterialName])
             writer.writerow(['材料', self.profile.meterial])
             writer.writerow(['主電極径(mm)', self.profile.mainDia])
