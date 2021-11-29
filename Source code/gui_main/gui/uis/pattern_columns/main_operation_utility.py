@@ -635,13 +635,16 @@ class Main_utility_manager(QWidget):
             try:
                 getItem=self.queuePool["GUI_DataQueue"].get()
 
-
+                #print("GUI_DataQueue",getItem)
                 #self.realTime_Voltage=getItem[-1].voltage
                 #self.realTime_Current=getItem[-1].current
                 #self.realTime_Resistor=getItem[-1].resistance
                 
                 for data in getItem:
-                    print(data.current)
+                    #self.realTime_Voltage=data.voltage
+                    #self.realTime_Current=data.current
+                    #self.realTime_Resistor=data.resistance
+                    print("GUI_DataQueue",data.time,data.voltage,data.current,)
                     XYdata={}
                     XYdata["x"]=float(data.time)
                     XYdata["y"]=float(data.current)
