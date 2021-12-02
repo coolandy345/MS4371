@@ -51,13 +51,13 @@ class Csv_manager():
 
                 with open(self.csv, 'a', newline='') as csvfile:
                     writer = csv.writer(csvfile)
-                    writer.writerow([   getItem.count,
-                                                getItem.time,
-                                                getItem.Temperature,
-                                                getItem.voltage,
-                                                getItem.current,
-                                                getItem.resistance,
-                                                getItem.resistivity])
+                    writer.writerow([   "{:0>7d}".format(getItem.count),
+                                                "{:.3f}".format(getItem.time),
+                                                "{:0>3d}".format(getItem.Temperature),
+                                                "{:+.5e}".format(getItem.voltage),
+                                                "{:+.5e}".format(getItem.current),
+                                                "{:+.5e}".format(getItem.resistance),
+                                                "{:+.5e}".format(getItem.resistivity)])
                     
             except:
                 pass

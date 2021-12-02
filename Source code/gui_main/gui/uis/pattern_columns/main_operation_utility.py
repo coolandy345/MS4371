@@ -181,7 +181,7 @@ class Main_utility_manager(QWidget):
 
         self.timer=QTimer()
         self.timer.timeout.connect(self.graph_Update_Work)
-        self.timer.start(10)
+        self.timer.start(30)
 
         ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
         ultility_Update_Thread.start()
@@ -641,9 +641,9 @@ class Main_utility_manager(QWidget):
                 #self.realTime_Resistor=getItem[-1].resistance
                 
                 for data in getItem:
-                    #self.realTime_Voltage=data.voltage
-                    #self.realTime_Current=data.current
-                    #self.realTime_Resistor=data.resistance
+                    self.realTime_Voltage1=data.voltage
+                    self.realTime_Current1=data.current
+                    self.realTime_Resistor1=data.resistance
                     print("GUI_DataQueue",data.time,data.voltage,data.current,)
                     XYdata={}
                     XYdata["x"]=float(data.time)
@@ -1147,9 +1147,9 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.realtime_Current_lineEdit.setText("{}".format(Quantity(self.realTime_Current,"A").render(prec=4)))
             self._parent.ui.load_pages.realtime_Voltage_lineEdit.setText("{}".format(Quantity(self.realTime_Voltage,"V").render(prec=4)))
             self._parent.ui.load_pages.realtime_Resistor_lineEdit.setText("{}".format(Quantity(self.realTime_Resistor,"Ω").render(prec=4)))
-            self.set_memorypool_register("Modbus Registor Pool - Registor","現在電圧値",self.realTime_Voltage)
-            self.set_memorypool_register("Modbus Registor Pool - Registor","現在電流値",self.realTime_Current)
-            self.set_memorypool_register("Modbus Registor Pool - Registor","現在抵抗値",self.realTime_Resistor)
+            #self.set_memorypool_register("Modbus Registor Pool - Registor","現在電圧値",self.realTime_Voltage)
+            #self.set_memorypool_register("Modbus Registor Pool - Registor","現在電流値",self.realTime_Current)
+            #self.set_memorypool_register("Modbus Registor Pool - Registor","現在抵抗値",self.realTime_Resistor)
 
 
             if self.realTime_Temp!=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue():

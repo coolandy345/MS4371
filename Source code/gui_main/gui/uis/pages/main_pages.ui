@@ -52,7 +52,7 @@ border-style: solid;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -5299,7 +5299,7 @@ padding-left:10px;
 </string>
                   </property>
                   <property name="text">
-                   <string>手動モード</string>
+                   <string>手動測定モード</string>
                   </property>
                   <property name="checkable">
                    <bool>true</bool>
@@ -7008,7 +7008,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>987</width>
                       <height>400</height>
                      </rect>
                     </property>
@@ -8237,7 +8237,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>987</width>
                       <height>200</height>
                      </rect>
                     </property>

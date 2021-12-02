@@ -522,6 +522,8 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step]._sp_limit_down=unit.sp_limit_down
                 self.step_widges_list[_step].pattern.Shift_lineEdit.setText("{}".format(unit.shift))
                 self.step_widges_list[_step]._shift=unit.shift
+                
+                self.step_widges_list[_step].time_style()
 
                 pass
             elif unit.Step_Type==tempUnit.test_unit_type:  #test unit
@@ -543,9 +545,13 @@ class TempPatternWidget(QWidget):
 
                 self.step_widges_list[_step].update_testFileCombobox(unit.test_measure_PatternNo)
                 self.step_widges_list[_step]._test_pattern=unit.test_measure_PatternNo
+                
+                self.step_widges_list[_step].time_style()
                 #self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
                 pass
             elif unit.Step_Type==tempUnit.End_unit_type:  #End unit
+                
+                self.step_widges_list[_step].time_style()
                 pass
         
             

@@ -19,6 +19,7 @@ class GPIB_package():
     init_type=0
     send_type=1
     read_type=2
+    reset_type=3
 
 
     def __init__(self,
@@ -71,7 +72,8 @@ class GPIB_Driver():
         15:"Serial poll status byte lost",
         16:"SRQ remains asserted",
         20:"The return buffer is fullS",
-        21:"Address or board is locked"
+        21:"Address or board is locked",
+        25:"No GPIB interface"
         }
 
     # Error messages in iberr
@@ -137,9 +139,11 @@ class GPIB_Driver():
                 error_code=self.send_Command(self.getItem.command)
             elif  self.getItem.type==GPIB_package.read_type:
                 error_code,getMessage=self.request_Command()
+            elif self.getItem.type==GPIB_package.reset_type:
+                error_code=self.reset_Command()
 
             error_message=self.err_check(error_code)
-            
+
             sendItem=GPIB_package(     type=self.getItem.type,
                                                                  command=self.getItem.command,
                                                                  name=self.getItem.name,
@@ -148,23 +152,51 @@ class GPIB_Driver():
 
             self.queuePool["GPIB_{}_queue".format(self.getItem.name)].put(sendItem)
             
-
-    
-    def initiail_GPIB_device(self):
+    def reset_Command(self):
+        
+        print("reset command")
         byte_string="GPIB0".encode("utf8")
         self.send_buffer= ctypes.create_string_buffer(byte_string)
-        self.board_descriptor=self.GPIB.ibfindW(self.send_buffer)
-        self.GPIB.ibdma(self.board_descriptor,1)
-        
-        self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T1s, 1, 0)
+        self.board_descriptor=self.GPIB.ibfindA(self.send_buffer)
+
+        self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T10s, 1, 0)
         #self.GPIB.ibclr(self.dev_descriptor[self.getItem.name])
-        self.GPIB.ibsic(self.dev_descriptor[self.getItem.name],0)
-        self.GPIB.ibsre(self.dev_descriptor[self.getItem.name],0)
+        # self.GPIB.ibclr(self.dev_descriptor[self.getItem.name])
+        self.GPIB.ibsic(self.board_descriptor)
+        self.GPIB.ibsre(self.board_descriptor,1)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
             return err
         else:
+            return 0
+    
+    def initiail_GPIB_device(self):
+        print("init")
+        byte_string="GPIB0".encode("utf8")
+        self.send_buffer= ctypes.create_string_buffer(byte_string)
+        self.board_descriptor=self.GPIB.ibfindA(self.send_buffer)
+        if self.board_descriptor==-1:
+            return 1<<25
+        print("1 {:#X}".format(self.GPIB.ThreadIbsta()),"self.board_descriptor",self.board_descriptor)
+        self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T10s, 1, 0)
+        print("2 {:#X}".format(self.GPIB.ThreadIbsta()),"self.dev_descriptor[self.getItem.name]",self.dev_descriptor[self.getItem.name])
+        # self.GPIB.ibclr(self.dev_descriptor[self.getItem.name])
+        # print("3 {:#X}".format(self.GPIB.ThreadIbsta()))
+        self.GPIB.ibsic(self.board_descriptor)
+        print("4 {:#X}".format(self.GPIB.ThreadIbsta()))
+
+        self.GPIB.ibsre(self.board_descriptor,1)
+        print("7 {:#X}".format(self.GPIB.ThreadIbsta()))
+
+        Ret=self.GPIB.ThreadIbsta()
+        err=self.GPIB.ThreadIberr()
+        if ((Ret & self.ERR) != 0):
+            
+            print("8 {:#X} {:#X}".format(Ret,err))
+            return err
+        else:
+            print("9 {:#X} {:#X}".format(Ret,err))
             return 0
 
     def request_Command(self):
@@ -177,7 +209,6 @@ class GPIB_Driver():
     def err_check(self,error_code):
         list=[]
         for bit in self.ERR_dict.keys():
-
             if ((error_code & 1<<bit) != 0):
                 list.append(self.ERR_dict[bit])
 
@@ -201,7 +232,7 @@ class GPIB_Driver():
 
     def get_Value(self):
 
-        read_buffer= ctypes.create_string_buffer(5000)
+        read_buffer= ctypes.create_string_buffer(4096)
         self.GPIB.ibrd(self.dev_descriptor[self.getItem.name],read_buffer,read_buffer._length_)
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
@@ -252,19 +283,30 @@ class GPIB_device():
         else:
             print("secess init GPIB device at {}".format(self.name))
             self.connect_action(True)
-            self.send_Command("node[1].smua.abort() ")
-            self.send_Command("node[2].smua.abort() ")
-            self.send_Command("*CLS")
-            self.send_Command("reset()")
-            self.send_Command("node[1].smua.reset()")
-            self.send_Command("node[2].smua.reset()")
-
-            
-            self.send_Command("node[2].smua.source.output = 0")
-            self.send_Command("node[1].smua.source.output = 0")
-
-            self.send_Command("tsplink.reset()")
-            self.send_Command("beeper.beep(0.1, 2400)")
+            time.sleep(0.01)
+            self.send_Command("""
+                                
+                                abort
+                                *CLS
+                                reset()
+                                node[1].smua.reset()
+                                node[2].smua.reset()
+                                node[2].smua.source.output = 0
+                                node[1].smua.source.output = 0
+                                tsplink.reset()
+                                beeper.beep(0.1, 2400)
+                                node[2].display.clear()
+                                node[2].display.setcursor(1, 1)
+                                node[2].display.settext("standby")
+                                node[1].display.clear()
+                                node[1].display.setcursor(1, 1)
+                                node[1].display.settext("standby")
+                                delay(0.5)
+                                node[1].display.screen = display.SMUA
+                                node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
+                                node[2].display.screen = display.SMUA
+                                node[2].display.smua.measure.func = display.MEASURE_DCAMPS
+                                """)
 
 
             return None
@@ -279,15 +321,20 @@ class GPIB_device():
         #self.set_memorypool_register("System memory","2635B connection".format(self.name),self.connection)
 
         
-         #if self.connection!=connect:
+        if not self.connection:
+            print("reset 2657")
+            GPIB_package.reset_type
 
-         #    self.connection=connect
-         #    if self.connection:
-         #       self.set_memorypool_register("System memory","{} connection".format(self.name),1)
-         #       print("{} connection".format(self.name),1)
-         #    else:
-         #       self.set_memorypool_register("System memory","{} connection".format(self.name),0)
-         #       print("{} connection".format(self.name),0)
+            sendItem=GPIB_package(
+                    type=GPIB_package.reset_type,
+                    command="",
+                    name=self.name,
+                    address=self.address
+                )
+        
+            self.queuePool["GPIB_send_queue"].put(sendItem)
+            getItem=self.queuePool["GPIB_{}_queue".format(self.name)].get()
+            
 
     def connnection_check_Work(self):
         

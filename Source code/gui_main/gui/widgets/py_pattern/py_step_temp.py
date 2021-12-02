@@ -332,24 +332,7 @@ class PyTempStep(QWidget):
                 self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
 
 
-            if (self.pattern.Type_comboBox.currentText()) == "測定":
-
-                pattern=self._test_pattern+1
-
-                if pattern>=1 and pattern<=20:
-                    BG0_test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(pattern)].getValue()
-                    step_number=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_実行STEP数".format(pattern)].getValue()
-                    test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(pattern)].getValue()
-                    BG_test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(pattern)].getValue()
-
-                    total_time=self._keep_seccond/60+BG0_test_time+step_number*test_time+step_number*BG_test_time
-                    if (self._hour*60)+self._minute<total_time:
-                        self.pattern.Time_label.setStyleSheet("color: rgb(255, 0, 0)")
-                    else:
-                        self.pattern.Time_label.setStyleSheet("")
-
-            else:
-                self.pattern.Time_label.setStyleSheet("")
+            self.time_style()
         
             try:
                 #Call upper mother renew information
@@ -358,6 +341,26 @@ class PyTempStep(QWidget):
             except AttributeError: #When self._parent.tempPattern is not initial yet
                 return
         
+    def time_style(self):
+        if (self.pattern.Type_comboBox.currentText()) == "測定":
+
+            pattern=self._test_pattern+1
+
+            if pattern>=1 and pattern<=20:
+                BG0_test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG0測定時間".format(pattern)].getValue()
+                step_number=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_実行STEP数".format(pattern)].getValue()
+                test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(pattern)].getValue()
+                BG_test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(pattern)].getValue()
+
+                total_time=self._keep_seccond/60+BG0_test_time+step_number*test_time+step_number*BG_test_time
+
+                if ((self._hour*60)+self._minute<total_time):
+                    self.pattern.Time_label.setStyleSheet("color: rgb(255, 0, 0)")
+                else:
+                    self.pattern.Time_label.setStyleSheet("")
+
+        else:
+            self.pattern.Time_label.setStyleSheet("")
 
     def type_modifly_callback(self):
         

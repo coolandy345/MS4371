@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesVvyAsv.ui'
+## Form generated from reading UI file 'main_pagesLbuQml.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *  # type: ignore
+from PyQt5.QtGui import *  # type: ignore
+from PyQt5.QtWidgets import *  # type: ignore
 
 
 class Ui_MainPages(object):
@@ -91,7 +91,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1038, 759))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 810, 759))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -3279,7 +3279,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 987, 400))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 100, 400))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -3793,7 +3793,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 987, 200))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 100, 200))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -4468,7 +4468,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
         self.stackedWidget_2.setCurrentIndex(0)
@@ -4607,7 +4607,7 @@ class Ui_MainPages(object):
         self.label_2.setText("")
         self.remoteConnect_pushButton.setText(QCoreApplication.translate("MainPages", u"\u30ea\u30e2\u30fc\u30c8\u63a5\u7d9a", None))
         self.btn_AutoMode.setText(QCoreApplication.translate("MainPages", u"\u81ea\u52d5\u30e2\u30fc\u30c9", None))
-        self.btn_ManaualMode.setText(QCoreApplication.translate("MainPages", u"\u624b\u52d5\u30e2\u30fc\u30c9", None))
+        self.btn_ManaualMode.setText(QCoreApplication.translate("MainPages", u"\u624b\u52d5\u6e2c\u5b9a\u30e2\u30fc\u30c9", None))
         self.autostart_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u958b\u59cb", None))
         self.label_11.setText("")
         self.eMSstop_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u505c\u6b62", None))
