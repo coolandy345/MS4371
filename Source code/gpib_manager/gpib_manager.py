@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 
 #from ctypes import cdll 
-import sys
-import time
+import copy
 import ctypes
+import sys
 import threading
 import time
+
 from registor_manager import *
-import copy
-
-
-
-
 
 
 class GPIB_package():

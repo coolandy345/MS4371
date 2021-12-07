@@ -1133,8 +1133,10 @@ class Operator():
                                                         loop_start=true
                                                         """)
 
-                        data_rate = float(0.1/script_sample_time)
+                        data_rate = float(0.04/script_sample_time)
                         print("burst",math.ceil(data_rate))
+                        if not data_rate>=1:
+                            data_rate=1
                         self.gpib_2657A.send_Command("search_burst={}".format(math.ceil(data_rate)))
                     
                         self.gpib_2657A.send_Command("""

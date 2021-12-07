@@ -1,10 +1,13 @@
-from .gpib_manager import GPIB_device_2635B,GPIB_device_2657A,GPIB_Driver,GPIB_package
-from registor_manager import *
 import copy
+import ctypes
 import threading
 import time
+
 import usb.core
-import ctypes
+from registor_manager import *
+
+from .gpib_manager import (GPIB_device_2635B, GPIB_device_2657A, GPIB_Driver,
+                           GPIB_package)
 
 
 def set_memorypool_register(memoryPool,

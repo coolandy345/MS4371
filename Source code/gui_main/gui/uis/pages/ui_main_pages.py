@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesLbuQml.ui'
+## Form generated from reading UI file 'main_pagesLwgcxe.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -91,7 +91,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 810, 759))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, -88, 1038, 759))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -560,6 +560,13 @@ class Ui_MainPages(object):
 
         self.gridLayout_63.addWidget(self.lineEdit_PID_0_P, 1, 1, 1, 1)
 
+        self.lineEdit_PID_0_I.raise_()
+        self.label_121.raise_()
+        self.label_122.raise_()
+        self.label_123.raise_()
+        self.label_124.raise_()
+        self.lineEdit_PID_0_P.raise_()
+        self.lineEdit_PID_0_D.raise_()
 
         self.horizontalLayout_10.addWidget(self.frame_77)
 
@@ -2046,7 +2053,7 @@ class Ui_MainPages(object):
         self.graphItem_combobox.addItem("")
         self.graphItem_combobox.addItem("")
         self.graphItem_combobox.setObjectName(u"graphItem_combobox")
-        self.graphItem_combobox.setMinimumSize(QSize(0, 0))
+        self.graphItem_combobox.setMinimumSize(QSize(100, 25))
         self.graphItem_combobox.setMaximumSize(QSize(16777215, 16777215))
         self.graphItem_combobox.setStyleSheet(u"")
 
@@ -2093,7 +2100,7 @@ class Ui_MainPages(object):
         self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.setObjectName(u"timeUnit_comboBox")
-        self.timeUnit_comboBox.setMinimumSize(QSize(0, 0))
+        self.timeUnit_comboBox.setMinimumSize(QSize(0, 25))
         self.timeUnit_comboBox.setMaximumSize(QSize(16777215, 16777215))
         self.timeUnit_comboBox.setStyleSheet(u"")
 
@@ -2112,7 +2119,7 @@ class Ui_MainPages(object):
 
         self.Resistor_checkBox = QCheckBox(self.frame_19)
         self.Resistor_checkBox.setObjectName(u"Resistor_checkBox")
-        self.Resistor_checkBox.setMinimumSize(QSize(0, 0))
+        self.Resistor_checkBox.setMinimumSize(QSize(0, 25))
         self.Resistor_checkBox.setCursor(QCursor(Qt.PointingHandCursor))
         self.Resistor_checkBox.setStyleSheet(u"background-color: rgba(0, 0, 0, 80);\n"
 "padding:5px")
@@ -2121,7 +2128,7 @@ class Ui_MainPages(object):
 
         self.Voltage_checkBox = QCheckBox(self.frame_19)
         self.Voltage_checkBox.setObjectName(u"Voltage_checkBox")
-        self.Voltage_checkBox.setMinimumSize(QSize(0, 0))
+        self.Voltage_checkBox.setMinimumSize(QSize(0, 25))
         self.Voltage_checkBox.setCursor(QCursor(Qt.PointingHandCursor))
         self.Voltage_checkBox.setStyleSheet(u"background-color: rgba(0, 0, 0, 80);\n"
 "padding:5px")
@@ -2130,7 +2137,7 @@ class Ui_MainPages(object):
 
         self.Current_checkBox = QCheckBox(self.frame_19)
         self.Current_checkBox.setObjectName(u"Current_checkBox")
-        self.Current_checkBox.setMinimumSize(QSize(0, 0))
+        self.Current_checkBox.setMinimumSize(QSize(0, 25))
         self.Current_checkBox.setCursor(QCursor(Qt.PointingHandCursor))
         self.Current_checkBox.setStyleSheet(u"background-color: rgba(0, 0, 0, 80);\n"
 "padding:5px")
@@ -3279,7 +3286,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 100, 400))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 987, 400))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -3793,7 +3800,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 100, 200))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 987, 200))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -4465,10 +4472,93 @@ class Ui_MainPages(object):
 
         self.gridLayout_8.addWidget(self.pages, 0, 1, 1, 1)
 
+        QWidget.setTabOrder(self.lineEdit_year, self.lineEdit_testNumber)
+        QWidget.setTabOrder(self.lineEdit_testNumber, self.QC_Test_RadioButton)
+        QWidget.setTabOrder(self.QC_Test_RadioButton, self.Costom_Test_RadioButton)
+        QWidget.setTabOrder(self.Costom_Test_RadioButton, self.lineEdit_costomer)
+        QWidget.setTabOrder(self.lineEdit_costomer, self.lineEdit_costomerName)
+        QWidget.setTabOrder(self.lineEdit_costomerName, self.lineEdit_testMeterialName)
+        QWidget.setTabOrder(self.lineEdit_testMeterialName, self.lineEdit_testMeterial)
+        QWidget.setTabOrder(self.lineEdit_testMeterial, self.lineEdit_MeterialMainDie)
+        QWidget.setTabOrder(self.lineEdit_MeterialMainDie, self.lineEdit_MeterialinnerDie)
+        QWidget.setTabOrder(self.lineEdit_MeterialinnerDie, self.lineEdit_thinkness)
+        QWidget.setTabOrder(self.lineEdit_thinkness, self.lineEdit_PID_0_P)
+        QWidget.setTabOrder(self.lineEdit_PID_0_P, self.lineEdit_PID_0_I)
+        QWidget.setTabOrder(self.lineEdit_PID_0_I, self.lineEdit_PID_0_D)
+        QWidget.setTabOrder(self.lineEdit_PID_0_D, self.lineEdit_PID_1_P)
+        QWidget.setTabOrder(self.lineEdit_PID_1_P, self.lineEdit_PID_1_I)
+        QWidget.setTabOrder(self.lineEdit_PID_1_I, self.lineEdit_PID_1_D)
+        QWidget.setTabOrder(self.lineEdit_PID_1_D, self.lineEdit_PID_2_P)
+        QWidget.setTabOrder(self.lineEdit_PID_2_P, self.lineEdit_PID_2_I)
+        QWidget.setTabOrder(self.lineEdit_PID_2_I, self.lineEdit_PID_2_D)
+        QWidget.setTabOrder(self.lineEdit_PID_2_D, self.lineEdit_PID_3_P)
+        QWidget.setTabOrder(self.lineEdit_PID_3_P, self.lineEdit_PID_3_I)
+        QWidget.setTabOrder(self.lineEdit_PID_3_I, self.lineEdit_PID_3_D)
+        QWidget.setTabOrder(self.lineEdit_PID_3_D, self.lineEdit_PID_4_P)
+        QWidget.setTabOrder(self.lineEdit_PID_4_P, self.lineEdit_PID_4_I)
+        QWidget.setTabOrder(self.lineEdit_PID_4_I, self.lineEdit_PID_4_D)
+        QWidget.setTabOrder(self.lineEdit_PID_4_D, self.lineEdit_PID_5_P)
+        QWidget.setTabOrder(self.lineEdit_PID_5_P, self.lineEdit_PID_5_I)
+        QWidget.setTabOrder(self.lineEdit_PID_5_I, self.lineEdit_PID_5_D)
+        QWidget.setTabOrder(self.lineEdit_PID_5_D, self.lineEdit_PID_6_P)
+        QWidget.setTabOrder(self.lineEdit_PID_6_P, self.lineEdit_PID_6_I)
+        QWidget.setTabOrder(self.lineEdit_PID_6_I, self.lineEdit_PID_6_D)
+        QWidget.setTabOrder(self.lineEdit_PID_6_D, self.lineEdit_PID_7_P)
+        QWidget.setTabOrder(self.lineEdit_PID_7_P, self.lineEdit_PID_7_I)
+        QWidget.setTabOrder(self.lineEdit_PID_7_I, self.lineEdit_PID_7_D)
+        QWidget.setTabOrder(self.lineEdit_PID_7_D, self.lineEdit_PID_8_P)
+        QWidget.setTabOrder(self.lineEdit_PID_8_P, self.lineEdit_PID_8_I)
+        QWidget.setTabOrder(self.lineEdit_PID_8_I, self.lineEdit_PID_8_D)
+        QWidget.setTabOrder(self.lineEdit_PID_8_D, self.lineEdit_PID_9_P)
+        QWidget.setTabOrder(self.lineEdit_PID_9_P, self.lineEdit_PID_9_I)
+        QWidget.setTabOrder(self.lineEdit_PID_9_I, self.lineEdit_PID_9_D)
+        QWidget.setTabOrder(self.lineEdit_PID_9_D, self.scrollArea)
+        QWidget.setTabOrder(self.scrollArea, self.graphItem_combobox)
+        QWidget.setTabOrder(self.graphItem_combobox, self.timeUnit_comboBox)
+        QWidget.setTabOrder(self.timeUnit_comboBox, self.Resistor_checkBox)
+        QWidget.setTabOrder(self.Resistor_checkBox, self.Voltage_checkBox)
+        QWidget.setTabOrder(self.Voltage_checkBox, self.Current_checkBox)
+        QWidget.setTabOrder(self.Current_checkBox, self.remoteConnect_pushButton)
+        QWidget.setTabOrder(self.remoteConnect_pushButton, self.btn_AutoMode)
+        QWidget.setTabOrder(self.btn_AutoMode, self.btn_ManaualMode)
+        QWidget.setTabOrder(self.btn_ManaualMode, self.autostart_pushButton)
+        QWidget.setTabOrder(self.autostart_pushButton, self.eMSstop_pushButton)
+        QWidget.setTabOrder(self.eMSstop_pushButton, self.AutoMode_pattern_comboBox)
+        QWidget.setTabOrder(self.AutoMode_pattern_comboBox, self.outputStop_pushButton)
+        QWidget.setTabOrder(self.outputStop_pushButton, self.manaualMode_comboBox)
+        QWidget.setTabOrder(self.manaualMode_comboBox, self.measurement_comboBox)
+        QWidget.setTabOrder(self.measurement_comboBox, self.voltage_lineEdit)
+        QWidget.setTabOrder(self.voltage_lineEdit, self.voltageOutput_pushButton)
+        QWidget.setTabOrder(self.voltageOutput_pushButton, self.manualMeasurement_pushButton)
+        QWidget.setTabOrder(self.manualMeasurement_pushButton, self.noiseMeasurement_Voltage_lineEdit)
+        QWidget.setTabOrder(self.noiseMeasurement_Voltage_lineEdit, self.noiseMeasurement_Current_lineEdit)
+        QWidget.setTabOrder(self.noiseMeasurement_Current_lineEdit, self.noiseMeasurement_Time_lineEdit)
+        QWidget.setTabOrder(self.noiseMeasurement_Time_lineEdit, self.Noisetest_pushButton)
+        QWidget.setTabOrder(self.Noisetest_pushButton, self.gasFreeflow_pushButton)
+        QWidget.setTabOrder(self.gasFreeflow_pushButton, self.scrollArea_2)
+        QWidget.setTabOrder(self.scrollArea_2, self.scrollArea_3)
+        QWidget.setTabOrder(self.scrollArea_3, self.RT_combobox)
+        QWidget.setTabOrder(self.RT_combobox, self.patternfile_comboBox)
+        QWidget.setTabOrder(self.patternfile_comboBox, self.commect_lineEdit)
+        QWidget.setTabOrder(self.commect_lineEdit, self.gas_Combobox)
+        QWidget.setTabOrder(self.gas_Combobox, self.RT_testpattern_combobox)
+        QWidget.setTabOrder(self.RT_testpattern_combobox, self.test_commect_lineEdit)
+        QWidget.setTabOrder(self.test_commect_lineEdit, self.testfile_comboBox)
+        QWidget.setTabOrder(self.testfile_comboBox, self.scrollArea_4)
+        QWidget.setTabOrder(self.scrollArea_4, self.test_sampletime_LineEdit)
+        QWidget.setTabOrder(self.test_sampletime_LineEdit, self.bg_sampletime_LineEdit)
+        QWidget.setTabOrder(self.bg_sampletime_LineEdit, self.test_time_LineEdit)
+        QWidget.setTabOrder(self.test_time_LineEdit, self.bg_time_LineEdit)
+        QWidget.setTabOrder(self.bg_time_LineEdit, self.bg0_time_LineEdit)
+        QWidget.setTabOrder(self.bg0_time_LineEdit, self.speed_comboBox)
+        QWidget.setTabOrder(self.speed_comboBox, self.filter_comboBox)
+        QWidget.setTabOrder(self.filter_comboBox, self.filter_count_LineEdit)
+        QWidget.setTabOrder(self.filter_count_LineEdit, self.lineEdit)
+        QWidget.setTabOrder(self.lineEdit, self.lineEdit_2)
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(1)
+        self.pages.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
         self.stackedWidget_2.setCurrentIndex(0)

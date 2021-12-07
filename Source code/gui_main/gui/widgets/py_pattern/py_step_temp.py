@@ -14,34 +14,28 @@
 #
 # ///////////////////////////////////////////////////////////////
 import os
-# IMPORT QT CORE
-# ///////////////////////////////////////////////////////////////
-from gui_main.qt_core import *
-from .ui_temp_pattern import *
-
-# IMPORT PY ONE DARK WIDGETS
-# ///////////////////////////////////////////////////////////////
-from gui_main.gui.widgets import *
-
-# IMPORT SETTINGS
-# ///////////////////////////////////////////////////////////////
-from gui_main.gui.core.json_settings import Settings
-
-# IMPORT THEME COLORS
-# ///////////////////////////////////////////////////////////////
-from gui_main.gui.core.json_themes import Themes
-
-
-from gui_main.system.profile_manager import *
+import threading
+import time
 
 # IMPORT FUNCTIONS
 # ///////////////////////////////////////////////////////////////
 from gui_main.gui.core.functions import *
+# IMPORT SETTINGS
+# ///////////////////////////////////////////////////////////////
+from gui_main.gui.core.json_settings import Settings
+# IMPORT THEME COLORS
+# ///////////////////////////////////////////////////////////////
+from gui_main.gui.core.json_themes import Themes
+# IMPORT PY ONE DARK WIDGETS
+# ///////////////////////////////////////////////////////////////
+from gui_main.gui.widgets import *
+# IMPORT QT CORE
+# ///////////////////////////////////////////////////////////////
+from gui_main.qt_core import *
+from gui_main.system.profile_manager import *
 
 from .py_pattern_menu import *
-
-import threading
-import time
+from .ui_temp_pattern import *
 
 
 class modifly_callbackThread(QRunnable):
@@ -68,9 +62,9 @@ class PyTempStep(QWidget):
     #timeframe_grayout="background-color: rgb(41,45,55);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
     #timeframe_normal="background-color: rgb(30,34,41);border-width: 1px;border-style: solid;border-radius: 5px;border-color: rgb(0, 0, 0);"
 
-    step_temp_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);border:none;"
-    step_test_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);border:none;"
-    step_end_type_style="font: 12px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
+    step_temp_type_style="font: 11px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(200, 133, 0);border:none;"
+    step_test_type_style="font: 11px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(73, 73, 220);border:none;"
+    step_end_type_style="font: 11px \"游ゴシック\";color: rgb(0,0,0);padding-left:5px;background-color: rgb(0, 168, 123);border:none;"
 
     
 
@@ -396,6 +390,7 @@ class PyTempStep(QWidget):
             self.pattern.KeepTime_lineEdit.setEnabled(False)
             self.pattern.KeepTime_lineEdit.setReadOnly(False)
             self.pattern.KeepTime_lineEdit.setText("0")
+            self._keep_seccon=0
             
             self.pattern.Sp_limit_up_label.setEnabled(True)
             self.pattern.Sp_limit_up_lineEdit.setEnabled(True)
@@ -474,19 +469,24 @@ class PyTempStep(QWidget):
             self.pattern.Hour_lineEdit.setEnabled(False)
             self.pattern.Hour_lineEdit.setReadOnly(False)
             self.pattern.Hour_lineEdit.setText("0")
+            self._hour=0
+
             self.pattern.Min_lineEdit.setEnabled(False)
             self.pattern.Min_lineEdit.setReadOnly(False)
             self.pattern.Min_lineEdit.setText("0")
+            self._minute=0
 
             self.pattern.SV_label.setEnabled(False)
             self.pattern.SV_lineEdit.setEnabled(False)
             self.pattern.SV_lineEdit.setReadOnly(False)
             self.pattern.SV_lineEdit.setText("0")
+            self._temperature=0
 
             self.pattern.N2_label.setEnabled(False)
             self.pattern.N2_lineEdit.setEnabled(False)
             self.pattern.N2_lineEdit.setReadOnly(False)
             self.pattern.N2_lineEdit.setText("0")
+            self._n2_flowrate=0
             
             self.pattern.PID_muffle_label.setEnabled(False)
             self.pattern.PID_muffle_comboBox.setEnabled(False)
@@ -497,21 +497,25 @@ class PyTempStep(QWidget):
             self.pattern.KeepTime_lineEdit.setEnabled(False)
             self.pattern.KeepTime_lineEdit.setReadOnly(False)
             self.pattern.KeepTime_lineEdit.setText("0")
+            self._keep_seccond=0
             
             self.pattern.Sp_limit_up_label.setEnabled(False)
             self.pattern.Sp_limit_up_lineEdit.setEnabled(False)
             self.pattern.Sp_limit_up_lineEdit.setReadOnly(False)
             self.pattern.Sp_limit_up_lineEdit.setText("0")
+            self._sp_limit_up=0
 
             self.pattern.Sp_limit_down_label.setEnabled(False)
             self.pattern.Sp_limit_down_lineEdit.setEnabled(False)
             self.pattern.Sp_limit_down_lineEdit.setReadOnly(False)
             self.pattern.Sp_limit_down_lineEdit.setText("0")
+            self._sp_limit_down=0
 
             self.pattern.Shift_label.setEnabled(False)
             self.pattern.Shift_lineEdit.setEnabled(False)
             self.pattern.Shift_lineEdit.setReadOnly(False)
             self.pattern.Shift_lineEdit.setText("0")
+            self._shift=0
 
             self.pattern.TestPattern_label.setEnabled(False)
             self.pattern.TestPattern_comboBox.setEnabled(False)

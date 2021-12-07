@@ -241,8 +241,8 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(True)
 
             #Enbale pattern be choose
-            if not self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
-                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
+            # if not self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
+            #     self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
 
             #Disbale EMS stop
             if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
@@ -290,8 +290,8 @@ class Main_utility_manager(QWidget):
             #    self._parent.ui.load_pages.gasFreeflow_pushButton.setChecked(False)
 
             #Disbale pattern be choose
-            if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
-                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
+            # if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
+            #     self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
 
 
     def wait_transferFinish_Work(self):
@@ -533,6 +533,10 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
 
+            if self.graph_Item=="Pattern":
+                self.graph_Update_request=True
+
+
         elif btn_name == "graphItem_combobox":
 
             index=self._parent.ui.load_pages.graphItem_combobox.currentText()
@@ -541,17 +545,21 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.timeUnit_Label.setVisible (True)
                 self._parent.ui.load_pages.timeUnit_comboBox.setVisible (True)
                 self._parent.ui.load_pages.frame_19.setVisible (True)
+                
+                self.graph_Update_request=True
 
             elif index=="運転パターン":
                 self.graph_Item="Pattern"
                 self._parent.ui.load_pages.timeUnit_Label.setVisible (False)
                 self._parent.ui.load_pages.timeUnit_comboBox.setVisible (False)
                 self._parent.ui.load_pages.frame_19.setVisible (False)
+                
+                self.graph_Update_request=True
 
                 
                 
             
-            self.graph_update()
+            # self.graph_update()
                 
             
         elif btn_name == "timeUnit_comboBox":
@@ -955,11 +963,13 @@ class Main_utility_manager(QWidget):
                     
 
     def graph_update(self):
-        self.measurement_data_array=[]
 
         if self.graph_Item=="Measure_Data":
 
-            self.realTime_Temperature_Graph_set=False
+            if self.realTime_Temperature_Graph_set:
+                self.realTime_Temperature_Graph_set=False
+                self.win.removeItem(self.realTime_Temperature_Graph_set)
+
 
             #self.realTime_Voltage_Graph.setVisible (self._parent.ui.load_pages.Resistor_checkBox.isChecked())
             #self.realTime_Current_Graph.setVisible (self._parent.ui.load_pages.Voltage_checkBox.isChecked())
@@ -1024,29 +1034,54 @@ class Main_utility_manager(QWidget):
 
 
         elif self.graph_Item=="Pattern":
+            
+
+            if self.realTime_Voltage_Graph_set:
+                self.realTime_Voltage_Graph_set=False
+                self.win.removeItem(self.realTime_Voltage_Graph)
+
+            if self.realTime_Current_Graph_set:
+                self.realTime_Current_Graph_set=False
+                self.win.removeItem(self.realTime_Current_Graph)
+
+            if self.realTime_Resistance_Graph_set:
+                self.realTime_Resistance_Graph_set=False
+                self.win.removeItem(self.realTime_Resistance_Graph)
+
+            if not self.realTime_Temperature_Graph_set:
+                    self.realTime_Temperature_Graph_set=True
+                    self.win.addItem(self.realTime_Temperature_Graph,row=0,col=0)
+
+            self.pattern_SV_data_array=[]
+
+
 
             self.choose_pattern=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No."].getValue()
+
+            print("self.choose_pattern",self.choose_pattern)
+
             if self.choose_pattern:
                 pattern_availible_number=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(self.choose_pattern)].getValue()
             
-                self.measurement_data_array.append({"x":0,"y":0})
+                self.pattern_SV_data_array.append({"x":0,"y":0})
                 for step in range(1,pattern_availible_number+2):
                     XYdata={}
                     XYdata["x"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(self.choose_pattern,step)].getValue()/60
                     XYdata["y"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(self.choose_pattern,step)].getValue()
-                    self.measurement_data_array.append(XYdata)
+                    self.pattern_SV_data_array.append(XYdata)
+                    print(XYdata)
             #not choose_pattern yet 
             else:
-                self.measurement_data_array=[]
+                self.pattern_SV_data_array=[]
 
-            self._parent.voltage_curve.setData(self.measurement_data_array)
+            self._parent.temp_sv_curve.setData(self.pattern_SV_data_array)
             self.timeUnit=3600
             self.timeLabel="hr"
             self.timeMaxRange=10
             self.timeMinRange=1
 
-            self.realTimeData_Graph.setLabel(axis='bottom', text='時間', units="hr")
-            self.realTimeData_Graph.setLabel(axis='left', text='温度', units='℃')
+            # self.realTime_Temperature_Graph_set.setLabel(axis='bottom', text='時間', units="hr")
+            # self.realTime_Temperature_Graph_set.setLabel(axis='left', text='温度', units='℃')
             #self.realTimeData_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
 
 

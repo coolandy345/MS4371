@@ -1,24 +1,23 @@
-from gui_main.qt_core import *
-from gui_main.gui.uis.windows.main_window import *
-from gui_main.gui.uis.pattern_columns.pattern_function import templist,tempUnit
-from gui_main.gui.widgets import *
-from gui_main.gui.core.functions import *
-from gui_main.gui.core.json_settings import Settings
-from gui_main.gui.core.json_themes import Themes
-from PyQt5.QtCore import QTimer
+import copy
+import sys
 import threading
+import time
 
 #from modbus_TcpServer import ModbusRegistorClass
 import modbus_TcpServer
-import time
-import sys
-
-import copy
-
-from registor_manager import *
-
 import numpy as np
 import pyqtgraph as pg
+from gui_main.gui.core.functions import *
+from gui_main.gui.core.json_settings import Settings
+from gui_main.gui.core.json_themes import Themes
+from gui_main.gui.uis.pattern_columns.pattern_function import (templist,
+                                                               tempUnit)
+from gui_main.gui.uis.windows.main_window import *
+from gui_main.gui.widgets import *
+from gui_main.qt_core import *
+from PyQt5.QtCore import QTimer
+from registor_manager import *
+
 
 class update_graph_Thread(QRunnable):
     def __init__(self, parent):

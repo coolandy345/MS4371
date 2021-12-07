@@ -52,7 +52,7 @@ border-style: solid;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -1280,6 +1280,13 @@ QLineEdit:read-only {
                         </widget>
                        </item>
                       </layout>
+                      <zorder>lineEdit_PID_0_I</zorder>
+                      <zorder>label_121</zorder>
+                      <zorder>label_122</zorder>
+                      <zorder>label_123</zorder>
+                      <zorder>label_124</zorder>
+                      <zorder>lineEdit_PID_0_P</zorder>
+                      <zorder>lineEdit_PID_0_D</zorder>
                      </widget>
                     </item>
                     <item>
@@ -4582,8 +4589,8 @@ QFrame:hover{
                  <widget class="QComboBox" name="graphItem_combobox">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
-                    <height>0</height>
+                    <width>100</width>
+                    <height>25</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -4682,7 +4689,7 @@ QFrame:focus{
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>0</height>
+                       <height>25</height>
                       </size>
                      </property>
                      <property name="maximumSize">
@@ -4757,7 +4764,7 @@ border:none;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>0</height>
+                       <height>25</height>
                       </size>
                      </property>
                      <property name="cursor">
@@ -4777,7 +4784,7 @@ padding:5px</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>0</height>
+                       <height>25</height>
                       </size>
                      </property>
                      <property name="cursor">
@@ -4797,7 +4804,7 @@ padding:5px</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>0</height>
+                       <height>25</height>
                       </size>
                      </property>
                      <property name="cursor">
@@ -7008,7 +7015,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>987</width>
+                      <width>100</width>
                       <height>400</height>
                      </rect>
                     </property>
@@ -8237,7 +8244,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>987</width>
+                      <width>100</width>
                       <height>200</height>
                      </rect>
                     </property>
@@ -9943,6 +9950,92 @@ padding:5px</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_year</tabstop>
+  <tabstop>lineEdit_testNumber</tabstop>
+  <tabstop>QC_Test_RadioButton</tabstop>
+  <tabstop>Costom_Test_RadioButton</tabstop>
+  <tabstop>lineEdit_costomer</tabstop>
+  <tabstop>lineEdit_costomerName</tabstop>
+  <tabstop>lineEdit_testMeterialName</tabstop>
+  <tabstop>lineEdit_testMeterial</tabstop>
+  <tabstop>lineEdit_MeterialMainDie</tabstop>
+  <tabstop>lineEdit_MeterialinnerDie</tabstop>
+  <tabstop>lineEdit_thinkness</tabstop>
+  <tabstop>lineEdit_PID_0_P</tabstop>
+  <tabstop>lineEdit_PID_0_I</tabstop>
+  <tabstop>lineEdit_PID_0_D</tabstop>
+  <tabstop>lineEdit_PID_1_P</tabstop>
+  <tabstop>lineEdit_PID_1_I</tabstop>
+  <tabstop>lineEdit_PID_1_D</tabstop>
+  <tabstop>lineEdit_PID_2_P</tabstop>
+  <tabstop>lineEdit_PID_2_I</tabstop>
+  <tabstop>lineEdit_PID_2_D</tabstop>
+  <tabstop>lineEdit_PID_3_P</tabstop>
+  <tabstop>lineEdit_PID_3_I</tabstop>
+  <tabstop>lineEdit_PID_3_D</tabstop>
+  <tabstop>lineEdit_PID_4_P</tabstop>
+  <tabstop>lineEdit_PID_4_I</tabstop>
+  <tabstop>lineEdit_PID_4_D</tabstop>
+  <tabstop>lineEdit_PID_5_P</tabstop>
+  <tabstop>lineEdit_PID_5_I</tabstop>
+  <tabstop>lineEdit_PID_5_D</tabstop>
+  <tabstop>lineEdit_PID_6_P</tabstop>
+  <tabstop>lineEdit_PID_6_I</tabstop>
+  <tabstop>lineEdit_PID_6_D</tabstop>
+  <tabstop>lineEdit_PID_7_P</tabstop>
+  <tabstop>lineEdit_PID_7_I</tabstop>
+  <tabstop>lineEdit_PID_7_D</tabstop>
+  <tabstop>lineEdit_PID_8_P</tabstop>
+  <tabstop>lineEdit_PID_8_I</tabstop>
+  <tabstop>lineEdit_PID_8_D</tabstop>
+  <tabstop>lineEdit_PID_9_P</tabstop>
+  <tabstop>lineEdit_PID_9_I</tabstop>
+  <tabstop>lineEdit_PID_9_D</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>graphItem_combobox</tabstop>
+  <tabstop>timeUnit_comboBox</tabstop>
+  <tabstop>Resistor_checkBox</tabstop>
+  <tabstop>Voltage_checkBox</tabstop>
+  <tabstop>Current_checkBox</tabstop>
+  <tabstop>remoteConnect_pushButton</tabstop>
+  <tabstop>btn_AutoMode</tabstop>
+  <tabstop>btn_ManaualMode</tabstop>
+  <tabstop>autostart_pushButton</tabstop>
+  <tabstop>eMSstop_pushButton</tabstop>
+  <tabstop>AutoMode_pattern_comboBox</tabstop>
+  <tabstop>outputStop_pushButton</tabstop>
+  <tabstop>manaualMode_comboBox</tabstop>
+  <tabstop>measurement_comboBox</tabstop>
+  <tabstop>voltage_lineEdit</tabstop>
+  <tabstop>voltageOutput_pushButton</tabstop>
+  <tabstop>manualMeasurement_pushButton</tabstop>
+  <tabstop>noiseMeasurement_Voltage_lineEdit</tabstop>
+  <tabstop>noiseMeasurement_Current_lineEdit</tabstop>
+  <tabstop>noiseMeasurement_Time_lineEdit</tabstop>
+  <tabstop>Noisetest_pushButton</tabstop>
+  <tabstop>gasFreeflow_pushButton</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+  <tabstop>scrollArea_3</tabstop>
+  <tabstop>RT_combobox</tabstop>
+  <tabstop>patternfile_comboBox</tabstop>
+  <tabstop>commect_lineEdit</tabstop>
+  <tabstop>gas_Combobox</tabstop>
+  <tabstop>RT_testpattern_combobox</tabstop>
+  <tabstop>test_commect_lineEdit</tabstop>
+  <tabstop>testfile_comboBox</tabstop>
+  <tabstop>scrollArea_4</tabstop>
+  <tabstop>test_sampletime_LineEdit</tabstop>
+  <tabstop>bg_sampletime_LineEdit</tabstop>
+  <tabstop>test_time_LineEdit</tabstop>
+  <tabstop>bg_time_LineEdit</tabstop>
+  <tabstop>bg0_time_LineEdit</tabstop>
+  <tabstop>speed_comboBox</tabstop>
+  <tabstop>filter_comboBox</tabstop>
+  <tabstop>filter_count_LineEdit</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

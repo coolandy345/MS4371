@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patternJEaLUR.ui'
+## Form generated from reading UI file 'temp_patternlXVZcz.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -31,10 +31,10 @@ class Ui_temp_pattern(object):
 "border-style: solid;\n"
 "font:12px;\n"
 "")
-        self.gridLayout_3 = QGridLayout(temp_pattern)
-        self.gridLayout_3.setSpacing(0)
-        self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2 = QVBoxLayout(temp_pattern)
+        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.page = QStackedWidget(temp_pattern)
         self.page.setObjectName(u"page")
         self.page.setStyleSheet(u"")
@@ -209,7 +209,7 @@ class Ui_temp_pattern(object):
         self.Type_comboBox.setObjectName(u"Type_comboBox")
         sizePolicy.setHeightForWidth(self.Type_comboBox.sizePolicy().hasHeightForWidth())
         self.Type_comboBox.setSizePolicy(sizePolicy)
-        self.Type_comboBox.setMinimumSize(QSize(0, 0))
+        self.Type_comboBox.setMinimumSize(QSize(0, 25))
         self.Type_comboBox.setMaximumSize(QSize(16777215, 16777215))
         self.Type_comboBox.setStyleSheet(u"QFrame{\n"
 "	border:none;\n"
@@ -226,8 +226,8 @@ class Ui_temp_pattern(object):
 
         self.frame_4 = QFrame(self.frame_6)
         self.frame_4.setObjectName(u"frame_4")
-        self.frame_4.setMinimumSize(QSize(0, 22))
-        self.frame_4.setMaximumSize(QSize(16777215, 22))
+        self.frame_4.setMinimumSize(QSize(0, 25))
+        self.frame_4.setMaximumSize(QSize(16777215, 25))
         self.frame_4.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -250,7 +250,7 @@ class Ui_temp_pattern(object):
 
         self.time_frame = QFrame(self.frame_4)
         self.time_frame.setObjectName(u"time_frame")
-        self.time_frame.setMinimumSize(QSize(80, 0))
+        self.time_frame.setMinimumSize(QSize(80, 25))
         self.time_frame.setMaximumSize(QSize(100, 16777215))
         self.time_frame.setStyleSheet(u"QFrame:enabled {\n"
 "	background-color: rgba(0, 0, 0, 80);\n"
@@ -342,8 +342,8 @@ class Ui_temp_pattern(object):
 
         self.frame_8 = QFrame(self.frame_6)
         self.frame_8.setObjectName(u"frame_8")
-        self.frame_8.setMinimumSize(QSize(0, 22))
-        self.frame_8.setMaximumSize(QSize(16777215, 22))
+        self.frame_8.setMinimumSize(QSize(0, 25))
+        self.frame_8.setMaximumSize(QSize(16777215, 25))
         self.frame_8.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -360,13 +360,17 @@ class Ui_temp_pattern(object):
         self.SV_label.setObjectName(u"SV_label")
         self.SV_label.setMinimumSize(QSize(0, 0))
         self.SV_label.setMaximumSize(QSize(16777215, 16777215))
+        font = QFont()
+        font.setBold(False)
+        font.setItalic(False)
+        self.SV_label.setFont(font)
         self.SV_label.setStyleSheet(u"")
 
         self.horizontalLayout_5.addWidget(self.SV_label)
 
         self.SV_lineEdit = QLineEdit(self.frame_8)
         self.SV_lineEdit.setObjectName(u"SV_lineEdit")
-        self.SV_lineEdit.setMinimumSize(QSize(75, 0))
+        self.SV_lineEdit.setMinimumSize(QSize(75, 25))
         self.SV_lineEdit.setMaximumSize(QSize(75, 16777215))
         self.SV_lineEdit.setStyleSheet(u"")
         self.SV_lineEdit.setAlignment(Qt.AlignCenter)
@@ -379,8 +383,8 @@ class Ui_temp_pattern(object):
 
         self.frame_5 = QFrame(self.frame_6)
         self.frame_5.setObjectName(u"frame_5")
-        self.frame_5.setMinimumSize(QSize(0, 22))
-        self.frame_5.setMaximumSize(QSize(16777215, 22))
+        self.frame_5.setMinimumSize(QSize(0, 25))
+        self.frame_5.setMaximumSize(QSize(16777215, 25))
         self.frame_5.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -403,7 +407,7 @@ class Ui_temp_pattern(object):
 
         self.N2_lineEdit = QLineEdit(self.frame_5)
         self.N2_lineEdit.setObjectName(u"N2_lineEdit")
-        self.N2_lineEdit.setMinimumSize(QSize(75, 0))
+        self.N2_lineEdit.setMinimumSize(QSize(75, 25))
         self.N2_lineEdit.setMaximumSize(QSize(75, 16777215))
         self.N2_lineEdit.setStyleSheet(u"")
         self.N2_lineEdit.setAlignment(Qt.AlignCenter)
@@ -452,9 +456,9 @@ class Ui_temp_pattern(object):
         self.PID_muffle_comboBox.setObjectName(u"PID_muffle_comboBox")
         sizePolicy.setHeightForWidth(self.PID_muffle_comboBox.sizePolicy().hasHeightForWidth())
         self.PID_muffle_comboBox.setSizePolicy(sizePolicy)
-        self.PID_muffle_comboBox.setMinimumSize(QSize(90, 0))
+        self.PID_muffle_comboBox.setMinimumSize(QSize(90, 25))
         self.PID_muffle_comboBox.setMaximumSize(QSize(90, 16777215))
-        self.PID_muffle_comboBox.setStyleSheet(u"font:12px;")
+        self.PID_muffle_comboBox.setStyleSheet(u"font:11px;")
         self.PID_muffle_comboBox.setMaxVisibleItems(10)
 
         self.horizontalLayout_7.addWidget(self.PID_muffle_comboBox)
@@ -500,9 +504,9 @@ class Ui_temp_pattern(object):
         self.PID_heater_comboBox.setObjectName(u"PID_heater_comboBox")
         sizePolicy.setHeightForWidth(self.PID_heater_comboBox.sizePolicy().hasHeightForWidth())
         self.PID_heater_comboBox.setSizePolicy(sizePolicy)
-        self.PID_heater_comboBox.setMinimumSize(QSize(90, 0))
+        self.PID_heater_comboBox.setMinimumSize(QSize(90, 25))
         self.PID_heater_comboBox.setMaximumSize(QSize(90, 16777215))
-        self.PID_heater_comboBox.setStyleSheet(u"font:12px;")
+        self.PID_heater_comboBox.setStyleSheet(u"font:11px;")
         self.PID_heater_comboBox.setMaxVisibleItems(10)
 
         self.horizontalLayout_8.addWidget(self.PID_heater_comboBox)
@@ -510,47 +514,47 @@ class Ui_temp_pattern(object):
 
         self.verticalLayout.addWidget(self.frame_12)
 
-        self.frame_9 = QFrame(self.frame_6)
-        self.frame_9.setObjectName(u"frame_9")
-        self.frame_9.setMinimumSize(QSize(0, 22))
-        self.frame_9.setMaximumSize(QSize(16777215, 22))
-        self.frame_9.setStyleSheet(u"QFrame:hover{\n"
+        self.frame_14 = QFrame(self.frame_6)
+        self.frame_14.setObjectName(u"frame_14")
+        self.frame_14.setMinimumSize(QSize(0, 25))
+        self.frame_14.setMaximumSize(QSize(16777215, 25))
+        self.frame_14.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
 "QFrame:focus{\n"
 "	border:none;\n"
 "}")
-        self.frame_9.setFrameShape(QFrame.StyledPanel)
-        self.frame_9.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_9 = QHBoxLayout(self.frame_9)
-        self.horizontalLayout_9.setSpacing(0)
-        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.KeepTime_label = QLabel(self.frame_9)
+        self.frame_14.setFrameShape(QFrame.StyledPanel)
+        self.frame_14.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_13 = QHBoxLayout(self.frame_14)
+        self.horizontalLayout_13.setSpacing(0)
+        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.KeepTime_label = QLabel(self.frame_14)
         self.KeepTime_label.setObjectName(u"KeepTime_label")
-        self.KeepTime_label.setMinimumSize(QSize(0, 0))
+        self.KeepTime_label.setMinimumSize(QSize(0, 25))
         self.KeepTime_label.setMaximumSize(QSize(16777215, 16777215))
         self.KeepTime_label.setStyleSheet(u"")
 
-        self.horizontalLayout_9.addWidget(self.KeepTime_label)
+        self.horizontalLayout_13.addWidget(self.KeepTime_label)
 
-        self.KeepTime_lineEdit = QLineEdit(self.frame_9)
+        self.KeepTime_lineEdit = QLineEdit(self.frame_14)
         self.KeepTime_lineEdit.setObjectName(u"KeepTime_lineEdit")
-        self.KeepTime_lineEdit.setMinimumSize(QSize(75, 0))
+        self.KeepTime_lineEdit.setMinimumSize(QSize(75, 25))
         self.KeepTime_lineEdit.setMaximumSize(QSize(75, 16777215))
-        self.KeepTime_lineEdit.setStyleSheet(u"font:12px;")
+        self.KeepTime_lineEdit.setStyleSheet(u"")
         self.KeepTime_lineEdit.setAlignment(Qt.AlignCenter)
         self.KeepTime_lineEdit.setReadOnly(False)
 
-        self.horizontalLayout_9.addWidget(self.KeepTime_lineEdit)
+        self.horizontalLayout_13.addWidget(self.KeepTime_lineEdit)
 
 
-        self.verticalLayout.addWidget(self.frame_9)
+        self.verticalLayout.addWidget(self.frame_14)
 
         self.frame_10 = QFrame(self.frame_6)
         self.frame_10.setObjectName(u"frame_10")
-        self.frame_10.setMinimumSize(QSize(0, 22))
-        self.frame_10.setMaximumSize(QSize(16777215, 22))
+        self.frame_10.setMinimumSize(QSize(0, 25))
+        self.frame_10.setMaximumSize(QSize(16777215, 25))
         self.frame_10.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -573,7 +577,7 @@ class Ui_temp_pattern(object):
 
         self.Sp_limit_up_lineEdit = QLineEdit(self.frame_10)
         self.Sp_limit_up_lineEdit.setObjectName(u"Sp_limit_up_lineEdit")
-        self.Sp_limit_up_lineEdit.setMinimumSize(QSize(75, 0))
+        self.Sp_limit_up_lineEdit.setMinimumSize(QSize(75, 25))
         self.Sp_limit_up_lineEdit.setMaximumSize(QSize(75, 16777215))
         self.Sp_limit_up_lineEdit.setStyleSheet(u"")
         self.Sp_limit_up_lineEdit.setAlignment(Qt.AlignCenter)
@@ -586,8 +590,8 @@ class Ui_temp_pattern(object):
 
         self.frame_11 = QFrame(self.frame_6)
         self.frame_11.setObjectName(u"frame_11")
-        self.frame_11.setMinimumSize(QSize(0, 22))
-        self.frame_11.setMaximumSize(QSize(16777215, 22))
+        self.frame_11.setMinimumSize(QSize(0, 25))
+        self.frame_11.setMaximumSize(QSize(16777215, 25))
         self.frame_11.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -610,7 +614,7 @@ class Ui_temp_pattern(object):
 
         self.Sp_limit_down_lineEdit = QLineEdit(self.frame_11)
         self.Sp_limit_down_lineEdit.setObjectName(u"Sp_limit_down_lineEdit")
-        self.Sp_limit_down_lineEdit.setMinimumSize(QSize(75, 0))
+        self.Sp_limit_down_lineEdit.setMinimumSize(QSize(75, 25))
         self.Sp_limit_down_lineEdit.setMaximumSize(QSize(75, 16777215))
         self.Sp_limit_down_lineEdit.setStyleSheet(u"")
         self.Sp_limit_down_lineEdit.setAlignment(Qt.AlignCenter)
@@ -623,8 +627,8 @@ class Ui_temp_pattern(object):
 
         self.frame_17 = QFrame(self.frame_6)
         self.frame_17.setObjectName(u"frame_17")
-        self.frame_17.setMinimumSize(QSize(0, 22))
-        self.frame_17.setMaximumSize(QSize(16777215, 22))
+        self.frame_17.setMinimumSize(QSize(0, 25))
+        self.frame_17.setMaximumSize(QSize(16777215, 25))
         self.frame_17.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -647,7 +651,7 @@ class Ui_temp_pattern(object):
 
         self.Shift_lineEdit = QLineEdit(self.frame_17)
         self.Shift_lineEdit.setObjectName(u"Shift_lineEdit")
-        self.Shift_lineEdit.setMinimumSize(QSize(75, 0))
+        self.Shift_lineEdit.setMinimumSize(QSize(75, 25))
         self.Shift_lineEdit.setMaximumSize(QSize(75, 16777215))
         self.Shift_lineEdit.setStyleSheet(u"")
         self.Shift_lineEdit.setAlignment(Qt.AlignCenter)
@@ -687,7 +691,7 @@ class Ui_temp_pattern(object):
         self.TestPattern_comboBox.setObjectName(u"TestPattern_comboBox")
         sizePolicy.setHeightForWidth(self.TestPattern_comboBox.sizePolicy().hasHeightForWidth())
         self.TestPattern_comboBox.setSizePolicy(sizePolicy)
-        self.TestPattern_comboBox.setMinimumSize(QSize(110, 0))
+        self.TestPattern_comboBox.setMinimumSize(QSize(110, 25))
         self.TestPattern_comboBox.setMaximumSize(QSize(110, 16777215))
         self.TestPattern_comboBox.setStyleSheet(u"")
         self.TestPattern_comboBox.setMaxVisibleItems(5)
@@ -707,14 +711,14 @@ class Ui_temp_pattern(object):
         self.frame_10.raise_()
         self.frame_11.raise_()
         self.frame_17.raise_()
-        self.frame_9.raise_()
         self.frame_13.raise_()
+        self.frame_14.raise_()
 
         self.gridLayout_4.addWidget(self.frame_6, 4, 0, 1, 1)
 
         self.page.addWidget(self.page2)
 
-        self.gridLayout_3.addWidget(self.page, 0, 0, 1, 1)
+        self.verticalLayout_2.addWidget(self.page)
 
 
         self.retranslateUi(temp_pattern)
@@ -767,7 +771,7 @@ class Ui_temp_pattern(object):
         self.PID_heater_comboBox.setItemText(8, QCoreApplication.translate("temp_pattern", u"PID\u8a2d\u5b9a 8", None))
         self.PID_heater_comboBox.setItemText(9, QCoreApplication.translate("temp_pattern", u"PID\u8a2d\u5b9a 9", None))
 
-        self.KeepTime_label.setText(QCoreApplication.translate("temp_pattern", u"\u30ad\u30fc\u30d7\u6642\u9593(min)", None))
+        self.KeepTime_label.setText(QCoreApplication.translate("temp_pattern", u"\u30ad\u30fc\u30d7\u6642\u9593", None))
         self.KeepTime_lineEdit.setText(QCoreApplication.translate("temp_pattern", u"0", None))
         self.Sp_limit_up_label.setText(QCoreApplication.translate("temp_pattern", u"\u30b9\u30ec\u30fc\u30d6SP\u4e0a\u9650", None))
         self.Sp_limit_up_lineEdit.setText(QCoreApplication.translate("temp_pattern", u"0", None))

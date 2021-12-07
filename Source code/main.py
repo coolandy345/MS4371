@@ -2,28 +2,22 @@
 # --------------------------------------------------------------------------- # 
 # System module import
 # --------------------------------------------------------------------------- # 
+import csv
+import ctypes
+import os
+import sys
+import time
 from concurrent.futures import ProcessPoolExecutor
-from multiprocessing import Manager,Queue
+from multiprocessing import Manager, Queue
 
 # --------------------------------------------------------------------------- # 
 # local module import
 # --------------------------------------------------------------------------- # 
-
-import sys
-import os
-import time
-
+from gui_main import *
+from gui_main.qt_core import *
+from main_operator import *
 from modbus_TcpServer import *
 from registor_manager import *
-from gui_main import*
-
-from gui_main.qt_core import *
-
-
-from main_operator import *
-
-import ctypes
-import csv
 
 
 def shotdown_entire_app(future):
@@ -33,6 +27,7 @@ def shotdown_entire_app(future):
 
 
 if __name__ == "__main__":
+    print("MS4371起動中...")
 
     sys.setrecursionlimit(1500)
 
@@ -91,9 +86,6 @@ if __name__ == "__main__":
     EventPool["Test Event1"]=MemoryPoolManager.Event()
     EventPool["Test Event2"]=MemoryPoolManager.Event()
 
-    #dsf=list(range(1,101))
-    #print(dsf,dsf[-10::2])
-
     
     databaseLoadThread(MemoryPool)
     #memoryWriteThread(MemoryPool,QueuePool)
@@ -101,7 +93,7 @@ if __name__ == "__main__":
     # operator_thread(MemoryPool,QueuePool,EventPool)
     #operator_thread(MemoryPool,QueuePool,EventPool)
     #run_async_server(MemoryPool,QueuePool)
-
+    print("1")
     with ProcessPoolExecutor(max_workers=10) as executor:
 
         executor.submit(run_async_server,MemoryPool,QueuePool,EventPool)
