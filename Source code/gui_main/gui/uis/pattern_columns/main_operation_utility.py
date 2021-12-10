@@ -54,9 +54,9 @@ class Memory_Manager():
             getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
             
             # #Wait for 0.01s for any others request
-            # time.sleep(0.0001)
-            # while not self.queuePool["memory_DownlaodToGUI_request_Queue"].empty():
-            #     getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
+            time.sleep(0.01)
+            while not self.queuePool["memory_DownlaodToGUI_request_Queue"].empty():
+                getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
 
             
             #Check the pools has been changed
@@ -95,10 +95,10 @@ class Memory_Manager():
             getItem_list=[]
             getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
             #Wait for 0.01s for any others request
-            # time.sleep(0.0001)
-            #Collected al  item in this 0.1s
-            # while not self.queuePool["memory_UploadToMaster_Queue"].empty():
-            #     getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
+            time.sleep(0.01)
+            # Collected al  item in this 0.1s
+            while not self.queuePool["memory_UploadToMaster_Queue"].empty():
+                getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
 
             
             #Check the pools has been changed
@@ -585,6 +585,9 @@ class Main_utility_manager(QWidget):
 
         elif btn_name == "AutoMode_pattern_comboBox":
 
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["リモート"].getValue():
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
+
             self._parent.ui.load_pages.autostart_pushButton.setEnabled(True)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(0)
 
@@ -594,7 +597,7 @@ class Main_utility_manager(QWidget):
             #choose pattern
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1))
             self.choose_pattern
-            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
+            # self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
 
             if self.graph_Item=="Pattern":
@@ -1288,7 +1291,7 @@ class Main_utility_manager(QWidget):
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始RST",0)
 
                 
-                time.sleep(0.5)
+                # time.sleep(0.5)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定終了RST"].getValue():
                 
@@ -1296,24 +1299,26 @@ class Main_utility_manager(QWidget):
                 self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了RST",0)
                 self.measurement_start=False
-                time.sleep(0.5)
+                # time.sleep(0.5)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No.変更RST"].getValue():
                 
                 # self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
                 
+                
                 time.sleep(0.5)
+                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["大気圧RST"].getValue():
                 # self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",0)
-                time.sleep(0.5)
+                # time.sleep(0.5)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転停止RST"].getValue():
                 # self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",0)
-                time.sleep(0.5)
+                # time.sleep(0.5)
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止RST",0)
 
 

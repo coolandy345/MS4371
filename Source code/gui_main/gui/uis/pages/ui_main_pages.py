@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesLwgcxe.ui'
+## Form generated from reading UI file 'main_pagesrCUbrS.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -91,7 +91,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, -88, 1038, 759))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 810, 759))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -2556,6 +2556,45 @@ class Ui_MainPages(object):
 
         self.gridLayout_16.addWidget(self.frame_6, 0, 0, 1, 1, Qt.AlignBottom)
 
+        self.gasFreeflow_pushButton = QPushButton(self.frame_8)
+        self.gasFreeflow_pushButton.setObjectName(u"gasFreeflow_pushButton")
+        sizePolicy.setHeightForWidth(self.gasFreeflow_pushButton.sizePolicy().hasHeightForWidth())
+        self.gasFreeflow_pushButton.setSizePolicy(sizePolicy)
+        self.gasFreeflow_pushButton.setMinimumSize(QSize(0, 40))
+        self.gasFreeflow_pushButton.setMaximumSize(QSize(16777215, 40))
+        self.gasFreeflow_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.gasFreeflow_pushButton.setTabletTracking(False)
+        self.gasFreeflow_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(65, 65, 65);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 10px;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,30);\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(148, 227, 114);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(158, 239, 120);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(125, 189, 95);\n"
+"}\n"
+"")
+        self.gasFreeflow_pushButton.setCheckable(False)
+
+        self.gridLayout_16.addWidget(self.gasFreeflow_pushButton, 1, 0, 1, 1)
+
 
         self.gridLayout_15.addWidget(self.frame_8, 0, 0, 1, 1)
 
@@ -3025,45 +3064,6 @@ class Ui_MainPages(object):
         self.stackedWidget_2.addWidget(self.page_5)
 
         self.gridLayout_20.addWidget(self.stackedWidget_2, 3, 0, 1, 1)
-
-        self.gasFreeflow_pushButton = QPushButton(self.frame_11)
-        self.gasFreeflow_pushButton.setObjectName(u"gasFreeflow_pushButton")
-        sizePolicy.setHeightForWidth(self.gasFreeflow_pushButton.sizePolicy().hasHeightForWidth())
-        self.gasFreeflow_pushButton.setSizePolicy(sizePolicy)
-        self.gasFreeflow_pushButton.setMinimumSize(QSize(0, 40))
-        self.gasFreeflow_pushButton.setMaximumSize(QSize(16777215, 40))
-        self.gasFreeflow_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.gasFreeflow_pushButton.setTabletTracking(False)
-        self.gasFreeflow_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
-"	color: rgb(202, 206, 216);\n"
-"	font: 20px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"	background-color: rgb(65, 65, 65);\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-radius: 10px;\n"
-"}\n"
-"QPushButton:disabled {\n"
-"	color: rgb(70, 80, 95);\n"
-"	background-color: rgba(0, 0, 0,30);\n"
-"}\n"
-"QPushButton:checked{\n"
-"	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(148, 227, 114);\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(158, 239, 120);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(125, 189, 95);\n"
-"}\n"
-"")
-        self.gasFreeflow_pushButton.setCheckable(True)
-
-        self.gridLayout_20.addWidget(self.gasFreeflow_pushButton, 0, 0, 1, 1)
 
 
         self.gridLayout_2.addWidget(self.frame_11, 0, 0, 1, 1)
@@ -4534,8 +4534,7 @@ class Ui_MainPages(object):
         QWidget.setTabOrder(self.noiseMeasurement_Voltage_lineEdit, self.noiseMeasurement_Current_lineEdit)
         QWidget.setTabOrder(self.noiseMeasurement_Current_lineEdit, self.noiseMeasurement_Time_lineEdit)
         QWidget.setTabOrder(self.noiseMeasurement_Time_lineEdit, self.Noisetest_pushButton)
-        QWidget.setTabOrder(self.Noisetest_pushButton, self.gasFreeflow_pushButton)
-        QWidget.setTabOrder(self.gasFreeflow_pushButton, self.scrollArea_2)
+        QWidget.setTabOrder(self.Noisetest_pushButton, self.scrollArea_2)
         QWidget.setTabOrder(self.scrollArea_2, self.scrollArea_3)
         QWidget.setTabOrder(self.scrollArea_3, self.RT_combobox)
         QWidget.setTabOrder(self.RT_combobox, self.patternfile_comboBox)
@@ -4558,7 +4557,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
         self.stackedWidget_2.setCurrentIndex(0)
@@ -4706,6 +4705,7 @@ class Ui_MainPages(object):
         self.AutoMode_pattern_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"pattern2", None))
 
         self.Gas_mode_Label.setText(QCoreApplication.translate("MainPages", u"\u96f0\u56f2\u6c17\u30e2\u30fc\u30c9\uff1a\u5927\u6c17", None))
+        self.gasFreeflow_pushButton.setText(QCoreApplication.translate("MainPages", u"\u5927\u6c17\u5727", None))
         self.label_18.setText("")
         self.outputStop_pushButton.setText(QCoreApplication.translate("MainPages", u"\u51fa\u529b\u505c\u6b62", None))
         self.manaualMode_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u4e00\u822c\u6e2c\u5b9a", None))
@@ -4726,7 +4726,6 @@ class Ui_MainPages(object):
         self.label_44.setText(QCoreApplication.translate("MainPages", u"\u5408\u683c\u5224\u5b9a\u57fa\u6e96(pA)", None))
         self.label_36.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u6642\u9593(min)", None))
         self.Noisetest_pushButton.setText(QCoreApplication.translate("MainPages", u"\u30ce\u30a4\u30ba\u6e2c\u5b9a", None))
-        self.gasFreeflow_pushButton.setText(QCoreApplication.translate("MainPages", u"\u5927\u6c17\u5727", None))
         self.Temp_Totaltime_Label.setText(QCoreApplication.translate("MainPages", u"\u5408\u8a08\u6642\u9593: 0 \u6642\u9593 0 \u5206", None))
         self.label_63.setText(QCoreApplication.translate("MainPages", u"\u96f0\u56f2\u6c17", None))
         self.label_27.setText(QCoreApplication.translate("MainPages", u"\u30d1\u30bf\u30fc\u30f3\u540d", None))

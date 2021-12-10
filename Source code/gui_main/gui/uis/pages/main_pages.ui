@@ -128,7 +128,7 @@ QLineEdit:read-only {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1038</width>
+            <width>810</width>
             <height>759</height>
            </rect>
           </property>
@@ -5701,6 +5701,69 @@ border:None</string>
                       </layout>
                      </widget>
                     </item>
+                    <item row="1" column="0">
+                     <widget class="QPushButton" name="gasFreeflow_pushButton">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="tabletTracking">
+                       <bool>false</bool>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 28px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 10px;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,30);
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(148, 227, 114);
+}
+
+QPushButton:hover {
+	color: rgb(44, 36, 0);
+	background-color: rgb(158, 239, 120);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgb(125, 189, 95);
+}
+</string>
+                      </property>
+                      <property name="text">
+                       <string>大気圧</string>
+                      </property>
+                      <property name="checkable">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -6588,69 +6651,6 @@ QPushButton:pressed {
                       </widget>
                      </widget>
                     </item>
-                    <item row="0" column="0">
-                     <widget class="QPushButton" name="gasFreeflow_pushButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="tabletTracking">
-                       <bool>false</bool>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 20px  &quot;游ゴシック&quot;;
-	background-color: rgb(65, 65, 65);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 10px;
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,30);
-}
-QPushButton:checked{
-	color: rgb(44, 36, 0);
-	background-color: rgb(148, 227, 114);
-}
-
-QPushButton:hover {
-	color: rgb(44, 36, 0);
-	background-color: rgb(158, 239, 120);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgb(125, 189, 95);
-}
-</string>
-                      </property>
-                      <property name="text">
-                       <string>大気圧</string>
-                      </property>
-                      <property name="checkable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -7015,7 +7015,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>987</width>
                       <height>400</height>
                      </rect>
                     </property>
@@ -8244,7 +8244,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>987</width>
                       <height>200</height>
                      </rect>
                     </property>
@@ -10014,7 +10014,6 @@ padding:5px</string>
   <tabstop>noiseMeasurement_Current_lineEdit</tabstop>
   <tabstop>noiseMeasurement_Time_lineEdit</tabstop>
   <tabstop>Noisetest_pushButton</tabstop>
-  <tabstop>gasFreeflow_pushButton</tabstop>
   <tabstop>scrollArea_2</tabstop>
   <tabstop>scrollArea_3</tabstop>
   <tabstop>RT_combobox</tabstop>
