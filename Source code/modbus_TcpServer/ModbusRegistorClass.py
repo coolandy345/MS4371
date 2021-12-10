@@ -37,10 +37,14 @@ class ModbusPackage():
         if isinstance(self.value, int):
             if not self.value>=0:
                 return 0
+            elif self.value>=65535:
+                return 65535
             return self.value
         elif isinstance(self.value, float):
             if not self.value>=0:
                 return 0
+            elif self.value>=65535:
+                return 65535
             return int(self.value)
         else:
             if self.value:

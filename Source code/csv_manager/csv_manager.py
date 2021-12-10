@@ -17,10 +17,12 @@ import shutil
 
 class Csv_manager():
     def __init__(self,
+                 PoolSemaphore,
                  memoryPool,
                  queuePool,
                  eventPool
                  ):
+        self.PoolSemaphore=PoolSemaphore
         self.memoryPool=memoryPool
         self.queuePool=queuePool
         self.eventPool=eventPool

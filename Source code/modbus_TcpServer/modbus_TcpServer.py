@@ -48,10 +48,10 @@ class CustomDataBlock(ModbusSparseDataBlock):
     """ A datablock that stores the new value in memory
     and performs a custom action after it has been stored.
     """
-    def __init__(self,memorypool,queuepool,eventPool):
+    def __init__(self,PoolSemaphore,memorypool,queuepool,eventPool):
         #super().__init__()
         
-
+        self.PoolSemaphore=PoolSemaphore
         self.memorypool=memorypool
         self.Modbuspool=self.memorypool["Modbus Registor Pool - Registor"]
         self.queuepool=queuepool
@@ -88,9 +88,11 @@ class CustomDataBlock(ModbusSparseDataBlock):
         
     def get_register_dict(self):
         self.register_dict={}
+        self.PoolSemaphore.acquire(timeout=1)
         for unit in self.memorypool["Modbus Registor Pool - Registor"].values():
             self.register_namedict[unit.registor_number+self.register_shift]=unit.name
             self.register_dict[unit.registor_number+self.register_shift]=unit.getModbusValue()
+        self.PoolSemaphore.release()
 
 
     def getValues(self, address, count):
@@ -129,10 +131,11 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
             self.ethernet_connection_pool=False
 
-            time.sleep(0.2)
+            time.sleep(1)
 
     def set_memorypool_register(self,pool_name,registor_name,value):
-
+        
+        self.PoolSemaphore.acquire(timeout=1)
         if self.memorypool[pool_name][registor_name].getValue()!=value:
 
             sub_memorypool=copy.deepcopy(self.memorypool[pool_name])
@@ -141,7 +144,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
             sendItem=MemoryUnit(pool_name,registor_name)
             self.queuepool["database_Uplaod_Queue"].put(sendItem)
             self.queuepool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
-
+        self.PoolSemaphore.release()
         
     def MainDatabase_upload_Work(self):
             #test=time.time()
@@ -157,13 +160,15 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
             #Remove Duplicates From poolNameList
             local_namelist = list(dict.fromkeys(local_namelist))
+            
+            self.PoolSemaphore.acquire(timeout=1)
             tempPool=self.memorypool["Modbus Registor Pool - Registor"]
 
             for name in local_namelist:
                 tempPool[name].setValue(self.Modbuspool[name].getValue())
                     #We get aviaible data
             self.memorypool["Modbus Registor Pool - Registor"]=tempPool
-
+            self.PoolSemaphore.release()
             for name in local_namelist:
                 sendItem=MemoryUnit("Modbus Registor Pool - Registor",name)
                 self.queuepool["database_modbusUplaod_Queue"].put(sendItem)
@@ -200,7 +205,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 address_temp+=1
             if change:
                 if self.Modbus_debug:
-                    print("modbus write - ","数量{}".format(len(self.MainPool_update_namelist)),change_contant_dict)
+                    print("modbus write from PLC - ","数量{}".format(len(self.MainPool_update_namelist)),change_contant_dict)
 
                 self.MainDatabase_upload_Work()
                 #self.MainPool_update_Request=True
@@ -216,7 +221,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 change=True
             if change:
                 if self.Modbus_debug:
-                    print("modbus write - ","[{}]".format(address-self.register_shift),registor_name,value)
+                    print("modbus write from PLC - ","[{}]".format(address-self.register_shift),registor_name,value)
                 self.MainDatabase_upload_Work()
                 #self.MainPool_update_Request=True
             
@@ -266,7 +271,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
                 registor_name=self.register_namedict[unit.registor_number+self.register_shift]
                 if self.Modbus_debug:
-                    print("modbus update write - ","[{}]".format(unit.registor_number),registor_name,unit.getModbusValue())
+                    print("modbus update from PC - ","[{}]".format(unit.registor_number),registor_name,unit.getModbusValue())
 
                 super(CustomDataBlock, self).setValues(unit.registor_number+self.register_shift, unit.getModbusValue())
 
@@ -286,9 +291,9 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
 
 
-def run_async_server(memorypool,queuePool,eventPool):
+def run_async_server(PoolSemaphore,memorypool,queuePool,eventPool):
     
-    block  = CustomDataBlock(memorypool,queuePool,eventPool)
+    block  = CustomDataBlock(PoolSemaphore,memorypool,queuePool,eventPool)
     #print(block.getValues(10, count=10))
 
     #block  = ModbusSequentialDataBlock(0, [17]*100)

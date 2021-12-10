@@ -24,7 +24,7 @@ class MemoryUnit():
         self.registor_name=registor_name
         self.count=count
 
-def databaseWriteThread_NoModbusLoop(memoryPool,queuePool,eventPool):
+def databaseWriteThread_NoModbusLoop(PoolSemaphore,memoryPool,queuePool,eventPool):
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
@@ -54,7 +54,7 @@ def databaseWriteThread_NoModbusLoop(memoryPool,queuePool,eventPool):
 
         System_Registor_Database.commit()
 
-def databaseWriteThread(memoryPool,queuePool,eventPool):
+def databaseWriteThread(PoolSemaphore,memoryPool,queuePool,eventPool):
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))

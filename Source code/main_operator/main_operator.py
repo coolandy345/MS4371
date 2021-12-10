@@ -149,28 +149,30 @@ class Single_data_unitPackage():
 
 
 
-def operator_thread(memoryPool,queuePool,eventPool):
-    gpib_Thread(memoryPool,queuePool)
+def operator_thread(PoolSemaphore,memoryPool,queuePool,eventPool):
+    gpib_Thread(PoolSemaphore,memoryPool,queuePool)
     time.sleep(1)
-    operator=Operator(memoryPool,queuePool,eventPool)
+    operator=Operator(PoolSemaphore,memoryPool,queuePool,eventPool)
 
 class Operator():
 
     def __init__(self,
+                PoolSemaphore,
                  memoryPool,
                  queuePool,
                  eventPool
                  ):
+        self.PoolSemaphore=PoolSemaphore
         self.memoryPool=memoryPool
         self.queuePool=queuePool
         self.eventPool=eventPool
 
         self.temperature=0
         
-        self.csv_manager=Csv_manager(memoryPool,queuePool,eventPool)
+        self.csv_manager=Csv_manager(PoolSemaphore,memoryPool,queuePool,eventPool)
 
         #self.gpib_2635B=GPIB_device_2635B(memoryPool,queuePool)
-        self.gpib_2657A=GPIB_device_2657A(memoryPool,queuePool)
+        self.gpib_2657A=GPIB_device_2657A(PoolSemaphore,memoryPool,queuePool)
 
         self.gpib_2657A_control=False
 
@@ -211,7 +213,9 @@ class Operator():
     def get_temp_Work(self):
         while 1:
             time.sleep(0.2)
+            self.PoolSemaphore.acquire(timeout=1)
             self.temperature=self.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()
+            self.PoolSemaphore.release()
 
     def test_Work1(self):
         
@@ -288,7 +292,8 @@ class Operator():
                                                 memorypool_name,
                                                 registor_name,
                                                 value):
-
+        
+        self.PoolSemaphore.acquire(timeout=1)
         if self.memoryPool[memorypool_name][registor_name].getValue()!=value:
             sub_memorypool=copy.deepcopy(self.memoryPool[memorypool_name])
             sub_memorypool[registor_name].setValue(value)
@@ -298,6 +303,7 @@ class Operator():
             
             self.queuePool["database_Uplaod_Queue"].put(sendItem)
             self.queuePool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
+        self.PoolSemaphore.release()
 
     def measurement_initial(
                                 self,
@@ -350,10 +356,11 @@ class Operator():
             self.set_memorypool_register("System memory","Noise_Measurement_status",1)
             
 
+            self.PoolSemaphore.acquire(timeout=1)
             self.noise_measurement_voltage=self.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()
             self.noise_measurement_current=1e-12*self.memoryPool["System memory"]["Noise_Measurement_Current"].getValue()
             self.noise_measurement_time=60*self.memoryPool["System memory"]["Noise_Measurement_Time"].getValue()
-
+            self.PoolSemaphore.release()
             #print("start_noise_measurement",self.noise_measurement_voltage,self.noise_measurement_current,self.noise_measurement_time)
 
             stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
@@ -835,10 +842,12 @@ class Operator():
             self.eventPool["Auto Run Start"].wait()
             #clear  Start Run Auto run event
             self.eventPool["Auto Run Start"].clear()
-
+            
+            self.PoolSemaphore.acquire(timeout=1)
             Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
             System_memory=self.memoryPool["System memory"]
             Measurement_Pattern=self.memoryPool["Measurement Pattern"]
+            self.PoolSemaphore.release()
             
 
             #Prepare Main Path
@@ -1505,7 +1514,9 @@ class Operator():
                             current=float(result_list[3])
                         )
                     self.measurement_data.append(data_pachage)
+                    self.PoolSemaphore.acquire(timeout=1)
                     self.memoryPool["Measurement_data"]=self.measurement_data
+                    self.PoolSemaphore.release()
                     self.eventPool["CSV_Data_arrive"].set()
                     self.eventPool["GUI_Data_arrive"].set()
                     

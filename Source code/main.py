@@ -34,6 +34,7 @@ if __name__ == "__main__":
     MemoryPoolManager=Manager()
     MemoryPool = MemoryPoolManager.dict()
 
+    PoolSemaphore=MemoryPoolManager.Semaphore(value=1)
     QueuePool={}
     QueuePool["modbus_Write_Queue"]=MemoryPoolManager.Queue()
     QueuePool["database_Uplaod_Queue"]=MemoryPoolManager.Queue()
@@ -96,12 +97,12 @@ if __name__ == "__main__":
     print("1")
     with ProcessPoolExecutor(max_workers=10) as executor:
 
-        executor.submit(run_async_server,MemoryPool,QueuePool,EventPool)
-        executor.submit(databaseWriteThread,MemoryPool,QueuePool,EventPool)
-        executor.submit(databaseWriteThread_NoModbusLoop,MemoryPool,QueuePool,EventPool)
-        executor.submit(operator_thread,MemoryPool,QueuePool,EventPool)
+        executor.submit(run_async_server,PoolSemaphore,MemoryPool,QueuePool,EventPool)
+        executor.submit(databaseWriteThread,PoolSemaphore,MemoryPool,QueuePool,EventPool)
+        executor.submit(databaseWriteThread_NoModbusLoop,PoolSemaphore,MemoryPool,QueuePool,EventPool)
+        executor.submit(operator_thread,PoolSemaphore,MemoryPool,QueuePool,EventPool)
 
-        Gui_future = executor.submit(initial_GUI,MemoryPool,QueuePool,EventPool)
+        Gui_future = executor.submit(initial_GUI,PoolSemaphore,MemoryPool,QueuePool,EventPool)
         Gui_future.add_done_callback(shotdown_entire_app)
 
 

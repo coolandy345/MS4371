@@ -28,7 +28,7 @@ def set_memorypool_register(memoryPool,
             queuePool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
             
 
-def GPIB_USB_interface_connnection_Work(memorypool,queuePool):
+def GPIB_USB_interface_connnection_Work(PoolSemaphore,memorypool,queuePool):
     
     # find our device
     connection=False
@@ -48,12 +48,14 @@ def GPIB_USB_interface_connnection_Work(memorypool,queuePool):
         time.sleep(1)
 
 
-def gpib_Thread(memoryPool,queuePool):
+def gpib_Thread(PoolSemaphore,memoryPool,queuePool):
+
     
-    gPIB_Driver=GPIB_Driver(memoryPool,queuePool)
+    
+    gPIB_Driver=GPIB_Driver(PoolSemaphore,memoryPool,queuePool)
     
     #GPIB connnection Thread create 
-    gPIB_USB_interface_connnection_Thread = threading.Thread(target = GPIB_USB_interface_connnection_Work,daemon=True,args = (memoryPool,queuePool))
+    gPIB_USB_interface_connnection_Thread = threading.Thread(target = GPIB_USB_interface_connnection_Work,daemon=True,args = (PoolSemaphore,memoryPool,queuePool))
     gPIB_USB_interface_connnection_Thread.start()
     
 

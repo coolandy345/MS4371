@@ -13,9 +13,12 @@ import numpy as np
 class Memory_Manager():
     def __init__( 
             self, 
+            PoolSemaphore=None,
             Master_memoryPool={},
             queuePool={}
     ):
+        self.PoolSemaphore=PoolSemaphore
+
         self.Master_memoryPool=Master_memoryPool
         self.queuePool=queuePool
         self.memoryPool={}
@@ -50,10 +53,10 @@ class Memory_Manager():
             getItem_list=[]
             getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
             
-            #Wait for 0.01s for any others request
-            time.sleep(0.01)
-            while not self.queuePool["memory_DownlaodToGUI_request_Queue"].empty():
-                getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
+            # #Wait for 0.01s for any others request
+            # time.sleep(0.0001)
+            # while not self.queuePool["memory_DownlaodToGUI_request_Queue"].empty():
+            #     getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
 
             
             #Check the pools has been changed
@@ -72,11 +75,14 @@ class Memory_Manager():
                 import_pool[getItem.pool_name].append(getItem)
 
             #print("getItem",poolNameList)
+            self.PoolSemaphore.acquire(timeout=1)
             for pool_name in poolNameList:
 
                 for item in import_pool[pool_name]:
                     value=self.Master_memoryPool[item.pool_name][item.registor_name].getValue()
                     self.memoryPool[item.pool_name][item.registor_name].setValue(value)
+                    print("GUI update",item.pool_name,item.registor_name,value)
+            self.PoolSemaphore.release()
                 
     def main_MemoryUpLoad_Work(self):
         """
@@ -89,10 +95,10 @@ class Memory_Manager():
             getItem_list=[]
             getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
             #Wait for 0.01s for any others request
-            time.sleep(0.01)
+            # time.sleep(0.0001)
             #Collected al  item in this 0.1s
-            while not self.queuePool["memory_UploadToMaster_Queue"].empty():
-                getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
+            # while not self.queuePool["memory_UploadToMaster_Queue"].empty():
+            #     getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
 
             
             #Check the pools has been changed
@@ -108,7 +114,10 @@ class Memory_Manager():
 
             #Update the local GUI memoryPool to Master_memoryPool
             for pool_name in poolNameList:
+                
+                self.PoolSemaphore.acquire(timeout=1)
                 self.Master_memoryPool[pool_name]=self.memoryPool[pool_name]
+                self.PoolSemaphore.release()
 
             #Send database update request
             for item in getItem_list:
@@ -154,6 +163,9 @@ class Main_utility_manager(QWidget):
         self.timeMaxRange=10
         self.timeMinRange=1
         self.divider=1
+
+        self.PV_Record_Start=False
+        self.collect_PV_Data_array_start=False
 
         self.graph_Update_request=False
 
@@ -226,6 +238,11 @@ class Main_utility_manager(QWidget):
 
         #if PLC is allow us to start
         if (self._parent.ui.load_pages.remoteConnect_pushButton.isChecked() and self.ready_icon_active):
+
+            #Stop collect PV temperature data
+            if self.PV_Record_Start:
+                    self.PV_Record_Start=False
+
             #Enable conent editable
             self._parent.testfile_manager.set_content_Editeable(True)
 
@@ -263,6 +280,13 @@ class Main_utility_manager(QWidget):
                 #Disable conent editable
                 self._parent.testfile_manager.set_content_Editeable(False)
 
+                #Start collecting PV temperature
+                if not self.PV_Record_Start:
+                    self.PV_Record_Start=True
+                    collect_PV_Data_array_Thread = threading.Thread(target = self.collect_PV_Data_array,daemon=True)
+                    collect_PV_Data_array_Thread.start()
+
+
                 #Enbale EMS stop
                 if not self._parent.ui.load_pages.autostart_pushButton.isEnabled():
                     self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(True)
@@ -271,6 +295,9 @@ class Main_utility_manager(QWidget):
                     
             #if PLC is not at Running state also PLC is not allow to start
             else:
+                if self.PV_Record_Start:
+                    self.PV_Record_Start=False
+
                 #Disbale EMS stop
                 if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
                     self._parent.ui.load_pages.eMSstop_pushButton.setEnabled(False)
@@ -292,6 +319,38 @@ class Main_utility_manager(QWidget):
             #Disbale pattern be choose
             # if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
             #     self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(False)
+
+    def collect_PV_Data_array(self):
+        print("collect_PV_Data_array")
+        self.pattern_PV_data_array=[]
+        if not self.collect_PV_Data_array_start:
+            self.collect_PV_Data_array_start=True
+            while self.PV_Record_Start:
+
+                XYdata={}
+                step=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行STEP No."].getValue()
+                pattern=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No."].getValue()
+                if (step>1 and pattern!=0):
+                    base_time=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(pattern,step-1)].getValue()/60
+                    print("base_time",base_time)
+                else:
+                    base_time=0
+                print("pattern",pattern,"step",step,"base_time",base_time)
+                XYdata["x"]=base_time+(self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["STEP実行経過時間（L)"].getValue()/60)
+                XYdata["y"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()
+                print("collect_PV_Data_array",XYdata)
+                self.pattern_PV_data_array.append(XYdata)
+                self.graph_Update_request=True
+
+                time.sleep(60)
+            
+            
+            self.collect_PV_Data_array_start=False
+        else:
+            print("Fault by collect_PV_Data_array")
+
+
+
 
 
     def wait_transferFinish_Work(self):
@@ -432,12 +491,16 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(1)
             self._parent.ui.load_pages.autostart_pushButton.setText("運転中")
+
+            self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1))
+            self.choose_pattern
             
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
             #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
-            #self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
+            # self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",0)
-            #self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
+
+            # self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
 
             self.dataRecord_Start=True
@@ -456,7 +519,7 @@ class Main_utility_manager(QWidget):
             set=self._parent.ui.load_pages.remoteConnect_pushButton.isChecked()
             self.set_memorypool_register("Modbus Registor Pool - Registor","リモート",int(set))
             #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
-            self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
+            # self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
             #self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
             #self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",int(set))
 
@@ -530,6 +593,7 @@ class Main_utility_manager(QWidget):
 
             #choose pattern
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1))
+            self.choose_pattern
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
 
@@ -959,7 +1023,22 @@ class Main_utility_manager(QWidget):
                     self.realTime_Voltage_Graph.showLabel("bottom", show=False)
                     self.realTime_Current_Graph.showLabel("bottom", show=False)
                     self.realTime_Resistance_Graph.showLabel("bottom", show=False)
-                    
+    def graph_size_adjust(self):
+
+        sum=0
+        if self.realTime_Voltage_Graph_set:
+            sum+=1
+        if self.realTime_Current_Graph_set:
+            sum+=1
+        if self.realTime_Resistance_Graph_set:
+            sum+=1
+
+        if sum==2 and self.realTime_Current_Graph_set and self.realTime_Resistance_Graph_set:
+            pass
+        elif sum==2 and self.realTime_Voltage_Graph_set and self.realTime_Resistance_Graph_set:
+            pass
+        elif sum==2 and self.realTime_Current_Graph_set and self.realTime_Voltage_Graph_set:
+            self.realTime_Current_Graph
                     
 
     def graph_update(self):
@@ -968,7 +1047,8 @@ class Main_utility_manager(QWidget):
 
             if self.realTime_Temperature_Graph_set:
                 self.realTime_Temperature_Graph_set=False
-                self.win.removeItem(self.realTime_Temperature_Graph_set)
+                self.win.removeItem(self.realTime_Temperature_Graph)
+                self.realTime_Temperature_Graph.showLabel("bottom", show=False)
 
 
             #self.realTime_Voltage_Graph.setVisible (self._parent.ui.load_pages.Resistor_checkBox.isChecked())
@@ -1052,13 +1132,16 @@ class Main_utility_manager(QWidget):
                     self.realTime_Temperature_Graph_set=True
                     self.win.addItem(self.realTime_Temperature_Graph,row=0,col=0)
 
+                    self.timeLabel="hour"
+
+                    self.realTime_Temperature_Graph.setLabel(axis='bottom', text='時間', units=self.timeLabel)
+
             self.pattern_SV_data_array=[]
 
 
 
             self.choose_pattern=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No."].getValue()
 
-            print("self.choose_pattern",self.choose_pattern)
 
             if self.choose_pattern:
                 pattern_availible_number=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_実行STEP数".format(self.choose_pattern)].getValue()
@@ -1069,16 +1152,13 @@ class Main_utility_manager(QWidget):
                     XYdata["x"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_ステップ累計時間".format(self.choose_pattern,step)].getValue()/60
                     XYdata["y"]=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_SV値".format(self.choose_pattern,step)].getValue()
                     self.pattern_SV_data_array.append(XYdata)
-                    print(XYdata)
             #not choose_pattern yet 
             else:
                 self.pattern_SV_data_array=[]
 
             self._parent.temp_sv_curve.setData(self.pattern_SV_data_array)
-            self.timeUnit=3600
-            self.timeLabel="hr"
-            self.timeMaxRange=10
-            self.timeMinRange=1
+            self._parent.temp_pv_curve.setData(self.pattern_PV_data_array)
+            
 
             # self.realTime_Temperature_Graph_set.setLabel(axis='bottom', text='時間', units="hr")
             # self.realTime_Temperature_Graph_set.setLabel(axis='left', text='温度', units='℃')
@@ -1111,8 +1191,6 @@ class Main_utility_manager(QWidget):
         self.realTime_Temperature_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Temperature_Graph.showGrid(x=True, y=True)
 
-        
-
         self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
         self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
         self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
@@ -1123,7 +1201,7 @@ class Main_utility_manager(QWidget):
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
-                                                        name="予定パターン",
+                                                        name="電圧",
                                                         )
 
         
@@ -1132,7 +1210,7 @@ class Main_utility_manager(QWidget):
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
-                                                        name="予定パターン",
+                                                        name="電流",
                                                         )
         
 
@@ -1140,21 +1218,24 @@ class Main_utility_manager(QWidget):
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
-                                                        name="予定パターン",
+                                                        name="抵抗値",
                                                         )
 
-        self._parent.temp_sv_curve=self.realTime_Temperature_Graph.plot(pen=pg.mkColor(194, 194, 194),
+        self.realTime_Temperature_Graph.addLegend()
+        self.pattern_SV_data_array=[]
+        self._parent.temp_sv_curve=self.realTime_Temperature_Graph.plot(pen=pg.mkColor(132, 220, 244),
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
-                                                        name="予定パターン",
+                                                        name="温度SV値",
                                                         )
 
-        self._parent.temp_pv_curve=self.realTime_Temperature_Graph.plot(pen=pg.mkColor(115, 183, 255),
+        self.pattern_PV_data_array=[]
+        self._parent.temp_pv_curve=self.realTime_Temperature_Graph.plot(pen=pg.mkColor(200, 133, 0),
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
-                                                        name="予定パターン",
+                                                        name="温度PV値",
                                                         )
 
         
@@ -1202,31 +1283,37 @@ class Main_utility_manager(QWidget):
                     measurement_finish_wait_Thread.start()
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転開始RST"].getValue():
-                #self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
+                # self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始RST",0)
 
+                
+                time.sleep(0.5)
+
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定終了RST"].getValue():
                 
-                #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
+                # self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了RST",0)
                 self.measurement_start=False
+                time.sleep(0.5)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No.変更RST"].getValue():
                 
-                #self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
+                # self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
-                #self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更RST",0)
+                
+                time.sleep(0.5)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["大気圧RST"].getValue():
-                #self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
+                # self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",0)
-                #self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧RST",0)
+                time.sleep(0.5)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転停止RST"].getValue():
-                #self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
+                # self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",0)
+                time.sleep(0.5)
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止RST",0)
 
 

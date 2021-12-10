@@ -111,9 +111,10 @@ class GPIB_Driver():
     T1000s  =17         # Timeout of 1000 Sec
 
 
-    def __init__(self,memoryPool,queuePool):
+    def __init__(self,PoolSemaphore,memoryPool,queuePool):
         self.GPIB = ctypes.cdll.LoadLibrary('GPIB-32.dll')
 
+        self.PoolSemaphore=PoolSemaphore
         self.memoryPool=memoryPool
         self.queuePool=queuePool
         self.dev_descriptor={}
@@ -241,13 +242,14 @@ class GPIB_Driver():
             return 0,result
 
 class GPIB_device():
-    def __init__(self,memoryPool,queuePool,address,name):
+    def __init__(self,PoolSemaphore,memoryPool,queuePool,address,name):
         
         self.address=address
         self.connection = False
         self.dev_descriptor=0
         self.device_IDN=""
         self.name=name
+        self.PoolSemaphore=PoolSemaphore
         self.memoryPool=memoryPool
         self.queuePool=queuePool
 
@@ -428,11 +430,12 @@ class GPIB_device_2635B(GPIB_device):
     
 
 class GPIB_device_2657A(GPIB_device):
-    def __init__(self,memoryPool,queuePool):
+    def __init__(self,PoolSemaphore,memoryPool,queuePool):
+        self.PoolSemaphore=PoolSemaphore
         self.memoryPool=memoryPool
         self.queuePool=queuePool
 
-        super().__init__(memoryPool,queuePool,address=self.memoryPool["System memory"]["2657A GPIB address"].getValue(),name="2657A")
+        super().__init__(PoolSemaphore,memoryPool,queuePool,address=self.memoryPool["System memory"]["2657A GPIB address"].getValue(),name="2657A")
 
 
 
