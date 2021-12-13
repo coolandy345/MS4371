@@ -161,18 +161,18 @@ class CustomDataBlock(ModbusSparseDataBlock):
             #Remove Duplicates From poolNameList
             local_namelist = list(dict.fromkeys(local_namelist))
             
-            self.PoolSemaphore.acquire(timeout=1)
             tempPool=self.memorypool["Modbus Registor Pool - Registor"]
 
             for name in local_namelist:
                 tempPool[name].setValue(self.Modbuspool[name].getValue())
                     #We get aviaible data
             self.memorypool["Modbus Registor Pool - Registor"]=tempPool
-            self.PoolSemaphore.release()
             for name in local_namelist:
                 sendItem=MemoryUnit("Modbus Registor Pool - Registor",name)
                 self.queuepool["database_modbusUplaod_Queue"].put(sendItem)
                 self.queuepool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
+
+            
                 
             #print(time.time()-test)
             
@@ -204,10 +204,15 @@ class CustomDataBlock(ModbusSparseDataBlock):
                     change=True
                 address_temp+=1
             if change:
+                
+                self.PoolSemaphore.acquire(timeout=10)
+
                 if self.Modbus_debug:
                     print("modbus write from PLC - ","数量{}".format(len(self.MainPool_update_namelist)),change_contant_dict)
 
                 self.MainDatabase_upload_Work()
+                
+                self.PoolSemaphore.release()
                 #self.MainPool_update_Request=True
 
                 
@@ -220,9 +225,14 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 self.MainPool_update_namelist.append(registor_name)
                 change=True
             if change:
+                
+                self.PoolSemaphore.acquire(timeout=10)
+                
                 if self.Modbus_debug:
                     print("modbus write from PLC - ","[{}]".format(address-self.register_shift),registor_name,value)
                 self.MainDatabase_upload_Work()
+
+                self.PoolSemaphore.release()
                 #self.MainPool_update_Request=True
             
 

@@ -90,11 +90,11 @@ if __name__ == "__main__":
     
     databaseLoadThread(MemoryPool)
     #memoryWriteThread(MemoryPool,QueuePool)
-    #initial_GUI(MemoryPool,QueuePool,EventPool)
+    # initial_GUI(PoolSemaphore,MemoryPool,QueuePool,EventPool)
     # operator_thread(MemoryPool,QueuePool,EventPool)
     #operator_thread(MemoryPool,QueuePool,EventPool)
     #run_async_server(MemoryPool,QueuePool)
-    print("1")
+    
     with ProcessPoolExecutor(max_workers=10) as executor:
 
         executor.submit(run_async_server,PoolSemaphore,MemoryPool,QueuePool,EventPool)

@@ -338,9 +338,8 @@ class Operator():
 
     def stop_measurement(self):
         self.script_stop=False
-        #get event Start Run Auto run
+        self.eventPool["Measure Stop"].clear()
         self.eventPool["Measure Stop"].wait()
-        #clear  Start Run Auto run event
         self.eventPool["Measure Stop"].clear()
         print("stop_measurement get signal")
         self.script_stop=True
@@ -733,7 +732,6 @@ class Operator():
                     else:
                         resistance=0
 
-
                     if data_count>=data_startIndex:
                         if data_count==data_startIndex:
                             data_startTime=voltage_timestemp
@@ -838,10 +836,12 @@ class Operator():
 
     def auto_Run_Start_Work(self):
         while 1:
+            print("Ready to auto_Run_Start_Work")
             #get event Start Run Auto run
             self.eventPool["Auto Run Start"].wait()
             #clear  Start Run Auto run event
             self.eventPool["Auto Run Start"].clear()
+            print("Start auto_Run_Start_Work")
             
             self.PoolSemaphore.acquire(timeout=1)
             Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
@@ -849,7 +849,7 @@ class Operator():
             Measurement_Pattern=self.memoryPool["Measurement Pattern"]
             self.PoolSemaphore.release()
             
-
+            
             #Prepare Main Path
             self.csv_manager.prepare_Mainfolder()
             
@@ -869,9 +869,11 @@ class Operator():
             if step_number:
                 test_pattern_number=Modbus_Registor_Pool["PTNData_{}_STEP_{}_測定パターン".format(pattern_number,step_number)].getValue()+1
                 folder_name="step_{}_{}℃".format(Modbus_Registor_Pool["PTNData_{}_STEP_{}_SV値".format(pattern_number,step_number)].getValue(),step_number)
+                print("a",test_pattern_number)
             else:
                 test_pattern_number=Modbus_Registor_Pool["PTNData_{}_RT測定パターン".format(pattern_number)].getValue()
                 folder_name="step_0_RT"
+                print("B",test_pattern_number)
 
             test_step_count=Measurement_Pattern["PTNData_{}_実行STEP数".format(test_pattern_number)].getValue()
 
@@ -963,6 +965,7 @@ class Operator():
                     self.csv_manager.prepare_CsvFile(profile)
                     stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
                     stop_noise_measurement_Thread.start()
+                    print(measuretype)
                     for mode_type in measuretype:
                         voltage_timestemp=0
                         voltage_status=0
@@ -1130,7 +1133,7 @@ class Operator():
 
             
                         print("script_time",type(script_time),script_time)
-                        self.gpib_2657A.send_Command("test_time={}".format(float(script_time)+float(script_sample_time*10)))
+                        self.gpib_2657A.send_Command("test_time={}".format(float(script_time)+float(script_sample_time*9)))
                     
                         self.gpib_2657A.send_Command("""
                                                         time_up=false
@@ -1181,7 +1184,7 @@ class Operator():
 
                                                         while loop_start do
                                                             trigger.timer[1].wait(10)
-                                                            if node[2].smua.nvbuffer1.n>0 then
+                                                            if node[2].smua.nvbuffer1.n>0 then  
 
                                                                 min_search_count=0
                                                                 if node[1].smua.nvbuffer1.n>node[2].smua.nvbuffer1.n then
@@ -1203,25 +1206,7 @@ class Operator():
                                                                 end
                                                             end
 
-                                                            if node[2].smua.nvbuffer1.n>0 then
                                                             
-                                                                voltage_time=node[1].smua.nvbuffer1.timestamps[search_index]
-                                                                current_data=node[2].smua.nvbuffer1.readings[search_index]
-                                                                if search_count>=search_burst then
-                                                                    min_search_count=0
-                                                                    if node[1].smua.nvbuffer1.n>node[2].smua.nvbuffer1.n then
-                                                                        min_search_count=node[2].smua.nvbuffer1.n
-                                                                    else
-                                                                        min_search_count=node[1].smua.nvbuffer1.n
-                                                                    end
-
-                                                                    printbuffer(search_index,min_search_count,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings,   node[2].smua.nvbuffer1.timestamps,   node[2].smua.nvbuffer1.statuses,  node[2].smua.nvbuffer1.readings)
-                                                                    search_index=min_search_count+1
-                                                                    search_count=1
-                                                                else
-                                                                    search_count=search_count+1
-                                                                end
-                                                            end
 
                                                             eta_time=voltage_time-test_time
                                                             if eta_time>=0 then
@@ -1239,6 +1224,10 @@ class Operator():
                                                             else
                                                                 time_up=false
                                                             end
+
+                                                            if time_up then
+                                                                break
+                                                            end
                                                         end
 
                                                         node[1].smua.abort()
@@ -1250,12 +1239,21 @@ class Operator():
 
                                                         print("finish")
                                                         beeper.beep(0.2, 2400)
+                                                        
+                                                        reset()
+                                                        node[1].smua.reset()
+                                                        node[2].smua.reset()
+
+                                                        
 
                                                         endscript
                                                         """)
 
 
-                    
+                        # node[1].smua.abort()
+                        # node[2].smua.abort()
+                        # node[1].smua.reset()
+                        # node[2].smua.reset()
                     
 
                         time.sleep(0.1)
@@ -1269,17 +1267,19 @@ class Operator():
                         data_count=1
                         data_startIndex=10
                         data_startTime=0
-                        while not self.script_stop:
+                        self.script_data_accept_stop=False
+                        while (not self.script_stop) and (not self.script_data_accept_stop):
                             #print("read_Command")
                             text=self.gpib_2657A.read_Command()
                             print(text)
                             if text[0]=="finish":
                                 print("finish")
-                                self.gpib_2657A.send_Command("reset()")
+                                # self.gpib_2657A.send_Command("reset()")
+                                # text=self.gpib_2657A.read_Command()
 
-                                break
+                                self.script_data_accept_stop=True
+
                             elif text[0].find('start') != -1:
-                                #print("!!!!!!!!!!!!!")
                                 pass
 
                             elif text[0]:
@@ -1352,21 +1352,22 @@ class Operator():
 
                         print("stop_measurement")
 
-                        self.gpib_2657A.send_Command("""
-                                                        node[1].smua.abort()
-                                                        node[2].smua.abort()
-                                                        *CLS
-                                                        reset()
-                                                        node[1].smua.reset()
-                                                        node[2].smua.reset()
-                                                        node[2].smua.source.output = 0
-                                                        node[1].smua.source.output = 0
-                                                        """)
+                        # self.gpib_2657A.send_Command("""
+                        #                                 node[1].smua.abort()
+                        #                                 node[2].smua.abort()
+                        #                                 *CLS
+                        #                                 reset()
+                        #                                 node[1].smua.reset()
+                        #                                 node[2].smua.reset()
+                        #                                 node[2].smua.source.output = 0
+                        #                                 node[1].smua.source.output = 0
+                        #                                 """)
                     
                     
                         #starting listen data arrive
                         self.csv_manager.stopRecord_CsvFile()
                         self.last_time_of_measure=voltage_timestemp-data_startTime+self.last_time_of_measure
+
                 self.gpib_2657A.send_Command("""
                                                 node[1].smua.abort()
                                                 node[2].smua.abort()

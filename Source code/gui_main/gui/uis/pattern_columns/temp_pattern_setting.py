@@ -241,6 +241,7 @@ class TempPatternWidget(QWidget):
 
             pattern.units=units
             _patternFile_lists.append(pattern)
+
         self.patternFiles=_patternFile_lists
         #print("memory_reader finish")
 
@@ -465,6 +466,7 @@ class TempPatternWidget(QWidget):
     # update step widge
     # /////////////////////////////
     def updata_step_widge(self):
+        print("updata_step_widge")
         #print("updata_step_widge_work")
         #adjust the Visible of each step
 
@@ -495,7 +497,6 @@ class TempPatternWidget(QWidget):
 
             unit=tempUnit()
             unit=self.cache_steplist.getStep(_step)
-            
             self.step_widges_list[_step].callback_stop=True
             self.step_widges_list[_step].pattern.Type_comboBox.setCurrentIndex(unit.Step_Type)
 
@@ -526,8 +527,15 @@ class TempPatternWidget(QWidget):
 
                 pass
             elif unit.Step_Type==tempUnit.test_unit_type:  #test unit
+                self.step_widges_list[_step].pattern.Hour_lineEdit.setText("{}".format(unit.time_hour))
+                self.step_widges_list[_step]._hour=unit.time_hour
+                self.step_widges_list[_step].pattern.Min_lineEdit.setText("{}".format(unit.time_min))
+                self.step_widges_list[_step]._minute=unit.time_min
                 self.step_widges_list[_step].pattern.SV_lineEdit.setText("{}".format(unit.SV))
                 self.step_widges_list[_step]._temperature=unit.SV
+                self.step_widges_list[_step].pattern.N2_lineEdit.setText("{:.1f}".format(unit.N2_flowRate))
+                self.step_widges_list[_step]._n2_flowrate=unit.N2_flowRate
+
                 self.step_widges_list[_step].pattern.PID_muffle_comboBox.setCurrentIndex(unit.PID_muffle_No)
                 self.step_widges_list[_step]._PID_muffle_no=unit.PID_muffle_No
                 self.step_widges_list[_step].pattern.PID_heater_comboBox.setCurrentIndex(unit.PID_heater_No)
@@ -555,7 +563,7 @@ class TempPatternWidget(QWidget):
         
             
             self.step_widges_list[_step].callback_stop=False
-        #print("updata_step_widge_work finish")
+        print("updata_step_widge_work finish")
         
     # update graph
     # /////////////////////////////
@@ -1034,6 +1042,7 @@ class TempPatternWidget(QWidget):
 
 
     def step_modifly_manager(self,step):
+        print("step_modifly_manager")
         stepUnit=self.cache_steplist.getStep(step)
 
         stepUnit.Step_Type                          =self.step_widges_list[step]._type      

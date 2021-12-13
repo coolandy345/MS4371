@@ -264,6 +264,7 @@ class PyTempStep(QWidget):
                 return
 
             btn_name=self.sender().objectName()
+            print(btn_name)
             
             if btn_name=="Hour_lineEdit":
                 data=int(self.pattern.Hour_lineEdit.text())
@@ -523,6 +524,7 @@ class PyTempStep(QWidget):
             self.update_testFileCombobox(0)
 
         if not self.callback_stop:
+            
             try:
                 #Call upper mother renew information
                 self._parent.tempPattern.step_modifly_manager(self._step)
@@ -593,12 +595,15 @@ class PyTempStep(QWidget):
             self.pattern.frame_6.clearFocus()
 
     def enableEndType(self,enable):
+        self.callback_stop=True
         if enable:
             if self.pattern.Type_comboBox.count()==2:
                 self.pattern.Type_comboBox.addItems(["END"])
 
         else:
-            self.pattern.Type_comboBox.removeItem(2)
+            if self.pattern.Type_comboBox.count()==3:
+                self.pattern.Type_comboBox.removeItem(2)
+        self.callback_stop=False
 
     
 

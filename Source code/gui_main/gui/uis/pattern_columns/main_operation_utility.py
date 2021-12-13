@@ -53,8 +53,9 @@ class Memory_Manager():
             getItem_list=[]
             getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
             
+            self.PoolSemaphore.acquire(timeout=10)
             # #Wait for 0.01s for any others request
-            time.sleep(0.01)
+            time.sleep(0.001)
             while not self.queuePool["memory_DownlaodToGUI_request_Queue"].empty():
                 getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
 
@@ -75,7 +76,6 @@ class Memory_Manager():
                 import_pool[getItem.pool_name].append(getItem)
 
             #print("getItem",poolNameList)
-            self.PoolSemaphore.acquire(timeout=1)
             for pool_name in poolNameList:
 
                 for item in import_pool[pool_name]:
@@ -94,8 +94,10 @@ class Memory_Manager():
             #Wait for any Master memoryPool update request
             getItem_list=[]
             getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
+            
+            self.PoolSemaphore.acquire(timeout=10)
             #Wait for 0.01s for any others request
-            time.sleep(0.01)
+            time.sleep(0.001)
             # Collected al  item in this 0.1s
             while not self.queuePool["memory_UploadToMaster_Queue"].empty():
                 getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
@@ -115,15 +117,14 @@ class Memory_Manager():
             #Update the local GUI memoryPool to Master_memoryPool
             for pool_name in poolNameList:
                 
-                self.PoolSemaphore.acquire(timeout=1)
                 self.Master_memoryPool[pool_name]=self.memoryPool[pool_name]
-                self.PoolSemaphore.release()
 
             #Send database update request
             for item in getItem_list:
                 sendItem=MemoryUnit(item.pool_name,item.registor_name)
                 self.queuePool["database_Uplaod_Queue"].put(sendItem)
             
+            self.PoolSemaphore.release()
 
 
 class Main_utility_manager(QWidget):
@@ -501,9 +502,10 @@ class Main_utility_manager(QWidget):
 
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
-        elif btn_name == "autostart_pushButton":
+        elif btn_name == "autostart_pushButton":    
             self.autostart_signal=True
             self.measurement_start=False
+            self.eventPool["Measure Stop"].clear()
 
             self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
             self._parent.ui.load_pages.autostart_pushButton.setChecked(1)
@@ -541,8 +543,6 @@ class Main_utility_manager(QWidget):
             #self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",int(set))
 
 
-            pass
-
         elif btn_name == "manualMeasurement_pushButton":
             self._parent.ui.load_pages.manualMeasurement_pushButton.blockSignals(True)
             self._parent.ui.load_pages.manualMeasurement_pushButton.setChecked(True)
@@ -565,6 +565,8 @@ class Main_utility_manager(QWidget):
             self.gasFreeflow_signal=True
             # Set Gas registor to memory bus
             self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",1)
+            time.sleep(0.5)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",0)
             #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
             
         elif btn_name == "outputStop_pushButton":
@@ -727,10 +729,10 @@ class Main_utility_manager(QWidget):
             try:
                 getItem=self.queuePool["GUI_DataQueue"].get()
 
-                #print("GUI_DataQueue",getItem)
-                #self.realTime_Voltage=getItem[-1].voltage
-                #self.realTime_Current=getItem[-1].current
-                #self.realTime_Resistor=getItem[-1].resistance
+                # print("GUI_DataQueue",getItem)
+                self.realTime_Voltage=getItem[-1].voltage
+                self.realTime_Current=getItem[-1].current
+                self.realTime_Resistor=getItem[-1].resistance
                 
                 for data in getItem:
                     self.realTime_Voltage1=data.voltage
@@ -1330,6 +1332,7 @@ class Main_utility_manager(QWidget):
                 self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了RST",0)
                 self.measurement_start=False
+                self.eventPool["Measure Stop"].clear()
                 # time.sleep(0.5)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No.変更RST"].getValue():
@@ -1357,7 +1360,7 @@ class Main_utility_manager(QWidget):
     def measurement_finish_wait_Work(self):
         print("測定開始")
         self.eventPool["Auto Run Start"].set()
-
+        self.eventPool["Auto Run finish"].clear()
         self.eventPool["Auto Run finish"].wait()
         self.eventPool["Auto Run finish"].clear()
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
