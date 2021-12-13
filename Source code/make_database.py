@@ -384,6 +384,18 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, '測定可',{},{},{},{},{},'{}')".format(Table_name,10109,0,0,1,0,1,"放電による測定禁止エリアがあるため")
 cur.execute(test)
 
+test="INSERT INTO '{}' values({}, 'マッフル内圧力',{},{},{},{},{},'{}')".format(Table_name,10110,0,0,65535,0,1,"1.1kPa => 11")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '圧力上昇',{},{},{},{},{},'{}')".format(Table_name,10111,0,0,65535,0,1,"この数値以上になると圧力警報になる")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '置換完了',{},{},{},{},{},'{}')".format(Table_name,10112,0,0,65535,0,1,"")
+cur.execute(test)
+
+test="INSERT INTO '{}' values({}, '減圧',{},{},{},{},{},'{}')".format(Table_name,10113,0,0,65535,0,1,"")
+cur.execute(test)
+
 test="INSERT INTO '{}' values({}, '測定開始',{},{},{},{},{},'{}')".format(Table_name,10120,0,0,1,0,1,"エッジ(PC側でRST)")
 cur.execute(test)
 

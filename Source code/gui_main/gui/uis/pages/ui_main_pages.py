@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesrCUbrS.ui'
+## Form generated from reading UI file 'main_pageslsXFYj.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -2005,6 +2005,38 @@ class Ui_MainPages(object):
 
         self.gridLayout_23.addWidget(self.frame_16, 0, 0, 1, 1)
 
+        self.frame_89 = QFrame(self.frame_14)
+        self.frame_89.setObjectName(u"frame_89")
+        self.frame_89.setMinimumSize(QSize(200, 0))
+        self.frame_89.setMaximumSize(QSize(16777215, 16777215))
+        self.frame_89.setFrameShape(QFrame.StyledPanel)
+        self.frame_89.setFrameShadow(QFrame.Raised)
+        self.gridLayout_26 = QGridLayout(self.frame_89)
+        self.gridLayout_26.setObjectName(u"gridLayout_26")
+        self.label_48 = QLabel(self.frame_89)
+        self.label_48.setObjectName(u"label_48")
+        self.label_48.setMinimumSize(QSize(80, 30))
+        self.label_48.setMaximumSize(QSize(60, 16777215))
+        self.label_48.setStyleSheet(u"")
+        self.label_48.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_26.addWidget(self.label_48, 0, 0, 1, 1)
+
+        self.realtime_Pressure_lineEdit = QLabel(self.frame_89)
+        self.realtime_Pressure_lineEdit.setObjectName(u"realtime_Pressure_lineEdit")
+        self.realtime_Pressure_lineEdit.setMinimumSize(QSize(0, 50))
+        self.realtime_Pressure_lineEdit.setMaximumSize(QSize(16777215, 16777215))
+        self.realtime_Pressure_lineEdit.setStyleSheet(u"font: 30px \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"color: rgb(225, 230, 241);\n"
+"padding-right:5px;\n"
+"background-color: rgb(16, 18, 22);")
+        self.realtime_Pressure_lineEdit.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_26.addWidget(self.realtime_Pressure_lineEdit, 0, 1, 1, 1)
+
+
+        self.gridLayout_23.addWidget(self.frame_89, 0, 2, 1, 1)
+
 
         self.gridLayout_5.addWidget(self.frame_14, 1, 0, 1, 1)
 
@@ -2390,7 +2422,7 @@ class Ui_MainPages(object):
         self.frame_4.setObjectName(u"frame_4")
         self.frame_4.setMinimumSize(QSize(0, 0))
         self.frame_4.setMaximumSize(QSize(16777215, 16777215))
-        self.frame_4.setCursor(QCursor(Qt.SizeHorCursor))
+        self.frame_4.setCursor(QCursor(Qt.ArrowCursor))
         self.frame_4.setLayoutDirection(Qt.LeftToRight)
         self.frame_4.setFrameShape(QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QFrame.Raised)
@@ -2398,11 +2430,50 @@ class Ui_MainPages(object):
         self.verticalLayout_7.setSpacing(10)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.gasFreeflow_pushButton = QPushButton(self.frame_4)
+        self.gasFreeflow_pushButton.setObjectName(u"gasFreeflow_pushButton")
+        sizePolicy.setHeightForWidth(self.gasFreeflow_pushButton.sizePolicy().hasHeightForWidth())
+        self.gasFreeflow_pushButton.setSizePolicy(sizePolicy)
+        self.gasFreeflow_pushButton.setMinimumSize(QSize(0, 40))
+        self.gasFreeflow_pushButton.setMaximumSize(QSize(16777215, 40))
+        self.gasFreeflow_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.gasFreeflow_pushButton.setTabletTracking(False)
+        self.gasFreeflow_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(65, 65, 65);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 10px;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,30);\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(148, 227, 114);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(158, 239, 120);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(125, 189, 95);\n"
+"}\n"
+"")
+        self.gasFreeflow_pushButton.setCheckable(False)
+
+        self.verticalLayout_7.addWidget(self.gasFreeflow_pushButton)
+
         self.autostart_pushButton = QPushButton(self.frame_4)
         self.autostart_pushButton.setObjectName(u"autostart_pushButton")
         self.autostart_pushButton.setMinimumSize(QSize(210, 50))
         self.autostart_pushButton.setMaximumSize(QSize(16777215, 16777215))
-        self.autostart_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.autostart_pushButton.setCursor(QCursor(Qt.BusyCursor))
         self.autostart_pushButton.setLayoutDirection(Qt.LeftToRight)
         self.autostart_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
 "	color: rgb(202, 206, 216);\n"
@@ -2431,7 +2502,7 @@ class Ui_MainPages(object):
 "	color: rgb(44, 36, 0);\n"
 "	background-color: rgb(69, 140, 207);\n"
 "}")
-        self.autostart_pushButton.setCheckable(True)
+        self.autostart_pushButton.setCheckable(False)
         self.autostart_pushButton.setAutoRepeatInterval(100)
 
         self.verticalLayout_7.addWidget(self.autostart_pushButton)
@@ -2482,7 +2553,7 @@ class Ui_MainPages(object):
 "QPushButton:pressed {\n"
 "	background-color: rgb(220, 37, 95);\n"
 "}")
-        self.eMSstop_pushButton.setCheckable(True)
+        self.eMSstop_pushButton.setCheckable(False)
 
         self.verticalLayout_7.addWidget(self.eMSstop_pushButton)
 
@@ -2555,45 +2626,6 @@ class Ui_MainPages(object):
 
 
         self.gridLayout_16.addWidget(self.frame_6, 0, 0, 1, 1, Qt.AlignBottom)
-
-        self.gasFreeflow_pushButton = QPushButton(self.frame_8)
-        self.gasFreeflow_pushButton.setObjectName(u"gasFreeflow_pushButton")
-        sizePolicy.setHeightForWidth(self.gasFreeflow_pushButton.sizePolicy().hasHeightForWidth())
-        self.gasFreeflow_pushButton.setSizePolicy(sizePolicy)
-        self.gasFreeflow_pushButton.setMinimumSize(QSize(0, 40))
-        self.gasFreeflow_pushButton.setMaximumSize(QSize(16777215, 40))
-        self.gasFreeflow_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.gasFreeflow_pushButton.setTabletTracking(False)
-        self.gasFreeflow_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
-"	color: rgb(202, 206, 216);\n"
-"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
-"	background-color: rgb(65, 65, 65);\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-radius: 10px;\n"
-"}\n"
-"QPushButton:disabled {\n"
-"	color: rgb(70, 80, 95);\n"
-"	background-color: rgba(0, 0, 0,30);\n"
-"}\n"
-"QPushButton:checked{\n"
-"	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(148, 227, 114);\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(158, 239, 120);\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(125, 189, 95);\n"
-"}\n"
-"")
-        self.gasFreeflow_pushButton.setCheckable(False)
-
-        self.gridLayout_16.addWidget(self.gasFreeflow_pushButton, 1, 0, 1, 1)
 
 
         self.gridLayout_15.addWidget(self.frame_8, 0, 0, 1, 1)
@@ -4670,14 +4702,16 @@ class Ui_MainPages(object):
         self.label_45.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u53ef", None))
         self.label_30.setText(QCoreApplication.translate("MainPages", u"\u6e29\u5ea6\u30ad\u30fc\u30d7\u4e2d", None))
         self.label_28.setText(QCoreApplication.translate("MainPages", u"\u6607\u6e29\u4e2d", None))
-        self.realtime_Voltage_lineEdit.setText(QCoreApplication.translate("MainPages", u"450V", None))
+        self.realtime_Voltage_lineEdit.setText("")
         self.label_31.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u96fb\u5727", None))
         self.label_34.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u62b5\u6297", None))
-        self.realtime_Resistor_lineEdit.setText(QCoreApplication.translate("MainPages", u"10\u03a9", None))
+        self.realtime_Resistor_lineEdit.setText("")
         self.label_35.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u96fb\u6d41", None))
-        self.realtime_Current_lineEdit.setText(QCoreApplication.translate("MainPages", u"100uA", None))
+        self.realtime_Current_lineEdit.setText("")
         self.label_23.setText(QCoreApplication.translate("MainPages", u"\u7089\u5185\u6e29\u5ea6", None))
-        self.realtime_Temp_lineEdit.setText(QCoreApplication.translate("MainPages", u"12.200 \u2103", None))
+        self.realtime_Temp_lineEdit.setText("")
+        self.label_48.setText(QCoreApplication.translate("MainPages", u"\u7089\u5185\u5727\u529b", None))
+        self.realtime_Pressure_lineEdit.setText("")
         self.graphItem_label.setText(QCoreApplication.translate("MainPages", u"\u8868\u793a\u9805\u76ee", None))
         self.graphItem_combobox.setItemText(0, QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u6570\u5024", None))
         self.graphItem_combobox.setItemText(1, QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u30d1\u30bf\u30fc\u30f3", None))
@@ -4697,6 +4731,7 @@ class Ui_MainPages(object):
         self.remoteConnect_pushButton.setText(QCoreApplication.translate("MainPages", u"\u30ea\u30e2\u30fc\u30c8\u63a5\u7d9a", None))
         self.btn_AutoMode.setText(QCoreApplication.translate("MainPages", u"\u81ea\u52d5\u30e2\u30fc\u30c9", None))
         self.btn_ManaualMode.setText(QCoreApplication.translate("MainPages", u"\u624b\u52d5\u6e2c\u5b9a\u30e2\u30fc\u30c9", None))
+        self.gasFreeflow_pushButton.setText(QCoreApplication.translate("MainPages", u"\u5927\u6c17\u5727", None))
         self.autostart_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u958b\u59cb", None))
         self.label_11.setText("")
         self.eMSstop_pushButton.setText(QCoreApplication.translate("MainPages", u"\u904b\u8ee2\u505c\u6b62", None))
@@ -4705,7 +4740,6 @@ class Ui_MainPages(object):
         self.AutoMode_pattern_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"pattern2", None))
 
         self.Gas_mode_Label.setText(QCoreApplication.translate("MainPages", u"\u96f0\u56f2\u6c17\u30e2\u30fc\u30c9\uff1a\u5927\u6c17", None))
-        self.gasFreeflow_pushButton.setText(QCoreApplication.translate("MainPages", u"\u5927\u6c17\u5727", None))
         self.label_18.setText("")
         self.outputStop_pushButton.setText(QCoreApplication.translate("MainPages", u"\u51fa\u529b\u505c\u6b62", None))
         self.manaualMode_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u4e00\u822c\u6e2c\u5b9a", None))

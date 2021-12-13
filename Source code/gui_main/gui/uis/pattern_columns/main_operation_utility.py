@@ -172,9 +172,12 @@ class Main_utility_manager(QWidget):
         self.utility_setup()
 
         self.realTime_Temp=0
+        self.realTime_Pressure=0
         self.realTime_Voltage=0
         self.realTime_Current=0
         self.realTime_Resistor=0
+
+        self.low_pressure=0
 
         self.temp_data_array=[]
         self.voltage_data_array=[]
@@ -239,6 +242,8 @@ class Main_utility_manager(QWidget):
         #if PLC is allow us to start
         if (self._parent.ui.load_pages.remoteConnect_pushButton.isChecked() and self.ready_icon_active):
 
+            self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
+
             #Stop collect PV temperature data
             if self.PV_Record_Start:
                     self.PV_Record_Start=False
@@ -273,9 +278,11 @@ class Main_utility_manager(QWidget):
             #if PLC is at Running state
             if (self.vacuum_icon_active or
                 self.heating_icon_active or
-                self.keepTemp_icon_active or 
-                self.testing_icon_active or 
+                self.keepTemp_icon_active or
+                self.testing_icon_active or
                 self.autoRunFinishing_icon_active):
+
+                self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
 
                 #Disable conent editable
                 self._parent.testfile_manager.set_content_Editeable(False)
@@ -295,8 +302,18 @@ class Main_utility_manager(QWidget):
                     
             #if PLC is not at Running state also PLC is not allow to start
             else:
+                
+                if self.realTime_Pressure<self.low_pressure:
+                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(True)
+                else:
+                    self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
+
+                    
+
                 if self.PV_Record_Start:
                     self.PV_Record_Start=False
+
+
 
                 #Disbale EMS stop
                 if self._parent.ui.load_pages.autostart_pushButton.isEnabled():
@@ -1254,6 +1271,12 @@ class Main_utility_manager(QWidget):
 
         self.graph_Update_request=False
 
+    def two_into_decimal(self,value):
+
+        if value>=32768:
+            return (-1)*(65535 + 1 - value)
+        else:
+            return value
 
     def realtime_data_Update_Work(self):
         #print("realtime_data_Update_Work")
@@ -1275,12 +1298,20 @@ class Main_utility_manager(QWidget):
                 self.realTime_Temp=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()
                 self._parent.ui.load_pages.realtime_Temp_lineEdit.setText("{}".format(Quantity(self.realTime_Temp,"℃").render(prec=4)))
 
+            if self.realTime_Pressure!=self.two_into_decimal(self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["マッフル内圧力"].getValue()):
+                data=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["マッフル内圧力"].getValue()
+                self.realTime_Pressure=self.two_into_decimal(data)
+                self._parent.ui.load_pages.realtime_Pressure_lineEdit.setText("{:.1f} kPa".format(self.realTime_Pressure/10))
 
+            if self.low_pressure!=self.two_into_decimal(self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["減圧"].getValue()):
+                data=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["減圧"].getValue()
+                self.low_pressure=self.two_into_decimal(data)
+            
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定開始"].getValue():
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
                 if not self.measurement_start:
-                    print("測定開始　信号到達",self.measurement_start)
+                    print("測定開始 信号到達",self.measurement_start)
                     self.measurement_start=True
                     measurement_finish_wait_Thread = threading.Thread(target = self.measurement_finish_wait_Work,daemon=True)
                     measurement_finish_wait_Thread.start()
@@ -1386,7 +1417,7 @@ class Main_utility_manager(QWidget):
             else:
                 gas_mode=""
 
-            self._parent.ui.load_pages.Gas_mode_Label.setText("雰囲気モード：{}".format(gas_mode))
+            self._parent.ui.load_pages.Gas_mode_Label.setText("雰囲気モード:{}".format(gas_mode))
         
             self.ethernetConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue()
             self.usbConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["GPIB USB conneciton"].getValue()

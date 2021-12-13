@@ -4225,7 +4225,7 @@ padding-right:5px;
 background-color: rgb(16, 18, 22);</string>
                   </property>
                   <property name="text">
-                   <string>450V</string>
+                   <string/>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -4327,7 +4327,7 @@ padding-right:5px;
 background-color: rgb(16, 18, 22);</string>
                   </property>
                   <property name="text">
-                   <string>10Ω</string>
+                   <string/>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -4404,7 +4404,7 @@ padding-right:5px;
 background-color: rgb(16, 18, 22);</string>
                   </property>
                   <property name="text">
-                   <string>100uA</string>
+                   <string/>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -4481,7 +4481,84 @@ padding-right:5px;
 background-color: rgb(16, 18, 22);</string>
                   </property>
                   <property name="text">
-                   <string>12.200 ℃</string>
+                   <string/>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QFrame" name="frame_89">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_26">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_48">
+                  <property name="minimumSize">
+                   <size>
+                    <width>80</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>60</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>炉内圧力</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="realtime_Pressure_lineEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font: 30px &quot;游ゴシック&quot;;
+color: rgb(225, 230, 241);
+padding-right:5px;
+background-color: rgb(16, 18, 22);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -5389,7 +5466,7 @@ padding-left:10px;
                        </size>
                       </property>
                       <property name="cursor">
-                       <cursorShape>SizeHorCursor</cursorShape>
+                       <cursorShape>ArrowCursor</cursorShape>
                       </property>
                       <property name="layoutDirection">
                        <enum>Qt::LeftToRight</enum>
@@ -5417,6 +5494,69 @@ padding-left:10px;
                         <number>0</number>
                        </property>
                        <item>
+                        <widget class="QPushButton" name="gasFreeflow_pushButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="tabletTracking">
+                          <bool>false</bool>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 28px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 10px;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,30);
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(148, 227, 114);
+}
+
+QPushButton:hover {
+	color: rgb(44, 36, 0);
+	background-color: rgb(158, 239, 120);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgb(125, 189, 95);
+}
+</string>
+                         </property>
+                         <property name="text">
+                          <string>大気圧</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>false</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
                         <widget class="QPushButton" name="autostart_pushButton">
                          <property name="minimumSize">
                           <size>
@@ -5431,7 +5571,7 @@ padding-left:10px;
                           </size>
                          </property>
                          <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
+                          <cursorShape>BusyCursor</cursorShape>
                          </property>
                          <property name="layoutDirection">
                           <enum>Qt::LeftToRight</enum>
@@ -5469,7 +5609,7 @@ QPushButton:pressed {
                           <string>運転開始</string>
                          </property>
                          <property name="checkable">
-                          <bool>true</bool>
+                          <bool>false</bool>
                          </property>
                          <property name="autoRepeatInterval">
                           <number>100</number>
@@ -5554,7 +5694,7 @@ QPushButton:pressed {
                           <string>運転停止</string>
                          </property>
                          <property name="checkable">
-                          <bool>true</bool>
+                          <bool>false</bool>
                          </property>
                         </widget>
                        </item>
@@ -5699,69 +5839,6 @@ border:None</string>
                         </widget>
                        </item>
                       </layout>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QPushButton" name="gasFreeflow_pushButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="tabletTracking">
-                       <bool>false</bool>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 28px  &quot;游ゴシック&quot;;
-	background-color: rgb(65, 65, 65);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 10px;
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,30);
-}
-QPushButton:checked{
-	color: rgb(44, 36, 0);
-	background-color: rgb(148, 227, 114);
-}
-
-QPushButton:hover {
-	color: rgb(44, 36, 0);
-	background-color: rgb(158, 239, 120);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgb(125, 189, 95);
-}
-</string>
-                      </property>
-                      <property name="text">
-                       <string>大気圧</string>
-                      </property>
-                      <property name="checkable">
-                       <bool>false</bool>
-                      </property>
                      </widget>
                     </item>
                    </layout>

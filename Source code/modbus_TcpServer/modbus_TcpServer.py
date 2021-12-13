@@ -197,7 +197,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 if val!=self.Modbuspool[registor_name].getValue():
                     self.Modbuspool[registor_name].setValue(val)
                     self.MainPool_update_namelist.append(registor_name)
-                    change_contant_dict["[{}]{}".format(address_temp,registor_name)]=val
+                    change_contant_dict["[{}]{}".format(address_temp-self.register_shift,registor_name)]=val
                     if self.Modbus_debug:
                         pass
                         #print("modbus write - ","[{}]".format(address_temp-self.register_shift),registor_name,val)
