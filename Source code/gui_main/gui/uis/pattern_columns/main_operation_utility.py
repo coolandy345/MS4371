@@ -522,9 +522,7 @@ class Main_utility_manager(QWidget):
             # self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
 
-            self.dataRecord_Start=True
-            data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
-            data_receive_Thread.start()
+            
 
             #Check all condition to start sequence
                 # Lock parameter setting
@@ -557,9 +555,6 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.voltageOutput_pushButton.setChecked(True)
 
             #self.eventPool["Test Event1"].set()
-            self.dataRecord_Start=True
-            data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
-            data_receive_Thread.start()
 
         elif btn_name == "gasFreeflow_pushButton":
             self.gasFreeflow_signal=True
@@ -724,8 +719,7 @@ class Main_utility_manager(QWidget):
 
         self.starttime=time.time()
         self.timeUnit=1
-        #while self.dataRecord_Start:
-        while True:
+        while self.dataRecord_Start:
             try:
                 getItem=self.queuePool["GUI_DataQueue"].get()
 
@@ -804,6 +798,9 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.measurement_comboBox.currentIndexChanged.connect(self.btn_callback)
         self._parent.ui.load_pages.graphItem_combobox.currentIndexChanged.connect(self.btn_callback)
         self._parent.ui.load_pages.timeUnit_comboBox.currentIndexChanged.connect(self.btn_callback)
+
+        self._parent.ui.load_pages.realtime_Pressure_lineEdit.setText("0 kPa")
+        self._parent.ui.load_pages.realtime_Temp_lineEdit.setText("0 ℃")
         
         self._parent.ui.load_pages.AutoMode_pattern_comboBox.clear()
         emptylist=[""]
@@ -1249,7 +1246,7 @@ class Main_utility_manager(QWidget):
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
-                                                        name="温度SV値",
+                                                        name="温度SP値",
                                                         )
 
         self.pattern_PV_data_array=[]
@@ -1359,11 +1356,15 @@ class Main_utility_manager(QWidget):
 
     def measurement_finish_wait_Work(self):
         print("測定開始")
+        self.dataRecord_Start=True
+        data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
+        data_receive_Thread.start()
         self.eventPool["Auto Run Start"].set()
         self.eventPool["Auto Run finish"].clear()
         self.eventPool["Auto Run finish"].wait()
         self.eventPool["Auto Run finish"].clear()
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
+        self.dataRecord_Start=False
         print("測定終了")
 
     def ultility_Update_Work(self):

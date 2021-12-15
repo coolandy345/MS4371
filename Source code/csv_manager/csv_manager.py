@@ -13,6 +13,7 @@ from gui_main.gui.widgets.py_dialog import *
 from registor_manager import *
 import datetime
 import shutil
+import math
 
 
 class Csv_manager():
@@ -297,6 +298,7 @@ class Csv_manager():
             writer.writerow(['材料', self.profile.meterial])
             writer.writerow(['主電極径(mm)', self.profile.mainDia])
             writer.writerow(['ガード電極の内径(mm)', self.profile.innerDia])
+            writer.writerow(['電極面積(mm2)', (((float(self.profile.mainDia)+float(self.profile.innerDia))/2)/2)*(((float(self.profile.mainDia)+float(self.profile.innerDia))/2)/2)*math.pi])
             writer.writerow(['材料の厚さ(mm)', self.profile.thinkness])
             writer.writerow(['測定雰囲気', self.profile.gas])
             writer.writerow("")
@@ -319,7 +321,7 @@ class Csv_manager():
             writer = csv.writer(csvfile)
             writer.writerow("")
             writer.writerow(["{}".format(type)])
-            writer.writerow(["測定次数","経過時間(sec)","温度℃","印加電圧(v)","測定電流A","抵抗値(Ω)","体積抵抗率(Ω・cm)"])
+            writer.writerow(["測定次数","経過時間(sec)","温度℃","印加電圧(v)","測定電流(A)","抵抗値(Ω)","体積抵抗率(Ω・cm)"])
 
 
     def testDataQueue_Work(self,title):

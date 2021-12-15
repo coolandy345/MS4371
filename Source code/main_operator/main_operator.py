@@ -868,7 +868,7 @@ class Operator():
             folder_name=""
             if step_number:
                 test_pattern_number=Modbus_Registor_Pool["PTNData_{}_STEP_{}_測定パターン".format(pattern_number,step_number)].getValue()+1
-                folder_name="step_{}_{}℃".format(Modbus_Registor_Pool["PTNData_{}_STEP_{}_SV値".format(pattern_number,step_number)].getValue(),step_number)
+                folder_name="step_{}_{}℃".format(step_number,Modbus_Registor_Pool["PTNData_{}_STEP_{}_SV値".format(pattern_number,step_number)].getValue())
                 print("a",test_pattern_number)
             else:
                 test_pattern_number=Modbus_Registor_Pool["PTNData_{}_RT測定パターン".format(pattern_number)].getValue()
@@ -885,6 +885,8 @@ class Operator():
             
 
             self.script_stop=False
+            stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
+            stop_noise_measurement_Thread.start()
 
             self.last_time_of_measure=0
 
@@ -963,9 +965,8 @@ class Operator():
 
                     #Prepare Main Path
                     self.csv_manager.prepare_CsvFile(profile)
-                    stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
-                    stop_noise_measurement_Thread.start()
-                    print(measuretype)
+                    
+                    
                     for mode_type in measuretype:
                         voltage_timestemp=0
                         voltage_status=0
@@ -1132,8 +1133,8 @@ class Operator():
                                                         """)
 
             
-                        print("script_time",type(script_time),script_time)
-                        self.gpib_2657A.send_Command("test_time={}".format(float(script_time)+float(script_sample_time*9)))
+                        print("script_time",type(script_time),script_time*60)
+                        self.gpib_2657A.send_Command("test_time={}".format(float(script_time*60)+float(script_sample_time*9)))
                     
                         self.gpib_2657A.send_Command("""
                                                         time_up=false
@@ -1267,6 +1268,14 @@ class Operator():
                         data_count=1
                         data_startIndex=10
                         data_startTime=0
+
+                        r1=float(System_memory["主電極径(mm)"].getValue())
+                        r2=float(System_memory["ガード電極の内径(mm)"].getValue())
+                        length=float(System_memory["試料の厚さ(mm)"].getValue())
+
+                        area=(((r1+r2)/2)/2)*(((r1+r2)/2)/2)*math.pi
+                        resistance_constance=area/(length*10)
+
                         self.script_data_accept_stop=False
                         while (not self.script_stop) and (not self.script_data_accept_stop):
                             #print("read_Command")
@@ -1278,6 +1287,7 @@ class Operator():
                                 # text=self.gpib_2657A.read_Command()
 
                                 self.script_data_accept_stop=True
+                                
 
                             elif text[0].find('start') != -1:
                                 pass
@@ -1318,7 +1328,7 @@ class Operator():
                                             voltage=voltage_value,
                                             current=current_value,
                                             resistance=resistance,
-                                            resistivity=0
+                                            resistivity=resistance_constance*voltage_value/current_value
                                         )
 
                                     
@@ -1368,16 +1378,36 @@ class Operator():
                         self.csv_manager.stopRecord_CsvFile()
                         self.last_time_of_measure=voltage_timestemp-data_startTime+self.last_time_of_measure
 
-                self.gpib_2657A.send_Command("""
-                                                node[1].smua.abort()
-                                                node[2].smua.abort()
-                                                *CLS
-                                                reset()
-                                                node[1].smua.reset()
-                                                node[2].smua.reset()
-                                                node[2].smua.source.output = 0
-                                                node[1].smua.source.output = 0
-                                                """)
+            print("Finish all measurement")
+            time.sleep(0.1)
+            self.gpib_2657A.send_Command("""
+                                            abort
+                                            node[1].display.clear()
+                                            node[1].display.setcursor(1, 1)
+                                            node[1].display.settext("Stop")
+                                            node[2].display.clear()
+                                            node[2].display.setcursor(1, 1)
+                                            node[2].display.settext("Stop")
+                                            """)
+
+            self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")
+            time.sleep(0.1)
+            self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
+            time.sleep(0.1)
+            self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
+            time.sleep(0.1)
+
+            self.gpib_2657A.send_Command("""
+                                            node[1].smua.reset()
+                                            node[2].smua.reset()
+
+                                            node[1].display.screen = display.SMUA
+                                            node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
+                                            node[2].display.screen = display.SMUA
+                                            node[2].display.smua.measure.func = display.MEASURE_DCAMPS
+
+                                            *CLS
+                                            """)
 
             self.eventPool["Auto Run finish"].set()
 
