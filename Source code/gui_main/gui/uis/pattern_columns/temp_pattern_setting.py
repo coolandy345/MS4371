@@ -347,11 +347,7 @@ class TempPatternWidget(QWidget):
 
             self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(self.editorEnable)
 
-            self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(True)
-            self._parent.ui.load_pages.RT_testpattern_combobox.clear()
-            self._parent.ui.load_pages.RT_testpattern_combobox.addItems(self._parent.testPattern.patternFile_nameList)
-            self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(self.cache_steplist.RT_testpattern-1)
-            self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(False)
+            self.update_testPattern_Combobox()
 
         #elif self.cache_steplist.RT_measure==1:
         #    self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(False)
@@ -379,13 +375,23 @@ class TempPatternWidget(QWidget):
         self.delete_IconButtonActiveState=self.editorEnable
 
         self.IconButtonUpdate=True
-        
-
-
 
         errormessage=self.cache_steplist.checkRule()
         
         self._parent.ui.load_pages.PatternErrorMessagelabel.setText(errormessage)
+
+    def update_testPattern_Combobox(self):
+        self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(True)
+        self._parent.ui.load_pages.RT_testpattern_combobox.clear()
+        self._parent.ui.load_pages.RT_testpattern_combobox.addItems(self._parent.testPattern.patternFile_nameList)
+        self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(self.cache_steplist.RT_testpattern-1)
+        self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(False)
+
+        if self._parent.ui.load_pages.RT_testpattern_combobox.currentIndex()==-1:
+            self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(0)
+
+        for widge in self.step_widges_list[1:]:
+            widge.update_testFileCombobox()
 
 
     def utility_setup(self):
@@ -685,6 +691,7 @@ class TempPatternWidget(QWidget):
 
         elif btn_name=="RT_testpattern_combobox": 
             self.cache_steplist.set_RT_testpattern(self._parent.ui.load_pages.RT_testpattern_combobox.currentIndex()+1)
+            self._parent.ui.load_pages.testfile_comboBox.setCurrentText("{}".format(self._parent.ui.load_pages.RT_testpattern_combobox.currentText()))
             
             self.update()
         

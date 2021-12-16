@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'temp_patternlXVZcz.ui'
+## Form generated from reading UI file 'temp_patternsMVzVb.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -217,7 +217,11 @@ class Ui_temp_pattern(object):
 "QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
-"")
+"QComboBox:disabled {\n"
+"	background-color: rgba(0, 0, 0, 80);\n"
+"	color: rgb(225, 230, 241);\n"
+"	border-width: 1px;\n"
+"}")
 
         self.horizontalLayout.addWidget(self.Type_comboBox)
 

@@ -788,6 +788,8 @@ class Operator():
                                         """)
 
         self.set_memorypool_register("System memory","Noise_Measurement_status",0)
+        
+        self.eventPool["Noise Measure finish"].set()
 
     def data_stream_work(self):
         #self.data_stream_start=False

@@ -773,6 +773,11 @@ class TestPatternWidget(QWidget):
 
         self.update_Request=True
 
+        try:
+            self._parent.tempPattern.update_testPattern_Combobox()
+        except:
+            pass
+
     def patternFile_Delete(self):
 
 

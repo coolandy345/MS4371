@@ -325,6 +325,8 @@ class PyTempStep(QWidget):
 
             elif btn_name=="TestPattern_comboBox":
                 self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
+                
+                self._parent.ui.load_pages.testfile_comboBox.setCurrentText("{}".format(self.pattern.TestPattern_comboBox.currentText()))
 
 
             self.time_style()
@@ -347,7 +349,7 @@ class PyTempStep(QWidget):
                 test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_測定時間".format(pattern)].getValue()
                 BG_test_time=self._parent.MMG.memoryPool["Measurement Pattern"]["PTNData_{}_BG測定時間".format(pattern)].getValue()
 
-                total_time=self._keep_seccond/60+BG0_test_time+step_number*test_time+step_number*BG_test_time
+                total_time=self._keep_seccond+BG0_test_time+step_number*test_time+step_number*BG_test_time
 
                 if ((self._hour*60)+self._minute<total_time):
                     self.pattern.Time_label.setStyleSheet("color: rgb(255, 0, 0)")
@@ -553,6 +555,9 @@ class PyTempStep(QWidget):
         self.pattern.TestPattern_comboBox.setCurrentIndex(self._test_pattern)
         self.pattern.TestPattern_comboBox.blockSignals(False)
 
+        if self.pattern.TestPattern_comboBox.currentIndex()==-1:
+            self.pattern.TestPattern_comboBox.setCurrentIndex(0)
+
 
     def addStepBtn_presscallback(self):
         self._parent.tempPattern.new_TempPattern()
@@ -595,15 +600,23 @@ class PyTempStep(QWidget):
             self.pattern.frame_6.clearFocus()
 
     def enableEndType(self,enable):
-        self.callback_stop=True
         if enable:
             if self.pattern.Type_comboBox.count()==2:
                 self.pattern.Type_comboBox.addItems(["END"])
 
+            self.pattern.Type_comboBox.setEnabled(False)
+            self.pattern.Type_comboBox.setCurrentText("END")
+            
+
         else:
             if self.pattern.Type_comboBox.count()==3:
+                
                 self.pattern.Type_comboBox.removeItem(2)
-        self.callback_stop=False
+            
+                # self.callback_stop=True
+                self.pattern.Type_comboBox.setEnabled(True)
+                self.pattern.Type_comboBox.setCurrentIndex(0)
+                # self.callback_stop=False
 
     
 

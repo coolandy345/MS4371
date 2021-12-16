@@ -245,6 +245,10 @@ class Main_utility_manager(QWidget):
 
             self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(False)
 
+            #Enable manual mode check pushbutton
+            self._parent.ui.load_pages.btn_ManaualMode.setEnabled(True)
+            self._parent.ui.load_pages.btn_ManaualMode.setVisible(True)
+
             #Stop collect PV temperature data
             if self.PV_Record_Start:
                     self.PV_Record_Start=False
@@ -288,6 +292,10 @@ class Main_utility_manager(QWidget):
                 #Disable conent editable
                 self._parent.testfile_manager.set_content_Editeable(False)
 
+                #Disable manual mode check pushbutton
+                self._parent.ui.load_pages.btn_ManaualMode.setEnabled(False)
+                self._parent.ui.load_pages.btn_ManaualMode.setVisible(False)
+
                 #Start collecting PV temperature
                 if not self.PV_Record_Start:
                     self.PV_Record_Start=True
@@ -303,6 +311,12 @@ class Main_utility_manager(QWidget):
                     
             #if PLC is not at Running state also PLC is not allow to start
             else:
+
+                #Enable manual mode check pushbutton
+                self._parent.ui.load_pages.btn_ManaualMode.setEnabled(True)
+                self._parent.ui.load_pages.btn_ManaualMode.setVisible(True)
+
+                
                 
                 if self.realTime_Pressure<self.low_pressure:
                     self._parent.ui.load_pages.gasFreeflow_pushButton.setEnabled(True)
@@ -455,12 +469,15 @@ class Main_utility_manager(QWidget):
 
 
         elif btn_name == "Noisetest_pushButton":
-            self._parent.ui.load_pages.Noisetest_pushButton.blockSignals(True)
-            self._parent.ui.load_pages.Noisetest_pushButton.setChecked(True)
+            print("Noisetest_pushButton 223423423")
+            # self._parent.ui.load_pages.Noisetest_pushButton.setEnabled(False)
+            # self._parent.ui.load_pages.Noisetest_pushButton.setChecked(1)
 
-            self.eventPool["Noise Measure Start"].set()
-            self.dataRecord_Start=True
-            data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
+            self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
+            self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
+
+            
+            data_receive_Thread = threading.Thread(target = self.noise_measurement_finish_wait_Work,daemon=True)
             data_receive_Thread.start()
 
         elif btn_name == "manaualMode_comboBox":
@@ -495,14 +512,15 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("System memory","Noise_Measurement_Current",data)
             self.noise_Measurement_Current=data
 
-
-
-        #elif btn_name == "test_pushButton_3":
-        #    self.eventPool["Measure Stop"].set()
+        elif btn_name == "outputStop_pushButton":
+        
+            self.eventPool["Measure Stop"].set()
+            # self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
+            # self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
 
         elif btn_name == "btn_ManaualMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_ManaulOperate)
-        elif btn_name == "autostart_pushButton":    
+        elif btn_name == "autostart_pushButton":
             self.autostart_signal=True
             self.measurement_start=False
             self.eventPool["Measure Stop"].clear()
@@ -512,7 +530,7 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.autostart_pushButton.setText("運転中")
 
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1))
-            self.choose_pattern
+            
             
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
             #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
@@ -564,10 +582,7 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","大気圧",0)
             #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
             
-        elif btn_name == "outputStop_pushButton":
         
-            self.eventPool["Measure Stop"].set()
-
 
 
         elif btn_name == "eMSstop_pushButton":
@@ -732,7 +747,7 @@ class Main_utility_manager(QWidget):
                     self.realTime_Voltage1=data.voltage
                     self.realTime_Current1=data.current
                     self.realTime_Resistor1=data.resistance
-                    print("GUI_DataQueue",data.time,data.voltage,data.current,)
+                    # print("GUI_DataQueue",data.time,data.voltage,data.current,)
                     XYdata={}
                     XYdata["x"]=float(data.time)
                     XYdata["y"]=float(data.current)
@@ -754,6 +769,8 @@ class Main_utility_manager(QWidget):
 
             except:
                 pass
+
+        print("sdklgdskgjsdklgjjsdlgdskg")
 
 
     def utility_setup(self):
@@ -1352,7 +1369,20 @@ class Main_utility_manager(QWidget):
                 # time.sleep(0.5)
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止RST",0)
 
-
+    def noise_measurement_finish_wait_Work(self):
+        print("ノイズ測定開始")
+        self.dataRecord_Start=True
+        data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
+        data_receive_Thread.start()
+        self.eventPool["Noise Measure Start"].set()
+        self.eventPool["Noise Measure finish"].clear()
+        self.eventPool["Noise Measure finish"].wait()
+        self.eventPool["Noise Measure finish"].clear()
+        self.dataRecord_Start=False
+        print("ノイズ測定終了")
+        
+        self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
+        self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
 
     def measurement_finish_wait_Work(self):
         print("測定開始")
