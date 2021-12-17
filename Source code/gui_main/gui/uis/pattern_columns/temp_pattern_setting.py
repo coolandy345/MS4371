@@ -1049,7 +1049,7 @@ class TempPatternWidget(QWidget):
 
 
     def step_modifly_manager(self,step):
-        print("step_modifly_manager")
+        print("step_modifly_manager",step)
         stepUnit=self.cache_steplist.getStep(step)
 
         stepUnit.Step_Type                          =self.step_widges_list[step]._type      

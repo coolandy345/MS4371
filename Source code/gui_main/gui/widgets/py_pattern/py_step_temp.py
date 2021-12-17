@@ -604,8 +604,12 @@ class PyTempStep(QWidget):
             if self.pattern.Type_comboBox.count()==2:
                 self.pattern.Type_comboBox.addItems(["END"])
 
+            
+            # self.callback_stop=True
             self.pattern.Type_comboBox.setEnabled(False)
             self.pattern.Type_comboBox.setCurrentText("END")
+            # self.type_modifly_callback()
+            # self.callback_stop=False
             
 
         else:
@@ -616,6 +620,7 @@ class PyTempStep(QWidget):
                 # self.callback_stop=True
                 self.pattern.Type_comboBox.setEnabled(True)
                 self.pattern.Type_comboBox.setCurrentIndex(0)
+                # self.type_modifly_callback()
                 # self.callback_stop=False
 
     
