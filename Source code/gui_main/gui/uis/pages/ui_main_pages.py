@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pageslsXFYj.ui'
+## Form generated from reading UI file 'main_pagesFhdRRY.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.2
 ##
@@ -2322,6 +2322,7 @@ class Ui_MainPages(object):
 "QPushButton:disabled {\n"
 "	color: rgb(70, 80, 95);\n"
 "	background-color: rgba(0, 0, 0,30);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "}\n"
 "QPushButton:checked{\n"
 "	color: rgb(44, 36, 0);\n"
@@ -2449,6 +2450,7 @@ class Ui_MainPages(object):
 "QPushButton:disabled {\n"
 "	color: rgb(70, 80, 95);\n"
 "	background-color: rgba(0, 0, 0,30);\n"
+"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "}\n"
 "QPushButton:checked{\n"
 "	color: rgb(44, 36, 0);\n"
@@ -2486,6 +2488,7 @@ class Ui_MainPages(object):
 "QPushButton:disabled {\n"
 "	color: rgb(70, 80, 95);\n"
 "	background-color: rgba(0, 0, 0,30);\n"
+"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "}\n"
 "QPushButton:checked{\n"
 "	color: rgb(44, 36, 0);\n"
@@ -2539,6 +2542,7 @@ class Ui_MainPages(object):
 "QPushButton:disabled {\n"
 "	color: rgb(70, 80, 95);\n"
 "	background-color: rgba(0, 0, 0,30);\n"
+"	font: 30px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "}\n"
 "QPushButton:checked{\n"
 "	color: rgb(44, 36, 0);\n"
@@ -2690,6 +2694,7 @@ class Ui_MainPages(object):
 "QPushButton:disabled {\n"
 "	color: rgb(70, 80, 95);\n"
 "	background-color: rgba(0, 0, 0,30);\n"
+"	font: 30px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "}\n"
 "QPushButton:checked{\n"
 "	color: rgb(44, 36, 0);\n"
@@ -2724,8 +2729,9 @@ class Ui_MainPages(object):
 "}\n"
 "QComboBox:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
-"	border: none;\n"
+"	color: rgb(225, 230, 241);\n"
+"	padding:5px;\n"
+"	border-width: 1px;\n"
 "}\n"
 "QComboBox:hover {\n"
 "	background-color: rgba(0, 0, 0,40);\n"
@@ -2790,8 +2796,9 @@ class Ui_MainPages(object):
 "}\n"
 "QComboBox:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
-"	border: none;\n"
+"	color: rgb(225, 230, 241);\n"
+"	padding:5px;\n"
+"	border-width: 1px;\n"
 "}\n"
 "QComboBox:hover {\n"
 "	background-color: rgba(0, 0, 0,40);\n"
@@ -2814,8 +2821,9 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
-"	border: none;\n"
+"	color: rgb(225, 230, 241);\n"
+"	padding:5px;\n"
+"	border-width: 1px;\n"
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgba(0, 0, 0,40);\n"
@@ -2850,6 +2858,7 @@ class Ui_MainPages(object):
 "QPushButton:disabled {\n"
 "	color: rgb(70, 80, 95);\n"
 "	background-color: rgba(0, 0, 0,30);\n"
+"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "}\n"
 "QPushButton:checked{\n"
 "	color: rgb(44, 36, 0);\n"
@@ -2892,21 +2901,21 @@ class Ui_MainPages(object):
 "QPushButton:disabled {\n"
 "	color: rgb(70, 80, 95);\n"
 "	background-color: rgba(0, 0, 0,30);\n"
+"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "}\n"
 "QPushButton:checked{\n"
 "	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(79, 159, 238);\n"
+"	background-color: rgb(148, 227, 114);\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"	\n"
 "	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(109, 182, 238);\n"
+"	background-color: rgb(132, 200, 100);\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
 "	color: rgb(44, 36, 0);\n"
-"	background-color: rgb(69, 140, 207);\n"
+"	background-color: rgb(148, 227, 114);\n"
 "}")
         self.manualMeasurement_pushButton.setCheckable(True)
         self.manualMeasurement_pushButton.setChecked(False)
@@ -2952,8 +2961,9 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
-"	border: none;\n"
+"	color: rgb(225, 230, 241);\n"
+"	padding:5px;\n"
+"	border-width: 1px;\n"
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgba(0, 0, 0,40);\n"
@@ -2990,8 +3000,9 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
-"	border: none;\n"
+"	color: rgb(225, 230, 241);\n"
+"	padding:5px;\n"
+"	border-width: 1px;\n"
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgba(0, 0, 0,40);\n"
@@ -3019,8 +3030,9 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
-"	border: none;\n"
+"	color: rgb(225, 230, 241);\n"
+"	padding:5px;\n"
+"	border-width: 1px;\n"
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgba(0, 0, 0,40);\n"
@@ -3063,7 +3075,7 @@ class Ui_MainPages(object):
         self.Noisetest_pushButton.setLayoutDirection(Qt.LeftToRight)
         self.Noisetest_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
 "	color: rgb(202, 206, 216);\n"
-"	font: 26px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "	background-color: rgb(65, 65, 65);\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
@@ -3072,6 +3084,7 @@ class Ui_MainPages(object):
 "QPushButton:disabled {\n"
 "	color: rgb(70, 80, 95);\n"
 "	background-color: rgba(0, 0, 0,30);\n"
+"	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "}\n"
 "QPushButton:checked{\n"
 "	color: rgb(44, 36, 0);\n"
@@ -4590,7 +4603,7 @@ class Ui_MainPages(object):
         self.retranslateUi(MainPages)
 
         self.pages.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
         self.stackedWidget_2.setCurrentIndex(0)
 

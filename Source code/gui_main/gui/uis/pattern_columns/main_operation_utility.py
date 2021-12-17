@@ -160,6 +160,7 @@ class Main_utility_manager(QWidget):
         self.graph_Item="Measure_Data"
 
         self.timeUnit=1
+        self.current_time_unit=1
         self.timeLabel="s"
         self.timeMaxRange=10
         self.timeMinRange=1
@@ -469,14 +470,9 @@ class Main_utility_manager(QWidget):
 
 
         elif btn_name == "Noisetest_pushButton":
-            print("Noisetest_pushButton 223423423")
-            # self._parent.ui.load_pages.Noisetest_pushButton.setEnabled(False)
-            # self._parent.ui.load_pages.Noisetest_pushButton.setChecked(1)
-
             self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
             self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
 
-            
             data_receive_Thread = threading.Thread(target = self.noise_measurement_finish_wait_Work,daemon=True)
             data_receive_Thread.start()
 
@@ -531,7 +527,7 @@ class Main_utility_manager(QWidget):
 
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1))
             
-            
+            self.set_memorypool_register("System memory","Auto_Measurement_status",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
             #self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
             # self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
@@ -563,16 +559,19 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.manualMeasurement_pushButton.blockSignals(True)
             self._parent.ui.load_pages.manualMeasurement_pushButton.setChecked(True)
 
+            self.set_memorypool_register("System memory","Manual_Measurement_trigger",1)
+
             #self.eventPool["Test Event2"].set()
              # Read valtage and current from gpib device
 
 
             pass
         elif btn_name == "voltageOutput_pushButton":
-            self._parent.ui.load_pages.voltageOutput_pushButton.blockSignals(True)
-            self._parent.ui.load_pages.voltageOutput_pushButton.setChecked(True)
+            self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
+            self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
 
-            #self.eventPool["Test Event1"].set()
+            data_receive_Thread = threading.Thread(target = self.manual_measurement_finish_wait_Work,daemon=True)
+            data_receive_Thread.start()
 
         elif btn_name == "gasFreeflow_pushButton":
             self.gasFreeflow_signal=True
@@ -603,7 +602,7 @@ class Main_utility_manager(QWidget):
 
         elif btn_name == "voltage_lineEdit":
             # Set output voltage limit
-            self.set_memorypool_register("System memory","Manual_Measurement_Voltage",float(self._parent.ui.load_pages.voltage_lineEdit.text()))
+            # self.set_memorypool_register("System memory","Manual_Measurement_Voltage",float(self._parent.ui.load_pages.voltage_lineEdit.text()))
 
             data=float(self._parent.ui.load_pages.voltage_lineEdit.text())
             data,err=self.maxmin(2000,-2000,data)
@@ -668,36 +667,36 @@ class Main_utility_manager(QWidget):
                 self.timeMaxRange=10
                 self.divider=1
                 
-                self.realTime_Voltage_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Current_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Resistance_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
+                self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
             elif index=="10s/div":
                 self.timeUnit=1
                 self.timeLabel="s"
                 self.timeMaxRange=100
                 self.divider=1
                 
-                self.realTime_Voltage_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Current_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Resistance_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
+                self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
             elif index=="30s/div":
                 self.timeUnit=1
                 self.timeLabel="s"
                 self.timeMaxRange=300
                 self.divider=3
                 
-                self.realTime_Voltage_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Current_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Resistance_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
+                self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
             elif index=="1min/div":
                 self.timeUnit=60
                 self.timeLabel="min"
                 self.timeMaxRange=10
                 self.divider=6
                 
-                self.realTime_Voltage_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Current_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Resistance_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
+                self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
 
             elif index=="10min/div":
                 self.timeUnit=60
@@ -705,26 +704,25 @@ class Main_utility_manager(QWidget):
                 self.timeMaxRange=100
                 self.divider=60
                 
-                self.realTime_Voltage_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Current_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Resistance_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
+                self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
             elif index=="1h/div":
                 self.timeUnit=3600
                 self.timeLabel="hour"
-                self.timeMaxRange=3
+                self.timeMaxRange=10
                 self.divider=360
                 
-                self.realTime_Voltage_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Current_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
-                self.realTime_Resistance_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
+                self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
     
 
-
+            self.graph_Update_request=True
 
             self.check_buttom_axix()
 
     def data_receive_Work(self):
-        print("data_receive_Work")
 
         self.voltage_data_array=[]
         self.current_data_array=[]
@@ -733,10 +731,10 @@ class Main_utility_manager(QWidget):
         self.temp_pv_data_array=[]
 
         self.starttime=time.time()
-        self.timeUnit=1
+        # self.timeUnit=1
         while self.dataRecord_Start:
             try:
-                getItem=self.queuePool["GUI_DataQueue"].get()
+                getItem=self.queuePool["GUI_DataQueue"].get(timeout=0.1)
 
                 # print("GUI_DataQueue",getItem)
                 self.realTime_Voltage=getItem[-1].voltage
@@ -770,7 +768,6 @@ class Main_utility_manager(QWidget):
             except:
                 pass
 
-        print("sdklgdskgjsdklgjjsdlgdskg")
 
 
     def utility_setup(self):
@@ -810,8 +807,15 @@ class Main_utility_manager(QWidget):
         self._parent.ui.load_pages.gasFreeflow_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.autostart_pushButton.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.eMSstop_pushButton.clicked.connect(self.btn_callback)
-        self._parent.ui.load_pages.voltage_lineEdit.editingFinished.connect(self.btn_callback)
+
+        
         self._parent.ui.load_pages.voltage_lineEdit.setValidator(QDoubleValidator())
+        data=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Voltage"].getValue()
+        self._parent.ui.load_pages.voltage_lineEdit.setText("{}".format(data))
+        self._parent.ui.load_pages.voltage_lineEdit.editingFinished.connect(self.btn_callback)
+
+        data=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Mode"].getValue()
+        self._parent.ui.load_pages.measurement_comboBox.setCurrentText("{}".format(data))
         self._parent.ui.load_pages.measurement_comboBox.currentIndexChanged.connect(self.btn_callback)
         self._parent.ui.load_pages.graphItem_combobox.currentIndexChanged.connect(self.btn_callback)
         self._parent.ui.load_pages.timeUnit_comboBox.currentIndexChanged.connect(self.btn_callback)
@@ -1086,6 +1090,45 @@ class Main_utility_manager(QWidget):
                 self.win.removeItem(self.realTime_Temperature_Graph)
                 self.realTime_Temperature_Graph.showLabel("bottom", show=False)
 
+                self.check_buttom_axix()
+
+
+            if self.current_time_unit!=self.timeUnit:
+
+                new_data=[]
+                for pos in range(0,len(self.voltage_data_array)):
+
+                    XYdata={}
+                    XYdata["x"]=self.voltage_data_array[pos]["x"]*self.current_time_unit/self.timeUnit
+                    XYdata["y"]=self.voltage_data_array[pos]["y"]
+                    new_data.append(XYdata)
+
+                self.voltage_data_array=new_data
+                self.realTime_Voltage_Graph_bottomAxis.setTickSpacing(self.timeMaxRange/10,self.timeMaxRange/100)
+
+                new_data=[]
+                for pos in range(0,len(self.current_data_array)):
+
+                    XYdata={}
+                    XYdata["x"]=self.current_data_array[pos]["x"]*self.current_time_unit/self.timeUnit
+                    XYdata["y"]=self.current_data_array[pos]["y"]
+                    new_data.append(XYdata)
+
+                self.current_data_array=new_data
+                self.realTime_Current_Graph_bottomAxis.setTickSpacing(self.timeMaxRange/10,self.timeMaxRange/100)
+
+                new_data=[]
+                for pos in range(0,len(self.resistance_data_array)):
+
+                    XYdata={}
+                    XYdata["x"]=self.resistance_data_array[pos]["x"]*self.current_time_unit/self.timeUnit
+                    XYdata["y"]=self.resistance_data_array[pos]["y"]
+                    new_data.append(XYdata)
+
+                self.resistance_data_array=new_data
+                self.realTime_Resistance_Graph_bottomAxis.setTickSpacing(self.timeMaxRange/10,self.timeMaxRange/100)
+
+                self.current_time_unit=self.timeUnit
 
             #self.realTime_Voltage_Graph.setVisible (self._parent.ui.load_pages.Resistor_checkBox.isChecked())
             #self.realTime_Current_Graph.setVisible (self._parent.ui.load_pages.Voltage_checkBox.isChecked())
@@ -1128,23 +1171,19 @@ class Main_utility_manager(QWidget):
                     self.realTime_Resistance_Graph_set=False
                     self.win.removeItem(self.realTime_Resistance_Graph)
                     self.check_buttom_axix()
-                
-            #self._parent.voltage_curve.setData(self.voltage_data_array[0::self.divider])
-            #self._parent.current_curve.setData(self.current_data_array[0::self.divider])
-            #self._parent.resistance_curve.setData(self.resistance_data_array[0::self.divider])
 
             self._parent.voltage_curve.setData(self.voltage_data_array)
             self._parent.current_curve.setData(self.current_data_array)
             self._parent.resistance_curve.setData(self.resistance_data_array)
 
             if self.voltage_data_array:
-                self.realTime_Voltage_Graph.setXRange(min=self.voltage_data_array[-1]["x"]-self.timeMaxRange, max=self.voltage_data_array[-1]["x"])
+                self.realTime_Voltage_Graph.setXRange(min=self.voltage_data_array[-1]["x"]-1.1*self.timeMaxRange, max=self.voltage_data_array[-1]["x"]+0.1*self.timeMaxRange)
 
             if self.current_data_array:
-                self.realTime_Current_Graph.setXRange(min=self.current_data_array[-1]["x"]-self.timeMaxRange, max=self.current_data_array[-1]["x"])
+                self.realTime_Current_Graph.setXRange(min=self.current_data_array[-1]["x"]-1.1*self.timeMaxRange, max=self.current_data_array[-1]["x"]+0.1*self.timeMaxRange)
 
             if self.resistance_data_array:
-                self.realTime_Resistance_Graph.setXRange(min=self.resistance_data_array[-1]["x"]-self.timeMaxRange, max=self.resistance_data_array[-1]["x"])
+                self.realTime_Resistance_Graph.setXRange(min=self.resistance_data_array[-1]["x"]-1.1*self.timeMaxRange, max=self.resistance_data_array[-1]["x"]+0.1*self.timeMaxRange)
 
 
 
@@ -1201,7 +1240,90 @@ class Main_utility_manager(QWidget):
             #self.realTimeData_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
 
 
+    def realTime_Voltage_Graph_mouse_move(self,evt):
 
+        pos = evt[0]  ## using signal proxy turns original arguments into a tuple
+        if self.realTime_Voltage_Graph.sceneBoundingRect().contains(pos):
+            mousePoint = self.realTime_Voltage_Graph_vb.mapSceneToView(pos)
+            index = int(mousePoint.x())
+            # if index > 0 and index < len(data1):
+            #     label.setText("<span style='font-size: 12pt'>x=%0.1f,   <span style='color: red'>y1=%0.1f</span>,   <span style='color: green'>y2=%0.1f</span>" % (mousePoint.x(), data1[index], data2[index]))
+            
+            sucess,x_index = self.get_data_from_view(mousePoint.x())
+
+            if sucess:
+                self.realTime_Voltage_Graph_vLine.setPos(x_index)
+                self.realTime_Current_Graph_vLine.setPos(x_index)
+                self.realTime_Resistance_Graph_vLine.setPos(x_index)
+
+
+    def realTime_Current_Graph_mouse_move(self,evt):
+
+        pos = evt[0]  ## using signal proxy turns original arguments into a tuple
+        if self.realTime_Current_Graph.sceneBoundingRect().contains(pos):
+            mousePoint = self.realTime_Current_Graph_vb.mapSceneToView(pos)
+            index = int(mousePoint.x())
+            # if index > 0 and index < len(data1):
+            #     label.setText("<span style='font-size: 12pt'>x=%0.1f,   <span style='color: red'>y1=%0.1f</span>,   <span style='color: green'>y2=%0.1f</span>" % (mousePoint.x(), data1[index], data2[index]))
+            
+            sucess,x_index = self.get_data_from_view(mousePoint.x())
+
+            if sucess:
+                self.realTime_Voltage_Graph_vLine.setPos(x_index)
+                self.realTime_Current_Graph_vLine.setPos(x_index)
+                self.realTime_Resistance_Graph_vLine.setPos(x_index)
+
+    def realTime_Resistance_Graph_mouse_move(self,evt):
+
+        pos = evt[0]  ## using signal proxy turns original arguments into a tuple
+        if self.realTime_Resistance_Graph.sceneBoundingRect().contains(pos):
+            mousePoint = self.realTime_Resistance_Graph_vb.mapSceneToView(pos)
+            index = int(mousePoint.x())
+            # if index > 0 and index < len(data1):
+            #     label.setText("<span style='font-size: 12pt'>x=%0.1f,   <span style='color: red'>y1=%0.1f</span>,   <span style='color: green'>y2=%0.1f</span>" % (mousePoint.x(), data1[index], data2[index]))
+            
+            sucess,x_index = self.get_data_from_view(mousePoint.x())
+
+            if sucess:
+                self.realTime_Voltage_Graph_vLine.setPos(x_index)
+                self.realTime_Current_Graph_vLine.setPos(x_index)
+                self.realTime_Resistance_Graph_vLine.setPos(x_index)
+
+    def get_data_from_view(self,pos):
+
+        if (    self.realTime_Voltage_Graph_set or 
+                self.realTime_Current_Graph_set or 
+                self.realTime_Resistance_Graph_set ):
+                
+
+            Finded_close_pos=False
+            most_clost_index=0
+            short_distance=9999999999
+            index=0
+            for data in self.voltage_data_array:
+
+                distance=abs(data["x"]-pos)
+                if distance<short_distance:
+                    Finded_close_pos=True
+                    most_clost_index=index
+                    short_distance=distance
+
+                index+=1
+
+            if Finded_close_pos:
+
+                self.realTime_Voltage=self.voltage_data_array[most_clost_index]["y"]
+                self.realTime_Current=self.current_data_array[most_clost_index]["y"]
+                self.realTime_Resistor=self.resistance_data_array[most_clost_index]["y"]
+                return True,self.voltage_data_array[most_clost_index]["x"]
+
+            else:
+                return None,None
+        
+        else:
+
+            return None,None
+            
 
     def graph_setup(self):
 
@@ -1211,25 +1333,43 @@ class Main_utility_manager(QWidget):
         self.row_count=0
         #autoDownsample=True,downsampleMethod="subsample",
         self.realTime_Voltage_Graph = self.win.addPlot(row=1, col=0,clipToView=True)
+        self.realTime_Voltage_Graph_vLine = pg.InfiniteLine(angle=90, movable=False)
+        self.realTime_Voltage_Graph.addItem(self.realTime_Voltage_Graph_vLine, ignoreBounds=True)
+        self.realTime_Voltage_Graph_vb = self.realTime_Voltage_Graph.vb
+        self.realTime_Voltage_Graph_proxy = pg.SignalProxy(self.realTime_Voltage_Graph.scene().sigMouseMoved, rateLimit=60, slot=self.realTime_Voltage_Graph_mouse_move)
+        self.realTime_Voltage_Graph.enableAutoRange('x',0.95)
         self.realTime_Voltage_Graph.setLabel(axis='left', text='電圧', units='V')
         self.realTime_Voltage_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Voltage_Graph.showGrid(x=True, y=True)
+
         self.realTime_Current_Graph = self.win.addPlot(row=2, col=0,clipToView=True)
+        self.realTime_Current_Graph_vLine = pg.InfiniteLine(angle=90, movable=False)
+        self.realTime_Current_Graph.addItem(self.realTime_Current_Graph_vLine, ignoreBounds=True)
+        self.realTime_Current_Graph_vb = self.realTime_Current_Graph.vb
+        self.realTime_Current_Graph_proxy = pg.SignalProxy(self.realTime_Current_Graph.scene().sigMouseMoved, delay=0.01 , rateLimit=60, slot=self.realTime_Current_Graph_mouse_move)
+        self.realTime_Current_Graph.enableAutoRange('x',0.95)
         self.realTime_Current_Graph.setLabel(axis='left', text='電流', units='A')
         self.realTime_Current_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Current_Graph.showGrid(x=True, y=True)
+
         self.realTime_Resistance_Graph = self.win.addPlot(row=3, col=0,clipToView=True)
+        self.realTime_Resistance_Graph_vLine = pg.InfiniteLine(angle=90, movable=False)
+        self.realTime_Resistance_Graph.addItem(self.realTime_Resistance_Graph_vLine, ignoreBounds=True)
+        self.realTime_Resistance_Graph_vb = self.realTime_Resistance_Graph.vb
+        self.realTime_Resistance_Graph_proxy = pg.SignalProxy(self.realTime_Resistance_Graph.scene().sigMouseMoved, rateLimit=60, slot=self.realTime_Resistance_Graph_mouse_move)
+        self.realTime_Resistance_Graph.enableAutoRange('x',0.95)
         self.realTime_Resistance_Graph.setLabel(axis='left', text='抵抗', units='Ω')
         self.realTime_Resistance_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Resistance_Graph.showGrid(x=True, y=True)
+
         self.realTime_Temperature_Graph = self.win.addPlot(row=4, col=0,clipToView=True)
         self.realTime_Temperature_Graph.setLabel(axis='left', text='温度', units='℃')
         self.realTime_Temperature_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Temperature_Graph.showGrid(x=True, y=True)
 
-        self.realTime_Voltage_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
-        self.realTime_Current_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
-        self.realTime_Resistance_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
+        self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+        self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+        self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
         #self.realTime_Temperature_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
 
         
@@ -1240,6 +1380,10 @@ class Main_utility_manager(QWidget):
                                                         name="電圧",
                                                         )
 
+                                                        
+
+        self.realTime_Voltage_Graph_bottomAxis=self.realTime_Voltage_Graph.getAxis("bottom")
+        self.realTime_Voltage_Graph_bottomAxis.enableAutoSIPrefix(False)
         
 
         self._parent.current_curve=self.realTime_Current_Graph.plot(pen=pg.mkColor(132, 220, 244),
@@ -1248,6 +1392,9 @@ class Main_utility_manager(QWidget):
                                                         symbolSize=1,
                                                         name="電流",
                                                         )
+
+        self.realTime_Current_Graph_bottomAxis=self.realTime_Current_Graph.getAxis("bottom")
+        self.realTime_Current_Graph_bottomAxis.enableAutoSIPrefix(False)
         
 
         self._parent.resistance_curve=self.realTime_Resistance_Graph.plot(pen=pg.mkColor(131, 255, 145),
@@ -1256,6 +1403,9 @@ class Main_utility_manager(QWidget):
                                                         symbolSize=1,
                                                         name="抵抗値",
                                                         )
+
+        self.realTime_Resistance_Graph_bottomAxis=self.realTime_Resistance_Graph.getAxis("bottom")
+        self.realTime_Resistance_Graph_bottomAxis.enableAutoSIPrefix(False)
 
         self.realTime_Temperature_Graph.addLegend()
         self.pattern_SV_data_array=[]
@@ -1337,7 +1487,6 @@ class Main_utility_manager(QWidget):
                 self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始RST",0)
 
-                
                 # time.sleep(0.5)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定終了RST"].getValue():
@@ -1350,10 +1499,8 @@ class Main_utility_manager(QWidget):
                 # time.sleep(0.5)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No.変更RST"].getValue():
-                
                 # self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
-                
                 
                 time.sleep(0.5)
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
@@ -1369,6 +1516,14 @@ class Main_utility_manager(QWidget):
                 # time.sleep(0.5)
                 #self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止RST",0)
 
+
+            # if self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_status"].getValue():
+            #     self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
+            #     self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
+            # else:
+            #     self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
+            #     self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
+
     def noise_measurement_finish_wait_Work(self):
         print("ノイズ測定開始")
         self.dataRecord_Start=True
@@ -1381,8 +1536,17 @@ class Main_utility_manager(QWidget):
         self.dataRecord_Start=False
         print("ノイズ測定終了")
         
-        self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
-        self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
+    def manual_measurement_finish_wait_Work(self):
+        print("手動測定開始")
+        self.dataRecord_Start=True
+        data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
+        data_receive_Thread.start()
+        self.eventPool["Manual Measure Start"].set()
+        self.eventPool["Manual Measure finish"].clear()
+        self.eventPool["Manual Measure finish"].wait()
+        self.eventPool["Manual Measure finish"].clear()
+        self.dataRecord_Start=False
+        print("手動測定終了")
 
     def measurement_finish_wait_Work(self):
         print("測定開始")
@@ -1402,27 +1566,60 @@ class Main_utility_manager(QWidget):
 
         while 1:
             time.sleep(0.1)
+            if ( self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_status"].getValue() or 
+                self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_status"].getValue()    ):
+                self._parent.ui.load_pages.outputStop_pushButton.blockSignals(False)
+                self._parent.ui.load_pages.outputStop_pushButton.setChecked(False)
+                self._parent.ui.load_pages.outputStop_pushButton.setEnabled(True)
+                self._parent.ui.load_pages.manaualMode_comboBox.setEnabled(False)
+                self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
+                self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
+            else:
+                self._parent.ui.load_pages.outputStop_pushButton.blockSignals(True)
+                self._parent.ui.load_pages.outputStop_pushButton.setChecked(True)
+                self._parent.ui.load_pages.outputStop_pushButton.setEnabled(False)
+                self._parent.ui.load_pages.manaualMode_comboBox.setEnabled(True)
+                self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
+                self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
 
             if self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_status"].getValue():
                 self._parent.ui.load_pages.Noisetest_pushButton.blockSignals(True)
                 self._parent.ui.load_pages.Noisetest_pushButton.setChecked(True)
+                self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setEnabled(False)
+                self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setEnabled(False)
+                self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setEnabled(False)
             else:
                 self._parent.ui.load_pages.Noisetest_pushButton.setChecked(False)
                 self._parent.ui.load_pages.Noisetest_pushButton.blockSignals(False)
+                self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setEnabled(True)
+                self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setEnabled(True)
+                self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setEnabled(True)
 
             if self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_status"].getValue():
                 self._parent.ui.load_pages.voltageOutput_pushButton.blockSignals(True)
                 self._parent.ui.load_pages.voltageOutput_pushButton.setChecked(True)
+                self._parent.ui.load_pages.voltage_lineEdit.setEnabled(False)
+
+                if self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Ready"].getValue():
+                    self._parent.ui.load_pages.manualMeasurement_pushButton.setEnabled(True)
+                else:
+                    self._parent.ui.load_pages.manualMeasurement_pushButton.setEnabled(False)
+
+
             else:
                 self._parent.ui.load_pages.voltageOutput_pushButton.setChecked(False)
                 self._parent.ui.load_pages.voltageOutput_pushButton.blockSignals(False)
+                self._parent.ui.load_pages.manualMeasurement_pushButton.setEnabled(False)
+                self._parent.ui.load_pages.voltage_lineEdit.setEnabled(True)
 
             if self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_trigger"].getValue():
                 self._parent.ui.load_pages.manualMeasurement_pushButton.blockSignals(True)
                 self._parent.ui.load_pages.manualMeasurement_pushButton.setChecked(True)
+                self._parent.ui.load_pages.measurement_comboBox.setEnabled(False)
             else:
                 self._parent.ui.load_pages.manualMeasurement_pushButton.setChecked(False)
                 self._parent.ui.load_pages.manualMeasurement_pushButton.blockSignals(False)
+                self._parent.ui.load_pages.measurement_comboBox.setEnabled(True)
 
             if self.AutoMode_pattern_comboBox_contantList !=self._parent.tempPattern.patternFile_nameList:
                 self.AutoMode_pattern_comboBox_contantList=self._parent.tempPattern.patternFile_nameList

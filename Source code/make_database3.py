@@ -65,8 +65,13 @@ cur.execute(text)
 text="INSERT INTO '{}' values('Main_FolderPath','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(text)
 
+text="INSERT INTO '{}' values('Auto_Measurement_status','{}','{}')".format(Table_name,0,"NULL")
+cur.execute(text)
 
 text="INSERT INTO '{}' values('Manual_Measurement_status','{}','{}')".format(Table_name,0,"NULL")
+cur.execute(text)
+
+text="INSERT INTO '{}' values('Manual_Measurement_Ready','{}','{}')".format(Table_name,"一回測定","NULL")
 cur.execute(text)
 
 text="INSERT INTO '{}' values('Manual_Measurement_trigger','{}','{}')".format(Table_name,0,"NULL")

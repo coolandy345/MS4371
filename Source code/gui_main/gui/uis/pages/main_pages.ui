@@ -52,7 +52,7 @@ border-style: solid;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -5234,6 +5234,7 @@ QFrame:focus{
 QPushButton:disabled {
 	color: rgb(70, 80, 95);
 	background-color: rgba(0, 0, 0,30);
+	font: 15px  &quot;游ゴシック&quot;;
 }
 QPushButton:checked{
 	color: rgb(44, 36, 0);
@@ -5531,6 +5532,7 @@ padding-left:10px;
 QPushButton:disabled {
 	color: rgb(70, 80, 95);
 	background-color: rgba(0, 0, 0,30);
+	font: 28px  &quot;游ゴシック&quot;;
 }
 QPushButton:checked{
 	color: rgb(44, 36, 0);
@@ -5588,6 +5590,7 @@ QPushButton:pressed {
 QPushButton:disabled {
 	color: rgb(70, 80, 95);
 	background-color: rgba(0, 0, 0,30);
+	font: 28px  &quot;游ゴシック&quot;;
 }
 QPushButton:checked{
 	color: rgb(44, 36, 0);
@@ -5675,6 +5678,7 @@ QFrame:focus{
 QPushButton:disabled {
 	color: rgb(70, 80, 95);
 	background-color: rgba(0, 0, 0,30);
+	font: 30px  &quot;游ゴシック&quot;;
 }
 QPushButton:checked{
 	color: rgb(44, 36, 0);
@@ -5994,6 +5998,7 @@ QFrame:focus{
 QPushButton:disabled {
 	color: rgb(70, 80, 95);
 	background-color: rgba(0, 0, 0,30);
+	font: 30px  &quot;游ゴシック&quot;;
 }
 QPushButton:checked{
 	color: rgb(44, 36, 0);
@@ -6034,8 +6039,9 @@ QPushButton:pressed {
 }
 QComboBox:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
-	border: none;
+	color: rgb(225, 230, 241);
+	padding:5px;
+	border-width: 1px;
 }
 QComboBox:hover {
 	background-color: rgba(0, 0, 0,40);
@@ -6056,7 +6062,7 @@ QComboBox:hover {
                     <item row="3" column="0">
                      <widget class="QStackedWidget" name="stackedWidget_2">
                       <property name="currentIndex">
-                       <number>1</number>
+                       <number>0</number>
                       </property>
                       <widget class="QWidget" name="page">
                        <property name="minimumSize">
@@ -6188,8 +6194,9 @@ border-radius: 10px;</string>
 }
 QComboBox:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
-	border: none;
+	color: rgb(225, 230, 241);
+	padding:5px;
+	border-width: 1px;
 }
 QComboBox:hover {
 	background-color: rgba(0, 0, 0,40);
@@ -6232,8 +6239,9 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
-	border: none;
+	color: rgb(225, 230, 241);
+	padding:5px;
+	border-width: 1px;
 }
 QLineEdit:hover {
 	background-color: rgba(0, 0, 0,40);
@@ -6292,6 +6300,7 @@ QLineEdit:read-only {
 QPushButton:disabled {
 	color: rgb(70, 80, 95);
 	background-color: rgba(0, 0, 0,30);
+	font: 28px  &quot;游ゴシック&quot;;
 }
 QPushButton:checked{
 	color: rgb(44, 36, 0);
@@ -6364,21 +6373,21 @@ QPushButton:pressed {
 QPushButton:disabled {
 	color: rgb(70, 80, 95);
 	background-color: rgba(0, 0, 0,30);
+	font: 28px  &quot;游ゴシック&quot;;
 }
 QPushButton:checked{
 	color: rgb(44, 36, 0);
-	background-color: rgb(79, 159, 238);
+	background-color: rgb(148, 227, 114);
 }
 
 QPushButton:hover {
-	
 	color: rgb(44, 36, 0);
-	background-color: rgb(109, 182, 238);
+	background-color: rgb(132, 200, 100);
 }
 
 QPushButton:pressed {
 	color: rgb(44, 36, 0);
-	background-color: rgb(69, 140, 207);
+	background-color: rgb(148, 227, 114);
 }</string>
                           </property>
                           <property name="text">
@@ -6476,8 +6485,9 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
-	border: none;
+	color: rgb(225, 230, 241);
+	padding:5px;
+	border-width: 1px;
 }
 QLineEdit:hover {
 	background-color: rgba(0, 0, 0,40);
@@ -6545,8 +6555,9 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
-	border: none;
+	color: rgb(225, 230, 241);
+	padding:5px;
+	border-width: 1px;
 }
 QLineEdit:hover {
 	background-color: rgba(0, 0, 0,40);
@@ -6589,8 +6600,9 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
-	border: none;
+	color: rgb(225, 230, 241);
+	padding:5px;
+	border-width: 1px;
 }
 QLineEdit:hover {
 	background-color: rgba(0, 0, 0,40);
@@ -6687,7 +6699,7 @@ QLineEdit:read-only {
                           <property name="styleSheet">
                            <string notr="true">QPushButton:enabled {
 	color: rgb(202, 206, 216);
-	font: 26px  &quot;游ゴシック&quot;;
+	font: 28px  &quot;游ゴシック&quot;;
 	background-color: rgb(65, 65, 65);
 	border-width: 1px;
 	border-style: solid;
@@ -6696,6 +6708,7 @@ QLineEdit:read-only {
 QPushButton:disabled {
 	color: rgb(70, 80, 95);
 	background-color: rgba(0, 0, 0,30);
+	font: 28px  &quot;游ゴシック&quot;;
 }
 QPushButton:checked{
 	color: rgb(44, 36, 0);

@@ -69,6 +69,9 @@ if __name__ == "__main__":
     
     EventPool["Noise Measure Start"]=MemoryPoolManager.Event()
     EventPool["Noise Measure finish"]=MemoryPoolManager.Event()
+
+    EventPool["Manual Measure Start"]=MemoryPoolManager.Event()
+    EventPool["Manual Measure finish"]=MemoryPoolManager.Event()
     
     EventPool["Measure Stop"]=MemoryPoolManager.Event()
     

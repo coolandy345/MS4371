@@ -36,7 +36,34 @@ class Csv_manager():
         #reset_Thread = threading.Thread(target = self.reset_Work,daemon=True)
         #reset_Thread.start()
 
+    def startRecord_Manual_CsvFile(self):
+        print("startRecord_manual_CsvFile")
+        self.dataRecord_Start=True
+        Record_manual_Thread = threading.Thread(target = self.record_manual_Work,daemon=True)
+        Record_manual_Thread.start()
 
+    def record_manual_Work(self):
+        print("record_manual_Work has start")
+        
+        while self.dataRecord_Start:
+            try:
+                getItem=self.queuePool["testDataQueue"].get(timeout=0.1)
+
+
+
+                with open(self.csv, 'a', newline='') as csvfile:
+                    writer = csv.writer(csvfile)
+                    writer.writerow([   "{:0>7d}".format(getItem.count),
+                                                "{:.3f}".format(getItem.time),
+                                                "{:0>3d}".format(getItem.Temperature),
+                                                "{:+.5e}".format(getItem.voltage),
+                                                "{:+.5e}".format(getItem.current),
+                                                "{:+.5e}".format(getItem.resistance),
+                                                "{:+.5e}".format(getItem.resistivity)])
+                    
+            except:
+                pass
+        print("record_manual_Work has stop")
 
 
     def startRecord_CsvFile(self):
@@ -45,7 +72,10 @@ class Csv_manager():
         Record_Thread = threading.Thread(target = self.record_Work,daemon=True)
         Record_Thread.start()
 
+    
+
     def record_Work(self):
+        print("record_Work has start")
         while self.dataRecord_Start:
             try:
                 getItem=self.queuePool["testDataQueue"].get(timeout=0.1)
@@ -65,9 +95,8 @@ class Csv_manager():
             except:
                 pass
         print("record_Work has stop")
+
     def stopRecord_CsvFile(self):
-        #while 1:
-        #    self.eventPool["CSV_Record_stop"].wait()
         self.dataRecord_Start=False
 
     def prepare_NoiseTestCsvFile(self,profile):
@@ -84,6 +113,31 @@ class Csv_manager():
             writer.writerow(['測定判定基準電流(A)', self.profile.ノイズ測定判定基準])
             writer.writerow(['測定時間(min)', self.profile.ノイズ測定時間])
 
+
+    def prepare_ManualTestCsvFile(self,profile):
+
+        self.profile=profile
+
+        self.csv = os.path.join(self.main_folder_path, "手動測定結果データ.csv")
+        with open(self.csv, 'w', newline='') as csvfile:
+
+            writer = csv.writer(csvfile)
+
+            writer.writerow(['測定日', self.profile.date])
+            writer.writerow(['測定番号', self.profile.number])
+            if self.profile.mode==2:
+                writer.writerow(['依頼元', self.profile.costomer])
+                writer.writerow(['依頼者', self.profile.costomerName])
+            writer.writerow(['試料名称', self.profile.meterialName])
+            writer.writerow(['材料', self.profile.meterial])
+            writer.writerow(['主電極径(mm)', self.profile.mainDia])
+            writer.writerow(['ガード電極の内径(mm)', self.profile.innerDia])
+            writer.writerow(['電極面積(mm2)', (((float(self.profile.mainDia)+float(self.profile.innerDia))/2)/2)*(((float(self.profile.mainDia)+float(self.profile.innerDia))/2)/2)*math.pi])
+            writer.writerow(['材料の厚さ(mm)', self.profile.thinkness])
+            writer.writerow(['測定電圧(V)', self.profile.voltage])
+            writer.writerow("")
+
+            
 
     def result_NoiseTestCsvFile(self,text,max,min):
         print("result_NoiseTestCsvFile",text,max,min)
@@ -127,15 +181,14 @@ class Csv_manager():
 
         now=datetime.datetime.now()
         try:
-            path = os.path.join(path, str("{}_{}_{}_{}_{}_{}".format(now.year,now.month,now.day,now.hour,now.minute,now.second)))
+            path = os.path.join(path, str("{}年_{}月_{}日_{}時_{}分_{}秒".format(now.year,now.month,now.day,now.hour,now.minute,now.second)))
             os.mkdir(path)
         except FileExistsError:
             pass
 
         self.main_folder_path=path
 
-
-    def prepare_Mainfolder(self):
+    def prepare_ManualTest_Mainfolder(self):
         
         System_memory=self.memoryPool["System memory"]
         Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
@@ -186,57 +239,101 @@ class Csv_manager():
             except FileExistsError:
                 pass
             
-        test_number_folder_ready=False
         test_number=System_memory["依頼測定番号"].getValue()
-        while not test_number_folder_ready:
+        try:
+            path=os.path.join(path, "{}".format(str(test_number)))
+            os.mkdir(path)
+        except FileExistsError:
+            pass
+
+        try:
+            path=os.path.join(path, "手動測定")
+            os.mkdir(path)
+        except FileExistsError:
+            pass
+
+
+        now=datetime.datetime.now()
+        try:
+            path=os.path.join(path, "{}年_{}月_{}日_{}時_{}分_{}秒".format(now.year,now.month,now.day,now.hour,now.minute,now.second))
+            os.mkdir(path)
+        except FileExistsError:
+            pass
+
+        self.main_folder_path=path
+
+    def prepare_AutoTest_Mainfolder(self):
+        
+        System_memory=self.memoryPool["System memory"]
+        Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
+
+        basepath = "C:/高温抵抗測定結果"
+        try:
+            os.mkdir(basepath)
+        except FileExistsError:
+            pass
+
+
+
+        directory = "{}".format(str(System_memory["年度"].getValue()))
+        
+        
+        # Create target Year Directory
+        try:
+            path = os.path.join(basepath, directory)
+            print(path)
+            os.mkdir(path)
+        except FileExistsError:
+            pass
+        
+        # Create target Directory
+        try:
+            os.mkdir(os.path.join(path, "評価試験"))
+        except FileExistsError:
+            pass
+
+        # Create target Directory
+        try:
+            os.mkdir(os.path.join(path, "依頼測定"))
+        except FileExistsError:
+            pass
+        
+        
+        
+        if System_memory["評価試験"].getValue():
+            path = os.path.join(path, "評価試験")
             try:
-                path_temp=os.path.join(path, "{}".format(str(test_number)))
-                os.mkdir(path_temp)
-
-
+                os.mkdir(path)
             except FileExistsError:
                 pass
-                
-                #result=self.lunchOptionDialog("依頼番号 \"{}\" フォルダーが存在しています。上書きますか？".format(test_number),PyDialog.warning_2_type)
-                
-                #item=["option","依頼番号 \"{}\" フォルダーが存在しています。上書きますか？".format(test_number),PyDialog.warning_2_type]
-                #self.queuePool["dialog comfirmQueue"].put(item)
-                #result=self.queuePool["dialog resultQueue"].get()
+        else:
+            path = os.path.join(path, "依頼測定")
+            try:
+                os.mkdir(path)
+            except FileExistsError:
+                pass
+            
+            
+        test_number=System_memory["依頼測定番号"].getValue()
+        try:
+            path=os.path.join(path, "{}".format(str(test_number)))
+            os.mkdir(path)
+        except FileExistsError:
+            pass
 
-                #if result=="Yes":
+        try:
+            path=os.path.join(path, "自動測定")
+            os.mkdir(path)
+        except FileExistsError:
+            pass
 
-                #    path=path_temp
-                #    #os.rmdir(path)
-                    
-                #    import shutil
-                #    try:
-                #        shutil.rmtree(path)
-                #    except:
-                #        pass
 
-                #    try:
-                #        os.mkdir(path)
-                #    except:
-                #        pass
-                    
-                #    test_number_folder_ready=True
-                #    break
-
-                #elif result=="No":
-                #    #NameString_fromDialog=self.lunchMessageDialog("依頼番号編集","新規依頼番号入力 :")
-
-                #    item=["Message","依頼番号編集","新規依頼番号入力 :"]
-                #    self.queuePool["dialog comfirmQueue"].put(item)
-                #    NameString_fromDialog=self.queuePool["dialog resultQueue"].get()
-                #    self.set_memorypool_register("System memory","依頼測定番号",NameString_fromDialog)
-
-                #    test_number=NameString_fromDialog
-                test_number_folder_ready=True
-                path = path_temp
-            else:
-                path = path_temp
-                test_number_folder_ready=True
-                break
+        now=datetime.datetime.now()
+        try:
+            path=os.path.join(path, "{}年_{}月_{}日_{}時_{}分_{}秒".format(now.year,now.month,now.day,now.hour,now.minute,now.second))
+            os.mkdir(path)
+        except FileExistsError:
+            pass
 
         self.main_folder_path=path
             
@@ -322,6 +419,7 @@ class Csv_manager():
             writer.writerow("")
             writer.writerow(["{}".format(type)])
             writer.writerow(["測定次数","経過時間(sec)","温度℃","印加電圧(v)","測定電流(A)","抵抗値(Ω)","体積抵抗率(Ω・cm)"])
+
 
 
     def testDataQueue_Work(self,title):
