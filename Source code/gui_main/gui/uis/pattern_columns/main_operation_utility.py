@@ -9,6 +9,8 @@ from registor_manager import *
 from quantiphy import Quantity
 import numpy as np
 
+import subprocess
+
 
 class Memory_Manager():
     def __init__( 
@@ -200,6 +202,7 @@ class Main_utility_manager(QWidget):
         self.timer.timeout.connect(self.graph_Update_Work)
         self.timer.start(30)
 
+
         ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
         ultility_Update_Thread.start()
 
@@ -208,7 +211,68 @@ class Main_utility_manager(QWidget):
 
         setting_transfer_Thread = threading.Thread(target = self.setting_transfer_Work,daemon=True)
         setting_transfer_Thread.start()
+
+        self.startup_check_dialog()
+
+
+
+    def startup_check_dialog(self):
+        subprocess2 = subprocess.Popen("ipconfig", shell=True, stdout=subprocess.PIPE)
+        subprocess_return = subprocess2.stdout.read()
+        get_string=subprocess_return.decode("Shift JIS")
+        get_ethernet_interface=get_string.find("イーサネット アダプター イーサネット")
+        if get_ethernet_interface==-1:
+            self.lunchOptionDialog("イーサネット・インターフェースは未検出です。パソコンを再起動してください。",PyDialog.error_type)
+            self.close_app()
+            return
         
+        get_correct_IP_address=get_string.find("IPv4 アドレス . . . . . . . . . . . .: 192.168.0.40")
+
+        if get_correct_IP_address==-1:
+            self.lunchOptionDialog("イーサネットIPアドレスは不正確です。192.168.0.40 に設定してください。",PyDialog.error_type)
+            os.system('netsh interface ip set address "イーサネット" static 192.168.0.40 255.255.255.0 192.168.0.1')
+            self.close_app()
+            return
+
+        if not self._parent.MMG.memoryPool["System memory"]["GPIB USB conneciton"].getValue():
+            self.lunchOptionDialog("GPIB-USBインターフェースは未検出です、接続状況をご確認ください。",PyDialog.error_type)
+            self.close_app()
+            return
+
+        if not self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue():
+            self.lunchOptionDialog("Keithey 2657A & 2635B は通信異常です。GPIB-USBインターフェースを挿し直し、接続状況をご確認ください。",PyDialog.error_type)
+            self.close_app()
+            return
+        
+
+
+
+        
+
+    def close_app(self):
+        self.timer2=QTimer()
+        self.timer2.timeout.connect(self.close_app_work)
+        self.timer2.start(100)
+        
+    def close_app_work(self):
+        print("close_app from GUI")
+        self._parent.close()
+
+
+    def lunchOptionDialog(self,message,type):
+
+        '''
+        PyDialog.error_type
+        PyDialog.warning_2_type
+        PyDialog.warning_3_type
+        '''
+
+        diag = PyDialog(type,message)
+        return(str(diag.exec()))
+
+    def lunchMessageDialog(self,title,message):
+        diag = PyMessageDialog(title,message)
+        return(str(diag.exec()))
 
     def autoRun_logic(self):
 
