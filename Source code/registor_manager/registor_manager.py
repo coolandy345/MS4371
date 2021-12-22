@@ -174,7 +174,6 @@ def databaseLoadThread(memoryPool):
     System_Registor_Database.close()
 
     
-        
 
 
 

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesFhdRRY.ui'
+## Form generated from reading UI file 'main_pagesFZQFhU.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.2
+## Created by: Qt User Interface Compiler version 6.1.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PyQt5.QtCore import *  # type: ignore
-from PyQt5.QtGui import *  # type: ignore
-from PyQt5.QtWidgets import *  # type: ignore
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 
 class Ui_MainPages(object):
@@ -91,7 +91,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 810, 759))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1038, 759))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -471,7 +471,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -482,7 +482,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -586,7 +586,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -597,7 +597,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -694,7 +694,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -705,7 +705,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -802,7 +802,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -813,7 +813,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -910,7 +910,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -921,7 +921,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -1039,7 +1039,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -1050,7 +1050,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -1147,7 +1147,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -1158,7 +1158,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -1255,7 +1255,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -1266,7 +1266,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -1363,7 +1363,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -1374,7 +1374,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -1471,7 +1471,7 @@ class Ui_MainPages(object):
 "	color: rgb(225, 230, 241);\n"
 "}\n"
 "QLabel:disabled {\n"
-"	color: rgb(91, 94, 98);\n"
+"	color: rgb(225, 230, 241);\n"
 "}\n"
 "\n"
 "QLineEdit:enabled {\n"
@@ -1482,7 +1482,7 @@ class Ui_MainPages(object):
 "}\n"
 "QLineEdit:disabled {\n"
 "	background-color: rgba(0, 0, 0, 0);\n"
-"	color: rgb(44, 49, 60);\n"
+"	color: rgb(225, 230, 241);\n"
 "	border: none;\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -2467,7 +2467,7 @@ class Ui_MainPages(object):
 "	background-color: rgb(125, 189, 95);\n"
 "}\n"
 "")
-        self.gasFreeflow_pushButton.setCheckable(False)
+        self.gasFreeflow_pushButton.setCheckable(True)
 
         self.verticalLayout_7.addWidget(self.gasFreeflow_pushButton)
 
@@ -4602,8 +4602,8 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(1)
+        self.pages.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
         self.stackedWidget_2.setCurrentIndex(0)
 

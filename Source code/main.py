@@ -8,7 +8,7 @@ import os
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor
-from multiprocessing import Manager, Queue
+import multiprocessing
 
 # --------------------------------------------------------------------------- # 
 # local module import
@@ -27,11 +27,10 @@ def shotdown_entire_app(future):
 
 
 if __name__ == "__main__":
-    print("MS4371起動中...")
-
+    multiprocessing.freeze_support()
     sys.setrecursionlimit(1500)
 
-    MemoryPoolManager=Manager()
+    MemoryPoolManager=multiprocessing.Manager()
     MemoryPool = MemoryPoolManager.dict()
 
     PoolSemaphore=MemoryPoolManager.Semaphore(value=1)

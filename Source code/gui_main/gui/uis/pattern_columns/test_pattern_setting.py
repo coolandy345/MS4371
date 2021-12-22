@@ -976,6 +976,8 @@ class TestPatternWidget(QWidget):
 
 
     def focus_step(self,_step):
+        
+        self._parent.ui.load_pages.scrollArea_4.ensureWidgetVisible(self.step_widges_list[_step])
         self.step_widges_list[_step].setFocusStyle(True)
         self.GraphRegionList[_step].setFocusStyle(True)
         self.focus_step_number=_step

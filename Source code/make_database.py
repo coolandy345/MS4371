@@ -414,6 +414,9 @@ cur.execute(test)
 test="INSERT INTO '{}' values({}, '運転停止RST',{},{},{},{},{},'{}')".format(Table_name,10129,0,0,1,0,1,"エッジ(PC側でRST)")
 cur.execute(test)
 
+test="INSERT INTO '{}' values({}, 'PC警報RST',{},{},{},{},{},'{}')".format(Table_name,10130,0,0,1,0,1,"エッジ(PC側でRST)")
+cur.execute(test)
+
 test="INSERT INTO '{}' values({}, 'PC Boot',{},{},{},{},{},'{}')".format(Table_name,10150,0,0,1,0,1,"PC側常に1にする")
 cur.execute(test)
 

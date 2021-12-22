@@ -52,7 +52,7 @@ border-style: solid;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -128,7 +128,7 @@ QLineEdit:read-only {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>810</width>
+            <width>1038</width>
             <height>759</height>
            </rect>
           </property>
@@ -1069,7 +1069,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -1080,7 +1080,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -1316,7 +1316,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -1327,7 +1327,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -1556,7 +1556,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -1567,7 +1567,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -1796,7 +1796,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -1807,7 +1807,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -2036,7 +2036,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -2047,7 +2047,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -2324,7 +2324,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -2335,7 +2335,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -2564,7 +2564,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -2575,7 +2575,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -2804,7 +2804,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -2815,7 +2815,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -3044,7 +3044,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -3055,7 +3055,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -3284,7 +3284,7 @@ QLabel:enabled {
 	color: rgb(225, 230, 241);
 }
 QLabel:disabled {
-	color: rgb(91, 94, 98);
+	color: rgb(225, 230, 241);
 }
 
 QLineEdit:enabled {
@@ -3295,7 +3295,7 @@ QLineEdit:enabled {
 }
 QLineEdit:disabled {
 	background-color: rgba(0, 0, 0, 0);
-	color: rgb(44, 49, 60);
+	color: rgb(225, 230, 241);
 	border: none;
 }
 QLineEdit:hover {
@@ -5403,7 +5403,7 @@ padding-left:10px;
                 <string notr="true">background-color: rgb(30, 34, 41);</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="page_AutoOperate">
                 <layout class="QGridLayout" name="gridLayout_15">
@@ -5554,7 +5554,7 @@ QPushButton:pressed {
                           <string>大気圧</string>
                          </property>
                          <property name="checkable">
-                          <bool>false</bool>
+                          <bool>true</bool>
                          </property>
                         </widget>
                        </item>
