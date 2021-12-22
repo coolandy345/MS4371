@@ -112,6 +112,9 @@ class PyTempStep(QWidget):
         self._n2_flowrate = n2_flowrate
         self._PID_muffle_no = PID_muffle_no
         self._PID_heater_no = PID_heater_no
+
+
+        self.N2_forbid=False
         # Parent
         self._parent = parent
         
@@ -144,6 +147,14 @@ class PyTempStep(QWidget):
         self._menu.menu_frame.move(60, 0)
         self._menu.menu_frame.hide()
         self.type_modifly_callback()
+
+    def set_N2Frobid(self,enable):
+        self.N2_forbid=enable
+        if enable:
+            self._n2_flowrate=0
+            
+        self.type_modifly_callback()
+            
 
 
     def parameter_setting(self):
@@ -286,7 +297,7 @@ class PyTempStep(QWidget):
 
             elif btn_name=="N2_lineEdit":
                 data=float(self.pattern.N2_lineEdit.text())
-                self._n2_flowrate,err=self.maxmin(10,0.1,data)
+                self._n2_flowrate,err=self.maxmin(10,0,data)
                 if err:
                     self.pattern.N2_lineEdit.setText(str(self._n2_flowrate))
 
@@ -380,9 +391,15 @@ class PyTempStep(QWidget):
             self.pattern.SV_lineEdit.setEnabled(True)
             self.pattern.SV_lineEdit.setReadOnly(False)
 
-            self.pattern.N2_label.setEnabled(True)
-            self.pattern.N2_lineEdit.setEnabled(True)
-            self.pattern.N2_lineEdit.setReadOnly(False)
+            if self.N2_forbid:
+                self.pattern.N2_label.setEnabled(True)
+                self.pattern.N2_lineEdit.setEnabled(True)
+                self.pattern.N2_lineEdit.setReadOnly(True)
+                self.pattern.N2_lineEdit.setText("0")
+            else:
+                self.pattern.N2_label.setEnabled(True)
+                self.pattern.N2_lineEdit.setEnabled(True)
+                self.pattern.N2_lineEdit.setReadOnly(False)
             
             self.pattern.PID_muffle_label.setEnabled(True)
             self.pattern.PID_muffle_comboBox.setEnabled(True)
@@ -431,9 +448,15 @@ class PyTempStep(QWidget):
             self.pattern.SV_lineEdit.setEnabled(True)
             self.pattern.SV_lineEdit.setReadOnly(True)
 
-            self.pattern.N2_label.setEnabled(True)
-            self.pattern.N2_lineEdit.setEnabled(True)
-            self.pattern.N2_lineEdit.setReadOnly(False)
+            if self.N2_forbid:
+                self.pattern.N2_label.setEnabled(True)
+                self.pattern.N2_lineEdit.setEnabled(True)
+                self.pattern.N2_lineEdit.setReadOnly(True)
+                self.pattern.N2_lineEdit.setText("0")
+            else:
+                self.pattern.N2_label.setEnabled(True)
+                self.pattern.N2_lineEdit.setEnabled(True)
+                self.pattern.N2_lineEdit.setReadOnly(False)
             
             self.pattern.PID_muffle_label.setEnabled(True)
             self.pattern.PID_muffle_comboBox.setEnabled(True)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagesFZQFhU.ui'
+## Form generated from reading UI file 'main_pageskTEEKB.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -2506,6 +2506,7 @@ class Ui_MainPages(object):
 "	background-color: rgb(69, 140, 207);\n"
 "}")
         self.autostart_pushButton.setCheckable(False)
+        self.autostart_pushButton.setChecked(False)
         self.autostart_pushButton.setAutoRepeatInterval(100)
 
         self.verticalLayout_7.addWidget(self.autostart_pushButton)
@@ -4602,7 +4603,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(0)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
         self.stackedWidget_2.setCurrentIndex(0)

@@ -41,11 +41,13 @@ class TempPatternWidget(QWidget):
     def __init__( 
             self, 
             parent = None,
+            PoolSemaphore = None,
             queuePool={}
     ):
         super().__init__()
 
         self._parent=parent
+        self.PoolSemaphore=PoolSemaphore
         self.Step_number=0
         self.queuePool=queuePool
         self.step_widges_list=[]
@@ -473,7 +475,6 @@ class TempPatternWidget(QWidget):
     # /////////////////////////////
     def updata_step_widge(self):
         print("updata_step_widge")
-        #print("updata_step_widge_work")
         #adjust the Visible of each step
 
         for _step in range(1,21):
@@ -567,7 +568,15 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].time_style()
                 pass
         
-            
+            #真空であれば、N2強制0にする
+            if self.cache_steplist.gas_condition==1:
+                self.step_widges_list[_step].set_N2Frobid(True)
+                unit=self.cache_steplist.getStep(_step)
+                unit.N2_flowRate=0
+                self.cache_steplist.setStep(_step,unit)
+            else:
+                self.step_widges_list[_step].set_N2Frobid(False)
+
             self.step_widges_list[_step].callback_stop=False
         print("updata_step_widge_work finish")
         
@@ -852,11 +861,12 @@ class TempPatternWidget(QWidget):
             self.patternFile_Save()
 
     def set_memorypool_register(self,pool_name,registor_name,value):
-        
+        self.PoolSemaphore.acquire(timeout=10)
         if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
             self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
+        self.PoolSemaphore.release()
 
     def ultility_Update_Work(self):
         

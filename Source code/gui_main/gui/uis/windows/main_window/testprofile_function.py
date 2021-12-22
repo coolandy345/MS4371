@@ -57,12 +57,14 @@ class Testfile_manager(QWidget):
     def __init__(
             self,
             parent = None,
+            PoolSemaphore = None,
             app_parent = None,
             queuePool={}
     ):
         super().__init__()
 
         self._parent=parent
+        self.PoolSemaphore=PoolSemaphore
         self.queuePool=queuePool
 
         self._year=""
@@ -138,11 +140,12 @@ class Testfile_manager(QWidget):
             self.pid_parameter_list.append(pid_parameter)
 
     def set_memorypool_register(self,pool_name,registor_name,value):
-
+        self.PoolSemaphore.acquire(timeout=10)
         if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
             self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
+        self.PoolSemaphore.release()
         
     def set_parameter(self):
         self._parent.ui.load_pages.QC_Test_RadioButton.setChecked(self._QC_Test)
