@@ -680,19 +680,17 @@ class Operator():
                                             
                                             """)
 
-        self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")
-        time.sleep(0.1)
-        self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
-        time.sleep(0.1)
-        self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
-        time.sleep(0.1)
-        
-
         self.gpib_2657A.send_Command("""
-                                        node[1].smua.reset()
-                                        node[2].smua.reset()
-                                        *CLS
-                                        """)
+                                            beeper.beep(0.1, 2550)
+                                            delay(0.1)
+                                            beeper.beep(0.1, 2550)
+                                            delay(0.1)
+                                            beeper.beep(0.1, 2550)
+                                            delay(0.1)
+                                            node[1].smua.reset()
+                                            node[2].smua.reset()
+                                            *CLS
+                                            """)
 
         
         self.set_memorypool_register("System memory","Manual_Measurement_Ready",0)
@@ -983,11 +981,11 @@ class Operator():
                                             node[1].display.setcursor(2, 1)
                                             node[1].display.settext("Please press 'TRIG' confirm")
 
-                                            beeper.beep(0.2, 2400)
-                                            delay(0.3)
-                                            beeper.beep(0.2, 2400)
-                                            delay(0.3)
-                                            beeper.beep(0.2, 2400)
+                                            beeper.beep(0.1, 2400)
+                                            delay(0.1)
+                                            beeper.beep(0.1, 2400)
+                                            delay(0.1)
+                                            beeper.beep(0.1, 2400)
 
                                             node[1].display.trigger.wait(300)
                                             beeper.beep(0.2, 2400)
@@ -1120,20 +1118,17 @@ class Operator():
                                             
                                             """)
 
-        self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")
-        time.sleep(0.1)
-        self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
-        time.sleep(0.1)
-        self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
-        time.sleep(0.1)
-        
-
         self.gpib_2657A.send_Command("""
-                                        node[1].smua.reset()
-                                        node[2].smua.reset()
-
-                                        *CLS
-                                        """)
+                                            beeper.beep(0.1, 2550)
+                                            delay(0.1)
+                                            beeper.beep(0.1, 2550)
+                                            delay(0.1)
+                                            beeper.beep(0.1, 2550)
+                                            delay(0.1)
+                                            node[1].smua.reset()
+                                            node[2].smua.reset()
+                                            *CLS
+                                            """)
 
         self.set_memorypool_register("System memory","Noise_Measurement_status",0)
 
@@ -1186,12 +1181,15 @@ class Operator():
 
     def auto_Run_Start_Work(self):
         while 1:
-            print("Ready to auto_Run_Start_Work")
+            # print("Ready to auto_Run_Start_Work")
             #get event Start Run Auto run
             self.eventPool["Auto Run Start"].wait()
             #clear  Start Run Auto run event
             self.eventPool["Auto Run Start"].clear()
-            print("Start auto_Run_Start_Work")
+            # print("Start auto_Run_Start_Work")
+
+            finish_property=False
+            self.script_stop=False
             
             self.PoolSemaphore.acquire(timeout=1)
             Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
@@ -1215,7 +1213,11 @@ class Operator():
             #check pattern & step
             pattern_number=Modbus_Registor_Pool["実行PTN No."].getValue()
             step_number=Modbus_Registor_Pool["実行STEP No."].getValue()
-
+            
+            if not pattern_number or not step_number:
+                pattern_number=1
+                step_number=1
+                self.script_stop=True
 
             folder_name=""
             if step_number:
@@ -1233,15 +1235,16 @@ class Operator():
             else:
                 step_list=range(1,test_step_count+1)
             
-
-            self.script_stop=False
+            
             stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
             stop_noise_measurement_Thread.start()
 
             self.last_time_of_measure=0
 
             for step in step_list:
+
                 if not self.script_stop:
+                    
                     script_voltage=0
                     script_time=0
                     script_sample_time=0
@@ -1318,6 +1321,12 @@ class Operator():
                     
                     
                     for mode_type in measuretype:
+
+                        if self.script_stop:
+                            continue
+
+                        finish_property=False
+
                         voltage_timestemp=0
                         voltage_status=0
                         voltage_value=0
@@ -1329,7 +1338,7 @@ class Operator():
 
                         #starting listen data arrive
                         self.csv_manager.startRecord_CsvFile()
-                    
+
                         if mode_type=="抵抗測定結果":
                             script_voltage=voltage
                             script_time=_time
@@ -1355,16 +1364,15 @@ class Operator():
 
                         filter_count=Measurement_Pattern["PTNData_{}_filter_count".format(test_pattern_number)].getValue()
                         #------------------------------------------------------------------------------------------------------
-                        print("start_normal_measurement",script_voltage,script_time,script_sample_time)
+                        # print("start_normal_measurement",script_voltage,script_time,script_sample_time)
 
-                    
                         self.gpib_2657A.send_Command("""
-                                                        node[1].smua.abort()
-                                                        node[2].smua.abort()     
-                                                        reset()
+                                                        abort
                                                         *CLS
+                                                        reset()
                                                         node[1].smua.reset()
                                                         node[2].smua.reset()
+
                                                         node[1].beeper.beep(0.1, 2400)
                                                         node[2].display.clear()
                                                         node[2].display.setcursor(1, 1)
@@ -1433,7 +1441,7 @@ class Operator():
                                                         """)
 
                         
-                        print("script_voltage",type(script_voltage),script_voltage)
+                        # print("script_voltage",type(script_voltage),script_voltage)
                         self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(float(script_voltage)))
 
                         self.gpib_2657A.send_Command("""
@@ -1483,7 +1491,7 @@ class Operator():
                                                         """)
 
             
-                        print("script_time",type(script_time),script_time*60)
+                        # print("script_time",type(script_time),script_time*60)
                         self.gpib_2657A.send_Command("test_time={}".format(float(script_time*60)+float(script_sample_time*9)))
                     
                         self.gpib_2657A.send_Command("""
@@ -1497,7 +1505,7 @@ class Operator():
                                                         """)
 
                         data_rate = float(0.04/script_sample_time)
-                        print("burst",math.ceil(data_rate))
+                        # print("burst",math.ceil(data_rate))
                         if not data_rate>=1:
                             data_rate=1
                         self.gpib_2657A.send_Command("search_burst={}".format(math.ceil(data_rate)))
@@ -1519,7 +1527,7 @@ class Operator():
                                                         trigger.timer[1].count = 0
                                                         """)
                     
-                        print("script_sample_time",type(script_sample_time),script_sample_time)
+                        # print("script_sample_time",type(script_sample_time),script_sample_time)
                         self.gpib_2657A.send_Command("trigger.timer[1].delay = {}".format(float(script_sample_time)))
 
                         self.gpib_2657A.send_Command("""
@@ -1609,7 +1617,7 @@ class Operator():
 
                         time.sleep(0.1)
                         if not self.script_stop:
-                            print("run script")
+                            # print("run script")
                             self.gpib_2657A.send_Command("Restance_Measurement.run()")
 
 
@@ -1632,12 +1640,12 @@ class Operator():
                             text=self.gpib_2657A.read_Command()
                             print(text)
                             if text[0]=="finish":
-                                print("finish")
+                                # print("finish")
                                 # self.gpib_2657A.send_Command("reset()")
                                 # text=self.gpib_2657A.read_Command()
 
                                 self.script_data_accept_stop=True
-                                
+                                finish_property=True
 
                             elif text[0].find('start') != -1:
                                 pass
@@ -1714,7 +1722,7 @@ class Operator():
                             else:
                                 time.sleep(0.1)
 
-                        print("stop_measurement")
+                        # print("stop_measurement")
 
                         # self.gpib_2657A.send_Command("""
                         #                                 node[1].smua.abort()
@@ -1732,35 +1740,36 @@ class Operator():
                         self.csv_manager.stopRecord_CsvFile()
                         self.last_time_of_measure=voltage_timestemp-data_startTime+self.last_time_of_measure
 
-            print("Finish all measurement")
+            # print("Finish all measurement")
             time.sleep(0.1)
-            self.gpib_2657A.send_Command("""
-                                            abort
-                                            node[1].display.clear()
-                                            node[1].display.setcursor(1, 1)
-                                            node[1].display.settext("Stop")
-                                            node[2].display.clear()
-                                            node[2].display.setcursor(1, 1)
-                                            node[2].display.settext("Stop")
-                                            """)
-
-            self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")
-            time.sleep(0.1)
-            self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
-            time.sleep(0.1)
-            self.gpib_2657A.send_Command("beeper.beep(0.1, 2550)")   #100
-            time.sleep(0.1)
+            if not finish_property:
+                print("finish not property go abort")
+                self.gpib_2657A.send_Command("""
+                                                abort
+                                                node[1].display.clear()
+                                                node[1].display.setcursor(1, 1)
+                                                node[1].display.settext("Stop")
+                                                node[2].display.clear()
+                                                node[2].display.setcursor(1, 1)
+                                                node[2].display.settext("Stop")
+                                                
+                                                """)
 
             self.gpib_2657A.send_Command("""
+                                            beeper.beep(0.1, 2550)
+                                            delay(0.1)
+                                            beeper.beep(0.1, 2550)
+                                            delay(0.1)
+                                            beeper.beep(0.1, 2550)
+                                            delay(0.1)
                                             node[1].smua.reset()
                                             node[2].smua.reset()
-
                                             node[1].display.screen = display.SMUA
                                             node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
                                             node[2].display.screen = display.SMUA
                                             node[2].display.smua.measure.func = display.MEASURE_DCAMPS
-
                                             *CLS
+
                                             """)
 
             self.eventPool["Auto Run finish"].set()

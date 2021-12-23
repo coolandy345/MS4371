@@ -46,13 +46,13 @@ class PyGraphRegionItem(pg.LinearRegionItem):
 
         
     def hoverEnterEvent(self, ev):
-        if self.step!=0 and self.step!=9:
+        if self.step!=0:
             self.parent.focus_step(self.step)
         #self.app_parent.tempPattern.focus_step(self.step)
 
 
     def hoverLeaveEvent(self, ev):
-        if self.step!=0 and self.step!=9:
+        if self.step!=0:
             self.parent.un_focus_step(self.step)
         #self.app_parent.tempPattern.un_focus_step(self.step)
 

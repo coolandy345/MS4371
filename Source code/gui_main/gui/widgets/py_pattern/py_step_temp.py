@@ -263,6 +263,8 @@ class PyTempStep(QWidget):
 
     #When infomation is modifly by user , call back to this function
     def modifly_callback(self):
+        # print("modifly_callback",self._step)
+
         if (self.sender==None):
             return
 
@@ -628,23 +630,17 @@ class PyTempStep(QWidget):
                 self.pattern.Type_comboBox.addItems(["END"])
 
             
-            # self.callback_stop=True
             self.pattern.Type_comboBox.setEnabled(False)
             self.pattern.Type_comboBox.setCurrentText("END")
-            # self.type_modifly_callback()
-            # self.callback_stop=False
             
 
         else:
             if self.pattern.Type_comboBox.count()==3:
-                
+                self.pattern.frame_6.clearFocus()
                 self.pattern.Type_comboBox.removeItem(2)
             
-                # self.callback_stop=True
                 self.pattern.Type_comboBox.setEnabled(True)
                 self.pattern.Type_comboBox.setCurrentIndex(0)
-                # self.type_modifly_callback()
-                # self.callback_stop=False
 
     
 

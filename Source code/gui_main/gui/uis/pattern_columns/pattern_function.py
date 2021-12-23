@@ -138,7 +138,8 @@ class templist():
         pass
 
 
-    
+    def setEndStep(self,step):
+        pass
 
     def checkRule(self):
         errorRule=""
@@ -310,13 +311,16 @@ class templist():
         #return self.units[step]
     def print_list(self):
         print("name = ",self.name)
+        print("asciicode_0 = ",self.asciicode_0)
+        print("asciicode_1 = ",self.asciicode_1)
+        print("asciicode_2 = ",self.asciicode_2)
+        print("asciicode_3 = ",self.asciicode_3)
         print("comment = ",self.comment)
         print("active = ",self.active)
         print("step_number = ",self.step_number)
         print("gas_condition = ",self.gas_condition)
         print("RT_measure = ",self.RT_measure)
-
-    
+        print("RT_testpattern = ",self.RT_testpattern)
 
 class testUnit():
 

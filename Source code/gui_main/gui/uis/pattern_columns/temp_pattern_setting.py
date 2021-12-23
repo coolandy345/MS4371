@@ -159,7 +159,7 @@ class TempPatternWidget(QWidget):
             self.GraphStepLabelList.append(label)
             self.graph.plotItem.addItem(self.GraphStepLabelList[_step], ignoreBounds=True)
             
-            
+        print(len(self.GraphRegionList))
      
     def new_TempPattern(self):
         self.cache_steplist.setStep(self.cache_steplist.step_number+1,tempUnit())
@@ -474,7 +474,7 @@ class TempPatternWidget(QWidget):
     # update step widge
     # /////////////////////////////
     def updata_step_widge(self):
-        print("updata_step_widge")
+        # print("updata_step_widge")
         #adjust the Visible of each step
 
         for _step in range(1,21):
@@ -492,9 +492,26 @@ class TempPatternWidget(QWidget):
 
             #Only last step has End type
             if _step==self.cache_steplist.step_number :
+                # print("make end step",_step)
+                self.step_widges_list[_step].callback_stop=True
                 self.step_widges_list[_step].enableEndType(True)
+                endstep=self.cache_steplist.getStep(_step)
+                endstep=tempUnit()
+                endstep.Step_Type=2
+                self.cache_steplist.setStep(_step,endstep)
+                self.step_widges_list[_step].callback_stop=False
+
+                # endstep=self.cache_steplist.getStep(_step)
+                # endstep=tempUnit()
+                # endstep.
+
+                # self.cache_steplist.setStep(_step,endstep)
+
+
             else:
+                self.step_widges_list[_step].callback_stop=True
                 self.step_widges_list[_step].enableEndType(False)
+                self.step_widges_list[_step].callback_stop=False
 
             #Check if we can still add step unit
             if self.cache_steplist.step_number<20:
@@ -578,7 +595,7 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].set_N2Frobid(False)
 
             self.step_widges_list[_step].callback_stop=False
-        print("updata_step_widge_work finish")
+        # print("updata_step_widge_work finish")
         
     # update graph
     # /////////////////////////////
@@ -861,12 +878,13 @@ class TempPatternWidget(QWidget):
             self.patternFile_Save()
 
     def set_memorypool_register(self,pool_name,registor_name,value):
-        self.PoolSemaphore.acquire(timeout=10)
         if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
+            self.PoolSemaphore.acquire(timeout=10)
+            print("set_memorypool_register",pool_name,registor_name,value)
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
             self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
-        self.PoolSemaphore.release()
+            self.PoolSemaphore.release()
 
     def ultility_Update_Work(self):
         
@@ -970,6 +988,10 @@ class TempPatternWidget(QWidget):
         self.GraphRegionList[_step].setFocusStyle(True)
         self.focus_step_number=_step
 
+        for step in range(1,21):
+            if step !=_step:
+                self.step_widges_list[step].setFocusStyle(False)
+
     def un_focus_step(self,_step):
         self.step_widges_list[_step].setFocusStyle(False)
         self.GraphRegionList[_step].setFocusStyle(False)
@@ -1001,7 +1023,7 @@ class TempPatternWidget(QWidget):
             self.cache_steplist.total_time=self.cache_steplist.units[self.cache_steplist.step_number].total_time
         else:
             self.cache_steplist.total_time=0
-        #print("content_change_check",self.cache_steplist.total_time)
+        print("content_change_check",self.cache_steplist.total_time)
 
         if (self.cache_steplist!=None and
             self.patternFiles[self.focus_patternFile_number]!=None
@@ -1023,8 +1045,17 @@ class TempPatternWidget(QWidget):
                 self.cache_steplist.RT_testpattern      != self.patternFiles[self.focus_patternFile_number].RT_testpattern 
                 
                 ):
-                #print("A")
+                
                 self.content_Change=True
+                # print("------------------------------------------------------------------")
+                # print("A")
+                # print(".")
+                # print("cache_list")
+                # self.cache_steplist.print_list()
+                # print(".")
+                # print("memory_stepUnit")
+                # self.patternFiles[self.focus_patternFile_number].print_list()
+
 
         
             for step in range(1,21):
@@ -1047,20 +1078,21 @@ class TempPatternWidget(QWidget):
                 cache_stepUnit.shift                !=memory_stepUnit.shift or
                 cache_stepUnit.time_min                 !=memory_stepUnit.time_min
                 ):
-                    #print("B")
+                    
+                    
                     self.content_Change=True
-                    #print("------------------------------------------------------------------")
-                    #print()
-                    #print()
-                    #print("cache_stepUnit")
-                    #print(cache_stepUnit.print_unit())
-                    #print()
-                    #print("memory_stepUnit")
-                    #print(memory_stepUnit.print_unit())
+                    # print("------------------------------------------------------------------")
+                    # print("B step",step)
+                    # print(".")
+                    # print("cache_stepUnit")
+                    # print(cache_stepUnit.print_unit())
+                    # print(".")
+                    # print("memory_stepUnit")
+                    # print(memory_stepUnit.print_unit())
 
 
     def step_modifly_manager(self,step):
-        print("step_modifly_manager",step)
+        # print("step_modifly_manager",step)
         stepUnit=self.cache_steplist.getStep(step)
 
         stepUnit.Step_Type                          =self.step_widges_list[step]._type      
