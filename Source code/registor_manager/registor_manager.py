@@ -12,7 +12,7 @@ def get_Abs_path(relative):
         return 
     join_path=os.path.join(os.path.abspath(os.getcwd()), relative)
     norm_path=os.path.normpath(join_path)
-    return norm_path
+    return relative
 
 class MemoryUnit():
 
@@ -26,6 +26,8 @@ class MemoryUnit():
 
 def databaseWriteThread_NoModbusLoop(PoolSemaphore,memoryPool,queuePool,eventPool):
 
+    
+
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
@@ -37,24 +39,22 @@ def databaseWriteThread_NoModbusLoop(PoolSemaphore,memoryPool,queuePool,eventPoo
         time.sleep(0.1)
         
         test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
-        #print(test)
+
         cur.execute(test)
-        #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
             
         while not queuePool["database_Uplaod_Queue"].empty():
             getItem=queuePool["database_Uplaod_Queue"].get()
             
 
             test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
-            #print(test)
-            cur.execute(test)
 
-            #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
+            cur.execute(test)
          
 
         System_Registor_Database.commit()
 
 def databaseWriteThread(PoolSemaphore,memoryPool,queuePool,eventPool):
+    
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
@@ -68,9 +68,8 @@ def databaseWriteThread(PoolSemaphore,memoryPool,queuePool,eventPool):
         time.sleep(0.1)
         
         test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
-        #print(test)
+
         cur.execute(test)
-        #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
             
         while not queuePool["database_Uplaod_Queue"].empty():
             getItem=queuePool["database_Uplaod_Queue"].get()
@@ -80,8 +79,6 @@ def databaseWriteThread(PoolSemaphore,memoryPool,queuePool,eventPool):
             test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
             #print(test)
             cur.execute(test)
-
-            #memoryPool[getItem.pool_name][getItem.registor_name].print_Package_Contant()
          
 
         System_Registor_Database.commit()
@@ -89,7 +86,6 @@ def databaseWriteThread(PoolSemaphore,memoryPool,queuePool,eventPool):
 
 
 def databaseLoadThread(memoryPool):
-
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     
@@ -121,11 +117,7 @@ def databaseLoadThread(memoryPool):
 
     memoryPool["Modbus Registor Pool - Registor"]=pool
 
-    #for item in pool.values():
-
-    #    print(item.name,item.registor_number)
-    
-    
+ 
 
 
     pool={}
@@ -154,24 +146,13 @@ def databaseLoadThread(memoryPool):
 
     memoryPool["System memory"]=pool
 
-    #datalist=[]
-    #for row in cur.execute('SELECT * FROM "Read Measurement Data" '):
 
-    #    register=ModbusRegistorClass.MeasurePackage(
-    #                            time                =row[0],
-    #                            valtage         =row[1],
-    #                            current         =row[2],
-    #                            resistor         =row[3],
-    #                            duration               =row[4],
-    #                            temperature           =row[5]
-    #                           )
-    #    datalist.append(register)
-
-    #memoryPool["Read Measurement Data"]=datalist
 
     
     System_Registor_Database.commit()
     System_Registor_Database.close()
+
+    
 
     
 

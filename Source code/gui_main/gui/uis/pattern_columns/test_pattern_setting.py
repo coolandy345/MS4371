@@ -875,12 +875,13 @@ class TestPatternWidget(QWidget):
             self.patternFile_Save()
 
     def set_memorypool_register(self,pool_name,registor_name,value):
-        self.PoolSemaphore.acquire(timeout=10)
         if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
+            
+            self.PoolSemaphore.acquire(timeout=10)
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
             self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
-        self.PoolSemaphore.release()
+            self.PoolSemaphore.release()
 
     def ultility_Update_Work(self):
         #print("self.test1 = ",self.test1)

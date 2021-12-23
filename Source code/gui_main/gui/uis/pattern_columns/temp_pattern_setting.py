@@ -159,7 +159,7 @@ class TempPatternWidget(QWidget):
             self.GraphStepLabelList.append(label)
             self.graph.plotItem.addItem(self.GraphStepLabelList[_step], ignoreBounds=True)
             
-        print(len(self.GraphRegionList))
+        # print(len(self.GraphRegionList))
      
     def new_TempPattern(self):
         self.cache_steplist.setStep(self.cache_steplist.step_number+1,tempUnit())
@@ -880,7 +880,7 @@ class TempPatternWidget(QWidget):
     def set_memorypool_register(self,pool_name,registor_name,value):
         if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
             self.PoolSemaphore.acquire(timeout=10)
-            print("set_memorypool_register",pool_name,registor_name,value)
+            # print("set_memorypool_register",pool_name,registor_name,value)
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
             self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
@@ -988,9 +988,10 @@ class TempPatternWidget(QWidget):
         self.GraphRegionList[_step].setFocusStyle(True)
         self.focus_step_number=_step
 
-        for step in range(1,21):
-            if step !=_step:
-                self.step_widges_list[step].setFocusStyle(False)
+
+        # for step in range(1,21):
+        #     if step !=_step:
+        #         self.step_widges_list[step].setFocusStyle(False)
 
     def un_focus_step(self,_step):
         self.step_widges_list[_step].setFocusStyle(False)
@@ -1023,7 +1024,7 @@ class TempPatternWidget(QWidget):
             self.cache_steplist.total_time=self.cache_steplist.units[self.cache_steplist.step_number].total_time
         else:
             self.cache_steplist.total_time=0
-        print("content_change_check",self.cache_steplist.total_time)
+        # print("content_change_check",self.cache_steplist.total_time)
 
         if (self.cache_steplist!=None and
             self.patternFiles[self.focus_patternFile_number]!=None

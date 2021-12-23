@@ -55,9 +55,9 @@ class Memory_Manager():
             getItem_list=[]
             getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
             
-            self.PoolSemaphore.acquire(timeout=10)
+            
             # #Wait for 0.01s for any others request
-            time.sleep(0.001)
+            time.sleep(0.1)
             while not self.queuePool["memory_DownlaodToGUI_request_Queue"].empty():
                 getItem_list.append(self.queuePool["memory_DownlaodToGUI_request_Queue"].get())
 
@@ -78,6 +78,8 @@ class Memory_Manager():
                 import_pool[getItem.pool_name].append(getItem)
 
             #print("getItem",poolNameList)
+            
+            self.PoolSemaphore.acquire(timeout=10)
             for pool_name in poolNameList:
 
                 for item in import_pool[pool_name]:
@@ -97,7 +99,6 @@ class Memory_Manager():
             getItem_list=[]
             getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
             
-            self.PoolSemaphore.acquire(timeout=10)
             #Wait for 0.01s for any others request
             time.sleep(0.1)
             # Collected al  item in this 0.1s
@@ -115,18 +116,21 @@ class Memory_Manager():
 
             #Remove Duplicates From poolNameList
             poolNameList = list(dict.fromkeys(poolNameList))
-
+            
+            self.PoolSemaphore.acquire(timeout=10)
             #Update the local GUI memoryPool to Master_memoryPool
             for pool_name in poolNameList:
                 
                 self.Master_memoryPool[pool_name]=self.memoryPool[pool_name]
+
+            self.PoolSemaphore.release()
 
             #Send database update request
             for item in getItem_list:
                 sendItem=MemoryUnit(item.pool_name,item.registor_name)
                 self.queuePool["database_Uplaod_Queue"].put(sendItem)
             
-            self.PoolSemaphore.release()
+            
 
 
             
@@ -218,7 +222,7 @@ class Main_utility_manager(QWidget):
         setting_transfer_Thread = threading.Thread(target = self.setting_transfer_Work,daemon=True)
         setting_transfer_Thread.start()
 
-        self.startup_check_dialog()
+        # self.startup_check_dialog()
 
         
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
@@ -317,7 +321,8 @@ class Main_utility_manager(QWidget):
                 self.set_memorypool_register("Modbus Registor Pool - Registor","リモート",0)
 
         if not self.usbConnecton_icon_active or not self.gPIBConnecton_2657A_icon_active:
-            self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",1)
+            if not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PC警報"].getValue():
+                self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",1)
 
         #if PLC is allow us to start
         if (self.ready_icon_active and self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["リモート"].getValue()):

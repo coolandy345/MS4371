@@ -302,6 +302,8 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
 
 def run_async_server(PoolSemaphore,memorypool,queuePool,eventPool):
+
+    test_time=time.time()
     
     block  = CustomDataBlock(PoolSemaphore,memorypool,queuePool,eventPool)
     #print(block.getValues(10, count=10))
@@ -327,6 +329,9 @@ def run_async_server(PoolSemaphore,memorypool,queuePool,eventPool):
     # run the server you want
     # ----------------------------------------------------------------------- # 
     # TCP Server
+    
+    print("finish run_async_server",time.time()-test_time,"s")
+
     local_IP_address=socket.gethostbyname(socket.gethostname())
     StartTcpServer(context, identity=identity, address=(local_IP_address, 506))
     
