@@ -34,7 +34,7 @@ class PyDialog(QDialog):
     warning_3_type="warning_3_type"
     error_type="error_type"
 
-    def __init__(self,type,text,):
+    def __init__(self,type,text):
         super().__init__()
 
         if type==self.warning_2_type:

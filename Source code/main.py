@@ -2,13 +2,11 @@
 # --------------------------------------------------------------------------- # 
 # System module import
 # --------------------------------------------------------------------------- # 
-import csv
-import ctypes
-import os
-import sys
-import time
+
+from sys import setrecursionlimit
 from concurrent.futures import ProcessPoolExecutor
-import multiprocessing
+from multiprocessing import Manager , freeze_support
+
 
 # --------------------------------------------------------------------------- # 
 # local module import
@@ -27,10 +25,12 @@ def shotdown_entire_app(future):
 
 
 if __name__ == "__main__":
-    multiprocessing.freeze_support()
-    sys.setrecursionlimit(1500)
+    freeze_support()
+    for count in range(1,100000):
+        print(count)
+    setrecursionlimit(1500)
 
-    MemoryPoolManager=multiprocessing.Manager()
+    MemoryPoolManager=Manager()
     MemoryPool = MemoryPoolManager.dict()
 
     PoolSemaphore=MemoryPoolManager.Semaphore(value=1)
@@ -79,10 +79,8 @@ if __name__ == "__main__":
     EventPool["CSV_Data_arrive"]=MemoryPoolManager.Event()
     EventPool["GUI_Data_arrive"]=MemoryPoolManager.Event()
 
-    
     EventPool["data_stream_start"]=MemoryPoolManager.Event()
     EventPool["data_stream_stop"]=MemoryPoolManager.Event()
-    
     
     EventPool["Database_data_Initial"]=MemoryPoolManager.Event()
     EventPool["CSV_Record_stop"]=MemoryPoolManager.Event()
@@ -91,7 +89,6 @@ if __name__ == "__main__":
     EventPool["Test Event1"]=MemoryPoolManager.Event()
     EventPool["Test Event2"]=MemoryPoolManager.Event()
 
-    
     databaseLoadThread(MemoryPool)
     #memoryWriteThread(MemoryPool,QueuePool)
     # initial_GUI(PoolSemaphore,MemoryPool,QueuePool,EventPool)

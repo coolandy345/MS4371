@@ -3,11 +3,15 @@ import time
 from gui_main.qt_core import *
 from gui_main.gui.widgets import *
 from gui_main.gui.core.functions import *
-import random
-from modbus_TcpServer import MeasurePackage
 from registor_manager import *
 from quantiphy import Quantity
-import numpy as np
+
+from pyqtgraph import setConfigOptions as pg_setConfigOptions
+from pyqtgraph import GraphicsLayoutWidget as pg_GraphicsLayoutWidget
+from pyqtgraph import InfiniteLine as pg_InfiniteLine
+from pyqtgraph import SignalProxy as pg_SignalProxy
+from pyqtgraph import mkColor as pg_mkColor
+
 
 import subprocess
 
@@ -180,7 +184,7 @@ class Main_utility_manager(QWidget):
         self.collect_PV_Data_array_start=False
 
         self.graph_Update_request=False
-
+        
         self.utility_setup()
 
         self.realTime_Temp=0
@@ -212,7 +216,6 @@ class Main_utility_manager(QWidget):
         self.timer.timeout.connect(self.graph_Update_Work)
         self.timer.start(30)
 
-
         ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
         ultility_Update_Thread.start()
 
@@ -223,7 +226,6 @@ class Main_utility_manager(QWidget):
         setting_transfer_Thread.start()
 
         # self.startup_check_dialog()
-
         
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
@@ -854,7 +856,6 @@ class Main_utility_manager(QWidget):
     def utility_setup(self):
 
         self.graph_setup()
-        
 
         self._parent.ui.load_pages.btn_AutoMode.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.btn_ManaualMode.clicked.connect(self.btn_callback)
@@ -1408,45 +1409,52 @@ class Main_utility_manager(QWidget):
 
     def graph_setup(self):
 
-        pg.setConfigOptions(background=None)
-        self.win = pg.GraphicsLayoutWidget(show=True,parent=self._parent)
+        pg_setConfigOptions(background=None)
+        self.win = pg_GraphicsLayoutWidget(show=True,parent=self._parent)
 
         self.row_count=0
         #autoDownsample=True,downsampleMethod="subsample",
         self.realTime_Voltage_Graph = self.win.addPlot(row=1, col=0,clipToView=True)
-        self.realTime_Voltage_Graph_vLine = pg.InfiniteLine(angle=90, movable=False)
+        self.realTime_Voltage_Graph_vLine = pg_InfiniteLine(angle=90, movable=False)
         self.realTime_Voltage_Graph.addItem(self.realTime_Voltage_Graph_vLine, ignoreBounds=True)
         self.realTime_Voltage_Graph_vb = self.realTime_Voltage_Graph.vb
-        self.realTime_Voltage_Graph_proxy = pg.SignalProxy(self.realTime_Voltage_Graph.scene().sigMouseMoved, rateLimit=60, slot=self.realTime_Voltage_Graph_mouse_move)
+        self.realTime_Voltage_Graph_proxy = pg_SignalProxy(self.realTime_Voltage_Graph.scene().sigMouseMoved, rateLimit=60, slot=self.realTime_Voltage_Graph_mouse_move)
         self.realTime_Voltage_Graph.enableAutoRange('x',0.95)
         self.realTime_Voltage_Graph.setLabel(axis='left', text='電圧', units='V')
         self.realTime_Voltage_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Voltage_Graph.showGrid(x=True, y=True)
 
+        
+        self.realTime_Voltage_Graph.setMenuEnabled(False)
+
         self.realTime_Current_Graph = self.win.addPlot(row=2, col=0,clipToView=True)
-        self.realTime_Current_Graph_vLine = pg.InfiniteLine(angle=90, movable=False)
+        self.realTime_Current_Graph_vLine = pg_InfiniteLine(angle=90, movable=False)
         self.realTime_Current_Graph.addItem(self.realTime_Current_Graph_vLine, ignoreBounds=True)
         self.realTime_Current_Graph_vb = self.realTime_Current_Graph.vb
-        self.realTime_Current_Graph_proxy = pg.SignalProxy(self.realTime_Current_Graph.scene().sigMouseMoved, delay=0.01 , rateLimit=60, slot=self.realTime_Current_Graph_mouse_move)
+        self.realTime_Current_Graph_proxy = pg_SignalProxy(self.realTime_Current_Graph.scene().sigMouseMoved, delay=0.01 , rateLimit=60, slot=self.realTime_Current_Graph_mouse_move)
         self.realTime_Current_Graph.enableAutoRange('x',0.95)
         self.realTime_Current_Graph.setLabel(axis='left', text='電流', units='A')
         self.realTime_Current_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Current_Graph.showGrid(x=True, y=True)
+        
+        self.realTime_Current_Graph.setMenuEnabled(False)
 
         self.realTime_Resistance_Graph = self.win.addPlot(row=3, col=0,clipToView=True)
-        self.realTime_Resistance_Graph_vLine = pg.InfiniteLine(angle=90, movable=False)
+        self.realTime_Resistance_Graph_vLine = pg_InfiniteLine(angle=90, movable=False)
         self.realTime_Resistance_Graph.addItem(self.realTime_Resistance_Graph_vLine, ignoreBounds=True)
         self.realTime_Resistance_Graph_vb = self.realTime_Resistance_Graph.vb
-        self.realTime_Resistance_Graph_proxy = pg.SignalProxy(self.realTime_Resistance_Graph.scene().sigMouseMoved, rateLimit=60, slot=self.realTime_Resistance_Graph_mouse_move)
+        self.realTime_Resistance_Graph_proxy = pg_SignalProxy(self.realTime_Resistance_Graph.scene().sigMouseMoved, rateLimit=60, slot=self.realTime_Resistance_Graph_mouse_move)
         self.realTime_Resistance_Graph.enableAutoRange('x',0.95)
         self.realTime_Resistance_Graph.setLabel(axis='left', text='抵抗', units='Ω')
         self.realTime_Resistance_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Resistance_Graph.showGrid(x=True, y=True)
+        self.realTime_Resistance_Graph.setMenuEnabled(False)
 
         self.realTime_Temperature_Graph = self.win.addPlot(row=4, col=0,clipToView=True)
         self.realTime_Temperature_Graph.setLabel(axis='left', text='温度', units='℃')
         self.realTime_Temperature_Graph.setMouseEnabled(x=True, y=True)
         self.realTime_Temperature_Graph.showGrid(x=True, y=True)
+        self.realTime_Temperature_Graph.setMenuEnabled(False)
 
         self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
         self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
@@ -1454,7 +1462,7 @@ class Main_utility_manager(QWidget):
         #self.realTime_Temperature_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
 
         
-        self._parent.voltage_curve=self.realTime_Voltage_Graph.plot(pen=pg.mkColor(200, 133, 0),
+        self._parent.voltage_curve=self.realTime_Voltage_Graph.plot(pen=pg_mkColor(200, 133, 0),
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
@@ -1467,7 +1475,7 @@ class Main_utility_manager(QWidget):
         self.realTime_Voltage_Graph_bottomAxis.enableAutoSIPrefix(False)
         
 
-        self._parent.current_curve=self.realTime_Current_Graph.plot(pen=pg.mkColor(132, 220, 244),
+        self._parent.current_curve=self.realTime_Current_Graph.plot(pen=pg_mkColor(132, 220, 244),
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
@@ -1478,7 +1486,7 @@ class Main_utility_manager(QWidget):
         self.realTime_Current_Graph_bottomAxis.enableAutoSIPrefix(False)
         
 
-        self._parent.resistance_curve=self.realTime_Resistance_Graph.plot(pen=pg.mkColor(131, 255, 145),
+        self._parent.resistance_curve=self.realTime_Resistance_Graph.plot(pen=pg_mkColor(131, 255, 145),
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
@@ -1490,7 +1498,7 @@ class Main_utility_manager(QWidget):
 
         self.realTime_Temperature_Graph.addLegend()
         self.pattern_SV_data_array=[]
-        self._parent.temp_sv_curve=self.realTime_Temperature_Graph.plot(pen=pg.mkColor(132, 220, 244),
+        self._parent.temp_sv_curve=self.realTime_Temperature_Graph.plot(pen=pg_mkColor(132, 220, 244),
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,
@@ -1498,7 +1506,7 @@ class Main_utility_manager(QWidget):
                                                         )
 
         self.pattern_PV_data_array=[]
-        self._parent.temp_pv_curve=self.realTime_Temperature_Graph.plot(pen=pg.mkColor(200, 133, 0),
+        self._parent.temp_pv_curve=self.realTime_Temperature_Graph.plot(pen=pg_mkColor(200, 133, 0),
                                                         symbolPen='w',
                                                         symbolBrush=(0,0,0),
                                                         symbolSize=1,

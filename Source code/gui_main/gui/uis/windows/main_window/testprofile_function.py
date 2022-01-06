@@ -37,8 +37,6 @@ from gui_main.gui.widgets.py_left_column.py_icon import *
 from gui_main.gui.uis.pattern_columns import *
 
 import threading
-import numpy as np
-import pyqtgraph as pg
 
 import sys
 import os

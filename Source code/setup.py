@@ -17,7 +17,7 @@ executables = [Executable("main.py",icon="icon.ico",target_name="MS4371 高温�
 includefiles = ['error.ico', 'icon.ico', 'warning.ico', 'libusb-1.0.dll', 'gui_main','Database and Profile']
 
 build_exe_options={
-                    "optimize": 1,
+                    "optimize": 2,
                     "include_files":includefiles,
                     "silent_level":1,
                     'build_exe': '../Application/execute file'
@@ -54,9 +54,6 @@ for (dirname, dirs, files) in os.walk(main_dir):
     for file in files:
         path = os.path.join(dirname,file)
         if file.endswith('.py'):
-            os.remove(path)
-
-        if file.endswith('.pyc'):
             os.remove(path)
 
         if file.endswith('.ui'):

@@ -151,7 +151,7 @@ class GPIB_Driver():
             
     def reset_Command(self):
         
-        print("reset command")
+        # print("reset command")
         byte_string="GPIB0".encode("utf8")
         self.send_buffer= ctypes.create_string_buffer(byte_string)
         self.board_descriptor=self.GPIB.ibfindA(self.send_buffer)
@@ -169,31 +169,31 @@ class GPIB_Driver():
             return 0
     
     def initiail_GPIB_device(self):
-        print("init")
+        # print("init")
         byte_string="GPIB0".encode("utf8")
         self.send_buffer= ctypes.create_string_buffer(byte_string)
         self.board_descriptor=self.GPIB.ibfindA(self.send_buffer)
         if self.board_descriptor==-1:
             return 1<<25
-        print("1 {:#X}".format(self.GPIB.ThreadIbsta()),"self.board_descriptor",self.board_descriptor)
+        # print("1 {:#X}".format(self.GPIB.ThreadIbsta()),"self.board_descriptor",self.board_descriptor)
         self.dev_descriptor[self.getItem.name]=self.GPIB.ibdev(0,self.getItem.address,0,self.T10s, 1, 0)
-        print("2 {:#X}".format(self.GPIB.ThreadIbsta()),"self.dev_descriptor[self.getItem.name]",self.dev_descriptor[self.getItem.name])
+        # print("2 {:#X}".format(self.GPIB.ThreadIbsta()),"self.dev_descriptor[self.getItem.name]",self.dev_descriptor[self.getItem.name])
         # self.GPIB.ibclr(self.dev_descriptor[self.getItem.name])
         # print("3 {:#X}".format(self.GPIB.ThreadIbsta()))
         self.GPIB.ibsic(self.board_descriptor)
-        print("4 {:#X}".format(self.GPIB.ThreadIbsta()))
+        # print("4 {:#X}".format(self.GPIB.ThreadIbsta()))
 
         self.GPIB.ibsre(self.board_descriptor,1)
-        print("7 {:#X}".format(self.GPIB.ThreadIbsta()))
+        # print("7 {:#X}".format(self.GPIB.ThreadIbsta()))
 
         Ret=self.GPIB.ThreadIbsta()
         err=self.GPIB.ThreadIberr()
         if ((Ret & self.ERR) != 0):
             
-            print("8 {:#X} {:#X}".format(Ret,err))
+            # print("8 {:#X} {:#X}".format(Ret,err))
             return err
         else:
-            print("9 {:#X} {:#X}".format(Ret,err))
+            # print("9 {:#X} {:#X}".format(Ret,err))
             return 0
 
     def request_Command(self):
@@ -213,7 +213,6 @@ class GPIB_Driver():
 
 
     def send_Command(self,command):
-        test=time.time()
         byte_string=command.encode("utf8")
         self.send_buffer= ctypes.create_string_buffer(byte_string)
 
@@ -320,7 +319,7 @@ class GPIB_device():
 
         
         if not self.connection:
-            print("reset 2657")
+            # print("reset 2657")
             GPIB_package.reset_type
 
             sendItem=GPIB_package(

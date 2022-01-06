@@ -53,9 +53,9 @@ class Test_profile_package():
                  filter=0,
                  filter_count=0,
 
-                 ノイズ測定判定基準=0,
-                 ノイズ測定時間=0,
-                 ノイズ測定電圧=0
+                 noise_passLevel=0,
+                 noise_testTime=0,
+                 noise_testVoltage=0
 
                  ):
         self.date=date
@@ -81,9 +81,9 @@ class Test_profile_package():
         self.speed=speed
         self.filter=filter
 
-        self.ノイズ測定判定基準=ノイズ測定判定基準
-        self.ノイズ測定時間=ノイズ測定時間
-        self.ノイズ測定電圧=ノイズ測定電圧
+        self.noise_passLevel=noise_passLevel
+        self.noise_testTime=noise_testTime
+        self.noise_testVoltage=noise_testVoltage
 
 
         if not self.time:
@@ -152,6 +152,7 @@ class Single_data_unitPackage():
 
 
 def operator_thread(PoolSemaphore,memoryPool,queuePool,eventPool):
+    
     gpib_Thread(PoolSemaphore,memoryPool,queuePool)
     time.sleep(1)
     operator=Operator(PoolSemaphore,memoryPool,queuePool,eventPool)
@@ -191,7 +192,6 @@ class Operator():
 
         get_temp_Thread = threading.Thread(target = self.get_temp_Work,daemon=True)
         get_temp_Thread.start()
-
 
         test1_Thread=threading.Thread(target = self.test_Work1,daemon=True)
         test1_Thread.start()
@@ -263,7 +263,6 @@ class Operator():
             self.gpib_2657A.send_Command("endscript")
 
             self.gpib_2657A.send_Command("testProfile.run()")
-            pass
 
 
     def test_Work2(self):
@@ -1023,9 +1022,9 @@ class Operator():
 
         profile=Test_profile_package(
                                     date=datetime.datetime.now(),
-                                    ノイズ測定判定基準=self.noise_measurement_current,
-                                     ノイズ測定時間=self.noise_measurement_time/60,
-                                     ノイズ測定電圧=self.noise_measurement_voltage,
+                                    noise_passLevel=self.noise_measurement_current,
+                                     noise_testTime=self.noise_measurement_time/60,
+                                     noise_testVoltage=self.noise_measurement_voltage,
                                 )
         
         #Prepare Main Path

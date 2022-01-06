@@ -6,7 +6,10 @@ import time
 #from modbus_TcpServer import ModbusRegistorClass
 import modbus_TcpServer
 import numpy as np
-import pyqtgraph as pg
+from pyqtgraph import TextItem as pg_TextItem
+from pyqtgraph import PlotWidget as pg_PlotWidget
+from pyqtgraph import mkPen as pg_mkPen
+
 from gui_main.gui.core.functions import *
 from gui_main.gui.core.json_settings import Settings
 from gui_main.gui.core.json_themes import Themes
@@ -98,7 +101,9 @@ class TempPatternWidget(QWidget):
         
         
     def setup_TempGraph(self):
-        self.graph =pg.PlotWidget(background=None,title="温度パターン")
+        self.graph =pg_PlotWidget(background=None,title="温度パターン")
+
+        self.graph.setMenuEnabled(False)
         
         self.graph.setLabel(axis='left', text='温度', units='℃')
 
@@ -106,7 +111,7 @@ class TempPatternWidget(QWidget):
         self.Xaxis = self.graph.getAxis('bottom')
         self.Xaxis.setStyle(autoReduceTextSpace=False)
         self.Xaxis.setTickSpacing(1,1)
-        self.Xaxis.setTextPen(pg.mkPen((25,28,34)))
+        self.Xaxis.setTextPen(pg_mkPen((25,28,34)))
         self.graph.setAxisItems({'bottom':self.Xaxis})
         
         self.Yaxis = self.graph.getAxis('left')
@@ -119,12 +124,14 @@ class TempPatternWidget(QWidget):
         #self.graph.setFixedSize(500, 300)
 
         self.curve=self.graph.plot(
-                                   pen=pg.mkPen('w',width=5), 
+                                   pen=pg_mkPen('w',width=5), 
                                    symbolBrush=(0,0,0),
                                    symbolPen='w', 
                                    #symbol='o', 
                                    symbolSize=5, 
                                    name="予定パターン")
+
+        
         
         self._parent.ui.load_pages.gridLayout_9.addWidget(self.graph, Qt.AlignCenter, Qt.AlignCenter)
         
@@ -142,7 +149,7 @@ class TempPatternWidget(QWidget):
                     app_parent = self._parent,
                     brush = QBrush(QColor(0, 0, 0, 0)),
                     hoverBrush=QBrush(QColor(0, 10, 10, 100)),
-                    pen=pg.mkPen(50,50,50),
+                    pen=pg_mkPen(50,50,50),
                     step=_step,
                     movable=False
                     )
@@ -152,7 +159,7 @@ class TempPatternWidget(QWidget):
             
             #text="STEP %d" %_step
             #print(text)
-            label=pg.TextItem(
+            label=pg_TextItem(
                 text="STEP %d" %_step,
                 )
             label.setPos(_step+0.1, 20)
@@ -162,6 +169,10 @@ class TempPatternWidget(QWidget):
         # print(len(self.GraphRegionList))
      
     def new_TempPattern(self):
+
+        step_unit=self.cache_steplist.getStep(self.cache_steplist.step_number)
+        step_unit.Step_Type=tempUnit.temp_unit_type
+        self.cache_steplist.setStep(self.cache_steplist.step_number,step_unit)
         self.cache_steplist.setStep(self.cache_steplist.step_number+1,tempUnit())
         self.cache_steplist.step_number+=1
         
@@ -497,7 +508,7 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].enableEndType(True)
                 endstep=self.cache_steplist.getStep(_step)
                 endstep=tempUnit()
-                endstep.Step_Type=2
+                endstep.Step_Type=tempUnit.End_unit_type
                 self.cache_steplist.setStep(_step,endstep)
                 self.step_widges_list[_step].callback_stop=False
 
@@ -519,7 +530,6 @@ class TempPatternWidget(QWidget):
             else:
                 self.activeStep_noFull=False
 
-            unit=tempUnit()
             unit=self.cache_steplist.getStep(_step)
             self.step_widges_list[_step].callback_stop=True
             self.step_widges_list[_step].pattern.Type_comboBox.setCurrentIndex(unit.Step_Type)

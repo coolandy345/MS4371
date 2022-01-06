@@ -72,7 +72,7 @@ class PyIcon(QWidget):
 
         if self._scale_factor!=20:
             self._icon=self._icon.scaled(self._scale_factor,self._scale_factor)
-            print(self._icon.rect())
+            # print(self._icon.rect())
 
         # SET PIXMAP
         self.icon.setPixmap(self._icon)

@@ -1,6 +1,5 @@
-import pyqtgraph as pg
+from pyqtgraph import LinearRegionItem as pg_LinearRegionItem
 from gui_main.qt_core import *
-import time
 
 class workThread(QThread):
 
@@ -14,7 +13,7 @@ class workThread(QThread):
     def run(self):
         self.trigger.emit()
 
-class PyGraphRegionItem(pg.LinearRegionItem):
+class PyGraphRegionItem(pg_LinearRegionItem):
 
     def __init__(self, parent,app_parent = None,step=0,values=(0, 1), orientation='vertical', brush=None, pen=None,
                  hoverBrush=None, hoverPen=None, movable=True, bounds=None, 

@@ -1,9 +1,8 @@
-import sqlite3
+from sqlite3 import connect as sqlite3_connect
 from modbus_TcpServer import ModbusRegistorClass
 import sys
 import os
-import time
-import threading
+from time import time,sleep
 
 def get_Abs_path(relative):
     if hasattr(sys, '_MEIPASS'):
@@ -29,14 +28,14 @@ def databaseWriteThread_NoModbusLoop(PoolSemaphore,memoryPool,queuePool,eventPoo
     
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
-    System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
+    System_Registor_Database = sqlite3_connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
 
     while 1:
         getItem=MemoryUnit()
         getItem=queuePool["database_modbusUplaod_Queue"].get()
         
-        time.sleep(0.1)
+        sleep(0.1)
         
         test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
 
@@ -57,7 +56,7 @@ def databaseWriteThread(PoolSemaphore,memoryPool,queuePool,eventPool):
     
 
     database_relative_path="Database and Profile/System Registor Structure Database.db"
-    System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
+    System_Registor_Database = sqlite3_connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
 
     while 1:
@@ -65,7 +64,7 @@ def databaseWriteThread(PoolSemaphore,memoryPool,queuePool,eventPool):
         getItem=queuePool["database_Uplaod_Queue"].get()
         queuePool["modbus_Write_Queue"].put(getItem)
         
-        time.sleep(0.1)
+        sleep(0.1)
         
         test="Update  '{}' set  Value='{}' where  Registor_Name='{}'".format(getItem.pool_name,memoryPool[getItem.pool_name][getItem.registor_name].value,getItem.registor_name)
 
@@ -87,9 +86,11 @@ def databaseWriteThread(PoolSemaphore,memoryPool,queuePool,eventPool):
 
 def databaseLoadThread(memoryPool):
 
+    # test_time=time()
+
     database_relative_path="Database and Profile/System Registor Structure Database.db"
     
-    System_Registor_Database = sqlite3.connect(get_Abs_path(database_relative_path))
+    System_Registor_Database = sqlite3_connect(get_Abs_path(database_relative_path))
     cur = System_Registor_Database.cursor()
 
     memoryPool["Measurement_data"]=None
@@ -151,6 +152,8 @@ def databaseLoadThread(memoryPool):
     
     System_Registor_Database.commit()
     System_Registor_Database.close()
+
+    # print(time()-test_time)
 
     
 

@@ -59,11 +59,7 @@ from gui_main.gui.widgets.py_left_column.py_icon import *
 from gui_main.gui.uis.pattern_columns import *
 
 
-import numpy as np
-import pyqtgraph as pg
 
-
-#from gui.uis.control_column import *
 
 
 
@@ -227,9 +223,7 @@ class SetupMainWindow:
         # ///////////////////////////////////////////////////////////////
         themes = Themes()
         self.main_namespace.themes = themes.items
-
         self.main_namespace.ui.load_pages.stackedWidget.setCurrentWidget(self.main_namespace.ui.load_pages.page_AutoOperate)
-
         self.main_namespace.MMG=Memory_Manager(PoolSemaphore=self.PoolSemaphore,Master_memoryPool=self.Master_memoryPool,queuePool=self.queuePool)
         self.main_namespace.testPattern=TestPatternWidget(self.main_namespace,queuePool=self.queuePool,PoolSemaphore=self.PoolSemaphore)
         self.main_namespace.tempPattern=TempPatternWidget(self.main_namespace,queuePool=self.queuePool,PoolSemaphore=self.PoolSemaphore)

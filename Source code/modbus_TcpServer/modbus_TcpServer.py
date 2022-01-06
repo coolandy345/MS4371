@@ -11,27 +11,20 @@ of nodes which can be helpful for testing monitoring software.
 # import the various server implementations
 # --------------------------------------------------------------------------- #
 from pymodbus.version import version
-from pymodbus.server.asynchronous import StartTcpServer,StopServer
-from twisted.internet import reactor
+from pymodbus.server.asynchronous import StartTcpServer
 from pymodbus.device import ModbusDeviceIdentification
-from pymodbus.datastore import ModbusSequentialDataBlock
 from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext
-from pymodbus.transaction import (ModbusRtuFramer,
-                                  ModbusAsciiFramer,
-                                  ModbusBinaryFramer)
+
 from pymodbus.datastore import ModbusSparseDataBlock
 from registor_manager import *
 from twisted.internet.task import LoopingCall
 
-
-import random
-
-import threading
+from threading import Thread
 # --------------------------------------------------------------------------- # 
 # configure the service logging
 # --------------------------------------------------------------------------- # 
-import logging
-import time
+# import logging
+from time import sleep
 import socket
 import copy
 
@@ -79,10 +72,10 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
         super().__init__(self.register_dict)
         
-        ethernet_connection_thread = threading.Thread(target = self.ethernet_connection_Work,daemon=True)
+        ethernet_connection_thread = Thread(target = self.ethernet_connection_Work,daemon=True)
         ethernet_connection_thread.start()
 
-        database_update_thread = threading.Thread(target = self.modbusDatabase_update_Work,daemon=True)
+        database_update_thread = Thread(target = self.modbusDatabase_update_Work,daemon=True)
         database_update_thread.start()
 
         
@@ -131,7 +124,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
             self.ethernet_connection_pool=False
 
-            time.sleep(1)
+            sleep(1)
 
     def set_memorypool_register(self,pool_name,registor_name,value):
         
@@ -147,7 +140,6 @@ class CustomDataBlock(ModbusSparseDataBlock):
         self.PoolSemaphore.release()
         
     def MainDatabase_upload_Work(self):
-            #test=time.time()
             
                 
             local_namelist=[]
@@ -173,8 +165,6 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 self.queuepool["memory_DownlaodToGUI_request_Queue"].put(sendItem)
 
             
-                
-            #print(time.time()-test)
             
 
 
@@ -259,7 +249,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
         self.modbus_setValues_Work(address,value)
 
-        #modbus_setValues_thread = threading.Thread(target = self.modbus_setValues_Work,daemon=True,args=[address,value])
+        #modbus_setValues_thread = Thread(target = self.modbus_setValues_Work,daemon=True,args=[address,value])
         #modbus_setValues_thread.start()
         
         
@@ -272,7 +262,6 @@ class CustomDataBlock(ModbusSparseDataBlock):
         while 1:
             getItem=MemoryUnit()
             getItem=self.queuepool["modbus_Write_Queue"].get()
-
 
             if getItem.pool_name=="Modbus Registor Pool - Registor":
                 unit=self.memorypool["Modbus Registor Pool - Registor"][getItem.registor_name]
@@ -302,8 +291,6 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
 
 def run_async_server(PoolSemaphore,memorypool,queuePool,eventPool):
-
-    test_time=time.time()
     
     block  = CustomDataBlock(PoolSemaphore,memorypool,queuePool,eventPool)
     #print(block.getValues(10, count=10))
@@ -330,7 +317,6 @@ def run_async_server(PoolSemaphore,memorypool,queuePool,eventPool):
     # ----------------------------------------------------------------------- # 
     # TCP Server
     
-    print("finish run_async_server",time.time()-test_time,"s")
 
     local_IP_address=socket.gethostbyname(socket.gethostname())
     StartTcpServer(context, identity=identity, address=(local_IP_address, 506))

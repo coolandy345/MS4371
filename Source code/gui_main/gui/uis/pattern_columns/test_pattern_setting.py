@@ -6,19 +6,21 @@ from gui_main.gui.core.functions import *
 from gui_main.gui.core.json_settings import Settings
 from gui_main.gui.core.json_themes import Themes
 from PyQt5.QtCore import QTimer
-import threading
+# import threading
 
 #from modbus_TcpServer import ModbusRegistorClass
-import modbus_TcpServer
-import time
-import sys
-
-import copy
+# import modbus_TcpServer
+# import time
+# import sys
+from copy import deepcopy as copy_deepcopy
 
 from registor_manager import *
 
 import numpy as np
-import pyqtgraph as pg
+
+from pyqtgraph import TextItem as pg_TextItem
+from pyqtgraph import PlotWidget as pg_PlotWidget
+from pyqtgraph import mkPen as pg_mkPen
 
 class updata_step_widge_Thread(QRunnable):
     def __init__(self, parent):
@@ -108,7 +110,9 @@ class TestPatternWidget(QWidget):
             self._parent.ui.load_pages.scrollArea_4.setMinimumSize(QSize(0, 160))
         
     def setup_TempGraph(self):
-        self.graph =pg.PlotWidget(background=None,title="測定パターン")
+        self.graph =pg_PlotWidget(background=None,title="測定パターン")
+
+        self.graph.setMenuEnabled(False)
         
         self.graph.setLabel(axis='left', text='電圧', units='V')
 
@@ -116,7 +120,7 @@ class TestPatternWidget(QWidget):
         self.Xaxis = self.graph.getAxis('bottom')
         self.Xaxis.setStyle(autoReduceTextSpace=False)
         self.Xaxis.setTickSpacing(1,1)
-        self.Xaxis.setTextPen(pg.mkPen((25,28,34)))
+        self.Xaxis.setTextPen(pg_mkPen((25,28,34)))
         self.graph.setAxisItems({'bottom':self.Xaxis})
         
         self.Yaxis = self.graph.getAxis('left')
@@ -128,7 +132,7 @@ class TestPatternWidget(QWidget):
         #self.graph.setMinimumSize(QSize(1100, 300))
         
         self.curve=self.graph.plot(
-                                   pen=pg.mkPen('w',width=5), 
+                                   pen=pg_mkPen('w',width=5), 
                                    symbolBrush=(0,0,0),
                                    symbolPen='w', 
                                    symbol='o', 
@@ -151,7 +155,7 @@ class TestPatternWidget(QWidget):
                     app_parent = self._parent,
                     brush = QBrush(QColor(0, 0, 0, 0)),
                     hoverBrush=QBrush(QColor(0, 10, 10, 100)),
-                    pen=pg.mkPen(50,50,50),
+                    pen=pg_mkPen(50,50,50),
                     step=_step,
                     movable=False
                     )
@@ -168,16 +172,16 @@ class TestPatternWidget(QWidget):
             #text="STEP %d" %_step
             #print(text)
             if _step ==0:
-                label=pg.TextItem(text="BG")
+                label=pg_TextItem(text="BG")
                 label.setPos(0.1, 20)
 
             elif _step ==9:
 
-                label=pg.TextItem(text="")
+                label=pg_TextItem(text="")
                 label.setPos(17.1, 20)
 
             else:
-                label=pg.TextItem(text="STEP {}".format(_step))
+                label=pg_TextItem(text="STEP {}".format(_step))
                 label.setPos((_step*2)-1, 20)
             
             self.GraphStepLabelList.append(label)
@@ -278,7 +282,7 @@ class TestPatternWidget(QWidget):
 
         self.cache_steplist.total_time=self.cache_steplist.BG0_test_time+self.cache_steplist.step_number*self.cache_steplist.test_time+self.cache_steplist.step_number*self.cache_steplist.BG_test_time
         
-        self._parent.ui.load_pages.Test_Totaltime_Label.setText("合計時間：{:.2f} 分".format(self.cache_steplist.total_time))
+        self._parent.ui.load_pages.Test_Totaltime_Label.setText("合計時間:{:.2f} 分".format(self.cache_steplist.total_time))
 
         self._parent.ui.load_pages.testfile_comboBox.blockSignals(True)
         self._parent.ui.load_pages.testfile_comboBox.setEnabled(self.editorEnable)
@@ -768,7 +772,7 @@ class TestPatternWidget(QWidget):
         self.paste_ready=False
 
         if(self.focus_patternFile_number>=1 and self.focus_patternFile_number<=20):
-            self.cache_steplist=copy.deepcopy(self.patternFiles[self.focus_patternFile_number])
+            self.cache_steplist=copy_deepcopy(self.patternFiles[self.focus_patternFile_number])
             self.editorEnable=True
         else:
             self.editorEnable=False
@@ -812,7 +816,7 @@ class TestPatternWidget(QWidget):
     def patternFile_Save_work(self):
 
         #Refresh patternFiles
-        self.patternFiles[self.focus_patternFile_number]=copy.deepcopy(self.cache_steplist)
+        self.patternFiles[self.focus_patternFile_number]=copy_deepcopy(self.cache_steplist)
         
         list=self.cache_steplist
 

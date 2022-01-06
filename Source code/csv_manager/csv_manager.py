@@ -109,9 +109,9 @@ class Csv_manager():
             writer = csv.writer(csvfile)
 
             writer.writerow(['測定実施時刻', self.profile.date])
-            writer.writerow(['測定電圧(V)', self.profile.ノイズ測定電圧])
-            writer.writerow(['測定判定基準電流(A)', self.profile.ノイズ測定判定基準])
-            writer.writerow(['測定時間(min)', self.profile.ノイズ測定時間])
+            writer.writerow(['測定電圧(V)', self.profile.noise_testVoltage])
+            writer.writerow(['測定判定基準電流(A)', self.profile.noise_passLevel])
+            writer.writerow(['測定時間(min)', self.profile.noise_testTime])
 
 
     def prepare_ManualTestCsvFile(self,profile):
