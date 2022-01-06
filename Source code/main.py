@@ -26,9 +26,6 @@ def shotdown_entire_app(future):
 
 if __name__ == "__main__":
     freeze_support()
-    for count in range(1,100000):
-        print(count)
-    setrecursionlimit(1500)
 
     MemoryPoolManager=Manager()
     MemoryPool = MemoryPoolManager.dict()

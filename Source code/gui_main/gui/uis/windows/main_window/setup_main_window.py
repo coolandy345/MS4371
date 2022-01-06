@@ -152,7 +152,7 @@ class SetupMainWindow:
         # TITLE BAR / ADD EXTRA BUTTONS
         # ///////////////////////////////////////////////////////////////
         # ADD MENUS
-        self.main_namespace.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
+        # self.main_namespace.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
 
         # SET SIGNALS
         self.main_namespace.ui.title_bar.clicked.connect(self.main_namespace.btn_clicked)
