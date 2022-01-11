@@ -322,9 +322,9 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.remoteConnect_pushButton.blockSignals(False)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","リモート",0)
 
-        if not self.usbConnecton_icon_active or not self.gPIBConnecton_2657A_icon_active:
-            if not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PC警報"].getValue():
-                self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",1)
+        # if not self.usbConnecton_icon_active or not self.gPIBConnecton_2657A_icon_active:
+        #     if not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PC警報"].getValue():
+        #         self.set_memorypool_register("Modbus Registor Pool - Registor","PC警報",1)
 
         #if PLC is allow us to start
         if (self.ready_icon_active and self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["リモート"].getValue()):
