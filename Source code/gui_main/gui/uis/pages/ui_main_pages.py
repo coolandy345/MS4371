@@ -2475,7 +2475,7 @@ class Ui_MainPages(object):
         self.autostart_pushButton.setObjectName(u"autostart_pushButton")
         self.autostart_pushButton.setMinimumSize(QSize(210, 50))
         self.autostart_pushButton.setMaximumSize(QSize(16777215, 16777215))
-        self.autostart_pushButton.setCursor(QCursor(Qt.BusyCursor))
+        self.autostart_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.autostart_pushButton.setLayoutDirection(Qt.LeftToRight)
         self.autostart_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
 "	color: rgb(202, 206, 216);\n"

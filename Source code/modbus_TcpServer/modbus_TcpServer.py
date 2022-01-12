@@ -81,7 +81,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
         
     def get_register_dict(self):
         self.register_dict={}
-        self.PoolSemaphore.acquire(timeout=1)
+        self.PoolSemaphore.acquire(timeout=20)
         for unit in self.memorypool["Modbus Registor Pool - Registor"].values():
             self.register_namedict[unit.registor_number+self.register_shift]=unit.name
             self.register_dict[unit.registor_number+self.register_shift]=unit.getModbusValue()
@@ -128,7 +128,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
 
     def set_memorypool_register(self,pool_name,registor_name,value):
         
-        self.PoolSemaphore.acquire(timeout=1)
+        self.PoolSemaphore.acquire(timeout=20)
         if self.memorypool[pool_name][registor_name].getValue()!=value:
 
             sub_memorypool=copy.deepcopy(self.memorypool[pool_name])
@@ -195,7 +195,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 address_temp+=1
             if change:
                 
-                self.PoolSemaphore.acquire(timeout=10)
+                self.PoolSemaphore.acquire(timeout=20)
 
                 if self.Modbus_debug:
                     print("modbus write from PLC - ","数量{}".format(len(self.MainPool_update_namelist)),change_contant_dict)
@@ -216,7 +216,7 @@ class CustomDataBlock(ModbusSparseDataBlock):
                 change=True
             if change:
                 
-                self.PoolSemaphore.acquire(timeout=10)
+                self.PoolSemaphore.acquire(timeout=20)
                 
                 if self.Modbus_debug:
                     print("modbus write from PLC - ","[{}]".format(address-self.register_shift),registor_name,value)

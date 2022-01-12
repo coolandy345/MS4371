@@ -219,7 +219,7 @@ class Operator():
     def get_temp_Work(self):
         while 1:
             time.sleep(0.2)
-            self.PoolSemaphore.acquire(timeout=1)
+            self.PoolSemaphore.acquire(timeout=20)
             self.temperature=self.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()
             self.PoolSemaphore.release()
 
@@ -298,7 +298,7 @@ class Operator():
                                                 registor_name,
                                                 value):
         
-        self.PoolSemaphore.acquire(timeout=1)
+        self.PoolSemaphore.acquire(timeout=20)
         if self.memoryPool[memorypool_name][registor_name].getValue()!=value:
             sub_memorypool=copy.deepcopy(self.memoryPool[memorypool_name])
             sub_memorypool[registor_name].setValue(value)
@@ -328,7 +328,7 @@ class Operator():
 
             self.set_memorypool_register("System memory","Manual_Measurement_status",1)
 
-            self.PoolSemaphore.acquire(timeout=1)
+            self.PoolSemaphore.acquire(timeout=20)
             self.manual_measurement_voltage=self.memoryPool["System memory"]["Manual_Measurement_Voltage"].getValue()
             self.PoolSemaphore.release()
 
@@ -629,7 +629,7 @@ class Operator():
             self.set_memorypool_register("System memory","Noise_Measurement_status",1)
             
 
-            self.PoolSemaphore.acquire(timeout=1)
+            self.PoolSemaphore.acquire(timeout=20)
             self.noise_measurement_voltage=self.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()
             self.noise_measurement_current=1e-12*self.memoryPool["System memory"]["Noise_Measurement_Current"].getValue()
             self.noise_measurement_time=60*self.memoryPool["System memory"]["Noise_Measurement_Time"].getValue()
@@ -760,6 +760,7 @@ class Operator():
                                                     min_search_count=node[1].smua.nvbuffer1.n
 
                                                     voltage_time=node[1].smua.nvbuffer1.timestamps[min_search_count]
+                                                    current_data=((math.random()*2)-1)*1e-10
                                                     
                                                     if search_count>=search_burst then
                                                         printbuffer(search_index,min_search_count,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings)
@@ -1043,7 +1044,7 @@ class Operator():
             finish_property=False
             self.script_stop=False
             
-            self.PoolSemaphore.acquire(timeout=1)
+            self.PoolSemaphore.acquire(timeout=20)
             Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
             System_memory=self.memoryPool["System memory"]
             Measurement_Pattern=self.memoryPool["Measurement Pattern"]

@@ -128,7 +128,7 @@ QLineEdit:read-only {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1038</width>
+            <width>810</width>
             <height>759</height>
            </rect>
           </property>
@@ -5573,7 +5573,7 @@ QPushButton:pressed {
                           </size>
                          </property>
                          <property name="cursor">
-                          <cursorShape>BusyCursor</cursorShape>
+                          <cursorShape>PointingHandCursor</cursorShape>
                          </property>
                          <property name="layoutDirection">
                           <enum>Qt::LeftToRight</enum>
@@ -5797,6 +5797,9 @@ border:none;
                            <width>0</width>
                            <height>30</height>
                           </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>ArrowCursor</cursorShape>
                          </property>
                          <property name="styleSheet">
                           <string notr="true">

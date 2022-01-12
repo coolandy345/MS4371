@@ -11,10 +11,10 @@ subdirectory that contains the files needed to run the application
 import os
 import shutil
 from cx_Freeze import setup, Executable
-#
-executables = [Executable("main.py",icon="icon.ico",base = "Win32GUI",target_name="MS4371 高温抵抗測定用電気炉",copyright="Copyright © 2021 MOTOYAMA. All rights reserved.",shortcut_name="MS4371 高温抵抗測定用電気炉")]
+#base = "Win32GUI",
+executables = [Executable("main.py",icon="icon.ico",target_name="MS4371 高温抵抗測定用電気炉",copyright="Copyright © 2021 MOTOYAMA. All rights reserved.",shortcut_name="MS4371 高温抵抗測定用電気炉")]
 
-includefiles = ['error.ico', 'icon.ico', 'warning.ico', 'libusb-1.0.dll', 'gui_main','Database and Profile']
+includefiles = ['error.ico', 'icon.ico', 'warning.ico', 'libusb-1.0.dll', 'gui_main','Database and Profile','取説資料']
 
 build_exe_options={
                     "optimize": 1,

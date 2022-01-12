@@ -893,7 +893,7 @@ class TempPatternWidget(QWidget):
 
     def set_memorypool_register(self,pool_name,registor_name,value):
         if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
-            self.PoolSemaphore.acquire(timeout=10)
+            self.PoolSemaphore.acquire(timeout=20)
             # print("set_memorypool_register",pool_name,registor_name,value)
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
