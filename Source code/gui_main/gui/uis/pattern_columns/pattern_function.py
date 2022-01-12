@@ -109,7 +109,7 @@ class templist():
         self.RT_testpattern=RT_testpattern
         
         self.units=[]
-        self.units.append(None)
+        self.units.append(tempUnit())
         for _step in range(1,21):
             self.units.append(tempUnit())
 
@@ -286,24 +286,24 @@ class templist():
     #  
     def setStep(self,step,input):
 
+        if not step==0:
+            self.units[step].Step_Type=input.Step_Type
+            self.units[step].step_time=input.step_time
+            self.units[step].total_time=input.total_time
+            self.units[step].time_hour=input.time_hour
+            self.units[step].time_min=input.time_min
+            self.units[step].SV=input.SV
+            self.units[step].N2_flowRate=input.N2_flowRate
+            self.units[step].time_keep=input.time_keep
+            self.units[step].sp_limit_up=input.sp_limit_up
+            self.units[step].sp_limit_down=input.sp_limit_down
+            self.units[step].shift=input.shift
+            self.units[step].PID_muffle_No=input.PID_muffle_No
+            self.units[step].PID_heater_No=input.PID_heater_No
+            self.units[step].test_measure_enable=input.test_measure_enable
+            self.units[step].test_measure_PatternNo=input.test_measure_PatternNo
 
-        self.units[step].Step_Type=input.Step_Type
-        self.units[step].step_time=input.step_time
-        self.units[step].total_time=input.total_time
-        self.units[step].time_hour=input.time_hour
-        self.units[step].time_min=input.time_min
-        self.units[step].SV=input.SV
-        self.units[step].N2_flowRate=input.N2_flowRate
-        self.units[step].time_keep=input.time_keep
-        self.units[step].sp_limit_up=input.sp_limit_up
-        self.units[step].sp_limit_down=input.sp_limit_down
-        self.units[step].shift=input.shift
-        self.units[step].PID_muffle_No=input.PID_muffle_No
-        self.units[step].PID_heater_No=input.PID_heater_No
-        self.units[step].test_measure_enable=input.test_measure_enable
-        self.units[step].test_measure_PatternNo=input.test_measure_PatternNo
-
-        self.check_and_adjust()
+            self.check_and_adjust()
 
     def getStep(self,step):
 

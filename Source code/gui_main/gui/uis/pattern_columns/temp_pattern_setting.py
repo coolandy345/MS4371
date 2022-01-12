@@ -170,7 +170,11 @@ class TempPatternWidget(QWidget):
      
     def new_TempPattern(self):
 
-        step_unit=self.cache_steplist.getStep(self.cache_steplist.step_number)
+        if self.cache_steplist.step_number==0:
+            step_unit=tempUnit()
+        else:
+            step_unit=self.cache_steplist.getStep(self.cache_steplist.step_number)
+        
         step_unit.Step_Type=tempUnit.temp_unit_type
         self.cache_steplist.setStep(self.cache_steplist.step_number,step_unit)
         self.cache_steplist.setStep(self.cache_steplist.step_number+1,tempUnit())
