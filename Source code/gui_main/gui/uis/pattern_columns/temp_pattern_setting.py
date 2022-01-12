@@ -226,7 +226,7 @@ class TempPatternWidget(QWidget):
                 )
             
             if pattern.active:
-                self.patternFile_nameList.append(pattern.name)
+                self.patternFile_nameList.append("[PTN No.{:2d}] ".format(ptn_no)+pattern.name)
             
             units=[None]
             
