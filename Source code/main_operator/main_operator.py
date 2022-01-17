@@ -219,7 +219,7 @@ class Operator():
     def get_temp_Work(self):
         while 1:
             time.sleep(0.2)
-            self.PoolSemaphore.acquire(timeout=20)
+            self.PoolSemaphore.acquire()
             self.temperature=self.memoryPool["Modbus Registor Pool - Registor"]["温度PV値"].getValue()
             self.PoolSemaphore.release()
 
@@ -240,7 +240,7 @@ class Operator():
 
             self.gpib_2657A.send_Command("for element = 1, 3 do ")
             self.gpib_2657A.send_Command("beeper.beep(0.1, 2400)")
-            self.gpib_2657A.send_Command("sendItem={element, node[1].tsplink.node,node[2].tsplink.node}")
+            self.gpib_2657A.send_Command("sendItem={element, tsplink.node,node[2].tsplink.node}")
             self.gpib_2657A.send_Command("dataqueue.add(sendItem)  ")
             self.gpib_2657A.send_Command("end")
 
@@ -256,8 +256,8 @@ class Operator():
  
 
 
-            #self.gpib_2657A.send_Command("  node[1].sendItem={ver1,ver2}")
-            #self.gpib_2657A.send_Command("  node[1].print(sendItem)")
+            #self.gpib_2657A.send_Command("  sendItem={ver1,ver2}")
+            #self.gpib_2657A.send_Command("  print(sendItem)")
             #self.gpib_2657A.send_Command("end)")
 
             self.gpib_2657A.send_Command("endscript")
@@ -298,7 +298,7 @@ class Operator():
                                                 registor_name,
                                                 value):
         
-        self.PoolSemaphore.acquire(timeout=20)
+        self.PoolSemaphore.acquire()
         if self.memoryPool[memorypool_name][registor_name].getValue()!=value:
             sub_memorypool=copy.deepcopy(self.memoryPool[memorypool_name])
             sub_memorypool[registor_name].setValue(value)
@@ -328,7 +328,7 @@ class Operator():
 
             self.set_memorypool_register("System memory","Manual_Measurement_status",1)
 
-            self.PoolSemaphore.acquire(timeout=20)
+            self.PoolSemaphore.acquire()
             self.manual_measurement_voltage=self.memoryPool["System memory"]["Manual_Measurement_Voltage"].getValue()
             self.PoolSemaphore.release()
 
@@ -339,66 +339,66 @@ class Operator():
                                             abort
                                             *CLS
                                             reset()
-                                            node[1].smua.reset()
+                                            smua.reset()
 
-                                            node[1].display.clear()
-                                            node[1].display.setcursor(1, 1)
-                                            node[1].display.settext("Uploading script")
+                                            display.clear()
+                                            display.setcursor(1, 1)
+                                            display.settext("Uploading script")
 
                                             loadscript Manual_Measurement
                                             reset()
-                                            node[1].beeper.beep(0.1, 2400)
+                                            beeper.beep(0.1, 2400)
 
-                                            node[1].display.clear()
-                                            node[1].display.setcursor(1, 1)
-                                            node[1].display.settext("Manual Test Start")
-                                            delay(0.3)
+                                            display.clear()
+                                            display.setcursor(1, 1)
+                                            display.settext("Manual Test Start")
+                                            delay(0.5)
 
-                                            node[1].display.clear()
-                                            node[1].display.setcursor(1, 1)
-                                            node[1].display.settext("Setting...")
+                                            display.clear()
+                                            display.setcursor(1, 1)
+                                            display.settext("Setting...")
 
-                                            node[1].display.setcursor(2, 1)
+                                            display.setcursor(2, 1)
 
                                             """)
 
             
 
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage... {}\")".format(Quantity(float(self.manual_measurement_voltage),"V").render(prec=4)))
+            self.gpib_2657A.send_Command("display.settext(\"Voltage... {}\")".format(Quantity(float(self.manual_measurement_voltage),"V").render(prec=4)))
 
 
 
             self.gpib_2657A.send_Command("""
-                                            node[1].smua.reset()
-                                            node[1].smua.nvbuffer1.clear()
-                                            node[1].smua.nvbuffer1.appendmode = 1
-                                            node[1].smua.nvbuffer1.cachemode = 0
-                                            node[1].smua.nvbuffer1.clearcache()
-                                            node[1].smua.nvbuffer1.collecttimestamps = 1
-                                            node[1].smua.nvbuffer1.fillmode = 0
+                                            smua.reset()
+                                            smua.nvbuffer1.clear()
+                                            smua.nvbuffer1.appendmode = 1
+                                            smua.nvbuffer1.cachemode = 0
+                                            smua.nvbuffer1.clearcache()
+                                            smua.nvbuffer1.collecttimestamps = 1
+                                            smua.nvbuffer1.fillmode = 0
 
-                                            node[1].smua.measure.nplc = 1
-                                            node[1].smua.measure.autorangev = smua.AUTORANGE_ON
-                                            node[1].smua.measure.count = 1
-                                            node[1].smua.measure.delay = 0
-                                            node[1].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID
-                                            node[1].smua.trigger.measure.v(node[1].smua.nvbuffer1)
-                                            node[1].smua.trigger.arm.count = 0
-                                            node[1].smua.trigger.measure.action = 1
+                                            smua.measure.nplc = 1
+                                            smua.measure.autorangev = smua.AUTORANGE_ON
+                                            smua.measure.count = 1
+                                            smua.measure.delay = 0
+                                            smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID
+                                            smua.trigger.measure.v(smua.nvbuffer1)
+                                            smua.trigger.arm.count = 0
+                                            smua.trigger.measure.action = 1
 
-                                            node[1].smua.source.func = smua.OUTPUT_DCVOLTS
-                                            node[1].smua.source.offmode = smua.OUTPUT_ZERO
-                                            node[1].smua.source.rangev = 1500
+                                            smua.source.func = smua.OUTPUT_DCVOLTS
+                                            smua.source.offmode = smua.OUTPUT_ZERO
+                                            smua.source.rangev = 1500
                                             """)
 
-            self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(self.manual_measurement_voltage))
-            # self.gpib_2657A.send_Command("node[1].smua.source.levelv = 0")
+            self.gpib_2657A.send_Command("smua.source.levelv = {}".format(self.manual_measurement_voltage))
+            # self.gpib_2657A.send_Command("smua.source.levelv = 0")
             
             self.gpib_2657A.send_Command("""
-                                            node[1].smua.source.limiti = 1e-6
+                                            smua.source.limiti = 1e-6
 
-                                            node[1].display.screen = display.SMUA
-                                            node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
+                                            display.screen = display.SMUA
+                                            display.smua.measure.func = display.MEASURE_DCVOLTS
                                             """)
 
             self.gpib_2657A.send_Command("""
@@ -409,12 +409,12 @@ class Operator():
                                             search_burst=1
 
                                             loop_start=true
-                                            node[1].smua.source.output = 1
+                                            smua.source.output = 1
 
-                                            node[1].tsplink.trigger[2].reset() 
-                                            node[1].tsplink.trigger[2].clear()  
-                                            node[1].tsplink.trigger[2].mode = 1
-                                            node[1].tsplink.trigger[2].stimulus = trigger.timer[1].EVENT_ID
+                                            tsplink.trigger[2].reset() 
+                                            tsplink.trigger[2].clear()  
+                                            tsplink.trigger[2].mode = 1
+                                            tsplink.trigger[2].stimulus = trigger.timer[1].EVENT_ID
 
                                             trigger.timer[1].reset()
                                             trigger.timer[1].clear()
@@ -428,7 +428,7 @@ class Operator():
                                             tsplink.trigger[1].clear()
                                             tsplink.trigger[1].mode = 1
 
-                                            node[1].smua.trigger.initiate()
+                                            smua.trigger.initiate()
                                             tsplink.trigger[1].assert()
 
                                             """)
@@ -436,13 +436,13 @@ class Operator():
             self.gpib_2657A.send_Command("""
                                             while loop_start do
                                                 trigger.timer[1].wait(10)    
-                                                if node[1].smua.nvbuffer1.n>0 then  
+                                                if smua.nvbuffer1.n>0 then  
 
                                                     min_search_count=0
-                                                    min_search_count=node[1].smua.nvbuffer1.n
+                                                    min_search_count=smua.nvbuffer1.n
 
                                                     if search_count>=search_burst then
-                                                        printbuffer(search_index,min_search_count,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings)
+                                                        printbuffer(search_index,min_search_count,   smua.nvbuffer1.timestamps,   smua.nvbuffer1.statuses,  smua.nvbuffer1.readings)
                                                         search_index=min_search_count+1
                                                         search_count=1
                                                     else
@@ -552,7 +552,7 @@ class Operator():
                     
                     current_value=((random.random()*2)-1)*1e-10
 
-                    index+=6
+                    index+=3
                     if current_value!=0:
                         resistance=voltage_value/current_value
                         resistivity=resistance_constance*voltage_value/current_value
@@ -595,9 +595,9 @@ class Operator():
         if not finish_property:
             self.gpib_2657A.send_Command("""
                                             abort
-                                            node[1].display.clear()
-                                            node[1].display.setcursor(1, 1)
-                                            node[1].display.settext("Stop")
+                                            display.clear()
+                                            display.setcursor(1, 1)
+                                            display.settext("Stop")
                                             
                                             """)
 
@@ -608,7 +608,7 @@ class Operator():
                                             delay(0.1)
                                             beeper.beep(0.1, 2550)
                                             delay(0.1)
-                                            node[1].smua.reset()
+                                            smua.reset()
                                             *CLS
                                             """)
 
@@ -629,7 +629,7 @@ class Operator():
             self.set_memorypool_register("System memory","Noise_Measurement_status",1)
             
 
-            self.PoolSemaphore.acquire(timeout=20)
+            self.PoolSemaphore.acquire()
             self.noise_measurement_voltage=self.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()
             self.noise_measurement_current=1e-12*self.memoryPool["System memory"]["Noise_Measurement_Current"].getValue()
             self.noise_measurement_time=60*self.memoryPool["System memory"]["Noise_Measurement_Time"].getValue()
@@ -643,65 +643,65 @@ class Operator():
                                             abort
                                             *CLS
                                             reset()
-                                            node[1].smua.reset()
-                                            node[1].display.clear()
-                                            node[1].display.setcursor(1, 1)
-                                            node[1].display.settext("Uploading script")
+                                            smua.reset()
+                                            display.clear()
+                                            display.setcursor(1, 1)
+                                            display.settext("Uploading script")
 
                                             loadscript Noise_Measurement
                                             reset()
-                                            node[1].beeper.beep(0.1, 2400)
+                                            beeper.beep(0.1, 2400)
 
-                                            node[1].display.clear()
-                                            node[1].display.setcursor(1, 1)
-                                            node[1].display.settext("Noise Test Start")
+                                            display.clear()
+                                            display.setcursor(1, 1)
+                                            display.settext("Noise Test Start")
                                             delay(0.3)
 
-                                            node[1].display.clear()
-                                            node[1].display.setcursor(1, 1)
-                                            node[1].display.settext("Setting...")
+                                            display.clear()
+                                            display.setcursor(1, 1)
+                                            display.settext("Setting...")
 
-                                            node[1].display.setcursor(2, 1)
+                                            display.setcursor(2, 1)
 
                                             """)
 
             
 
-            self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage... {}\")".format(Quantity(float(self.noise_measurement_voltage),"V").render(prec=4)))
+            self.gpib_2657A.send_Command("display.settext(\"Voltage... {}\")".format(Quantity(float(self.noise_measurement_voltage),"V").render(prec=4)))
 
 
 
             self.gpib_2657A.send_Command("""
-                                            node[1].smua.reset()
-                                            node[1].smua.nvbuffer1.clear()
-                                            node[1].smua.nvbuffer1.appendmode = 1
-                                            node[1].smua.nvbuffer1.cachemode = 0
-                                            node[1].smua.nvbuffer1.clearcache()
-                                            node[1].smua.nvbuffer1.collecttimestamps = 1
-                                            node[1].smua.nvbuffer1.fillmode = 0
+                                            smua.reset()
+                                            smua.nvbuffer1.clear()
+                                            smua.nvbuffer1.appendmode = 1
+                                            smua.nvbuffer1.cachemode = 0
+                                            smua.nvbuffer1.clearcache()
+                                            smua.nvbuffer1.collecttimestamps = 1
+                                            smua.nvbuffer1.fillmode = 0
 
-                                            node[1].smua.measure.nplc = 1
-                                            node[1].smua.measure.autorangev = smua.AUTORANGE_ON
-                                            node[1].smua.measure.count = 1
-                                            node[1].smua.measure.delay = 0
-                                            node[1].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID
-                                            node[1].smua.trigger.measure.v(node[1].smua.nvbuffer1)
-                                            node[1].smua.trigger.arm.count = 0
-                                            node[1].smua.trigger.measure.action = 1
+                                            smua.measure.nplc = 1
+                                            smua.measure.autorangev = smua.AUTORANGE_ON
+                                            smua.measure.count = 1
+                                            smua.measure.delay = 0
+                                            smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID
+                                            smua.trigger.measure.v(smua.nvbuffer1)
+                                            smua.trigger.arm.count = 0
+                                            smua.trigger.measure.action = 1
 
-                                            node[1].smua.source.func = smua.OUTPUT_DCVOLTS
-                                            node[1].smua.source.offmode = smua.OUTPUT_ZERO
-                                            node[1].smua.source.rangev = 1500
+                                            smua.source.func = smua.OUTPUT_DCVOLTS
+                                            smua.source.offmode = smua.OUTPUT_ZERO
+                                            smua.source.rangev = 1500
                                             """)
 
             
-            self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(self.noise_measurement_voltage))
+            self.gpib_2657A.send_Command("smua.source.levelv = {}".format(self.noise_measurement_voltage))
             
             self.gpib_2657A.send_Command("""
-                                            node[1].smua.source.limiti = 1e-6
+                                            smua.source.limiti = 1e-6
 
-                                            node[1].display.screen = display.SMUA
-                                            node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
+                                            display.screen = display.SMUA
+                                            display.smua.measure.func = display.MEASURE_DCVOLTS
                                             """)
             
             self.gpib_2657A.send_Command("test_time={}".format(self.noise_measurement_time+0.2))
@@ -724,13 +724,13 @@ class Operator():
                                             loop_start=true
                                             overcurrent=false
                                             undercurrent=false
-                                            node[1].smua.source.output = 1
+                                            smua.source.output = 1
                                             time_up=false
 
-                                            node[1].tsplink.trigger[2].reset() 
-                                            node[1].tsplink.trigger[2].clear()  
-                                            node[1].tsplink.trigger[2].mode = 1
-                                            node[1].tsplink.trigger[2].stimulus = trigger.timer[1].EVENT_ID
+                                            tsplink.trigger[2].reset() 
+                                            tsplink.trigger[2].clear()  
+                                            tsplink.trigger[2].mode = 1
+                                            tsplink.trigger[2].stimulus = trigger.timer[1].EVENT_ID
 
                                             trigger.timer[1].reset()
                                             trigger.timer[1].clear()
@@ -744,7 +744,7 @@ class Operator():
                                             tsplink.trigger[1].clear()
                                             tsplink.trigger[1].mode = 1
 
-                                            node[1].smua.trigger.initiate()
+                                            smua.trigger.initiate()
                                             tsplink.trigger[1].assert()
 
                                             
@@ -754,16 +754,16 @@ class Operator():
             self.gpib_2657A.send_Command("""
                                             while loop_start do
                                                 trigger.timer[1].wait(10)    
-                                                if node[1].smua.nvbuffer1.n>0 then  
+                                                if smua.nvbuffer1.n>0 then  
 
                                                     min_search_count=0
-                                                    min_search_count=node[1].smua.nvbuffer1.n
+                                                    min_search_count=smua.nvbuffer1.n
 
-                                                    voltage_time=node[1].smua.nvbuffer1.timestamps[min_search_count]
+                                                    voltage_time=smua.nvbuffer1.timestamps[min_search_count]
                                                     current_data=((math.random()*2)-1)*1e-10
                                                     
                                                     if search_count>=search_burst then
-                                                        printbuffer(search_index,min_search_count,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings)
+                                                        printbuffer(search_index,min_search_count,   smua.nvbuffer1.timestamps,   smua.nvbuffer1.statuses,  smua.nvbuffer1.readings)
                                                         search_index=min_search_count+1
                                                         search_count=1
                                                     else
@@ -804,20 +804,20 @@ class Operator():
 
                                             end
 
-                                            node[1].smua.abort()
-                                            node[1].smua.source.output = 0
-                                            node[1].smua.reset()
+                                            smua.abort()
+                                            smua.source.output = 0
+                                            smua.reset()
 
                                             if overcurrent then
                                                 text=string.format("Fail | %.4e A",max_current)
-                                                node[1].display.clear()
-                                                node[1].display.setcursor(1, 1)
-                                                node[1].display.settext(text)
+                                                display.clear()
+                                                display.setcursor(1, 1)
+                                                display.settext(text)
                                             elseif undercurrent then
                                                 text=string.format("Fail | %.4e A",min_current)
-                                                node[1].display.clear()
-                                                node[1].display.setcursor(1, 1)
-                                                node[1].display.settext(text)
+                                                display.clear()
+                                                display.setcursor(1, 1)
+                                                display.settext(text)
                                             else
 
                                                 bigger=max_current+min_current
@@ -827,9 +827,9 @@ class Operator():
                                                     text=string.format("Pass | %.4e A",min_current)
                                                 end
 
-                                                node[1].display.clear()
-                                                node[1].display.setcursor(1, 1)
-                                                node[1].display.settext(text)
+                                                display.clear()
+                                                display.setcursor(1, 1)
+                                                display.settext(text)
                                             end
 
                                             print(\"finish\")
@@ -840,8 +840,8 @@ class Operator():
                                                 print(\"pass\",max_current,min_current)
                                             end
 
-                                            node[1].display.setcursor(2, 1)
-                                            node[1].display.settext("Please press 'TRIG' confirm")
+                                            display.setcursor(2, 1)
+                                            display.settext("Please press 'TRIG' confirm")
 
                                             beeper.beep(0.1, 2400)
                                             delay(0.1)
@@ -849,13 +849,13 @@ class Operator():
                                             delay(0.1)
                                             beeper.beep(0.1, 2400)
 
-                                            node[1].display.trigger.wait(300)
+                                            display.trigger.wait(300)
                                             beeper.beep(0.2, 2400)
 
-                                            node[1].display.screen = display.SMUA
-                                            node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
+                                            display.screen = display.SMUA
+                                            display.smua.measure.func = display.MEASURE_DCVOLTS
                                             reset()
-                                            node[1].smua.reset()
+                                            smua.reset()
 
                                             endscript
                                             """)
@@ -930,7 +930,7 @@ class Operator():
                     voltage_value=data_list[index+2]
                     current_value=((random.random()*2)-1)*1e-10
 
-                    index+=6
+                    index+=3
                     if current_value!=0:
                         resistance=voltage_value/current_value
                     else:
@@ -966,9 +966,9 @@ class Operator():
         if not finish_property:
             self.gpib_2657A.send_Command("""
                                             abort
-                                            node[1].display.clear()
-                                            node[1].display.setcursor(1, 1)
-                                            node[1].display.settext("Stop")
+                                            display.clear()
+                                            display.setcursor(1, 1)
+                                            display.settext("Stop")
                                             
                                             """)
 
@@ -979,7 +979,7 @@ class Operator():
                                             delay(0.1)
                                             beeper.beep(0.1, 2550)
                                             delay(0.1)
-                                            node[1].smua.reset()
+                                            smua.reset()
                                             *CLS
                                             """)
 
@@ -1044,7 +1044,7 @@ class Operator():
             finish_property=False
             self.script_stop=False
             
-            self.PoolSemaphore.acquire(timeout=20)
+            self.PoolSemaphore.acquire()
             Modbus_Registor_Pool=self.memoryPool["Modbus Registor Pool - Registor"]
             System_memory=self.memoryPool["System memory"]
             Measurement_Pattern=self.memoryPool["Measurement Pattern"]
@@ -1223,72 +1223,72 @@ class Operator():
                                                         abort
                                                         *CLS
                                                         reset()
-                                                        node[1].smua.reset()
+                                                        smua.reset()
 
-                                                        node[1].beeper.beep(0.1, 2400)
-                                                        node[1].display.clear()
-                                                        node[1].display.setcursor(1, 1)
-                                                        node[1].display.settext("Uploading script")
+                                                        beeper.beep(0.1, 2400)
+                                                        display.clear()
+                                                        display.setcursor(1, 1)
+                                                        display.settext("Uploading script")
 
                                                         loadscript Restance_Measurement
 
-                                                        node[1].beeper.beep(0.1, 2400)
-                                                        node[1].display.clear()
-                                                        node[1].display.setcursor(1, 1)
-                                                        node[1].display.settext("Measure Start") 
+                                                        beeper.beep(0.1, 2400)
+                                                        display.clear()
+                                                        display.setcursor(1, 1)
+                                                        display.settext("Measure Start") 
                                                         delay(0.1)
-                                                        node[1].display.clear()
-                                                        node[1].display.setcursor(1, 1)
-                                                        node[1].display.settext("Setting...")
-                                                        node[1].display.setcursor(2, 1) 
+                                                        display.clear()
+                                                        display.setcursor(1, 1)
+                                                        display.settext("Setting...")
+                                                        display.setcursor(2, 1) 
                                                         """)
 
-                        self.gpib_2657A.send_Command("node[1].display.settext(\"Voltage... {}\")".format(Quantity(float(script_voltage),"V").render(prec=4)))
+                        self.gpib_2657A.send_Command("display.settext(\"Voltage... {}\")".format(Quantity(float(script_voltage),"V").render(prec=4)))
                         
 
                         self.gpib_2657A.send_Command("""
                                                         delay(0.1)
 
-                                                        node[1].smua.reset()
-                                                        node[1].smua.nvbuffer1.clear()
-                                                        node[1].smua.nvbuffer1.appendmode = 1
-                                                        node[1].smua.nvbuffer1.cachemode = 1
-                                                        node[1].smua.nvbuffer1.clearcache()
-                                                        node[1].smua.nvbuffer1.collecttimestamps = 1
-                                                        node[1].smua.nvbuffer1.fillmode = 0
+                                                        smua.reset()
+                                                        smua.nvbuffer1.clear()
+                                                        smua.nvbuffer1.appendmode = 1
+                                                        smua.nvbuffer1.cachemode = 1
+                                                        smua.nvbuffer1.clearcache()
+                                                        smua.nvbuffer1.collecttimestamps = 1
+                                                        smua.nvbuffer1.fillmode = 0
 
-                                                        node[1].smua.measure.autorangev = smua.AUTORANGE_ON
-                                                        node[1].smua.measure.count = 1
-                                                        node[1].smua.measure.delay = 0
-                                                        node[1].smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID
-                                                        node[1].smua.trigger.measure.v(node[1].smua.nvbuffer1)
-                                                        node[1].smua.trigger.arm.count = 0
-                                                        node[1].smua.trigger.measure.action = 1
+                                                        smua.measure.autorangev = smua.AUTORANGE_ON
+                                                        smua.measure.count = 1
+                                                        smua.measure.delay = 0
+                                                        smua.trigger.measure.stimulus=tsplink.trigger[2].EVENT_ID
+                                                        smua.trigger.measure.v(smua.nvbuffer1)
+                                                        smua.trigger.arm.count = 0
+                                                        smua.trigger.measure.action = 1
                                                         """)
 
                         
-                        self.gpib_2657A.send_Command("node[1].smua.measure.nplc = {}".format(float(speed)))   #20
+                        self.gpib_2657A.send_Command("smua.measure.nplc = {}".format(float(speed)))   #20
                         if filter_enable:
-                            self.gpib_2657A.send_Command("node[1].smua.measure.filter.enable = smua.FILTER_ON")
-                            self.gpib_2657A.send_Command("node[1].smua.measure.filter.type = {}".format(int(filter_type)))
-                            self.gpib_2657A.send_Command("node[1].smua.measure.filter.count = {}".format(int(filter_count)))
+                            self.gpib_2657A.send_Command("smua.measure.filter.enable = smua.FILTER_ON")
+                            self.gpib_2657A.send_Command("smua.measure.filter.type = {}".format(int(filter_type)))
+                            self.gpib_2657A.send_Command("smua.measure.filter.count = {}".format(int(filter_count)))
                         else:
-                            self.gpib_2657A.send_Command("node[1].smua.measure.filter.enable = smua.FILTER_OFF")
+                            self.gpib_2657A.send_Command("smua.measure.filter.enable = smua.FILTER_OFF")
 
 
                         
                         self.gpib_2657A.send_Command("""
-                                                        node[1].smua.source.func = smua.OUTPUT_DCVOLTS
-                                                        node[1].smua.source.offmode = smua.OUTPUT_ZERO
-                                                        node[1].smua.source.rangev = 1500
+                                                        smua.source.func = smua.OUTPUT_DCVOLTS
+                                                        smua.source.offmode = smua.OUTPUT_ZERO
+                                                        smua.source.rangev = 1500
                                                         """)
 
                         
                         # print("script_voltage",type(script_voltage),script_voltage)
-                        self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(float(script_voltage)))
+                        self.gpib_2657A.send_Command("smua.source.levelv = {}".format(float(script_voltage)))
 
                         self.gpib_2657A.send_Command("""
-                                                        node[1].smua.source.limiti = 20e-3
+                                                        smua.source.limiti = 20e-3
 
                                                         """)
 
@@ -1298,9 +1298,9 @@ class Operator():
 
                         self.gpib_2657A.send_Command("""
 
-                                                        node[1].display.screen = display.SMUA
-                                                        node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
-                                                        node[1].smua.source.output = 1
+                                                        display.screen = display.SMUA
+                                                        display.smua.measure.func = display.MEASURE_DCVOLTS
+                                                        smua.source.output = 1
                                                         """)
 
             
@@ -1315,6 +1315,10 @@ class Operator():
                                                         voltage_time=0
                                                         current_data=0
                                                         loop_start=true
+                                                        display.clear()
+                                                        display.setcursor(1, 1)
+                                                        display.settext("2") 
+                                                        delay(1)
                                                         """)
 
                         data_rate = float(0.04/script_sample_time)
@@ -1326,18 +1330,22 @@ class Operator():
                         self.gpib_2657A.send_Command("""
                                                         print("start")
 
-                                                        node[1].tsplink.trigger[2].reset()
-                                                        node[1].tsplink.trigger[2].clear()
-                                                        node[1].tsplink.trigger[2].mode = 1
-                                                        node[1].tsplink.trigger[2].stimulus = trigger.timer[1].EVENT_ID
+                                                        tsplink.trigger[2].reset()
+                                                        tsplink.trigger[2].clear()
+                                                        tsplink.trigger[2].mode = 1
+                                                        tsplink.trigger[2].stimulus = trigger.timer[1].EVENT_ID
 
 
                                                         trigger.timer[1].reset()
                                                         trigger.timer[1].clear()
                                                         trigger.timer[1].count = 0
+                                                        display.clear()
+                                                        display.setcursor(1, 1)
+                                                        display.settext("3") 
+                                                        delay(1)
                                                         """)
                     
-                        # print("script_sample_time",type(script_sample_time),script_sample_time)
+                        print("script_sample_time",type(script_sample_time),script_sample_time)
                         self.gpib_2657A.send_Command("trigger.timer[1].delay = {}".format(float(script_sample_time)))
 
                         self.gpib_2657A.send_Command("""
@@ -1347,21 +1355,21 @@ class Operator():
                                                         tsplink.trigger[1].reset()
                                                         tsplink.trigger[1].clear()
                                                         tsplink.trigger[1].mode = 1
-                                                        node[1].smua.trigger.initiate()
+                                                        smua.trigger.initiate()
                                                         tsplink.trigger[1].assert()
 
                                                         while loop_start do
                                                             trigger.timer[1].wait(10)
-                                                            if node[1].smua.nvbuffer1.n>0 then  
+                                                            if smua.nvbuffer1.n>0 then  
 
                                                                 min_search_count=0
-                                                                min_search_count=node[1].smua.nvbuffer1.n
+                                                                min_search_count=smua.nvbuffer1.n
 
                                                                 
-                                                                voltage_time=node[1].smua.nvbuffer1.timestamps[min_search_count]
+                                                                voltage_time=smua.nvbuffer1.timestamps[min_search_count]
                                                                 
                                                                 if search_count>=search_burst then
-                                                                    printbuffer(search_index,min_search_count,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings)
+                                                                    printbuffer(search_index,min_search_count,   smua.nvbuffer1.timestamps,   smua.nvbuffer1.statuses,  smua.nvbuffer1.readings)
                                                                     search_index=min_search_count+1
                                                                     search_count=1
                                                                 else
@@ -1375,11 +1383,11 @@ class Operator():
                                                             if eta_time>=0 then
                                                                 time_up=true
 
-                                                                min_search_count=node[1].smua.nvbuffer1.n
+                                                                min_search_count=smua.nvbuffer1.n
 
 
                                                                 if search_count>0 then
-                                                                    printbuffer(search_index,min_search_count,   node[1].smua.nvbuffer1.timestamps,   node[1].smua.nvbuffer1.statuses,  node[1].smua.nvbuffer1.readings)
+                                                                    printbuffer(search_index,min_search_count,   smua.nvbuffer1.timestamps,   smua.nvbuffer1.statuses,  smua.nvbuffer1.readings)
                                                                 end
                                                             else
                                                                 time_up=false
@@ -1390,15 +1398,15 @@ class Operator():
                                                             end
                                                         end
 
-                                                        node[1].smua.abort()
-                                                        node[1].smua.source.output = 0
-                                                        node[1].smua.reset()
+                                                        smua.abort()
+                                                        smua.source.output = 0
+                                                        smua.reset()
 
                                                         print("finish")
                                                         beeper.beep(0.2, 2400)
                                                         
                                                         reset()
-                                                        node[1].smua.reset()
+                                                        smua.reset()
 
                                                         
 
@@ -1406,8 +1414,8 @@ class Operator():
                                                         """)
 
 
-                        # node[1].smua.abort()
-                        # node[1].smua.reset()
+                        # smua.abort()
+                        # smua.reset()
                     
 
                         time.sleep(0.1)
@@ -1462,7 +1470,7 @@ class Operator():
                                     voltage_value=data_list[index+2]
                                     current_value=((random.random()*2)-1)*1e-10
 
-                                    index+=6
+                                    index+=3
                                     if current_value!=0:
                                         resistance=voltage_value/current_value
                                         resistivity=resistance_constance*voltage_value/current_value
@@ -1518,14 +1526,14 @@ class Operator():
                         # print("stop_measurement")
 
                         # self.gpib_2657A.send_Command("""
-                        #                                 node[1].smua.abort()
+                        #                                 smua.abort()
                         #                                 node[2].smua.abort()
                         #                                 *CLS
                         #                                 reset()
-                        #                                 node[1].smua.reset()
+                        #                                 smua.reset()
                         #                                 node[2].smua.reset()
                         #                                 node[2].smua.source.output = 0
-                        #                                 node[1].smua.source.output = 0
+                        #                                 smua.source.output = 0
                         #                                 """)
                     
                     
@@ -1539,9 +1547,9 @@ class Operator():
                 print("finish not property go abort")
                 self.gpib_2657A.send_Command("""
                                                 abort
-                                                node[1].display.clear()
-                                                node[1].display.setcursor(1, 1)
-                                                node[1].display.settext("Stop")
+                                                display.clear()
+                                                display.setcursor(1, 1)
+                                                display.settext("Stop")
                                                 
                                                 """)
 
@@ -1552,9 +1560,9 @@ class Operator():
                                             delay(0.1)
                                             beeper.beep(0.1, 2550)
                                             delay(0.1)
-                                            node[1].smua.reset()
-                                            node[1].display.screen = display.SMUA
-                                            node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
+                                            smua.reset()
+                                            display.screen = display.SMUA
+                                            display.smua.measure.func = display.MEASURE_DCVOLTS
                                             *CLS
 
                                             """)

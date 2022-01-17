@@ -286,23 +286,16 @@ class GPIB_device():
                                 abort
                                 *CLS
                                 reset()
-                                node[1].smua.reset()
-                                node[2].smua.reset()
-                                node[2].smua.source.output = 0
-                                node[1].smua.source.output = 0
+                                smua.reset()
+                                smua.source.output = 0
                                 tsplink.reset()
                                 beeper.beep(0.1, 2400)
-                                node[2].display.clear()
-                                node[2].display.setcursor(1, 1)
-                                node[2].display.settext("standby")
-                                node[1].display.clear()
-                                node[1].display.setcursor(1, 1)
-                                node[1].display.settext("standby")
+                                display.clear()
+                                display.setcursor(1, 1)
+                                display.settext("standby")
                                 delay(0.5)
-                                node[1].display.screen = display.SMUA
-                                node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
-                                node[2].display.screen = display.SMUA
-                                node[2].display.smua.measure.func = display.MEASURE_DCAMPS
+                                display.screen = display.SMUA
+                                display.smua.measure.func = display.MEASURE_DCVOLTS
                                 """)
 
 
