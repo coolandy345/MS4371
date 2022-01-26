@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pagessVdHgR.ui'
+## Form generated from reading UI file 'main_pagesYjZAic.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -2775,7 +2775,7 @@ class Ui_MainPages(object):
         self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.setObjectName(u"timeUnit_comboBox")
-        self.timeUnit_comboBox.setMinimumSize(QSize(0, 25))
+        self.timeUnit_comboBox.setMinimumSize(QSize(90, 25))
         self.timeUnit_comboBox.setMaximumSize(QSize(16777215, 16777215))
         self.timeUnit_comboBox.setStyleSheet(u"")
 
@@ -5369,7 +5369,7 @@ class Ui_MainPages(object):
         self.pages.setCurrentIndex(1)
         self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
-        self.stackedWidget_2.setCurrentIndex(0)
+        self.stackedWidget_2.setCurrentIndex(1)
         self.Manual_Measurement_Start_pushButton.setDefault(False)
 
 

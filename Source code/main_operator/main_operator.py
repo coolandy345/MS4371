@@ -187,8 +187,12 @@ class Operator():
         start_noise_measurement_Thread.start()
 
         self.set_memorypool_register("System memory","Manual_Measurement_Active",0)
-        start_manual_measurement_Thread = threading.Thread(target = self.start_manual_measurement,daemon=True)
+        start_manual_measurement_Thread = threading.Thread(target = self.start_manual_measurement_Single,daemon=True)
         start_manual_measurement_Thread.start()
+        start_manual_measurement_Thread = threading.Thread(target = self.start_manual_measurement_Pattern,daemon=True)
+        start_manual_measurement_Thread.start()
+
+
 
         get_temp_Thread = threading.Thread(target = self.get_temp_Work,daemon=True)
         get_temp_Thread.start()
@@ -319,13 +323,34 @@ class Operator():
         print("stop_measurement get signal")
         self.script_stop=True
 
-    def start_manual_measurement(self):
+    
+
+    def start_manual_measurement_Single(self):
         while 1:
-            print("start_manual_measurement")
+            print("start_manual_measurement_Single")
             #get event Start Run Auto run
-            self.eventPool["Manual Measure Start"].wait()
+            self.eventPool["Manual Measure Single Start"].wait()
             #clear  Start Run Auto run event
-            self.eventPool["Manual Measure Start"].clear()
+            self.eventPool["Manual Measure Single Start"].clear()
+
+            self.set_memorypool_register("System memory","Manual_Measurement_Active",1)
+
+            stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
+            stop_noise_measurement_Thread.start()
+
+            trigger_manual_measurement_Thread = threading.Thread(target = self.trigger_manual_measurement_Work,daemon=True)
+            trigger_manual_measurement_Thread.start()
+
+            stop_manual_measurement_Thread = threading.Thread(target = self.Manual_data_retrive_Work,daemon=True)
+            stop_manual_measurement_Thread.start()
+
+    def start_manual_measurement_Pattern(self):
+        while 1:
+            print("start_manual_measurement_Pattern")
+            #get event Start Run Auto run
+            self.eventPool["Manual Measure Pattern Start"].wait()
+            #clear  Start Run Auto run event
+            self.eventPool["Manual Measure Pattern Start"].clear()
 
             self.set_memorypool_register("System memory","Manual_Measurement_Active",1)
 
@@ -342,6 +367,7 @@ class Operator():
         print("Manual_data_retrive_Work")
         data_count=0
         start_time=time.time()
+        self.set_memorypool_register("System memory","Manual_Measurement_Ready",1)
         while not self.script_stop:
 
             data_package_list=[]
@@ -364,7 +390,7 @@ class Operator():
         self.set_memorypool_register("System memory","Manual_Measurement_Ready",0)
         self.set_memorypool_register("System memory","Manual_Measurement_Active",0)
 
-        self.eventPool["Manual Measure finish"].set()
+        self.eventPool["Manual Measure Single finish"].set()
 
         print("Manual_data_retrive_Work finish")
 
@@ -372,9 +398,9 @@ class Operator():
     def start_manual_measurement1(self):
         while 1:
             #get event Start Run Auto run
-            self.eventPool["Manual Measure Start"].wait()
+            self.eventPool["Manual Measure Single Start"].wait()
             #clear  Start Run Auto run event
-            self.eventPool["Manual Measure Start"].clear()
+            self.eventPool["Manual Measure Single Start"].clear()
 
             self.set_memorypool_register("System memory","Manual_Measurement_Active",1)
 
@@ -670,9 +696,31 @@ class Operator():
         self.set_memorypool_register("System memory","Manual_Measurement_Ready",0)
         self.set_memorypool_register("System memory","Manual_Measurement_Active",0)
 
-        self.eventPool["Manual Measure finish"].set()
+        self.eventPool["Manual Measure Single finish"].set()
 
     def start_noise_measurement(self):
+
+        while 1:
+            #get event Start Run Auto run
+            self.eventPool["Noise Measure Start"].wait()
+            #clear  Start Run Auto run event
+            self.eventPool["Noise Measure Start"].clear()
+
+            self.set_memorypool_register("System memory","Noise_Measurement_Active",1)
+
+            self.PoolSemaphore.acquire()
+            self.noise_measurement_voltage=self.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()
+            self.noise_measurement_current=1e-12*self.memoryPool["System memory"]["Noise_Measurement_Current"].getValue()
+            self.noise_measurement_time=60*self.memoryPool["System memory"]["Noise_Measurement_Time"].getValue()
+            self.PoolSemaphore.release()
+
+            stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
+            stop_noise_measurement_Thread.start()
+
+            stop_noise_measurement_Thread = threading.Thread(target = self.Noise_data_retrive_Work,daemon=True)
+            stop_noise_measurement_Thread.start()
+
+    def start_noise_measurement1(self):
         
         while 1:
             #get event Start Run Auto run
@@ -923,6 +971,41 @@ class Operator():
             stop_noise_measurement_Thread.start()
 
     def Noise_data_retrive_Work(self):
+
+        print("Noise_data_retrive_Work")
+
+        data_count=0
+        start_time=time.time()
+        while not self.script_stop:
+            data_package_list=[]
+            datapackage=Single_data_unitPackage(
+                             time=time.time()-start_time,
+                             count=data_count,
+                             Temperature=random.random(),
+                             voltage=random.random(),
+                             current=random.random(),
+                             resistance=random.random(),
+                             resistivity=random.random(),
+                        )
+            data_package_list.append(datapackage)
+            data_count+=1
+
+            self.queuePool["GUI_DataQueue"].put(data_package_list)
+            time.sleep(0.01)
+
+            if data_count>1000:
+                self.eventPool["Measure Stop"].set()
+
+        
+        self.set_memorypool_register("System memory","Noise_Measurement_Active",0)
+
+        self.eventPool["Noise Measure finish"].set()
+
+        
+        print("Noise_data_retrive_Work finish")
+
+
+    def Noise_data_retrive_Work1(self):
 
         pass_="不合格"
         max_current=0
