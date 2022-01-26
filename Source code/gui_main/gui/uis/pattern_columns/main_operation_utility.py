@@ -14,7 +14,8 @@ from pyqtgraph import mkColor as pg_mkColor
 
 import random
 import subprocess
-
+import numpy
+import math
 
 class Memory_Manager():
     def __init__( 
@@ -172,6 +173,11 @@ class Main_utility_manager(QWidget):
         self.choose_pattern=0
 
         self.graph_Item="Pattern"
+        
+        self.AutoMode_pattern_comboBox_contantList=[]
+        self.Manual_Measurement_pattern_comboBox_contantList=[]
+
+        
 
 
         self.timeUnit=1
@@ -198,16 +204,23 @@ class Main_utility_manager(QWidget):
 
         self.low_pressure=0
 
+        self.data_semaphore=threading.Semaphore()
         self.temp_data_array=[]
-        self.voltage_data_array=[]
-        self.current_data_array=[]
-        self.resistance_data_array=[]
+        self.data_array_depth=0
+
         self.temp_graph_data_array=[]
-        self.voltage_graph_data_array=[]
-        self.current_graph_data_array=[]
-        self.resistance_graph_data_array=[]
-        self.temp_sv_data_array=[]
-        self.temp_pv_data_array=[]
+        # self.voltage_graph_data_array=[]
+        # self.current_graph_data_array=[]
+        # self.resistance_graph_data_array=[]
+
+        self.voltage_data_array     =numpy.zeros(shape=(1000000000, 2),dtype='f')
+        self.current_data_array     =numpy.zeros(shape=(1000000000, 2),dtype='f')
+        self.resistance_data_array  =numpy.zeros(shape=(1000000000, 2),dtype='f')
+        self.temp_sv_data_array     =numpy.zeros(shape=(1000000000, 2),dtype='f')
+        self.temp_pv_data_array     =numpy.zeros(shape=(1000000000, 2),dtype='f')
+
+        
+
 
         self.autostart_signal=False
         self.measurement_start=False
@@ -218,12 +231,14 @@ class Main_utility_manager(QWidget):
         self.set_setting_Transfer_value=0
 
 
-        self.timer=QTimer()
-        self.timer.timeout.connect(self.graph_Update_Work)
-        self.timer.start(30)
+        self.graph_Update_timer=QTimer()
+        self.graph_Update_timer.timeout.connect(self.graph_Update_Work)
+        self.graph_Update_timer.start(30)
 
-        ultility_Update_Thread = threading.Thread(target = self.ultility_Update_Work,daemon=True)
-        ultility_Update_Thread.start()
+        self.ultility_Update_timer=QTimer()
+        self.ultility_Update_timer.timeout.connect(self.ultility_Update_Work)
+        self.ultility_Update_timer.start(10)
+
 
         realtime_data_Update_Thread = threading.Thread(target = self.realtime_data_Update_Work,daemon=True)
         realtime_data_Update_Thread.start()
@@ -231,7 +246,7 @@ class Main_utility_manager(QWidget):
         setting_transfer_Thread = threading.Thread(target = self.setting_transfer_Work,daemon=True)
         setting_transfer_Thread.start()
 
-        self.startup_check_dialog()
+        # self.startup_check_dialog()
         
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定可",0)
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
@@ -239,6 +254,7 @@ class Main_utility_manager(QWidget):
         self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
         self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
 
+        
 
 
     def startup_check_dialog(self):
@@ -300,43 +316,21 @@ class Main_utility_manager(QWidget):
         return(str(diag.exec()))
 
     def autoRun_logic(self):
-
-        self.ethernetConnecton_icon_active
         
-        #self.autostart_signal=True
-        #self.remoteConnect_signal=True
-
-        #self.ready_icon_active
-        #self.stop_icon_active
-        #self.vacuum_icon_active
-        #self.heating_icon_active
-        #self.keepTemp_icon_active
-        #self.testing_icon_active
-        #self.autoRunFinishing_icon_active
-        #self.error_icon_active
-
-
         #If we got ethernet access
         if self.ethernetConnecton_icon_active:
-            if not self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled():
-                self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(True)
 
-            if not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
-                self._parent.ui.load_pages.btn_ManaualMode.setEnabled(False)
-                self._parent.ui.load_pages.manaualMode_comboBox.setEnabled(False)
-                self._parent.ui.load_pages.voltageOutput_pushButton.setEnabled(False)
-                self._parent.ui.load_pages.Noisetest_pushButton.setEnabled(False)
+            self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(True)
+
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+                self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.setEnabled(True)
             else:
-                self._parent.ui.load_pages.btn_ManaualMode.setEnabled(True)
-                self._parent.ui.load_pages.manaualMode_comboBox.setEnabled(True)
-                self._parent.ui.load_pages.voltageOutput_pushButton.setEnabled(True)
-                self._parent.ui.load_pages.Noisetest_pushButton.setEnabled(True)
+                self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.setEnabled(False)
+                
 
         else:
-            self._parent.ui.load_pages.btn_ManaualMode.setEnabled(True)
-            self._parent.ui.load_pages.manaualMode_comboBox.setEnabled(True)
-            self._parent.ui.load_pages.voltageOutput_pushButton.setEnabled(True)
-            self._parent.ui.load_pages.Noisetest_pushButton.setEnabled(True)
+            self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.setEnabled(True)
+
 
             if self._parent.ui.load_pages.remoteConnect_pushButton.isEnabled() or self._parent.ui.load_pages.remoteConnect_pushButton.isChecked():
                 self._parent.ui.load_pages.remoteConnect_pushButton.blockSignals(True)
@@ -407,9 +401,8 @@ class Main_utility_manager(QWidget):
                 self._parent.testfile_manager.set_content_Editeable(False)
 
                 #Disable manual mode check pushbutton
-                if not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
-                    self._parent.ui.load_pages.btn_ManaualMode.setEnabled(False)
-                    self._parent.ui.load_pages.btn_ManaualMode.setVisible(False)
+                self._parent.ui.load_pages.btn_ManaualMode.setEnabled(False)
+                self._parent.ui.load_pages.btn_ManaualMode.setVisible(False)
 
                 #Start collecting PV temperature
                 if not self.PV_Record_Start:
@@ -567,7 +560,7 @@ class Main_utility_manager(QWidget):
 
         btn_name=self.sender().objectName()
 
-        # print(btn_name)
+        # print(btn_name)v
 
         if btn_name == "btn_AutoMode":
             self._parent.ui.load_pages.stackedWidget.setCurrentWidget(self._parent.ui.load_pages.page_AutoOperate)
@@ -582,48 +575,48 @@ class Main_utility_manager(QWidget):
             self.graph_Update_request=True
 
 
-        elif btn_name == "Noisetest_pushButton":
-            self._parent.ui.load_pages.Noisetest_pushButton.blockSignals(True)
+        elif btn_name == "Noise_Measurement_Start_pushButton":
+            self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.blockSignals(True)
             self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
             self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
 
             data_receive_Thread = threading.Thread(target = self.noise_measurement_finish_wait_Work,daemon=True)
             data_receive_Thread.start()
 
-        elif btn_name == "manaualMode_comboBox":
-            index=self._parent.ui.load_pages.manaualMode_comboBox.currentIndex()
+        elif btn_name == "Measurement_Mode_comboBox":
+            index=self._parent.ui.load_pages.Measurement_Mode_comboBox.currentIndex()
             self._parent.ui.load_pages.stackedWidget_2.setCurrentIndex(index)
 
-        elif btn_name == "noiseMeasurement_Voltage_lineEdit":
-            data=float(self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.text())
+        elif btn_name == "Noise_Measurement_Voltage_lineEdit":
+            data=float(self._parent.ui.load_pages.Noise_Measurement_Voltage_lineEdit.text())
             data,err=self.maxmin(1000,0,data)
             if err:
-                self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setText(str(data))
+                self._parent.ui.load_pages.Noise_Measurement_Voltage_lineEdit.setText(str(data))
 
             self.set_memorypool_register("System memory","Noise_Measurement_Voltage",data)
             self.noise_Measurement_Voltage=data
 
-        elif btn_name == "noiseMeasurement_Time_lineEdit":
-            data=float(self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.text())
+        elif btn_name == "Noise_Measurement_Time_lineEdit":
+            data=float(self._parent.ui.load_pages.Noise_Measurement_Time_lineEdit.text())
             data,err=self.maxmin(60,0.1,data)
             if err:
-                self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setText(str(data))
+                self._parent.ui.load_pages.Noise_Measurement_Time_lineEdit.setText(str(data))
 
             self.set_memorypool_register("System memory","Noise_Measurement_Time",data)
             self.noise_Measurement_Time=data
 
 
-        elif btn_name == "noiseMeasurement_Current_lineEdit":
-            data=float(self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.text())
+        elif btn_name == "Noise_Measurement_Current_lineEdit":
+            data=float(self._parent.ui.load_pages.Noise_Measurement_Current_lineEdit.text())
             data,err=self.maxmin(1000,0,data)
             if err:
-                self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setText(str(data))
+                self._parent.ui.load_pages.Noise_Measurement_Current_lineEdit.setText(str(data))
 
             self.set_memorypool_register("System memory","Noise_Measurement_Current",data)
             self.noise_Measurement_Current=data
 
-        elif btn_name == "outputStop_pushButton":
-            self._parent.ui.load_pages.outputStop_pushButton.blockSignals(True)
+        elif btn_name == "Measurement_Stop_pushButton":
+            self._parent.ui.load_pages.Measurement_Stop_pushButton.blockSignals(True)
         
             self.eventPool["Measure Stop"].set()
             # self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
@@ -675,24 +668,7 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
 
 
-        elif btn_name == "manualMeasurement_pushButton":
-            self._parent.ui.load_pages.manualMeasurement_pushButton.blockSignals(True)
-            self._parent.ui.load_pages.manualMeasurement_pushButton.setChecked(True)
-
-            self.set_memorypool_register("System memory","Manual_Measurement_trigger",1)
-
-            #self.eventPool["Test Event2"].set()
-             # Read valtage and current from gpib device
-
-
-            pass
-        elif btn_name == "voltageOutput_pushButton":
-            self._parent.ui.load_pages.voltageOutput_pushButton.blockSignals(True)
-            self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
-            self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
-
-            data_receive_Thread = threading.Thread(target = self.manual_measurement_finish_wait_Work,daemon=True)
-            data_receive_Thread.start()
+        
 
         elif btn_name == "gasFreeflow_pushButton":
             # Set Gas registor to memory bus
@@ -708,21 +684,52 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
 
-          
 
+        elif btn_name == "Manual_Measurement_SingleMode_comboBox":
+            manual_mode=self._parent.ui.load_pages.Manual_Measurement_SingleMode_comboBox.currentText()
+            self.set_memorypool_register("System memory","Manual_Measurement_Single_Mode",manual_mode)
 
-        elif btn_name == "measurement_comboBox":
-            manual_mode=self._parent.ui.load_pages.measurement_comboBox.currentText()
-            self.set_memorypool_register("System memory","Manual_Measurement_Mode",manual_mode)
+        elif btn_name == "Manual_Measurement_PatternMode_comboBox":
+            manual_PaPattern_No=self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.currentIndex()
+            self.set_memorypool_register("System memory","Manual_Measurement_Pattern_Number",manual_PaPattern_No)
 
-        elif btn_name == "voltage_lineEdit":
+        elif btn_name == "Manual_Measurement_SingleMode_pushButton":
+            self.set_memorypool_register("System memory","Manual_Measurement_Mode","Single")
+            self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setText("電圧印加")
+            # self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.setVisible(True)
+
+        elif btn_name == "Manual_Measurement_PatternMode_pushButton":
+            self.set_memorypool_register("System memory","Manual_Measurement_Mode","Pattern")
+            self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setText("パターン測定")
+            # self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.setVisible(False)
+
+        elif btn_name == "Manual_Measurement_Trigger_pushButton":
+            self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.blockSignals(True)
+            self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setChecked(True)
+
+            self.set_memorypool_register("System memory","Manual_Measurement_trigger",1)
+
+            #self.eventPool["Test Event2"].set()
+             # Read valtage and current from gpib device
+
+        elif btn_name == "Manual_Measurement_Start_pushButton":
+            self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.blockSignals(True)
+            self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
+            self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
+
+            data_receive_Thread = threading.Thread(target = self.manual_measurement_finish_wait_Work,daemon=True)
+            data_receive_Thread.start()
+
+            
+
+        elif btn_name == "Manual_Measurement_SingleVoltage_lineEdit":
             # Set output voltage limit
-            # self.set_memorypool_register("System memory","Manual_Measurement_Voltage",float(self._parent.ui.load_pages.voltage_lineEdit.text()))
+            # self.set_memorypool_register("System memory","Manual_Measurement_Voltage",float(self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.text()))
 
-            data=float(self._parent.ui.load_pages.voltage_lineEdit.text())
+            data=float(self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.text())
             data,err=self.maxmin(2000,-2000,data)
             if err:
-                self._parent.ui.load_pages.voltage_lineEdit.setText(str(data))
+                self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.setText(str(data))
 
             self.set_memorypool_register("System memory","Manual_Measurement_Voltage",data)
 
@@ -781,9 +788,14 @@ class Main_utility_manager(QWidget):
             
         elif btn_name == "timeUnit_comboBox":
             # self.starttime=time.time()
+            time_unitChange=False
 
             index=self._parent.ui.load_pages.timeUnit_comboBox.currentText()
             if index=="1s/div":
+
+                if not self.timeUnit==1:
+                    time_unitChange=True
+
                 self.timeUnit=1
                 self.timeLabel="s"
                 self.timeMaxRange=10
@@ -793,6 +805,10 @@ class Main_utility_manager(QWidget):
                 self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
                 self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
             elif index=="10s/div":
+
+                if not self.timeUnit==1:
+                    time_unitChange=True
+
                 self.timeUnit=1
                 self.timeLabel="s"
                 self.timeMaxRange=100
@@ -802,6 +818,10 @@ class Main_utility_manager(QWidget):
                 self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
                 self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
             elif index=="30s/div":
+                
+                if not self.timeUnit==1:
+                    time_unitChange=True
+
                 self.timeUnit=1
                 self.timeLabel="s"
                 self.timeMaxRange=300
@@ -811,6 +831,10 @@ class Main_utility_manager(QWidget):
                 self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
                 self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
             elif index=="1min/div":
+                
+                if not self.timeUnit==60:
+                    time_unitChange=True
+                    
                 self.timeUnit=60
                 self.timeLabel="min"
                 self.timeMaxRange=10
@@ -821,6 +845,10 @@ class Main_utility_manager(QWidget):
                 self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
 
             elif index=="10min/div":
+                
+                if not self.timeUnit==60:
+                    time_unitChange=True
+                    
                 self.timeUnit=60
                 self.timeLabel="min"
                 self.timeMaxRange=100
@@ -829,7 +857,27 @@ class Main_utility_manager(QWidget):
                 self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
                 self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
                 self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+
+            elif index=="30min/div":
+                
+                if not self.timeUnit==60:
+                    time_unitChange=True
+                    
+                self.timeUnit=60
+                self.timeLabel="min"
+                self.timeMaxRange=300
+                self.divider=180
+                
+                self.realTime_Voltage_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+                self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
+
+
             elif index=="1h/div":
+                
+                if not self.timeUnit==3600:
+                    time_unitChange=True
+                    
                 self.timeUnit=3600
                 self.timeLabel="hour"
                 self.timeMaxRange=10
@@ -839,6 +887,8 @@ class Main_utility_manager(QWidget):
                 self.realTime_Current_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
                 self.realTime_Resistance_Graph.setLimits(minXRange=0.01*self.timeMaxRange,maxXRange=1.1*self.timeMaxRange)
     
+            if time_unitChange:
+                self.graph_timeUnitData_adjust()
 
             self.graph_Update_request=True
 
@@ -847,6 +897,7 @@ class Main_utility_manager(QWidget):
             
 
     def fake_data_receive_Work(self):
+        
         self.voltage_data_array=[]
         self.current_data_array=[]
         self.resistance_data_array=[]
@@ -873,10 +924,6 @@ class Main_utility_manager(QWidget):
                 self.realTime_Voltage=voltage
                 self.realTime_Current=current
                 self.realTime_Resistor=resistance
-                
-                self.realTime_Voltage1=voltage
-                self.realTime_Current1=current
-                self.realTime_Resistor1=resistance
 
                 XYdata={}
                 XYdata["x"]=float(_time)
@@ -905,43 +952,66 @@ class Main_utility_manager(QWidget):
 
     def data_receive_Work(self):
 
-        self.voltage_data_array=[]
-        self.current_data_array=[]
-        self.resistance_data_array=[]
-        self.temp_sv_data_array=[]
-        self.temp_pv_data_array=[]
+        self._parent.ui.load_pages.timeUnit_comboBox.setCurrentIndex(0)
 
+        self.data_array_depth=0
+
+        pressure_testnumber=10000
+
+        start_time=0
+
+        self.data_semaphore.acquire()
+
+        self.current_time_unit=self.timeUnit
+
+        time_array=numpy.linspace(0,3600*24/self.timeUnit,num=pressure_testnumber).reshape(pressure_testnumber,1)
+                                    
+        ran_array1=numpy.random.rand(pressure_testnumber,1).reshape(pressure_testnumber,1)
+        ran_array2=numpy.random.rand(pressure_testnumber,1).reshape(pressure_testnumber,1)
+        ran_array3=numpy.random.rand(pressure_testnumber,1).reshape(pressure_testnumber,1)
+
+        self.voltage_data_array[0:pressure_testnumber,0:1]=time_array
+        self.voltage_data_array[0:pressure_testnumber,1:2]=ran_array1
+        self.current_data_array[0:pressure_testnumber,0:1]=time_array
+        self.current_data_array[0:pressure_testnumber,1:2]=ran_array2
+        self.resistance_data_array[0:pressure_testnumber,0:1]=time_array
+        self.resistance_data_array[0:pressure_testnumber,1:2]=ran_array3
+
+        self.data_array_depth=pressure_testnumber
+
+        start_time=float(time_array[-1])
+        print(start_time)
+        
+        self.data_semaphore.release()
         self.starttime=time.time()
         # self.timeUnit=1
         while self.dataRecord_Start:
             try:
                 getItem=self.queuePool["GUI_DataQueue"].get(timeout=0.1)
 
+
                 # print("GUI_DataQueue",getItem)
                 self.realTime_Voltage=getItem[-1].voltage
                 self.realTime_Current=getItem[-1].current
                 self.realTime_Resistor=getItem[-1].resistance
+
+                # print("12",self.realTime_Voltage,self.realTime_Current,self.realTime_Resistor)
                 
                 for data in getItem:
-                    self.realTime_Voltage1=data.voltage
-                    self.realTime_Current1=data.current
-                    self.realTime_Resistor1=data.resistance
                     # print("GUI_DataQueue",data.time,data.voltage,data.current,)
-                    XYdata={}
-                    XYdata["x"]=float(data.time)
-                    XYdata["y"]=float(data.current)
-                    self.current_data_array.append(XYdata)
+                    
 
-                    XYdata={}
-                    XYdata["x"]=float(data.time)
-                    XYdata["y"]=float(data.voltage)
-                    self.voltage_data_array.append(XYdata)
+                    self.data_semaphore.acquire()
+                    data_time=(data.time+start_time)/self.timeUnit
+                    self.current_data_array[self.data_array_depth]=numpy.array([data_time,data.current])
+                    self.voltage_data_array[self.data_array_depth]=numpy.array([data_time,data.voltage])
+                    self.resistance_data_array[self.data_array_depth]=numpy.array([data_time,data.resistance])
+                    self.data_semaphore.release()
 
-                    XYdata={}
-                    XYdata["x"]=float(data.time)
-                    XYdata["y"]=float(data.resistance)
-                    self.resistance_data_array.append(XYdata)
+                    self.data_array_depth+=1
 
+
+                
                 self.graph_Update_request=True
 
 
@@ -959,30 +1029,30 @@ class Main_utility_manager(QWidget):
 
         self._parent.ui.load_pages.btn_AutoMode.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.btn_ManaualMode.clicked.connect(self.btn_callback)
-        self._parent.ui.load_pages.manualMeasurement_pushButton.clicked.connect(self.btn_callback)
-        self._parent.ui.load_pages.voltageOutput_pushButton.clicked.connect(self.btn_callback)
-        self._parent.ui.load_pages.outputStop_pushButton.clicked.connect(self.btn_callback)
-        self._parent.ui.load_pages.Noisetest_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.Measurement_Stop_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.clicked.connect(self.btn_callback)
 
-        self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setValidator(QDoubleValidator())
+        self._parent.ui.load_pages.Noise_Measurement_Voltage_lineEdit.setValidator(QDoubleValidator())
         data=self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()
-        self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setText("{}".format(data))
-        self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.editingFinished.connect(self.btn_callback)
-        self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setValidator(QDoubleValidator())
+        self._parent.ui.load_pages.Noise_Measurement_Voltage_lineEdit.setText("{}".format(data))
+        self._parent.ui.load_pages.Noise_Measurement_Voltage_lineEdit.editingFinished.connect(self.btn_callback)
+        self._parent.ui.load_pages.Noise_Measurement_Time_lineEdit.setValidator(QDoubleValidator())
         data=self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_Time"].getValue()
-        self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setText("{}".format(data))
-        self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.editingFinished.connect(self.btn_callback)
-        self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setValidator(QDoubleValidator())
+        self._parent.ui.load_pages.Noise_Measurement_Time_lineEdit.setText("{}".format(data))
+        self._parent.ui.load_pages.Noise_Measurement_Time_lineEdit.editingFinished.connect(self.btn_callback)
+        self._parent.ui.load_pages.Noise_Measurement_Current_lineEdit.setValidator(QDoubleValidator())
         data=self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_Current"].getValue()
-        self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setText("{}".format(data))
-        self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.editingFinished.connect(self.btn_callback)
+        self._parent.ui.load_pages.Noise_Measurement_Current_lineEdit.setText("{}".format(data))
+        self._parent.ui.load_pages.Noise_Measurement_Current_lineEdit.editingFinished.connect(self.btn_callback)
 
         self._parent.ui.load_pages.Resistor_checkBox.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.Voltage_checkBox.clicked.connect(self.btn_callback)
         self._parent.ui.load_pages.Current_checkBox.clicked.connect(self.btn_callback)
         
-        self._parent.ui.load_pages.manaualMode_comboBox.currentIndexChanged.connect(self.btn_callback)
-        index=self._parent.ui.load_pages.manaualMode_comboBox.currentIndex()
+        self._parent.ui.load_pages.Measurement_Mode_comboBox.currentIndexChanged.connect(self.btn_callback)
+        index=self._parent.ui.load_pages.Measurement_Mode_comboBox.currentIndex()
         self._parent.ui.load_pages.stackedWidget_2.setCurrentIndex(index)
         
         self._parent.ui.load_pages.remoteConnect_pushButton.clicked.connect(self.btn_callback)
@@ -992,16 +1062,38 @@ class Main_utility_manager(QWidget):
 
 
         
-        self._parent.ui.load_pages.voltage_lineEdit.setValidator(QDoubleValidator())
+        self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.setValidator(QDoubleValidator())
         data=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Voltage"].getValue()
-        self._parent.ui.load_pages.voltage_lineEdit.setText("{}".format(data))
-        self._parent.ui.load_pages.voltage_lineEdit.editingFinished.connect(self.btn_callback)
+        self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.setText("{}".format(data))
+        self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.editingFinished.connect(self.btn_callback)
 
-        data=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Mode"].getValue()
-        self._parent.ui.load_pages.measurement_comboBox.setCurrentText("{}".format(data))
-        self._parent.ui.load_pages.measurement_comboBox.currentIndexChanged.connect(self.btn_callback)
-        self._parent.ui.load_pages.graphItem_combobox.currentIndexChanged.connect(self.btn_callback)
+        data=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Single_Mode"].getValue()
+        self._parent.ui.load_pages.Manual_Measurement_SingleMode_comboBox.setCurrentText("{}".format(data))
+        self._parent.ui.load_pages.Manual_Measurement_SingleMode_comboBox.currentIndexChanged.connect(self.btn_callback)
+
+        data=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Pattern_Number"].getValue()
+        self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.setCurrentIndex(data)
+        self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.currentIndexChanged.connect(self.btn_callback)
+
+
+        self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.clicked.connect(self.btn_callback)
+        self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.clicked.connect(self.btn_callback)
+
         
+        data=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Mode"].getValue()
+        if data=="Single":
+            self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.setChecked(True)
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.setChecked(False)
+            self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setText("電圧印加")
+        elif data=="Pattern":
+            self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.setChecked(False)
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.setChecked(True)
+            self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setText("パターン測定")
+
+
+
+        self._parent.ui.load_pages.graphItem_combobox.currentIndexChanged.connect(self.btn_callback)
+
         self._parent.ui.load_pages.graphItem_combobox.setCurrentIndex(1)
         self._parent.ui.load_pages.timeUnit_comboBox.currentIndexChanged.connect(self.btn_callback)
 
@@ -1264,7 +1356,18 @@ class Main_utility_manager(QWidget):
             pass
         elif sum==2 and self.realTime_Current_Graph_set and self.realTime_Voltage_Graph_set:
             self.realTime_Current_Graph
-                    
+
+    def graph_timeUnitData_adjust(self):
+
+        time_convert_constant=self.current_time_unit/self.timeUnit
+        
+        self.data_semaphore.acquire()
+        self.voltage_data_array[0:self.data_array_depth,0:1]*=time_convert_constant
+        self.current_data_array[0:self.data_array_depth,0:1]*=time_convert_constant
+        self.resistance_data_array[0:self.data_array_depth,0:1]*=time_convert_constant
+        self.data_semaphore.release()
+
+        self.current_time_unit=self.timeUnit
 
     def graph_update(self):
 
@@ -1277,54 +1380,9 @@ class Main_utility_manager(QWidget):
 
                 self.check_buttom_axix()
 
-            # self.temp_graph_data_array=[]
-            # self.voltage_graph_data_array=[]
-            # self.current_graph_data_array=[]
-            # self.resistance_graph_data_array=[]
-
-
-
-            new_data=[]
-            for pos in range(0,len(self.voltage_data_array)):
-
-                XYdata={}
-                XYdata["x"]=self.voltage_data_array[pos]["x"]/self.timeUnit
-                XYdata["y"]=self.voltage_data_array[pos]["y"]
-                new_data.append(XYdata)
-
-            self.voltage_graph_data_array=new_data
             self.realTime_Voltage_Graph_bottomAxis.setTickSpacing(self.timeMaxRange/10,self.timeMaxRange/100)
-
-            new_data=[]
-            for pos in range(0,len(self.current_data_array)):
-
-                XYdata={}
-                XYdata["x"]=self.current_data_array[pos]["x"]/self.timeUnit
-                XYdata["y"]=self.current_data_array[pos]["y"]
-                new_data.append(XYdata)
-
-            self.current_graph_data_array=new_data
             self.realTime_Current_Graph_bottomAxis.setTickSpacing(self.timeMaxRange/10,self.timeMaxRange/100)
-
-            new_data=[]
-            for pos in range(0,len(self.resistance_data_array)):
-
-                XYdata={}
-                XYdata["x"]=self.resistance_data_array[pos]["x"]/self.timeUnit
-                XYdata["y"]=self.resistance_data_array[pos]["y"]
-                new_data.append(XYdata)
-
-            self.resistance_graph_data_array=new_data
             self.realTime_Resistance_Graph_bottomAxis.setTickSpacing(self.timeMaxRange/10,self.timeMaxRange/100)
-
-
-            #self.realTime_Voltage_Graph.setVisible (self._parent.ui.load_pages.Resistor_checkBox.isChecked())
-            #self.realTime_Current_Graph.setVisible (self._parent.ui.load_pages.Voltage_checkBox.isChecked())
-            #self.realTime_Resistance_Graph.setVisible (self._parent.ui.load_pages.Current_checkBox.isChecked())
-
-            #self._parent.ui.load_pages.frame_75.setVisible (self._parent.ui.load_pages.Resistor_checkBox.isChecked())
-            #self._parent.ui.load_pages.frame_76.setVisible (self._parent.ui.load_pages.Voltage_checkBox.isChecked())
-            #self._parent.ui.load_pages.frame_2.setVisible (self._parent.ui.load_pages.Current_checkBox.isChecked())
 
             
             if self._parent.ui.load_pages.Voltage_checkBox.isChecked():
@@ -1360,18 +1418,22 @@ class Main_utility_manager(QWidget):
                     self.win.removeItem(self.realTime_Resistance_Graph)
                     self.check_buttom_axix()
 
-            self._parent.voltage_curve.setData(self.voltage_graph_data_array)
-            self._parent.current_curve.setData(self.current_graph_data_array)
-            self._parent.resistance_curve.setData(self.resistance_graph_data_array)
 
-            if self.voltage_graph_data_array:
-                self.realTime_Voltage_Graph.setXRange(min=self.voltage_graph_data_array[-1]["x"]-1.1*self.timeMaxRange, max=self.voltage_graph_data_array[-1]["x"]+0.1*self.timeMaxRange)
+            sucess,pos,index=self.get_data_from_view(self.voltage_data_array[self.data_array_depth-1][0]-1.1*self.timeMaxRange)
 
-            if self.current_graph_data_array:
-                self.realTime_Current_Graph.setXRange(min=self.current_graph_data_array[-1]["x"]-1.1*self.timeMaxRange, max=self.current_graph_data_array[-1]["x"]+0.1*self.timeMaxRange)
+            skip_gap=1
+            gap=(self.data_array_depth-index)
+            if gap >5000:
+                skip_gap=math.ceil(gap/5000)
 
-            if self.resistance_graph_data_array:
-                self.realTime_Resistance_Graph.setXRange(min=self.resistance_graph_data_array[-1]["x"]-1.1*self.timeMaxRange, max=self.resistance_graph_data_array[-1]["x"]+0.1*self.timeMaxRange)
+            self._parent.voltage_curve.setData(self.voltage_data_array[index:self.data_array_depth:skip_gap])
+            self._parent.current_curve.setData(self.current_data_array[index:self.data_array_depth:skip_gap])
+            self._parent.resistance_curve.setData(self.resistance_data_array[index:self.data_array_depth:skip_gap])
+
+            if self.data_array_depth>0:
+                self.realTime_Voltage_Graph.setXRange(min=self.voltage_data_array[self.data_array_depth-1][0]-1.1*self.timeMaxRange, max=self.voltage_data_array[self.data_array_depth-1][0]+0.1*self.timeMaxRange)
+                self.realTime_Current_Graph.setXRange(min=self.current_data_array[self.data_array_depth-1][0]-1.1*self.timeMaxRange, max=self.current_data_array[self.data_array_depth-1][0]+0.1*self.timeMaxRange)
+                self.realTime_Resistance_Graph.setXRange(min=self.resistance_data_array[self.data_array_depth-1][0]-1.1*self.timeMaxRange, max=self.resistance_data_array[self.data_array_depth-1][0]+0.1*self.timeMaxRange)
 
 
 
@@ -1428,7 +1490,27 @@ class Main_utility_manager(QWidget):
             #self.realTimeData_Graph.setLimits(minXRange=0,maxXRange=self.timeMaxRange)
 
 
+    def adjust_graph_and_data(self):
+        # print(self.realTime_Voltage_Graph.viewRange())
+
+        xrange=self.realTime_Voltage_Graph.viewRange()[0]
+
+        sucess,pos,start_index=self.get_data_from_view(xrange[0])
+        sucess,pos,end_index=self.get_data_from_view(xrange[1])
+
+        if sucess:
+            skip_gap=1
+            gap=(end_index-start_index)
+            if gap >=5000:
+                skip_gap=math.ceil(gap/5000)
+
+            self._parent.voltage_curve.setData(self.voltage_data_array[start_index:end_index+1:skip_gap])
+            self._parent.current_curve.setData(self.current_data_array[start_index:end_index+1:skip_gap])
+            self._parent.resistance_curve.setData(self.resistance_data_array[start_index:end_index+1:skip_gap])
+
     def realTime_Voltage_Graph_mouse_move(self,evt):
+
+        self.adjust_graph_and_data()
 
         pos = evt[0]  ## using signal proxy turns original arguments into a tuple
         if self.realTime_Voltage_Graph.sceneBoundingRect().contains(pos):
@@ -1437,12 +1519,12 @@ class Main_utility_manager(QWidget):
             # if index > 0 and index < len(data1):
             #     label.setText("<span style='font-size: 12pt'>x=%0.1f,   <span style='color: red'>y1=%0.1f</span>,   <span style='color: green'>y2=%0.1f</span>" % (mousePoint.x(), data1[index], data2[index]))
             
-            sucess,x_index = self.get_data_from_view(mousePoint.x())
+            sucess,pos,index = self.get_data_from_view(mousePoint.x())
 
             if sucess:
-                self.realTime_Voltage_Graph_vLine.setPos(x_index)
-                self.realTime_Current_Graph_vLine.setPos(x_index)
-                self.realTime_Resistance_Graph_vLine.setPos(x_index)
+                self.realTime_Voltage_Graph_vLine.setPos(pos)
+                self.realTime_Current_Graph_vLine.setPos(pos)
+                self.realTime_Resistance_Graph_vLine.setPos(pos)
 
 
     def realTime_Current_Graph_mouse_move(self,evt):
@@ -1454,12 +1536,12 @@ class Main_utility_manager(QWidget):
             # if index > 0 and index < len(data1):
             #     label.setText("<span style='font-size: 12pt'>x=%0.1f,   <span style='color: red'>y1=%0.1f</span>,   <span style='color: green'>y2=%0.1f</span>" % (mousePoint.x(), data1[index], data2[index]))
             
-            sucess,x_index = self.get_data_from_view(mousePoint.x())
+            sucess,pos,index = self.get_data_from_view(mousePoint.x())
 
             if sucess:
-                self.realTime_Voltage_Graph_vLine.setPos(x_index)
-                self.realTime_Current_Graph_vLine.setPos(x_index)
-                self.realTime_Resistance_Graph_vLine.setPos(x_index)
+                self.realTime_Voltage_Graph_vLine.setPos(pos)
+                self.realTime_Current_Graph_vLine.setPos(pos)
+                self.realTime_Resistance_Graph_vLine.setPos(pos)
 
     def realTime_Resistance_Graph_mouse_move(self,evt):
 
@@ -1470,12 +1552,12 @@ class Main_utility_manager(QWidget):
             # if index > 0 and index < len(data1):
             #     label.setText("<span style='font-size: 12pt'>x=%0.1f,   <span style='color: red'>y1=%0.1f</span>,   <span style='color: green'>y2=%0.1f</span>" % (mousePoint.x(), data1[index], data2[index]))
             
-            sucess,x_index = self.get_data_from_view(mousePoint.x())
+            sucess,pos,index = self.get_data_from_view(mousePoint.x())
 
             if sucess:
-                self.realTime_Voltage_Graph_vLine.setPos(x_index)
-                self.realTime_Current_Graph_vLine.setPos(x_index)
-                self.realTime_Resistance_Graph_vLine.setPos(x_index)
+                self.realTime_Voltage_Graph_vLine.setPos(pos)
+                self.realTime_Current_Graph_vLine.setPos(pos)
+                self.realTime_Resistance_Graph_vLine.setPos(pos)
 
     def get_data_from_view(self,pos):
 
@@ -1486,37 +1568,52 @@ class Main_utility_manager(QWidget):
 
             Finded_close_pos=False
             most_clost_index=0
-            short_distance=9999999999
-            index=0
-            for data in self.voltage_graph_data_array:
+            short_distance=9999999999 
 
-                distance=abs(data["x"]-pos)
-                if distance<short_distance:
-                    Finded_close_pos=True
-                    most_clost_index=index
-                    short_distance=distance
+            temp_array=numpy.hsplit(self.voltage_data_array, 2)
 
-                index+=1
+            temp_array=numpy.reshape(temp_array[0][:self.data_array_depth],self.data_array_depth)
+
+            most_clost_index=numpy.searchsorted(temp_array, pos)
+
+            distance_a=abs(self.voltage_data_array[most_clost_index][0]-pos)
+            distance_b=abs(self.voltage_data_array[most_clost_index-1][0]-pos)
+
+            if most_clost_index>0 and distance_a>distance_b:
+                most_clost_index-=1
+
+            Finded_close_pos=True
+
+            # for data in self.voltage_data_array:
+
+            #     distance=abs(data[0]-pos)
+            #     if distance<short_distance:
+            #         Finded_close_pos=True
+            #         most_clost_index=index
+            #         short_distance=distance
+
+            #     index+=1
 
             if Finded_close_pos:
 
-                self.realTime_Voltage=self.voltage_graph_data_array[most_clost_index]["y"]
-                self.realTime_Current=self.current_graph_data_array[most_clost_index]["y"]
-                self.realTime_Resistor=self.resistance_graph_data_array[most_clost_index]["y"]
-                return True,self.voltage_graph_data_array[most_clost_index]["x"]
+                self.realTime_Voltage=self.voltage_data_array[most_clost_index][1]
+                self.realTime_Current=self.current_data_array[most_clost_index][1]
+                self.realTime_Resistor=self.resistance_data_array[most_clost_index][1]
+
+                return True,self.voltage_data_array[most_clost_index][0],most_clost_index
 
             else:
-                return None,None
+                return None,None,0
         
         else:
 
-            return None,None
-            
+            return None,None,0
 
     def graph_setup(self):
 
         pg_setConfigOptions(background=None)
         self.win = pg_GraphicsLayoutWidget(show=True,parent=self._parent)
+
 
         self.row_count=0
         #autoDownsample=True,downsampleMethod="subsample",
@@ -1568,23 +1665,16 @@ class Main_utility_manager(QWidget):
         #self.realTime_Temperature_Graph.setLimits(minXRange=self.timeMaxRange,maxXRange=self.timeMaxRange)
 
         
+
         self._parent.voltage_curve=self.realTime_Voltage_Graph.plot(pen=pg_mkColor(200, 133, 0),
-                                                        symbolPen='w',
-                                                        symbolBrush=(0,0,0),
-                                                        symbolSize=1,
                                                         name="電圧",
                                                         )
-
-                                                        
 
         self.realTime_Voltage_Graph_bottomAxis=self.realTime_Voltage_Graph.getAxis("bottom")
         self.realTime_Voltage_Graph_bottomAxis.enableAutoSIPrefix(False)
         
 
         self._parent.current_curve=self.realTime_Current_Graph.plot(pen=pg_mkColor(132, 220, 244),
-                                                        symbolPen='w',
-                                                        symbolBrush=(0,0,0),
-                                                        symbolSize=1,
                                                         name="電流",
                                                         )
 
@@ -1593,9 +1683,6 @@ class Main_utility_manager(QWidget):
         
 
         self._parent.resistance_curve=self.realTime_Resistance_Graph.plot(pen=pg_mkColor(131, 255, 145),
-                                                        symbolPen='w',
-                                                        symbolBrush=(0,0,0),
-                                                        symbolSize=1,
                                                         name="抵抗値",
                                                         )
 
@@ -1605,17 +1692,11 @@ class Main_utility_manager(QWidget):
         self.realTime_Temperature_Graph.addLegend()
         self.pattern_SV_data_array=[]
         self._parent.temp_sv_curve=self.realTime_Temperature_Graph.plot(pen=pg_mkColor(132, 220, 244),
-                                                        symbolPen='w',
-                                                        symbolBrush=(0,0,0),
-                                                        symbolSize=1,
                                                         name="温度SP値",
                                                         )
 
         self.pattern_PV_data_array=[]
         self._parent.temp_pv_curve=self.realTime_Temperature_Graph.plot(pen=pg_mkColor(200, 133, 0),
-                                                        symbolPen='w',
-                                                        symbolBrush=(0,0,0),
-                                                        symbolSize=1,
                                                         name="温度PV値",
                                                         )
 
@@ -1677,7 +1758,9 @@ class Main_utility_manager(QWidget):
                         measurement_finish_wait_Thread = threading.Thread(target = self.measurement_finish_wait_Work,daemon=True)
                         measurement_finish_wait_Thread.start()
 
-            if not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+
+
+            if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
                 self.eventPool["Measure Stop"].set()
 
 
@@ -1733,6 +1816,7 @@ class Main_utility_manager(QWidget):
         # print("ノイズ測定終了")
         
     def manual_measurement_finish_wait_Work(self):
+
         # print("手動測定開始")
         self.dataRecord_Start=True
         data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
@@ -1742,6 +1826,8 @@ class Main_utility_manager(QWidget):
         self.eventPool["Manual Measure finish"].wait()
         self.eventPool["Manual Measure finish"].clear()
         self.dataRecord_Start=False
+        
+        self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.blockSignals(False)
         # print("手動測定終了")
 
     def measurement_finish_wait_Work(self):
@@ -1758,153 +1844,249 @@ class Main_utility_manager(QWidget):
         self.dataRecord_Start=False
         # print("測定終了")
 
+    
+
     def ultility_Update_Work(self):
-        self.AutoMode_pattern_comboBox_contantList=[]
 
-        while 1:
-            time.sleep(0.1)
-            if ( self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_status"].getValue() or 
-                self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_status"].getValue()    ):
-                self._parent.ui.load_pages.outputStop_pushButton.blockSignals(False)
-                self._parent.ui.load_pages.outputStop_pushButton.setChecked(False)
-                self._parent.ui.load_pages.outputStop_pushButton.setEnabled(True)
-                self._parent.ui.load_pages.manaualMode_comboBox.setEnabled(False)
-                self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
-                self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
+        #if any Measurement is taking place
+        #enable Stop button
+        #prevent user go to others mode
+        if ( self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_Active"].getValue() or 
+            self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Active"].getValue()    ):
+            self._parent.ui.load_pages.Measurement_Stop_pushButton.blockSignals(False)
+            self._parent.ui.load_pages.Measurement_Stop_pushButton.setChecked(False)
+            self._parent.ui.load_pages.Measurement_Stop_pushButton.setEnabled(True)
+            self._parent.ui.load_pages.Measurement_Mode_comboBox.setEnabled(False)
+            self._parent.ui.load_pages.btn_ManaualMode.setEnabled(True)
+            self._parent.ui.load_pages.btn_ManaualMode.setVisible(True)
+            self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
+            self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
+        else:
+            #We dont need to stop/abort any measurement
+            self._parent.ui.load_pages.Measurement_Stop_pushButton.blockSignals(True)
+            self._parent.ui.load_pages.Measurement_Stop_pushButton.setChecked(False)
+            self._parent.ui.load_pages.Measurement_Stop_pushButton.setEnabled(False)
+
+            #We should allow to switch to Auto mode
+            self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
+            self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
+
+
+            #if PLC tell us not to do measurement
+            if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+                self._parent.ui.load_pages.btn_ManaualMode.setEnabled(False)
+                self._parent.ui.load_pages.btn_ManaualMode.setVisible(False)
+
+                self._parent.ui.load_pages.Measurement_Mode_comboBox.setEnabled(False)
+                self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.setEnabled(False)
+
+
+            #if we are free to process any measurement
             else:
-                self._parent.ui.load_pages.outputStop_pushButton.blockSignals(True)
-                self._parent.ui.load_pages.outputStop_pushButton.setChecked(True)
-                self._parent.ui.load_pages.outputStop_pushButton.setEnabled(False)
-                self._parent.ui.load_pages.manaualMode_comboBox.setEnabled(True)
-                self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
-                self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
+                self._parent.ui.load_pages.btn_ManaualMode.setEnabled(True)
+                self._parent.ui.load_pages.btn_ManaualMode.setVisible(True)
+                self._parent.ui.load_pages.Measurement_Mode_comboBox.setEnabled(True)
 
-            if self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_status"].getValue():
-                self._parent.ui.load_pages.Noisetest_pushButton.blockSignals(True)
-                self._parent.ui.load_pages.Noisetest_pushButton.setChecked(True)
-                self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setEnabled(False)
-                self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setEnabled(False)
-                self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setEnabled(False)
-            else:
-                self._parent.ui.load_pages.Noisetest_pushButton.setChecked(False)
-                self._parent.ui.load_pages.Noisetest_pushButton.blockSignals(False)
-                self._parent.ui.load_pages.noiseMeasurement_Voltage_lineEdit.setEnabled(True)
-                self._parent.ui.load_pages.noiseMeasurement_Time_lineEdit.setEnabled(True)
-                self._parent.ui.load_pages.noiseMeasurement_Current_lineEdit.setEnabled(True)
+        #if Noise Measurement is ongoing
+        #Disable Noise_Measurement_Start_pushButton from over load method
+        #Prevent any test paremeter changed
+        if self._parent.MMG.memoryPool["System memory"]["Noise_Measurement_Active"].getValue():
+            self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.blockSignals(True)
+            self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.setChecked(True)
+            self._parent.ui.load_pages.Noise_Measurement_Voltage_lineEdit.setEnabled(False)
+            self._parent.ui.load_pages.Noise_Measurement_Time_lineEdit.setEnabled(False)
+            self._parent.ui.load_pages.Noise_Measurement_Current_lineEdit.setEnabled(False)
+        else:
+            self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.setChecked(False)
+            self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.blockSignals(False)
+            self._parent.ui.load_pages.Noise_Measurement_Voltage_lineEdit.setEnabled(True)
+            self._parent.ui.load_pages.Noise_Measurement_Time_lineEdit.setEnabled(True)
+            self._parent.ui.load_pages.Noise_Measurement_Current_lineEdit.setEnabled(True)
 
-            if self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_status"].getValue():
-                self._parent.ui.load_pages.voltageOutput_pushButton.blockSignals(True)
-                self._parent.ui.load_pages.voltageOutput_pushButton.setChecked(True)
-                self._parent.ui.load_pages.voltage_lineEdit.setEnabled(False)
 
+        #if Manual Measurement is ongoing
+        if self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Active"].getValue():
+
+            self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.setEnabled(False)
+            self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.blockSignals(True)
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.blockSignals(True)
+            self._parent.ui.load_pages.Manual_Measurement_SingleMode_comboBox.setEnabled(False)
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.setEnabled(False)
+
+            #Check which measeurement mode are we
+            Manual_Measurement_Mode=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Mode"].getValue()
+            if Manual_Measurement_Mode=="Single":
+                self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.setChecked(True)
+                self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.setEnabled(True)
+                self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.setChecked(False)
+                self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.setEnabled(False)
+
+                if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+                
+                    self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setChecked(False)
+                    self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setEnabled(False)
+                else:
+                    self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setChecked(True)
+                    self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setEnabled(True)
+
+                #if voltage is already output and data is incomeing
                 if self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Ready"].getValue():
-                    self._parent.ui.load_pages.manualMeasurement_pushButton.setEnabled(True)
+                    if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+                        print("1")
+                        self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setEnabled(True)
+                    else:
+                        self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setEnabled(False)
+
                 else:
-                    self._parent.ui.load_pages.manualMeasurement_pushButton.setEnabled(False)
+                    self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setEnabled(False)
 
 
+            elif Manual_Measurement_Mode=="Pattern":
+                self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.setChecked(False)
+                self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.setEnabled(False)
+                self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.setChecked(True)
+                self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.setEnabled(True)
+
+                self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setChecked(False)
+                self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setEnabled(False)
+
+        #if Manual Measurement is not ongoing
+        else:
+
+            self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setEnabled(False)
+
+
+
+
+
+            # #Check which measeurement mode are we looking at
+            # Manual_Measurement_Mode=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Mode"].getValue()
+            # if Manual_Measurement_Mode=="Single":
+            #     if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+            #         self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setEnabled(False)
+            #     else:
+            #         self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setEnabled(True)
+            #         self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.blockSignals(False)
+
+            # elif Manual_Measurement_Mode=="Pattern":
+            #     self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setEnabled(False)
+            #     self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.blockSignals(True)
+
+            #     if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+            #         self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setEnabled(False)
+            #     else:
+            #         print("2")
+            #         self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setEnabled(True)
+
+                
+
+        if self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_trigger"].getValue():
+            self._parent.ui.load_pages.Manual_Measurement_SingleMode_comboBox.setEnabled(False)
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.setEnabled(False)
+        else:
+            self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setChecked(False)
+            self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.blockSignals(False)
+            self._parent.ui.load_pages.Manual_Measurement_SingleMode_comboBox.setEnabled(True)
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.setEnabled(True)
+
+        if self.AutoMode_pattern_comboBox_contantList !=self._parent.tempPattern.patternFile_nameList:
+            self.AutoMode_pattern_comboBox_contantList=self._parent.tempPattern.patternFile_nameList
+            self._parent.ui.load_pages.AutoMode_pattern_comboBox.blockSignals(True)
+            self._parent.ui.load_pages.AutoMode_pattern_comboBox.clear()
+            self._parent.ui.load_pages.AutoMode_pattern_comboBox.addItems(self.AutoMode_pattern_comboBox_contantList)
+            self._parent.ui.load_pages.AutoMode_pattern_comboBox.setCurrentIndex(self.choose_pattern)
+            self._parent.ui.load_pages.AutoMode_pattern_comboBox.blockSignals(False)
+
+        if self.Manual_Measurement_pattern_comboBox_contantList !=self._parent.testPattern.patternFile_nameList:
+            self.Manual_Measurement_pattern_comboBox_contantList=self._parent.testPattern.patternFile_nameList
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.blockSignals(True)
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.clear()
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.addItems(self.Manual_Measurement_pattern_comboBox_contantList)
+            choose_test_pattern=self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Pattern_Number"].getValue()
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.setCurrentIndex(choose_test_pattern)
+            self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.blockSignals(False)
+
+        if not self._parent.tempPattern.patternFiles==[] and self.AutoMode_pattern_comboBox_contantList:
+
+            gas_mode=0
+            if self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1]:
+                gas_mode=self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1].gas_condition
             else:
-                self._parent.ui.load_pages.voltageOutput_pushButton.setChecked(False)
-                self._parent.ui.load_pages.voltageOutput_pushButton.blockSignals(False)
-                self._parent.ui.load_pages.manualMeasurement_pushButton.setEnabled(False)
-                self._parent.ui.load_pages.voltage_lineEdit.setEnabled(True)
+                gas_mode==-1
 
-            if self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_trigger"].getValue():
-                self._parent.ui.load_pages.manualMeasurement_pushButton.blockSignals(True)
-                self._parent.ui.load_pages.manualMeasurement_pushButton.setChecked(True)
-                self._parent.ui.load_pages.measurement_comboBox.setEnabled(False)
-            else:
-                self._parent.ui.load_pages.manualMeasurement_pushButton.setChecked(False)
-                self._parent.ui.load_pages.manualMeasurement_pushButton.blockSignals(False)
-                self._parent.ui.load_pages.measurement_comboBox.setEnabled(True)
+            if gas_mode==-1:
+                gas_mode="未選択"
+            elif gas_mode==0:
+                gas_mode="大気"
+            elif gas_mode==1:
+                gas_mode="真空"
+            elif gas_mode==2:
+                gas_mode="N2置換"
+        else:
+            gas_mode=""
 
-            if self.AutoMode_pattern_comboBox_contantList !=self._parent.tempPattern.patternFile_nameList:
-                self.AutoMode_pattern_comboBox_contantList=self._parent.tempPattern.patternFile_nameList
-                self._parent.ui.load_pages.AutoMode_pattern_comboBox.blockSignals(True)
-                self._parent.ui.load_pages.AutoMode_pattern_comboBox.clear()
-                self._parent.ui.load_pages.AutoMode_pattern_comboBox.addItems(self.AutoMode_pattern_comboBox_contantList)
-                self._parent.ui.load_pages.AutoMode_pattern_comboBox.setCurrentIndex(self.choose_pattern)
-                self._parent.ui.load_pages.AutoMode_pattern_comboBox.blockSignals(False)
+        self._parent.ui.load_pages.Gas_mode_Label.setText("雰囲気モード:{}".format(gas_mode))
+    
+        self.ethernetConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue()
+        self.usbConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["GPIB USB conneciton"].getValue()
+        self.gPIBConnecton_2635B_icon_active=self._parent.MMG.memoryPool["System memory"]["2635B connection"].getValue()
+        self.gPIBConnecton_2657A_icon_active=self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue()
 
-
-            if not self._parent.tempPattern.patternFiles==[] and self.AutoMode_pattern_comboBox_contantList:
-
-                if self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1]:
-                    gas_mode=self._parent.tempPattern.patternFiles[self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1].gas_condition
-                else:
-                    gas_mode==-1
-
-                if gas_mode==-1:
-                    gas_mode="未選択"
-                elif gas_mode==0:
-                    gas_mode="大気"
-                elif gas_mode==1:
-                    gas_mode="真空"
-                elif gas_mode==2:
-                    gas_mode="N2置換"
-            else:
-                gas_mode=""
-
-            self._parent.ui.load_pages.Gas_mode_Label.setText("雰囲気モード:{}".format(gas_mode))
         
-            self.ethernetConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue()
-            self.usbConnecton_icon_active=self._parent.MMG.memoryPool["System memory"]["GPIB USB conneciton"].getValue()
-            self.gPIBConnecton_2635B_icon_active=self._parent.MMG.memoryPool["System memory"]["2635B connection"].getValue()
-            self.gPIBConnecton_2657A_icon_active=self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue()
+
+        if self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue():
+            
+            self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
+            self.stop_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
+            self.vacuum_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
+            self.heating_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
+            self.keepTemp_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度ｷｰﾌﾟ中"].getValue()
+            self.testing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
+            self.autoRunFinishing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
+            self.error_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
+
+
+        else:
+            self.ready_icon_active=0
+            self.stop_icon_active=0
+            self.vacuum_icon_active=0
+            self.heating_icon_active=0
+            self.keepTemp_icon_active=0
+            self.testing_icon_active=0
+            self.autoRunFinishing_icon_active=0
+            self.error_icon_active=0
+
+
+        if self.ready_icon_active != self._parent.ready_icon._is_active:
+            self._parent.ready_icon.set_active(self.ready_icon_active)
+        if self.stop_icon_active != self._parent.stop_icon._is_active:
+            self._parent.stop_icon.set_active(self.stop_icon_active)
+        if self.vacuum_icon_active != self._parent.vacuum_icon._is_active:
+            self._parent.vacuum_icon.set_active(self.vacuum_icon_active)
+        if self.heating_icon_active != self._parent.heating_icon._is_active:
+            self._parent.heating_icon.set_active(self.heating_icon_active)
+        if self.keepTemp_icon_active != self._parent.keepTemp_icon._is_active:
+            self._parent.keepTemp_icon.set_active(self.keepTemp_icon_active)
+        if self.testing_icon_active != self._parent.testing_icon._is_active:
+            self._parent.testing_icon.set_active(self.testing_icon_active)
+        if self.autoRunFinishing_icon_active != self._parent.autoRunFinishing_icon._is_active:
+            self._parent.autoRunFinishing_icon.set_active(self.autoRunFinishing_icon_active)
+        if self.error_icon_active != self._parent.error_icon._is_active:
+            self._parent.error_icon.set_active(self.error_icon_active)
 
             
+        if self.ethernetConnecton_icon_active != self._parent.ethernetConnecton_icon._is_active:
+            self._parent.ethernetConnecton_icon.set_active(self.ethernetConnecton_icon_active)
+        if self.usbConnecton_icon_active != self._parent.usbConnecton_icon._is_active:
+            self._parent.usbConnecton_icon.set_active(self.usbConnecton_icon_active)
 
-            if self._parent.MMG.memoryPool["System memory"]["Ethernet conneciton"].getValue():
-                
-                self.ready_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転可"].getValue()
-                self.stop_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["停止中"].getValue()
-                self.vacuum_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["真空置換中"].getValue()
-                self.heating_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["昇温中"].getValue()
-                self.keepTemp_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["温度ｷｰﾌﾟ中"].getValue()
-                self.testing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定中"].getValue()
-                self.autoRunFinishing_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転終了"].getValue()
-                self.error_icon_active=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PLC警報"].getValue()
+        if self.gPIBConnecton_2657A_icon_active != self._parent.gPIBConnecton_2657A_icon._is_active:
+            self._parent.gPIBConnecton_2657A_icon.set_active(self.gPIBConnecton_2657A_icon_active)
+        if self.gPIBConnecton_2635B_icon_active != self._parent.gPIBConnecton_2635B_icon._is_active:
+            self._parent.gPIBConnecton_2635B_icon.set_active(self.gPIBConnecton_2635B_icon_active)
 
-
-            else:
-                self.ready_icon_active=0
-                self.stop_icon_active=0
-                self.vacuum_icon_active=0
-                self.heating_icon_active=0
-                self.keepTemp_icon_active=0
-                self.testing_icon_active=0
-                self.autoRunFinishing_icon_active=0
-                self.error_icon_active=0
+        
+        self.autoRun_logic()
 
 
-            if self.ready_icon_active != self._parent.ready_icon._is_active:
-                self._parent.ready_icon.set_active(self.ready_icon_active)
-            if self.stop_icon_active != self._parent.stop_icon._is_active:
-                self._parent.stop_icon.set_active(self.stop_icon_active)
-            if self.vacuum_icon_active != self._parent.vacuum_icon._is_active:
-                self._parent.vacuum_icon.set_active(self.vacuum_icon_active)
-            if self.heating_icon_active != self._parent.heating_icon._is_active:
-                self._parent.heating_icon.set_active(self.heating_icon_active)
-            if self.keepTemp_icon_active != self._parent.keepTemp_icon._is_active:
-                self._parent.keepTemp_icon.set_active(self.keepTemp_icon_active)
-            if self.testing_icon_active != self._parent.testing_icon._is_active:
-                self._parent.testing_icon.set_active(self.testing_icon_active)
-            if self.autoRunFinishing_icon_active != self._parent.autoRunFinishing_icon._is_active:
-                self._parent.autoRunFinishing_icon.set_active(self.autoRunFinishing_icon_active)
-            if self.error_icon_active != self._parent.error_icon._is_active:
-                self._parent.error_icon.set_active(self.error_icon_active)
-
-                
-            if self.ethernetConnecton_icon_active != self._parent.ethernetConnecton_icon._is_active:
-                self._parent.ethernetConnecton_icon.set_active(self.ethernetConnecton_icon_active)
-            if self.usbConnecton_icon_active != self._parent.usbConnecton_icon._is_active:
-                self._parent.usbConnecton_icon.set_active(self.usbConnecton_icon_active)
-            if self.gPIBConnecton_2657A_icon_active != self._parent.gPIBConnecton_2657A_icon._is_active:
-                self._parent.gPIBConnecton_2657A_icon.set_active(self.gPIBConnecton_2657A_icon_active)
-            # if self.gPIBConnecton_2635B_icon_active != self._parent.gPIBConnecton_2635B_icon._is_active:
-            #     self._parent.gPIBConnecton_2635B_icon.set_active(self.gPIBConnecton_2635A_icon_active)
-
-            self._parent.gPIBConnecton_2635B_icon.set_active(False)
-            
-            self.autoRun_logic()
 

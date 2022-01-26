@@ -149,6 +149,7 @@ def databaseLoadThread(memoryPool):
 
 
 
+
     
     System_Registor_Database.commit()
     System_Registor_Database.close()

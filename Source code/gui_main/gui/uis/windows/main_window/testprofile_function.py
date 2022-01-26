@@ -77,6 +77,9 @@ class Testfile_manager(QWidget):
         self._MeterialinnerDie=""
         self._thinkness=""
 
+        self.AvgValue=0
+        self.AvgHelper=[]
+
         self.pid_parameter_list=[]
 
         self.folder_path=""
@@ -85,6 +88,8 @@ class Testfile_manager(QWidget):
         self.set_parameter()
         self.utility_setup()
         self.utility_update()
+        self.AvgHelper_update()
+        
 
         dialog_thread = threading.Thread(target = self.dialog_work,daemon=True)
         dialog_thread.start()
@@ -128,6 +133,13 @@ class Testfile_manager(QWidget):
         self._MeterialMainDie=self._parent.MMG.memoryPool["System memory"]["主電極径(mm)"].getValue()
         self._MeterialinnerDie=self._parent.MMG.memoryPool["System memory"]["ガード電極の内径(mm)"].getValue()
         self._thinkness=self._parent.MMG.memoryPool["System memory"]["試料の厚さ(mm)"].getValue()
+
+        for index in range(1,9):
+            data=[]
+            data.append(self._parent.MMG.memoryPool["System memory"]["AvgHelper_Enable_{}".format(index)].getValue()) 
+            data.append(self._parent.MMG.memoryPool["System memory"]["AvgHelper_Value_{}".format(index)].getValue())   
+            self.AvgHelper.append(data)
+
 
         self.pid_parameter_list=[]
         for pid_number in range(0,10):
@@ -198,6 +210,28 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_PID_9_P.setText(str("{:0.01f}".format(0.01*self.pid_parameter_list[9][0])))
         self._parent.ui.load_pages.lineEdit_PID_9_I.setText(str(self.pid_parameter_list[9][1]))
         self._parent.ui.load_pages.lineEdit_PID_9_D.setText(str(self.pid_parameter_list[9][2]))
+
+
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_1.setChecked(True if self.AvgHelper[0][0] else False)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_1.setText(str(self.AvgHelper[0][1]))
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_2.setChecked(True if self.AvgHelper[1][0] else False)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_2.setText(str(self.AvgHelper[1][1]))
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_3.setChecked(True if self.AvgHelper[2][0] else False)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_3.setText(str(self.AvgHelper[2][1]))
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_4.setChecked(True if self.AvgHelper[3][0] else False)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_4.setText(str(self.AvgHelper[3][1]))
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_5.setChecked(True if self.AvgHelper[4][0] else False)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_5.setText(str(self.AvgHelper[4][1]))
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_6.setChecked(True if self.AvgHelper[5][0] else False)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_6.setText(str(self.AvgHelper[5][1]))
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_7.setChecked(True if self.AvgHelper[6][0] else False)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_7.setText(str(self.AvgHelper[6][1]))
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_8.setChecked(True if self.AvgHelper[7][0] else False)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_8.setText(str(self.AvgHelper[7][1]))
+        
+
+
+    
 
 
     def utility_update(self):
@@ -309,6 +343,44 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_PID_9_I.setValidator(QIntValidator())
         self._parent.ui.load_pages.lineEdit_PID_9_D.editingFinished.connect(self.button_callback)
         self._parent.ui.load_pages.lineEdit_PID_9_D.setValidator(QIntValidator())
+
+
+        self._parent.ui.load_pages.AvgHelper_A_submit_pushButton.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_B_submit_pushButton.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_C_submit_pushButton.clicked.connect(self.button_callback)
+        
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_1.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_1.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_1.setValidator(QDoubleValidator())
+
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_2.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_2.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_2.setValidator(QDoubleValidator())
+
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_3.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_3.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_3.setValidator(QDoubleValidator())
+
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_4.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_4.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_4.setValidator(QDoubleValidator())
+
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_5.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_5.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_5.setValidator(QDoubleValidator())
+
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_6.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_6.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_6.setValidator(QDoubleValidator())
+
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_7.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_7.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_7.setValidator(QDoubleValidator())
+
+        self._parent.ui.load_pages.AvgHelper_Enable_pushButton_8.clicked.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_8.editingFinished.connect(self.button_callback)
+        self._parent.ui.load_pages.AvgHelper_Value_lineEditor_8.setValidator(QDoubleValidator())
+
         
         self.areaVolumeCal()
         
@@ -327,6 +399,11 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_MeterialMainDie.setEnabled(enable)
         self._parent.ui.load_pages.lineEdit_MeterialinnerDie.setEnabled(enable)
         self._parent.ui.load_pages.lineEdit_thinkness.setEnabled(enable)
+
+        
+        self._parent.ui.load_pages.AvgHelper_A_submit_pushButton.setEnabled(enable)
+        self._parent.ui.load_pages.AvgHelper_B_submit_pushButton.setEnabled(enable)
+        self._parent.ui.load_pages.AvgHelper_C_submit_pushButton.setEnabled(enable)
 
         self._parent.ui.load_pages.lineEdit_PID_0_P.setEnabled(enable)
         self._parent.ui.load_pages.lineEdit_PID_0_I.setEnabled(enable)
@@ -386,6 +463,7 @@ class Testfile_manager(QWidget):
 
     def button_callback(self):
         btn=self.sender().objectName()
+        # print(btn)
 
         if btn=="QC_Test_RadioButton":
             self._QC_Test=1
@@ -434,10 +512,105 @@ class Testfile_manager(QWidget):
             self.set_memorypool_register("System memory","ガード電極の内径(mm)",self._MeterialinnerDie)
             self.areaVolumeCal()
 
+            
         elif btn=="lineEdit_thinkness":
             self._thinkness=float(self._parent.ui.load_pages.lineEdit_thinkness.text())
             self.set_memorypool_register("System memory","試料の厚さ(mm)",self._thinkness)
             self.areaVolumeCal()
+
+            
+        elif btn=="AvgHelper_A_submit_pushButton":
+            self._parent.ui.load_pages.lineEdit_MeterialMainDie.setText(str(self.AvgValue))
+            
+        elif btn=="AvgHelper_B_submit_pushButton":
+            self._parent.ui.load_pages.lineEdit_MeterialinnerDie.setText(str(self.AvgValue))
+            
+        elif btn=="AvgHelper_C_submit_pushButton":
+            self._parent.ui.load_pages.lineEdit_thinkness.setText(str(self.AvgValue))
+
+            
+        elif btn=="AvgHelper_Enable_pushButton_1":
+            self.AvgHelper[0][0]=1 if self._parent.ui.load_pages.AvgHelper_Enable_pushButton_1.isChecked() else 0
+            self.set_memorypool_register("System memory","AvgHelper_Enable_1",self.AvgHelper[0][0])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Value_lineEditor_1":
+            self.AvgHelper[0][1]=float(self._parent.ui.load_pages.AvgHelper_Value_lineEditor_1.text())
+            self.set_memorypool_register("System memory","AvgHelper_Value_1",self.AvgHelper[0][1])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Enable_pushButton_2":
+            self.AvgHelper[1][0]=1 if self._parent.ui.load_pages.AvgHelper_Enable_pushButton_2.isChecked() else 0
+            self.set_memorypool_register("System memory","AvgHelper_Enable_2",self.AvgHelper[1][0])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Value_lineEditor_2":
+            self.AvgHelper[1][1]=float(self._parent.ui.load_pages.AvgHelper_Value_lineEditor_2.text())
+            self.set_memorypool_register("System memory","AvgHelper_Value_2",self.AvgHelper[1][1])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Enable_pushButton_3":
+            self.AvgHelper[2][0]=1 if self._parent.ui.load_pages.AvgHelper_Enable_pushButton_3.isChecked() else 0
+            self.set_memorypool_register("System memory","AvgHelper_Enable_3",self.AvgHelper[2][0])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Value_lineEditor_3":
+            self.AvgHelper[2][1]=float(self._parent.ui.load_pages.AvgHelper_Value_lineEditor_3.text())
+            self.set_memorypool_register("System memory","AvgHelper_Value_3",self.AvgHelper[2][1])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Enable_pushButton_4":
+            self.AvgHelper[3][0]=1 if self._parent.ui.load_pages.AvgHelper_Enable_pushButton_4.isChecked() else 0
+            self.set_memorypool_register("System memory","AvgHelper_Enable_4",self.AvgHelper[3][0])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Value_lineEditor_4":
+            self.AvgHelper[3][1]=float(self._parent.ui.load_pages.AvgHelper_Value_lineEditor_4.text())
+            self.set_memorypool_register("System memory","AvgHelper_Value_4",self.AvgHelper[3][1])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Enable_pushButton_5":
+            self.AvgHelper[4][0]=1 if self._parent.ui.load_pages.AvgHelper_Enable_pushButton_5.isChecked() else 0
+            self.set_memorypool_register("System memory","AvgHelper_Enable_5",self.AvgHelper[4][0])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Value_lineEditor_5":
+            self.AvgHelper[4][1]=float(self._parent.ui.load_pages.AvgHelper_Value_lineEditor_5.text())
+            self.set_memorypool_register("System memory","AvgHelper_Value_5",self.AvgHelper[4][1])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Enable_pushButton_6":
+            self.AvgHelper[5][0]=1 if self._parent.ui.load_pages.AvgHelper_Enable_pushButton_6.isChecked() else 0
+            self.set_memorypool_register("System memory","AvgHelper_Enable_6",self.AvgHelper[5][0])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Value_lineEditor_6":
+            self.AvgHelper[5][1]=float(self._parent.ui.load_pages.AvgHelper_Value_lineEditor_6.text())
+            self.set_memorypool_register("System memory","AvgHelper_Value_6",self.AvgHelper[5][1])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Enable_pushButton_7":
+            self.AvgHelper[6][0]=1 if self._parent.ui.load_pages.AvgHelper_Enable_pushButton_7.isChecked() else 0
+            self.set_memorypool_register("System memory","AvgHelper_Enable_7",self.AvgHelper[6][0])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Value_lineEditor_7":
+            self.AvgHelper[6][1]=float(self._parent.ui.load_pages.AvgHelper_Value_lineEditor_7.text())
+            self.set_memorypool_register("System memory","AvgHelper_Value_7",self.AvgHelper[6][1])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Enable_pushButton_8":
+            self.AvgHelper[7][0]=1 if self._parent.ui.load_pages.AvgHelper_Enable_pushButton_8.isChecked() else 0
+            self.set_memorypool_register("System memory","AvgHelper_Enable_8",self.AvgHelper[7][0])
+            self.AvgHelper_update()
+
+        elif btn=="AvgHelper_Value_lineEditor_8":
+            self.AvgHelper[7][1]=float(self._parent.ui.load_pages.AvgHelper_Value_lineEditor_8.text())
+            self.set_memorypool_register("System memory","AvgHelper_Value_8",self.AvgHelper[7][1])
+            self.AvgHelper_update()
+
+        
+
 
         elif btn=="lineEdit_PID_0_P":
             if float(self._parent.ui.load_pages.lineEdit_PID_0_P.text())<0.1:
@@ -582,6 +755,23 @@ class Testfile_manager(QWidget):
 
 
         self.utility_update()
+
+    def AvgHelper_update(self):
+        self.AvgHelper[7][1]
+        total_value=0
+        total_qty=0
+        for data in self.AvgHelper:
+            if data[0]:
+                total_value+=data[1]
+                total_qty+=1
+        
+        if total_qty:
+            self.AvgValue=total_value/total_qty
+        else :
+            self.AvgValue=0
+
+        self._parent.ui.load_pages.AvgHelper_result.setText(str("平均値 = {}".format(self.AvgValue)))
+
 
     def areaVolumeCal(self):
 

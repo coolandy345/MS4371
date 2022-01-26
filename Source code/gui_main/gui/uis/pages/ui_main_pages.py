@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pageskTEEKB.ui'
+## Form generated from reading UI file 'main_pagessVdHgR.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.0
 ##
@@ -91,7 +91,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1038, 759))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1001, 818))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -117,7 +117,7 @@ class Ui_MainPages(object):
         self.frame_48 = QFrame(self.frame_42)
         self.frame_48.setObjectName(u"frame_48")
         self.frame_48.setMinimumSize(QSize(0, 0))
-        self.frame_48.setMaximumSize(QSize(16777215, 300))
+        self.frame_48.setMaximumSize(QSize(16777215, 16777215))
         self.frame_48.setStyleSheet(u"QFrame{\n"
 "	background-color: rgb(36, 40, 49);\n"
 "	border:none;\n"
@@ -279,8 +279,11 @@ class Ui_MainPages(object):
 
         self.frame_62 = QFrame(self.frame_42)
         self.frame_62.setObjectName(u"frame_62")
-        sizePolicy.setHeightForWidth(self.frame_62.sizePolicy().hasHeightForWidth())
-        self.frame_62.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.frame_62.sizePolicy().hasHeightForWidth())
+        self.frame_62.setSizePolicy(sizePolicy1)
         self.frame_62.setMinimumSize(QSize(0, 0))
         self.frame_62.setMaximumSize(QSize(16777215, 16777215))
         self.frame_62.setStyleSheet(u"QFrame{\n"
@@ -295,6 +298,14 @@ class Ui_MainPages(object):
         self.gridLayout_10 = QGridLayout(self.frame_62)
         self.gridLayout_10.setObjectName(u"gridLayout_10")
         self.gridLayout_10.setHorizontalSpacing(12)
+        self.lineEdit_MeterialinnerDie = QLineEdit(self.frame_62)
+        self.lineEdit_MeterialinnerDie.setObjectName(u"lineEdit_MeterialinnerDie")
+        self.lineEdit_MeterialinnerDie.setMinimumSize(QSize(200, 30))
+        self.lineEdit_MeterialinnerDie.setMaximumSize(QSize(200, 30))
+        self.lineEdit_MeterialinnerDie.setStyleSheet(u"")
+
+        self.gridLayout_10.addWidget(self.lineEdit_MeterialinnerDie, 3, 1, 1, 1)
+
         self.label_32 = QLabel(self.frame_62)
         self.label_32.setObjectName(u"label_32")
         self.label_32.setMinimumSize(QSize(140, 35))
@@ -303,100 +314,6 @@ class Ui_MainPages(object):
         self.label_32.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_10.addWidget(self.label_32, 6, 0, 1, 1)
-
-        self.lineEdit_testMeterialName = QLineEdit(self.frame_62)
-        self.lineEdit_testMeterialName.setObjectName(u"lineEdit_testMeterialName")
-        self.lineEdit_testMeterialName.setMinimumSize(QSize(200, 30))
-        self.lineEdit_testMeterialName.setMaximumSize(QSize(200, 30))
-        self.lineEdit_testMeterialName.setStyleSheet(u"")
-
-        self.gridLayout_10.addWidget(self.lineEdit_testMeterialName, 0, 1, 1, 1)
-
-        self.lineEdit_meterialArea = QLabel(self.frame_62)
-        self.lineEdit_meterialArea.setObjectName(u"lineEdit_meterialArea")
-        self.lineEdit_meterialArea.setMinimumSize(QSize(0, 0))
-        self.lineEdit_meterialArea.setMaximumSize(QSize(16777215, 16777215))
-        self.lineEdit_meterialArea.setStyleSheet(u"")
-        self.lineEdit_meterialArea.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-
-        self.gridLayout_10.addWidget(self.lineEdit_meterialArea, 5, 1, 1, 1)
-
-        self.lineEdit_testMeterial = QLineEdit(self.frame_62)
-        self.lineEdit_testMeterial.setObjectName(u"lineEdit_testMeterial")
-        self.lineEdit_testMeterial.setMinimumSize(QSize(200, 30))
-        self.lineEdit_testMeterial.setMaximumSize(QSize(200, 30))
-        self.lineEdit_testMeterial.setStyleSheet(u"")
-
-        self.gridLayout_10.addWidget(self.lineEdit_testMeterial, 1, 1, 1, 1)
-
-        self.label_10 = QLabel(self.frame_62)
-        self.label_10.setObjectName(u"label_10")
-        self.label_10.setMinimumSize(QSize(140, 35))
-        self.label_10.setMaximumSize(QSize(140, 35))
-        self.label_10.setStyleSheet(u"")
-        self.label_10.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_10.addWidget(self.label_10, 4, 0, 1, 1)
-
-        self.lineEdit_thinkness = QLineEdit(self.frame_62)
-        self.lineEdit_thinkness.setObjectName(u"lineEdit_thinkness")
-        self.lineEdit_thinkness.setMinimumSize(QSize(0, 30))
-        self.lineEdit_thinkness.setMaximumSize(QSize(60, 30))
-        self.lineEdit_thinkness.setStyleSheet(u"")
-
-        self.gridLayout_10.addWidget(self.lineEdit_thinkness, 4, 1, 1, 1)
-
-        self.label_26 = QLabel(self.frame_62)
-        self.label_26.setObjectName(u"label_26")
-        self.label_26.setMinimumSize(QSize(140, 35))
-        self.label_26.setMaximumSize(QSize(140, 35))
-        self.label_26.setStyleSheet(u"")
-        self.label_26.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_10.addWidget(self.label_26, 5, 0, 1, 1)
-
-        self.label_8 = QLabel(self.frame_62)
-        self.label_8.setObjectName(u"label_8")
-        self.label_8.setMinimumSize(QSize(140, 35))
-        self.label_8.setMaximumSize(QSize(140, 35))
-        self.label_8.setStyleSheet(u"")
-        self.label_8.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_10.addWidget(self.label_8, 2, 0, 1, 1)
-
-        self.lineEdit_MeterialinnerDie = QLineEdit(self.frame_62)
-        self.lineEdit_MeterialinnerDie.setObjectName(u"lineEdit_MeterialinnerDie")
-        self.lineEdit_MeterialinnerDie.setMinimumSize(QSize(0, 30))
-        self.lineEdit_MeterialinnerDie.setMaximumSize(QSize(60, 30))
-        self.lineEdit_MeterialinnerDie.setStyleSheet(u"")
-
-        self.gridLayout_10.addWidget(self.lineEdit_MeterialinnerDie, 3, 1, 1, 1)
-
-        self.label_24 = QLabel(self.frame_62)
-        self.label_24.setObjectName(u"label_24")
-        self.label_24.setMinimumSize(QSize(140, 35))
-        self.label_24.setMaximumSize(QSize(140, 35))
-        self.label_24.setStyleSheet(u"")
-        self.label_24.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_10.addWidget(self.label_24, 0, 0, 1, 1)
-
-        self.lineEdit_MeterialMainDie = QLineEdit(self.frame_62)
-        self.lineEdit_MeterialMainDie.setObjectName(u"lineEdit_MeterialMainDie")
-        self.lineEdit_MeterialMainDie.setMinimumSize(QSize(0, 30))
-        self.lineEdit_MeterialMainDie.setMaximumSize(QSize(60, 30))
-        self.lineEdit_MeterialMainDie.setStyleSheet(u"")
-
-        self.gridLayout_10.addWidget(self.lineEdit_MeterialMainDie, 2, 1, 1, 1)
-
-        self.label_9 = QLabel(self.frame_62)
-        self.label_9.setObjectName(u"label_9")
-        self.label_9.setMinimumSize(QSize(140, 35))
-        self.label_9.setMaximumSize(QSize(140, 35))
-        self.label_9.setStyleSheet(u"")
-        self.label_9.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_10.addWidget(self.label_9, 3, 0, 1, 1)
 
         self.label_22 = QLabel(self.frame_62)
         self.label_22.setObjectName(u"label_22")
@@ -407,10 +324,96 @@ class Ui_MainPages(object):
 
         self.gridLayout_10.addWidget(self.label_22, 1, 0, 1, 1)
 
+        self.label_8 = QLabel(self.frame_62)
+        self.label_8.setObjectName(u"label_8")
+        self.label_8.setMinimumSize(QSize(140, 35))
+        self.label_8.setMaximumSize(QSize(140, 35))
+        self.label_8.setStyleSheet(u"")
+        self.label_8.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_10.addWidget(self.label_8, 2, 0, 1, 1)
+
+        self.lineEdit_thinkness = QLineEdit(self.frame_62)
+        self.lineEdit_thinkness.setObjectName(u"lineEdit_thinkness")
+        self.lineEdit_thinkness.setMinimumSize(QSize(200, 30))
+        self.lineEdit_thinkness.setMaximumSize(QSize(200, 30))
+        self.lineEdit_thinkness.setStyleSheet(u"")
+
+        self.gridLayout_10.addWidget(self.lineEdit_thinkness, 4, 1, 1, 1)
+
+        self.label_9 = QLabel(self.frame_62)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setMinimumSize(QSize(140, 35))
+        self.label_9.setMaximumSize(QSize(140, 35))
+        self.label_9.setStyleSheet(u"")
+        self.label_9.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_10.addWidget(self.label_9, 3, 0, 1, 1)
+
+        self.label_10 = QLabel(self.frame_62)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setMinimumSize(QSize(140, 35))
+        self.label_10.setMaximumSize(QSize(140, 35))
+        self.label_10.setStyleSheet(u"")
+        self.label_10.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_10.addWidget(self.label_10, 4, 0, 1, 1)
+
+        self.lineEdit_MeterialMainDie = QLineEdit(self.frame_62)
+        self.lineEdit_MeterialMainDie.setObjectName(u"lineEdit_MeterialMainDie")
+        self.lineEdit_MeterialMainDie.setMinimumSize(QSize(200, 30))
+        self.lineEdit_MeterialMainDie.setMaximumSize(QSize(200, 30))
+        self.lineEdit_MeterialMainDie.setStyleSheet(u"")
+
+        self.gridLayout_10.addWidget(self.lineEdit_MeterialMainDie, 2, 1, 1, 1)
+
+        self.lineEdit_testMeterial = QLineEdit(self.frame_62)
+        self.lineEdit_testMeterial.setObjectName(u"lineEdit_testMeterial")
+        self.lineEdit_testMeterial.setMinimumSize(QSize(200, 30))
+        self.lineEdit_testMeterial.setMaximumSize(QSize(200, 30))
+        self.lineEdit_testMeterial.setStyleSheet(u"")
+
+        self.gridLayout_10.addWidget(self.lineEdit_testMeterial, 1, 1, 1, 1)
+
+        self.label_26 = QLabel(self.frame_62)
+        self.label_26.setObjectName(u"label_26")
+        self.label_26.setMinimumSize(QSize(140, 35))
+        self.label_26.setMaximumSize(QSize(140, 35))
+        self.label_26.setStyleSheet(u"")
+        self.label_26.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_10.addWidget(self.label_26, 5, 0, 1, 1)
+
+        self.label_24 = QLabel(self.frame_62)
+        self.label_24.setObjectName(u"label_24")
+        self.label_24.setMinimumSize(QSize(140, 35))
+        self.label_24.setMaximumSize(QSize(140, 35))
+        self.label_24.setStyleSheet(u"")
+        self.label_24.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_10.addWidget(self.label_24, 0, 0, 1, 1)
+
+        self.lineEdit_meterialArea = QLabel(self.frame_62)
+        self.lineEdit_meterialArea.setObjectName(u"lineEdit_meterialArea")
+        self.lineEdit_meterialArea.setMinimumSize(QSize(0, 0))
+        self.lineEdit_meterialArea.setMaximumSize(QSize(16777215, 30))
+        self.lineEdit_meterialArea.setStyleSheet(u"")
+        self.lineEdit_meterialArea.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.gridLayout_10.addWidget(self.lineEdit_meterialArea, 5, 1, 1, 1)
+
+        self.lineEdit_testMeterialName = QLineEdit(self.frame_62)
+        self.lineEdit_testMeterialName.setObjectName(u"lineEdit_testMeterialName")
+        self.lineEdit_testMeterialName.setMinimumSize(QSize(200, 30))
+        self.lineEdit_testMeterialName.setMaximumSize(QSize(200, 30))
+        self.lineEdit_testMeterialName.setStyleSheet(u"")
+
+        self.gridLayout_10.addWidget(self.lineEdit_testMeterialName, 0, 1, 1, 1)
+
         self.lineEdit_meterialVolume = QLabel(self.frame_62)
         self.lineEdit_meterialVolume.setObjectName(u"lineEdit_meterialVolume")
         self.lineEdit_meterialVolume.setMinimumSize(QSize(0, 0))
-        self.lineEdit_meterialVolume.setMaximumSize(QSize(16777215, 16777215))
+        self.lineEdit_meterialVolume.setMaximumSize(QSize(16777215, 30))
         self.lineEdit_meterialVolume.setStyleSheet(u"")
         self.lineEdit_meterialVolume.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
@@ -418,6 +421,645 @@ class Ui_MainPages(object):
 
 
         self.horizontalLayout_9.addWidget(self.frame_62, 0, Qt.AlignTop)
+
+        self.frame_90 = QFrame(self.frame_42)
+        self.frame_90.setObjectName(u"frame_90")
+        sizePolicy.setHeightForWidth(self.frame_90.sizePolicy().hasHeightForWidth())
+        self.frame_90.setSizePolicy(sizePolicy)
+        self.frame_90.setMinimumSize(QSize(0, 0))
+        self.frame_90.setMaximumSize(QSize(16777215, 16777215))
+        self.frame_90.setStyleSheet(u"QFrame{\n"
+"	background-color: rgb(36, 40, 49);\n"
+"	border:none;\n"
+"}\n"
+"QFrame:hover{\n"
+"	border:none;\n"
+"}")
+        self.frame_90.setFrameShape(QFrame.StyledPanel)
+        self.frame_90.setFrameShadow(QFrame.Raised)
+        self.gridLayout_14 = QGridLayout(self.frame_90)
+        self.gridLayout_14.setObjectName(u"gridLayout_14")
+        self.gridLayout_14.setHorizontalSpacing(12)
+        self.frame_92 = QFrame(self.frame_90)
+        self.frame_92.setObjectName(u"frame_92")
+        self.frame_92.setFrameShape(QFrame.StyledPanel)
+        self.frame_92.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_19 = QHBoxLayout(self.frame_92)
+        self.horizontalLayout_19.setObjectName(u"horizontalLayout_19")
+        self.horizontalLayout_19.setContentsMargins(-1, 0, -1, 0)
+        self.AvgHelper_Enable_pushButton_1 = QPushButton(self.frame_92)
+        self.AvgHelper_Enable_pushButton_1.setObjectName(u"AvgHelper_Enable_pushButton_1")
+        self.AvgHelper_Enable_pushButton_1.setMinimumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_1.setMaximumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_1.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_Enable_pushButton_1.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_Enable_pushButton_1.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(244, 200, 25);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgba(226, 210, 36,128);\n"
+"}\n"
+"")
+        self.AvgHelper_Enable_pushButton_1.setCheckable(True)
+        self.AvgHelper_Enable_pushButton_1.setChecked(False)
+        self.AvgHelper_Enable_pushButton_1.setAutoRepeatInterval(100)
+
+        self.horizontalLayout_19.addWidget(self.AvgHelper_Enable_pushButton_1)
+
+        self.AvgHelper_Value_lineEditor_1 = QLineEdit(self.frame_92)
+        self.AvgHelper_Value_lineEditor_1.setObjectName(u"AvgHelper_Value_lineEditor_1")
+        self.AvgHelper_Value_lineEditor_1.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_Value_lineEditor_1.setMaximumSize(QSize(60, 30))
+        self.AvgHelper_Value_lineEditor_1.setStyleSheet(u"")
+
+        self.horizontalLayout_19.addWidget(self.AvgHelper_Value_lineEditor_1)
+
+
+        self.gridLayout_14.addWidget(self.frame_92, 2, 1, 1, 1)
+
+        self.frame_96 = QFrame(self.frame_90)
+        self.frame_96.setObjectName(u"frame_96")
+        self.frame_96.setFrameShape(QFrame.StyledPanel)
+        self.frame_96.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_23 = QHBoxLayout(self.frame_96)
+        self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
+        self.horizontalLayout_23.setContentsMargins(-1, 0, -1, 0)
+        self.AvgHelper_Enable_pushButton_5 = QPushButton(self.frame_96)
+        self.AvgHelper_Enable_pushButton_5.setObjectName(u"AvgHelper_Enable_pushButton_5")
+        self.AvgHelper_Enable_pushButton_5.setMinimumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_5.setMaximumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_5.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_Enable_pushButton_5.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_Enable_pushButton_5.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(244, 200, 25);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgba(226, 210, 36,128);\n"
+"}\n"
+"")
+        self.AvgHelper_Enable_pushButton_5.setCheckable(True)
+        self.AvgHelper_Enable_pushButton_5.setChecked(False)
+        self.AvgHelper_Enable_pushButton_5.setAutoRepeatInterval(100)
+
+        self.horizontalLayout_23.addWidget(self.AvgHelper_Enable_pushButton_5)
+
+        self.AvgHelper_Value_lineEditor_5 = QLineEdit(self.frame_96)
+        self.AvgHelper_Value_lineEditor_5.setObjectName(u"AvgHelper_Value_lineEditor_5")
+        self.AvgHelper_Value_lineEditor_5.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_Value_lineEditor_5.setMaximumSize(QSize(60, 30))
+        self.AvgHelper_Value_lineEditor_5.setStyleSheet(u"")
+
+        self.horizontalLayout_23.addWidget(self.AvgHelper_Value_lineEditor_5)
+
+
+        self.gridLayout_14.addWidget(self.frame_96, 4, 1, 1, 1)
+
+        self.frame_94 = QFrame(self.frame_90)
+        self.frame_94.setObjectName(u"frame_94")
+        self.frame_94.setFrameShape(QFrame.StyledPanel)
+        self.frame_94.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_21 = QHBoxLayout(self.frame_94)
+        self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
+        self.horizontalLayout_21.setContentsMargins(-1, 0, -1, 0)
+        self.AvgHelper_Enable_pushButton_3 = QPushButton(self.frame_94)
+        self.AvgHelper_Enable_pushButton_3.setObjectName(u"AvgHelper_Enable_pushButton_3")
+        self.AvgHelper_Enable_pushButton_3.setMinimumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_3.setMaximumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_3.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_Enable_pushButton_3.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_Enable_pushButton_3.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(244, 200, 25);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgba(226, 210, 36,128);\n"
+"}\n"
+"")
+        self.AvgHelper_Enable_pushButton_3.setCheckable(True)
+        self.AvgHelper_Enable_pushButton_3.setChecked(False)
+        self.AvgHelper_Enable_pushButton_3.setAutoRepeatInterval(100)
+
+        self.horizontalLayout_21.addWidget(self.AvgHelper_Enable_pushButton_3)
+
+        self.AvgHelper_Value_lineEditor_3 = QLineEdit(self.frame_94)
+        self.AvgHelper_Value_lineEditor_3.setObjectName(u"AvgHelper_Value_lineEditor_3")
+        self.AvgHelper_Value_lineEditor_3.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_Value_lineEditor_3.setMaximumSize(QSize(60, 30))
+        self.AvgHelper_Value_lineEditor_3.setStyleSheet(u"")
+
+        self.horizontalLayout_21.addWidget(self.AvgHelper_Value_lineEditor_3)
+
+
+        self.gridLayout_14.addWidget(self.frame_94, 2, 2, 1, 1)
+
+        self.frame_95 = QFrame(self.frame_90)
+        self.frame_95.setObjectName(u"frame_95")
+        self.frame_95.setFrameShape(QFrame.StyledPanel)
+        self.frame_95.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_22 = QHBoxLayout(self.frame_95)
+        self.horizontalLayout_22.setObjectName(u"horizontalLayout_22")
+        self.horizontalLayout_22.setContentsMargins(-1, 0, -1, 0)
+        self.AvgHelper_Enable_pushButton_4 = QPushButton(self.frame_95)
+        self.AvgHelper_Enable_pushButton_4.setObjectName(u"AvgHelper_Enable_pushButton_4")
+        self.AvgHelper_Enable_pushButton_4.setMinimumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_4.setMaximumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_4.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_Enable_pushButton_4.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_Enable_pushButton_4.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(244, 200, 25);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgba(226, 210, 36,128);\n"
+"}\n"
+"")
+        self.AvgHelper_Enable_pushButton_4.setCheckable(True)
+        self.AvgHelper_Enable_pushButton_4.setChecked(False)
+        self.AvgHelper_Enable_pushButton_4.setAutoRepeatInterval(100)
+
+        self.horizontalLayout_22.addWidget(self.AvgHelper_Enable_pushButton_4)
+
+        self.AvgHelper_Value_lineEditor_4 = QLineEdit(self.frame_95)
+        self.AvgHelper_Value_lineEditor_4.setObjectName(u"AvgHelper_Value_lineEditor_4")
+        self.AvgHelper_Value_lineEditor_4.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_Value_lineEditor_4.setMaximumSize(QSize(60, 30))
+        self.AvgHelper_Value_lineEditor_4.setStyleSheet(u"")
+
+        self.horizontalLayout_22.addWidget(self.AvgHelper_Value_lineEditor_4)
+
+
+        self.gridLayout_14.addWidget(self.frame_95, 3, 2, 1, 1)
+
+        self.frame_5 = QFrame(self.frame_90)
+        self.frame_5.setObjectName(u"frame_5")
+        self.frame_5.setStyleSheet(u"background-color: rgb(29, 33, 40);")
+        self.frame_5.setFrameShape(QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_19 = QVBoxLayout(self.frame_5)
+        self.verticalLayout_19.setSpacing(6)
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.verticalLayout_19.setContentsMargins(6, 6, 6, 6)
+        self.frame_91 = QFrame(self.frame_5)
+        self.frame_91.setObjectName(u"frame_91")
+        self.frame_91.setFrameShape(QFrame.StyledPanel)
+        self.frame_91.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_18 = QHBoxLayout(self.frame_91)
+        self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
+        self.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
+        self.AvgHelper_result = QLabel(self.frame_91)
+        self.AvgHelper_result.setObjectName(u"AvgHelper_result")
+        self.AvgHelper_result.setMinimumSize(QSize(0, 35))
+        self.AvgHelper_result.setMaximumSize(QSize(16777215, 35))
+        self.AvgHelper_result.setStyleSheet(u"")
+        self.AvgHelper_result.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_18.addWidget(self.AvgHelper_result)
+
+
+        self.verticalLayout_19.addWidget(self.frame_91)
+
+        self.AvgHelper_A_submit_pushButton = QPushButton(self.frame_5)
+        self.AvgHelper_A_submit_pushButton.setObjectName(u"AvgHelper_A_submit_pushButton")
+        self.AvgHelper_A_submit_pushButton.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_A_submit_pushButton.setMaximumSize(QSize(16777215, 30))
+        self.AvgHelper_A_submit_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_A_submit_pushButton.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_A_submit_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(65, 65, 65);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 10px;\n"
+"	border-color: rgb(65, 65, 65);\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,30);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(109, 182, 238);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(69, 140, 207);\n"
+"}\n"
+"\n"
+"")
+        self.AvgHelper_A_submit_pushButton.setCheckable(False)
+        self.AvgHelper_A_submit_pushButton.setChecked(False)
+        self.AvgHelper_A_submit_pushButton.setAutoRepeatInterval(100)
+
+        self.verticalLayout_19.addWidget(self.AvgHelper_A_submit_pushButton)
+
+        self.AvgHelper_B_submit_pushButton = QPushButton(self.frame_5)
+        self.AvgHelper_B_submit_pushButton.setObjectName(u"AvgHelper_B_submit_pushButton")
+        self.AvgHelper_B_submit_pushButton.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_B_submit_pushButton.setMaximumSize(QSize(16777215, 30))
+        self.AvgHelper_B_submit_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_B_submit_pushButton.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_B_submit_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(65, 65, 65);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 10px;\n"
+"	border-color: rgb(65, 65, 65);\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,30);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(109, 182, 238);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(69, 140, 207);\n"
+"}\n"
+"\n"
+"")
+        self.AvgHelper_B_submit_pushButton.setCheckable(False)
+        self.AvgHelper_B_submit_pushButton.setChecked(False)
+        self.AvgHelper_B_submit_pushButton.setAutoRepeatInterval(100)
+
+        self.verticalLayout_19.addWidget(self.AvgHelper_B_submit_pushButton)
+
+        self.AvgHelper_C_submit_pushButton = QPushButton(self.frame_5)
+        self.AvgHelper_C_submit_pushButton.setObjectName(u"AvgHelper_C_submit_pushButton")
+        self.AvgHelper_C_submit_pushButton.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_C_submit_pushButton.setMaximumSize(QSize(16777215, 30))
+        self.AvgHelper_C_submit_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_C_submit_pushButton.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_C_submit_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(65, 65, 65);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-radius: 10px;\n"
+"	border-color: rgb(65, 65, 65);\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,30);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(109, 182, 238);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(69, 140, 207);\n"
+"}\n"
+"\n"
+"")
+        self.AvgHelper_C_submit_pushButton.setCheckable(False)
+        self.AvgHelper_C_submit_pushButton.setChecked(False)
+        self.AvgHelper_C_submit_pushButton.setAutoRepeatInterval(100)
+
+        self.verticalLayout_19.addWidget(self.AvgHelper_C_submit_pushButton)
+
+
+        self.gridLayout_14.addWidget(self.frame_5, 6, 0, 1, 3)
+
+        self.label_51 = QLabel(self.frame_90)
+        self.label_51.setObjectName(u"label_51")
+        self.label_51.setMinimumSize(QSize(150, 35))
+        self.label_51.setMaximumSize(QSize(16777215, 35))
+        self.label_51.setStyleSheet(u"background-color: rgb(29, 33, 40);")
+        self.label_51.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_14.addWidget(self.label_51, 0, 0, 1, 3)
+
+        self.frame_93 = QFrame(self.frame_90)
+        self.frame_93.setObjectName(u"frame_93")
+        self.frame_93.setFrameShape(QFrame.StyledPanel)
+        self.frame_93.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_20 = QHBoxLayout(self.frame_93)
+        self.horizontalLayout_20.setObjectName(u"horizontalLayout_20")
+        self.horizontalLayout_20.setContentsMargins(-1, 0, -1, 0)
+        self.AvgHelper_Enable_pushButton_2 = QPushButton(self.frame_93)
+        self.AvgHelper_Enable_pushButton_2.setObjectName(u"AvgHelper_Enable_pushButton_2")
+        self.AvgHelper_Enable_pushButton_2.setMinimumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_2.setMaximumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_2.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_Enable_pushButton_2.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_Enable_pushButton_2.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(244, 200, 25);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgba(226, 210, 36,128);\n"
+"}\n"
+"")
+        self.AvgHelper_Enable_pushButton_2.setCheckable(True)
+        self.AvgHelper_Enable_pushButton_2.setChecked(False)
+        self.AvgHelper_Enable_pushButton_2.setAutoRepeatInterval(100)
+
+        self.horizontalLayout_20.addWidget(self.AvgHelper_Enable_pushButton_2)
+
+        self.AvgHelper_Value_lineEditor_2 = QLineEdit(self.frame_93)
+        self.AvgHelper_Value_lineEditor_2.setObjectName(u"AvgHelper_Value_lineEditor_2")
+        self.AvgHelper_Value_lineEditor_2.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_Value_lineEditor_2.setMaximumSize(QSize(60, 30))
+        self.AvgHelper_Value_lineEditor_2.setStyleSheet(u"")
+
+        self.horizontalLayout_20.addWidget(self.AvgHelper_Value_lineEditor_2)
+
+
+        self.gridLayout_14.addWidget(self.frame_93, 3, 1, 1, 1)
+
+        self.frame_97 = QFrame(self.frame_90)
+        self.frame_97.setObjectName(u"frame_97")
+        self.frame_97.setFrameShape(QFrame.StyledPanel)
+        self.frame_97.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_24 = QHBoxLayout(self.frame_97)
+        self.horizontalLayout_24.setObjectName(u"horizontalLayout_24")
+        self.horizontalLayout_24.setContentsMargins(-1, 0, -1, 0)
+        self.AvgHelper_Enable_pushButton_6 = QPushButton(self.frame_97)
+        self.AvgHelper_Enable_pushButton_6.setObjectName(u"AvgHelper_Enable_pushButton_6")
+        self.AvgHelper_Enable_pushButton_6.setMinimumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_6.setMaximumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_6.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_Enable_pushButton_6.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_Enable_pushButton_6.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(244, 200, 25);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgba(226, 210, 36,128);\n"
+"}\n"
+"")
+        self.AvgHelper_Enable_pushButton_6.setCheckable(True)
+        self.AvgHelper_Enable_pushButton_6.setChecked(False)
+        self.AvgHelper_Enable_pushButton_6.setAutoRepeatInterval(100)
+
+        self.horizontalLayout_24.addWidget(self.AvgHelper_Enable_pushButton_6)
+
+        self.AvgHelper_Value_lineEditor_6 = QLineEdit(self.frame_97)
+        self.AvgHelper_Value_lineEditor_6.setObjectName(u"AvgHelper_Value_lineEditor_6")
+        self.AvgHelper_Value_lineEditor_6.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_Value_lineEditor_6.setMaximumSize(QSize(60, 30))
+        self.AvgHelper_Value_lineEditor_6.setStyleSheet(u"")
+
+        self.horizontalLayout_24.addWidget(self.AvgHelper_Value_lineEditor_6)
+
+
+        self.gridLayout_14.addWidget(self.frame_97, 5, 1, 1, 1)
+
+        self.frame_98 = QFrame(self.frame_90)
+        self.frame_98.setObjectName(u"frame_98")
+        self.frame_98.setFrameShape(QFrame.StyledPanel)
+        self.frame_98.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_25 = QHBoxLayout(self.frame_98)
+        self.horizontalLayout_25.setObjectName(u"horizontalLayout_25")
+        self.horizontalLayout_25.setContentsMargins(-1, 0, -1, 0)
+        self.AvgHelper_Enable_pushButton_7 = QPushButton(self.frame_98)
+        self.AvgHelper_Enable_pushButton_7.setObjectName(u"AvgHelper_Enable_pushButton_7")
+        self.AvgHelper_Enable_pushButton_7.setMinimumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_7.setMaximumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_7.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_Enable_pushButton_7.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_Enable_pushButton_7.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(244, 200, 25);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgba(226, 210, 36,128);\n"
+"}\n"
+"")
+        self.AvgHelper_Enable_pushButton_7.setCheckable(True)
+        self.AvgHelper_Enable_pushButton_7.setChecked(False)
+        self.AvgHelper_Enable_pushButton_7.setAutoRepeatInterval(100)
+
+        self.horizontalLayout_25.addWidget(self.AvgHelper_Enable_pushButton_7)
+
+        self.AvgHelper_Value_lineEditor_7 = QLineEdit(self.frame_98)
+        self.AvgHelper_Value_lineEditor_7.setObjectName(u"AvgHelper_Value_lineEditor_7")
+        self.AvgHelper_Value_lineEditor_7.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_Value_lineEditor_7.setMaximumSize(QSize(60, 30))
+        self.AvgHelper_Value_lineEditor_7.setStyleSheet(u"")
+
+        self.horizontalLayout_25.addWidget(self.AvgHelper_Value_lineEditor_7)
+
+
+        self.gridLayout_14.addWidget(self.frame_98, 4, 2, 1, 1)
+
+        self.frame_99 = QFrame(self.frame_90)
+        self.frame_99.setObjectName(u"frame_99")
+        self.frame_99.setFrameShape(QFrame.StyledPanel)
+        self.frame_99.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_26 = QHBoxLayout(self.frame_99)
+        self.horizontalLayout_26.setObjectName(u"horizontalLayout_26")
+        self.horizontalLayout_26.setContentsMargins(-1, 0, -1, 0)
+        self.AvgHelper_Enable_pushButton_8 = QPushButton(self.frame_99)
+        self.AvgHelper_Enable_pushButton_8.setObjectName(u"AvgHelper_Enable_pushButton_8")
+        self.AvgHelper_Enable_pushButton_8.setMinimumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_8.setMaximumSize(QSize(40, 30))
+        self.AvgHelper_Enable_pushButton_8.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AvgHelper_Enable_pushButton_8.setLayoutDirection(Qt.LeftToRight)
+        self.AvgHelper_Enable_pushButton_8.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(244, 200, 25);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgba(226, 210, 36,128);\n"
+"}\n"
+"")
+        self.AvgHelper_Enable_pushButton_8.setCheckable(True)
+        self.AvgHelper_Enable_pushButton_8.setChecked(False)
+        self.AvgHelper_Enable_pushButton_8.setAutoRepeatInterval(100)
+
+        self.horizontalLayout_26.addWidget(self.AvgHelper_Enable_pushButton_8)
+
+        self.AvgHelper_Value_lineEditor_8 = QLineEdit(self.frame_99)
+        self.AvgHelper_Value_lineEditor_8.setObjectName(u"AvgHelper_Value_lineEditor_8")
+        self.AvgHelper_Value_lineEditor_8.setMinimumSize(QSize(0, 30))
+        self.AvgHelper_Value_lineEditor_8.setMaximumSize(QSize(60, 30))
+        self.AvgHelper_Value_lineEditor_8.setStyleSheet(u"")
+
+        self.horizontalLayout_26.addWidget(self.AvgHelper_Value_lineEditor_8)
+
+
+        self.gridLayout_14.addWidget(self.frame_99, 5, 2, 1, 1)
+
+
+        self.horizontalLayout_9.addWidget(self.frame_90, 0, Qt.AlignTop)
 
 
         self.verticalLayout_9.addWidget(self.frame_42, 0, Qt.AlignLeft)
@@ -2131,6 +2773,7 @@ class Ui_MainPages(object):
         self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.addItem("")
+        self.timeUnit_comboBox.addItem("")
         self.timeUnit_comboBox.setObjectName(u"timeUnit_comboBox")
         self.timeUnit_comboBox.setMinimumSize(QSize(0, 25))
         self.timeUnit_comboBox.setMaximumSize(QSize(16777215, 16777215))
@@ -2361,21 +3004,27 @@ class Ui_MainPages(object):
         self.gridFrame = QFrame(self.frame_7)
         self.gridFrame.setObjectName(u"gridFrame")
         self.gridFrame.setMinimumSize(QSize(0, 0))
-        self.gridFrame.setMaximumSize(QSize(16777215, 30))
+        self.gridFrame.setMaximumSize(QSize(16777215, 16777215))
         self.horizontalLayout = QHBoxLayout(self.gridFrame)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.btn_AutoMode = QRadioButton(self.gridFrame)
         self.btn_AutoMode.setObjectName(u"btn_AutoMode")
         sizePolicy.setHeightForWidth(self.btn_AutoMode.sizePolicy().hasHeightForWidth())
         self.btn_AutoMode.setSizePolicy(sizePolicy)
-        self.btn_AutoMode.setMinimumSize(QSize(120, 0))
-        self.btn_AutoMode.setMaximumSize(QSize(120, 16777215))
+        self.btn_AutoMode.setMinimumSize(QSize(0, 30))
+        self.btn_AutoMode.setMaximumSize(QSize(16777215, 16777215))
         self.btn_AutoMode.setCursor(QCursor(Qt.PointingHandCursor))
-        self.btn_AutoMode.setStyleSheet(u"background-color: rgb(30, 34, 41);\n"
-"min-width:100;\n"
-"max-width:100;\n"
-"padding-left:20px;\n"
-"")
+        self.btn_AutoMode.setStyleSheet(u"\n"
+"\n"
+"QRadioButton {\n"
+"	background-color: rgb(30, 34, 41);\n"
+"padding:5px;\n"
+"}\n"
+"\n"
+"\n"
+"QRadioButton:hover {\n"
+"	background-color: rgba(0, 0, 0,100);\n"
+"}")
         self.btn_AutoMode.setCheckable(True)
         self.btn_AutoMode.setChecked(True)
 
@@ -2385,21 +3034,25 @@ class Ui_MainPages(object):
         self.btn_ManaualMode.setObjectName(u"btn_ManaualMode")
         sizePolicy.setHeightForWidth(self.btn_ManaualMode.sizePolicy().hasHeightForWidth())
         self.btn_ManaualMode.setSizePolicy(sizePolicy)
-        self.btn_ManaualMode.setMinimumSize(QSize(130, 0))
-        self.btn_ManaualMode.setMaximumSize(QSize(130, 16777215))
+        self.btn_ManaualMode.setMinimumSize(QSize(0, 30))
+        self.btn_ManaualMode.setMaximumSize(QSize(16777215, 16777215))
         self.btn_ManaualMode.setCursor(QCursor(Qt.PointingHandCursor))
-        self.btn_ManaualMode.setStyleSheet(u"background-color: rgb(30, 34, 41);\n"
-"min-width:120;\n"
-"max-width:120;\n"
-"padding-left:10px;\n"
-"")
+        self.btn_ManaualMode.setStyleSheet(u"QRadioButton {\n"
+"	background-color: rgb(30, 34, 41);\n"
+"padding:5px;\n"
+"}\n"
+"\n"
+"\n"
+"QRadioButton:hover {\n"
+"	background-color: rgba(0, 0, 0,100);\n"
+"}")
         self.btn_ManaualMode.setCheckable(True)
         self.btn_ManaualMode.setChecked(False)
 
         self.horizontalLayout.addWidget(self.btn_ManaualMode)
 
 
-        self.verticalLayout_8.addWidget(self.gridFrame)
+        self.verticalLayout_8.addWidget(self.gridFrame, 0, Qt.AlignHCenter)
 
         self.stackedWidget = QStackedWidget(self.frame_7)
         self.stackedWidget.setObjectName(u"stackedWidget")
@@ -2467,7 +3120,7 @@ class Ui_MainPages(object):
 "	background-color: rgb(125, 189, 95);\n"
 "}\n"
 "")
-        self.gasFreeflow_pushButton.setCheckable(True)
+        self.gasFreeflow_pushButton.setCheckable(False)
 
         self.verticalLayout_7.addWidget(self.gasFreeflow_pushButton)
 
@@ -2600,6 +3253,7 @@ class Ui_MainPages(object):
         self.AutoMode_pattern_comboBox.setMinimumSize(QSize(0, 30))
         self.AutoMode_pattern_comboBox.setMaximumSize(QSize(16777215, 30))
         self.AutoMode_pattern_comboBox.setBaseSize(QSize(0, 30))
+        self.AutoMode_pattern_comboBox.setCursor(QCursor(Qt.ArrowCursor))
         self.AutoMode_pattern_comboBox.setStyleSheet(u"\n"
 "\n"
 "QComboBox:enabled {\n"
@@ -2679,12 +3333,12 @@ class Ui_MainPages(object):
 
         self.gridLayout_19.addWidget(self.label_18, 4, 0, 1, 1)
 
-        self.outputStop_pushButton = QPushButton(self.frame_9)
-        self.outputStop_pushButton.setObjectName(u"outputStop_pushButton")
-        self.outputStop_pushButton.setMinimumSize(QSize(210, 90))
-        self.outputStop_pushButton.setMaximumSize(QSize(16777215, 16777215))
-        self.outputStop_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.outputStop_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+        self.Measurement_Stop_pushButton = QPushButton(self.frame_9)
+        self.Measurement_Stop_pushButton.setObjectName(u"Measurement_Stop_pushButton")
+        self.Measurement_Stop_pushButton.setMinimumSize(QSize(210, 90))
+        self.Measurement_Stop_pushButton.setMaximumSize(QSize(16777215, 16777215))
+        self.Measurement_Stop_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Measurement_Stop_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
 "	color: rgb(202, 206, 216);\n"
 "	font: 30px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "	background-color: rgb(65, 65, 65);\n"
@@ -2710,19 +3364,19 @@ class Ui_MainPages(object):
 "QPushButton:pressed {\n"
 "	background-color: rgb(220, 37, 95);\n"
 "}")
-        self.outputStop_pushButton.setCheckable(False)
-        self.outputStop_pushButton.setChecked(False)
+        self.Measurement_Stop_pushButton.setCheckable(False)
+        self.Measurement_Stop_pushButton.setChecked(False)
 
-        self.gridLayout_19.addWidget(self.outputStop_pushButton, 5, 0, 1, 1)
+        self.gridLayout_19.addWidget(self.Measurement_Stop_pushButton, 5, 0, 1, 1)
 
 
         self.gridLayout_20.addWidget(self.frame_9, 8, 0, 1, 1, Qt.AlignBottom)
 
-        self.manaualMode_comboBox = QComboBox(self.frame_11)
-        self.manaualMode_comboBox.addItem("")
-        self.manaualMode_comboBox.addItem("")
-        self.manaualMode_comboBox.setObjectName(u"manaualMode_comboBox")
-        self.manaualMode_comboBox.setStyleSheet(u"QComboBox:enabled {\n"
+        self.Measurement_Mode_comboBox = QComboBox(self.frame_11)
+        self.Measurement_Mode_comboBox.addItem("")
+        self.Measurement_Mode_comboBox.addItem("")
+        self.Measurement_Mode_comboBox.setObjectName(u"Measurement_Mode_comboBox")
+        self.Measurement_Mode_comboBox.setStyleSheet(u"QComboBox:enabled {\n"
 "	background-color: rgba(0, 0, 0, 80);\n"
 "	color: rgb(225, 230, 241);\n"
 "	padding:5px;\n"
@@ -2738,7 +3392,7 @@ class Ui_MainPages(object):
 "	background-color: rgba(0, 0, 0,40);\n"
 "}")
 
-        self.gridLayout_20.addWidget(self.manaualMode_comboBox, 1, 0, 1, 1)
+        self.gridLayout_20.addWidget(self.Measurement_Mode_comboBox, 1, 0, 1, 1)
 
         self.stackedWidget_2 = QStackedWidget(self.frame_11)
         self.stackedWidget_2.setObjectName(u"stackedWidget_2")
@@ -2764,32 +3418,66 @@ class Ui_MainPages(object):
         self.frame_12.setFrameShadow(QFrame.Raised)
         self.gridLayout_21 = QGridLayout(self.frame_12)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
+        self.Manual_Measurement_PatternMode_pushButton = QPushButton(self.frame_12)
+        self.Manual_Measurement_PatternMode_pushButton.setObjectName(u"Manual_Measurement_PatternMode_pushButton")
+        self.Manual_Measurement_PatternMode_pushButton.setMinimumSize(QSize(70, 20))
+        self.Manual_Measurement_PatternMode_pushButton.setMaximumSize(QSize(70, 20))
+        self.Manual_Measurement_PatternMode_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Manual_Measurement_PatternMode_pushButton.setLayoutDirection(Qt.LeftToRight)
+        self.Manual_Measurement_PatternMode_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"\n"
+"	border-radius: 1px;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(197, 197, 197);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(197, 197, 197,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,50);\n"
+"}\n"
+"")
+        self.Manual_Measurement_PatternMode_pushButton.setCheckable(True)
+        self.Manual_Measurement_PatternMode_pushButton.setChecked(False)
+        self.Manual_Measurement_PatternMode_pushButton.setAutoExclusive(True)
+        self.Manual_Measurement_PatternMode_pushButton.setAutoRepeatInterval(100)
+
+        self.gridLayout_21.addWidget(self.Manual_Measurement_PatternMode_pushButton, 3, 0, 1, 1)
+
         self.label_20 = QLabel(self.frame_12)
         self.label_20.setObjectName(u"label_20")
-        self.label_20.setMinimumSize(QSize(70, 0))
-        self.label_20.setMaximumSize(QSize(16777215, 16777215))
+        self.label_20.setMinimumSize(QSize(70, 30))
+        self.label_20.setMaximumSize(QSize(70, 30))
         self.label_20.setStyleSheet(u"border:None")
         self.label_20.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_21.addWidget(self.label_20, 0, 0, 1, 1)
 
-        self.label_21 = QLabel(self.frame_12)
-        self.label_21.setObjectName(u"label_21")
-        self.label_21.setMinimumSize(QSize(70, 0))
-        self.label_21.setMaximumSize(QSize(16777215, 16777215))
-        self.label_21.setStyleSheet(u"border:None")
-        self.label_21.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_21.addWidget(self.label_21, 1, 0, 1, 1)
-
-        self.measurement_comboBox = QComboBox(self.frame_12)
-        self.measurement_comboBox.addItem("")
-        self.measurement_comboBox.addItem("")
-        self.measurement_comboBox.setObjectName(u"measurement_comboBox")
-        sizePolicy.setHeightForWidth(self.measurement_comboBox.sizePolicy().hasHeightForWidth())
-        self.measurement_comboBox.setSizePolicy(sizePolicy)
-        self.measurement_comboBox.setMaximumSize(QSize(16777215, 30))
-        self.measurement_comboBox.setStyleSheet(u"QComboBox:enabled {\n"
+        self.Manual_Measurement_PatternMode_comboBox = QComboBox(self.frame_12)
+        self.Manual_Measurement_PatternMode_comboBox.addItem("")
+        self.Manual_Measurement_PatternMode_comboBox.addItem("")
+        self.Manual_Measurement_PatternMode_comboBox.setObjectName(u"Manual_Measurement_PatternMode_comboBox")
+        sizePolicy.setHeightForWidth(self.Manual_Measurement_PatternMode_comboBox.sizePolicy().hasHeightForWidth())
+        self.Manual_Measurement_PatternMode_comboBox.setSizePolicy(sizePolicy)
+        self.Manual_Measurement_PatternMode_comboBox.setMinimumSize(QSize(0, 30))
+        self.Manual_Measurement_PatternMode_comboBox.setMaximumSize(QSize(16777215, 30))
+        self.Manual_Measurement_PatternMode_comboBox.setStyleSheet(u"QComboBox:enabled {\n"
 "	background-color: rgba(0, 0, 0, 80);\n"
 "	color: rgb(225, 230, 241);\n"
 "	padding:5px;\n"
@@ -2804,15 +3492,59 @@ class Ui_MainPages(object):
 "QComboBox:hover {\n"
 "	background-color: rgba(0, 0, 0,40);\n"
 "}")
+        self.Manual_Measurement_PatternMode_comboBox.setDuplicatesEnabled(False)
+        self.Manual_Measurement_PatternMode_comboBox.setFrame(True)
 
-        self.gridLayout_21.addWidget(self.measurement_comboBox, 1, 1, 1, 1)
+        self.gridLayout_21.addWidget(self.Manual_Measurement_PatternMode_comboBox, 3, 1, 1, 1)
 
-        self.voltage_lineEdit = QLineEdit(self.frame_12)
-        self.voltage_lineEdit.setObjectName(u"voltage_lineEdit")
-        sizePolicy.setHeightForWidth(self.voltage_lineEdit.sizePolicy().hasHeightForWidth())
-        self.voltage_lineEdit.setSizePolicy(sizePolicy)
-        self.voltage_lineEdit.setMaximumSize(QSize(16777215, 30))
-        self.voltage_lineEdit.setStyleSheet(u"\n"
+        self.Manual_Measurement_SingleMode_pushButton = QPushButton(self.frame_12)
+        self.Manual_Measurement_SingleMode_pushButton.setObjectName(u"Manual_Measurement_SingleMode_pushButton")
+        self.Manual_Measurement_SingleMode_pushButton.setMinimumSize(QSize(70, 20))
+        self.Manual_Measurement_SingleMode_pushButton.setMaximumSize(QSize(70, 20))
+        self.Manual_Measurement_SingleMode_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Manual_Measurement_SingleMode_pushButton.setLayoutDirection(Qt.LeftToRight)
+        self.Manual_Measurement_SingleMode_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+"	color: rgb(202, 206, 216);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"	background-color: rgb(44, 50, 61);\n"
+"	border-color: rgb(19, 21, 26);\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"\n"
+"	border-radius: 1px;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"	color: rgb(70, 80, 95);\n"
+"	background-color: rgba(0, 0, 0,20);\n"
+"	font: 15px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
+"}\n"
+"QPushButton:checked{\n"
+"	color: rgb(44, 36, 0);\n"
+"	background-color: rgb(197, 197, 197);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(197, 197, 197,50);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	color: rgb(202, 206, 216);\n"
+"	background-color: rgba(0, 0, 0,50);\n"
+"}\n"
+"")
+        self.Manual_Measurement_SingleMode_pushButton.setCheckable(True)
+        self.Manual_Measurement_SingleMode_pushButton.setChecked(True)
+        self.Manual_Measurement_SingleMode_pushButton.setAutoExclusive(True)
+        self.Manual_Measurement_SingleMode_pushButton.setAutoRepeatInterval(100)
+
+        self.gridLayout_21.addWidget(self.Manual_Measurement_SingleMode_pushButton, 1, 0, 1, 1)
+
+        self.Manual_Measurement_SingleVoltage_lineEdit = QLineEdit(self.frame_12)
+        self.Manual_Measurement_SingleVoltage_lineEdit.setObjectName(u"Manual_Measurement_SingleVoltage_lineEdit")
+        sizePolicy.setHeightForWidth(self.Manual_Measurement_SingleVoltage_lineEdit.sizePolicy().hasHeightForWidth())
+        self.Manual_Measurement_SingleVoltage_lineEdit.setSizePolicy(sizePolicy)
+        self.Manual_Measurement_SingleVoltage_lineEdit.setMaximumSize(QSize(16777215, 30))
+        self.Manual_Measurement_SingleVoltage_lineEdit.setStyleSheet(u"\n"
 "\n"
 "QLineEdit:enabled {\n"
 "	background-color: rgba(0, 0, 0, 80);\n"
@@ -2833,22 +3565,51 @@ class Ui_MainPages(object):
 "	background-color: rgba(0, 0, 0, 0);\n"
 "	border: none;\n"
 "}")
-        self.voltage_lineEdit.setAlignment(Qt.AlignCenter)
+        self.Manual_Measurement_SingleVoltage_lineEdit.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_21.addWidget(self.voltage_lineEdit, 0, 1, 1, 1)
+        self.gridLayout_21.addWidget(self.Manual_Measurement_SingleVoltage_lineEdit, 0, 1, 1, 1)
+
+        self.Manual_Measurement_SingleMode_comboBox = QComboBox(self.frame_12)
+        self.Manual_Measurement_SingleMode_comboBox.addItem("")
+        self.Manual_Measurement_SingleMode_comboBox.addItem("")
+        self.Manual_Measurement_SingleMode_comboBox.setObjectName(u"Manual_Measurement_SingleMode_comboBox")
+        sizePolicy.setHeightForWidth(self.Manual_Measurement_SingleMode_comboBox.sizePolicy().hasHeightForWidth())
+        self.Manual_Measurement_SingleMode_comboBox.setSizePolicy(sizePolicy)
+        self.Manual_Measurement_SingleMode_comboBox.setMinimumSize(QSize(0, 30))
+        self.Manual_Measurement_SingleMode_comboBox.setMaximumSize(QSize(16777215, 30))
+        self.Manual_Measurement_SingleMode_comboBox.setTabletTracking(False)
+        self.Manual_Measurement_SingleMode_comboBox.setStyleSheet(u"QComboBox:enabled {\n"
+"	background-color: rgba(0, 0, 0, 80);\n"
+"	color: rgb(225, 230, 241);\n"
+"	padding:5px;\n"
+"	border-width: 1px;\n"
+"}\n"
+"QComboBox:disabled {\n"
+"	background-color: rgba(0, 0, 0, 0);\n"
+"	color: rgb(225, 230, 241);\n"
+"	padding:5px;\n"
+"	border-width: 1px;\n"
+"}\n"
+"QComboBox:hover {\n"
+"	background-color: rgba(0, 0, 0,40);\n"
+"}\n"
+"")
+        self.Manual_Measurement_SingleMode_comboBox.setEditable(False)
+
+        self.gridLayout_21.addWidget(self.Manual_Measurement_SingleMode_comboBox, 1, 1, 1, 1)
 
 
         self.verticalLayout_17.addWidget(self.frame_12, 0, Qt.AlignBottom)
 
-        self.voltageOutput_pushButton = QPushButton(self.page)
-        self.voltageOutput_pushButton.setObjectName(u"voltageOutput_pushButton")
-        sizePolicy.setHeightForWidth(self.voltageOutput_pushButton.sizePolicy().hasHeightForWidth())
-        self.voltageOutput_pushButton.setSizePolicy(sizePolicy)
-        self.voltageOutput_pushButton.setMinimumSize(QSize(0, 40))
-        self.voltageOutput_pushButton.setMaximumSize(QSize(16777215, 40))
-        self.voltageOutput_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.voltageOutput_pushButton.setLayoutDirection(Qt.LeftToRight)
-        self.voltageOutput_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+        self.Manual_Measurement_Start_pushButton = QPushButton(self.page)
+        self.Manual_Measurement_Start_pushButton.setObjectName(u"Manual_Measurement_Start_pushButton")
+        sizePolicy.setHeightForWidth(self.Manual_Measurement_Start_pushButton.sizePolicy().hasHeightForWidth())
+        self.Manual_Measurement_Start_pushButton.setSizePolicy(sizePolicy)
+        self.Manual_Measurement_Start_pushButton.setMinimumSize(QSize(0, 40))
+        self.Manual_Measurement_Start_pushButton.setMaximumSize(QSize(16777215, 40))
+        self.Manual_Measurement_Start_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Manual_Measurement_Start_pushButton.setLayoutDirection(Qt.LeftToRight)
+        self.Manual_Measurement_Start_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
 "	color: rgb(202, 206, 216);\n"
 "	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "	background-color: rgb(65, 65, 65);\n"
@@ -2876,22 +3637,24 @@ class Ui_MainPages(object):
 "	color: rgb(44, 36, 0);\n"
 "	background-color: rgb(69, 140, 207);\n"
 "}")
-        self.voltageOutput_pushButton.setCheckable(True)
-        self.voltageOutput_pushButton.setChecked(False)
-        self.voltageOutput_pushButton.setAutoExclusive(False)
-        self.voltageOutput_pushButton.setAutoRepeatInterval(100)
+        self.Manual_Measurement_Start_pushButton.setCheckable(True)
+        self.Manual_Measurement_Start_pushButton.setChecked(False)
+        self.Manual_Measurement_Start_pushButton.setAutoExclusive(False)
+        self.Manual_Measurement_Start_pushButton.setAutoRepeatInterval(100)
+        self.Manual_Measurement_Start_pushButton.setAutoDefault(False)
+        self.Manual_Measurement_Start_pushButton.setFlat(False)
 
-        self.verticalLayout_17.addWidget(self.voltageOutput_pushButton)
+        self.verticalLayout_17.addWidget(self.Manual_Measurement_Start_pushButton)
 
-        self.manualMeasurement_pushButton = QPushButton(self.page)
-        self.manualMeasurement_pushButton.setObjectName(u"manualMeasurement_pushButton")
-        sizePolicy.setHeightForWidth(self.manualMeasurement_pushButton.sizePolicy().hasHeightForWidth())
-        self.manualMeasurement_pushButton.setSizePolicy(sizePolicy)
-        self.manualMeasurement_pushButton.setMinimumSize(QSize(0, 40))
-        self.manualMeasurement_pushButton.setMaximumSize(QSize(16777215, 40))
-        self.manualMeasurement_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.manualMeasurement_pushButton.setLayoutDirection(Qt.LeftToRight)
-        self.manualMeasurement_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+        self.Manual_Measurement_Trigger_pushButton = QPushButton(self.page)
+        self.Manual_Measurement_Trigger_pushButton.setObjectName(u"Manual_Measurement_Trigger_pushButton")
+        sizePolicy.setHeightForWidth(self.Manual_Measurement_Trigger_pushButton.sizePolicy().hasHeightForWidth())
+        self.Manual_Measurement_Trigger_pushButton.setSizePolicy(sizePolicy)
+        self.Manual_Measurement_Trigger_pushButton.setMinimumSize(QSize(0, 40))
+        self.Manual_Measurement_Trigger_pushButton.setMaximumSize(QSize(16777215, 40))
+        self.Manual_Measurement_Trigger_pushButton.setCursor(QCursor(Qt.PointingHandCursor))
+        self.Manual_Measurement_Trigger_pushButton.setLayoutDirection(Qt.LeftToRight)
+        self.Manual_Measurement_Trigger_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
 "	color: rgb(202, 206, 216);\n"
 "	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "	background-color: rgb(65, 65, 65);\n"
@@ -2918,12 +3681,12 @@ class Ui_MainPages(object):
 "	color: rgb(44, 36, 0);\n"
 "	background-color: rgb(148, 227, 114);\n"
 "}")
-        self.manualMeasurement_pushButton.setCheckable(True)
-        self.manualMeasurement_pushButton.setChecked(False)
-        self.manualMeasurement_pushButton.setAutoExclusive(False)
-        self.manualMeasurement_pushButton.setAutoRepeatInterval(100)
+        self.Manual_Measurement_Trigger_pushButton.setCheckable(True)
+        self.Manual_Measurement_Trigger_pushButton.setChecked(False)
+        self.Manual_Measurement_Trigger_pushButton.setAutoExclusive(False)
+        self.Manual_Measurement_Trigger_pushButton.setAutoRepeatInterval(100)
 
-        self.verticalLayout_17.addWidget(self.manualMeasurement_pushButton)
+        self.verticalLayout_17.addWidget(self.Manual_Measurement_Trigger_pushButton)
 
         self.stackedWidget_2.addWidget(self.page)
         self.page_5 = QWidget()
@@ -2947,12 +3710,12 @@ class Ui_MainPages(object):
         self.frame_75.setFrameShadow(QFrame.Raised)
         self.gridLayout_22 = QGridLayout(self.frame_75)
         self.gridLayout_22.setObjectName(u"gridLayout_22")
-        self.noiseMeasurement_Voltage_lineEdit = QLineEdit(self.frame_75)
-        self.noiseMeasurement_Voltage_lineEdit.setObjectName(u"noiseMeasurement_Voltage_lineEdit")
-        sizePolicy.setHeightForWidth(self.noiseMeasurement_Voltage_lineEdit.sizePolicy().hasHeightForWidth())
-        self.noiseMeasurement_Voltage_lineEdit.setSizePolicy(sizePolicy)
-        self.noiseMeasurement_Voltage_lineEdit.setMaximumSize(QSize(16777215, 30))
-        self.noiseMeasurement_Voltage_lineEdit.setStyleSheet(u"\n"
+        self.Noise_Measurement_Voltage_lineEdit = QLineEdit(self.frame_75)
+        self.Noise_Measurement_Voltage_lineEdit.setObjectName(u"Noise_Measurement_Voltage_lineEdit")
+        sizePolicy.setHeightForWidth(self.Noise_Measurement_Voltage_lineEdit.sizePolicy().hasHeightForWidth())
+        self.Noise_Measurement_Voltage_lineEdit.setSizePolicy(sizePolicy)
+        self.Noise_Measurement_Voltage_lineEdit.setMaximumSize(QSize(16777215, 30))
+        self.Noise_Measurement_Voltage_lineEdit.setStyleSheet(u"\n"
 "\n"
 "QLineEdit:enabled {\n"
 "	background-color: rgba(0, 0, 0, 80);\n"
@@ -2973,9 +3736,9 @@ class Ui_MainPages(object):
 "	background-color: rgba(0, 0, 0, 0);\n"
 "	border: none;\n"
 "}")
-        self.noiseMeasurement_Voltage_lineEdit.setAlignment(Qt.AlignCenter)
+        self.Noise_Measurement_Voltage_lineEdit.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_22.addWidget(self.noiseMeasurement_Voltage_lineEdit, 0, 1, 1, 1)
+        self.gridLayout_22.addWidget(self.Noise_Measurement_Voltage_lineEdit, 0, 1, 1, 1)
 
         self.label_33 = QLabel(self.frame_75)
         self.label_33.setObjectName(u"label_33")
@@ -2986,12 +3749,12 @@ class Ui_MainPages(object):
 
         self.gridLayout_22.addWidget(self.label_33, 0, 0, 1, 1)
 
-        self.noiseMeasurement_Current_lineEdit = QLineEdit(self.frame_75)
-        self.noiseMeasurement_Current_lineEdit.setObjectName(u"noiseMeasurement_Current_lineEdit")
-        sizePolicy.setHeightForWidth(self.noiseMeasurement_Current_lineEdit.sizePolicy().hasHeightForWidth())
-        self.noiseMeasurement_Current_lineEdit.setSizePolicy(sizePolicy)
-        self.noiseMeasurement_Current_lineEdit.setMaximumSize(QSize(16777215, 30))
-        self.noiseMeasurement_Current_lineEdit.setStyleSheet(u"\n"
+        self.Noise_Measurement_Current_lineEdit = QLineEdit(self.frame_75)
+        self.Noise_Measurement_Current_lineEdit.setObjectName(u"Noise_Measurement_Current_lineEdit")
+        sizePolicy.setHeightForWidth(self.Noise_Measurement_Current_lineEdit.sizePolicy().hasHeightForWidth())
+        self.Noise_Measurement_Current_lineEdit.setSizePolicy(sizePolicy)
+        self.Noise_Measurement_Current_lineEdit.setMaximumSize(QSize(16777215, 30))
+        self.Noise_Measurement_Current_lineEdit.setStyleSheet(u"\n"
 "\n"
 "QLineEdit:enabled {\n"
 "	background-color: rgba(0, 0, 0, 80);\n"
@@ -3012,16 +3775,16 @@ class Ui_MainPages(object):
 "	background-color: rgba(0, 0, 0, 0);\n"
 "	border: none;\n"
 "}")
-        self.noiseMeasurement_Current_lineEdit.setAlignment(Qt.AlignCenter)
+        self.Noise_Measurement_Current_lineEdit.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_22.addWidget(self.noiseMeasurement_Current_lineEdit, 2, 1, 1, 1)
+        self.gridLayout_22.addWidget(self.Noise_Measurement_Current_lineEdit, 2, 1, 1, 1)
 
-        self.noiseMeasurement_Time_lineEdit = QLineEdit(self.frame_75)
-        self.noiseMeasurement_Time_lineEdit.setObjectName(u"noiseMeasurement_Time_lineEdit")
-        sizePolicy.setHeightForWidth(self.noiseMeasurement_Time_lineEdit.sizePolicy().hasHeightForWidth())
-        self.noiseMeasurement_Time_lineEdit.setSizePolicy(sizePolicy)
-        self.noiseMeasurement_Time_lineEdit.setMaximumSize(QSize(16777215, 30))
-        self.noiseMeasurement_Time_lineEdit.setStyleSheet(u"\n"
+        self.Noise_Measurement_Time_lineEdit = QLineEdit(self.frame_75)
+        self.Noise_Measurement_Time_lineEdit.setObjectName(u"Noise_Measurement_Time_lineEdit")
+        sizePolicy.setHeightForWidth(self.Noise_Measurement_Time_lineEdit.sizePolicy().hasHeightForWidth())
+        self.Noise_Measurement_Time_lineEdit.setSizePolicy(sizePolicy)
+        self.Noise_Measurement_Time_lineEdit.setMaximumSize(QSize(16777215, 30))
+        self.Noise_Measurement_Time_lineEdit.setStyleSheet(u"\n"
 "\n"
 "QLineEdit:enabled {\n"
 "	background-color: rgba(0, 0, 0, 80);\n"
@@ -3042,9 +3805,9 @@ class Ui_MainPages(object):
 "	background-color: rgba(0, 0, 0, 0);\n"
 "	border: none;\n"
 "}")
-        self.noiseMeasurement_Time_lineEdit.setAlignment(Qt.AlignCenter)
+        self.Noise_Measurement_Time_lineEdit.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_22.addWidget(self.noiseMeasurement_Time_lineEdit, 1, 1, 1, 1)
+        self.gridLayout_22.addWidget(self.Noise_Measurement_Time_lineEdit, 1, 1, 1, 1)
 
         self.label_44 = QLabel(self.frame_75)
         self.label_44.setObjectName(u"label_44")
@@ -3067,14 +3830,14 @@ class Ui_MainPages(object):
 
         self.verticalLayout_18.addWidget(self.frame_75, 0, Qt.AlignBottom)
 
-        self.Noisetest_pushButton = QPushButton(self.page_5)
-        self.Noisetest_pushButton.setObjectName(u"Noisetest_pushButton")
-        sizePolicy.setHeightForWidth(self.Noisetest_pushButton.sizePolicy().hasHeightForWidth())
-        self.Noisetest_pushButton.setSizePolicy(sizePolicy)
-        self.Noisetest_pushButton.setMinimumSize(QSize(0, 40))
-        self.Noisetest_pushButton.setMaximumSize(QSize(16777215, 40))
-        self.Noisetest_pushButton.setLayoutDirection(Qt.LeftToRight)
-        self.Noisetest_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
+        self.Noise_Measurement_Start_pushButton = QPushButton(self.page_5)
+        self.Noise_Measurement_Start_pushButton.setObjectName(u"Noise_Measurement_Start_pushButton")
+        sizePolicy.setHeightForWidth(self.Noise_Measurement_Start_pushButton.sizePolicy().hasHeightForWidth())
+        self.Noise_Measurement_Start_pushButton.setSizePolicy(sizePolicy)
+        self.Noise_Measurement_Start_pushButton.setMinimumSize(QSize(0, 40))
+        self.Noise_Measurement_Start_pushButton.setMaximumSize(QSize(16777215, 40))
+        self.Noise_Measurement_Start_pushButton.setLayoutDirection(Qt.LeftToRight)
+        self.Noise_Measurement_Start_pushButton.setStyleSheet(u"QPushButton:enabled {\n"
 "	color: rgb(202, 206, 216);\n"
 "	font: 28px  \"\u6e38\u30b4\u30b7\u30c3\u30af\";\n"
 "	background-color: rgb(65, 65, 65);\n"
@@ -3102,10 +3865,10 @@ class Ui_MainPages(object):
 "	background-color: rgb(125, 189, 95);\n"
 "}\n"
 "")
-        self.Noisetest_pushButton.setCheckable(True)
-        self.Noisetest_pushButton.setAutoRepeatInterval(100)
+        self.Noise_Measurement_Start_pushButton.setCheckable(True)
+        self.Noise_Measurement_Start_pushButton.setAutoRepeatInterval(100)
 
-        self.verticalLayout_18.addWidget(self.Noisetest_pushButton)
+        self.verticalLayout_18.addWidget(self.Noise_Measurement_Start_pushButton)
 
         self.stackedWidget_2.addWidget(self.page_5)
 
@@ -3189,11 +3952,11 @@ class Ui_MainPages(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
         self.frame_20.setObjectName(u"frame_20")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.frame_20.sizePolicy().hasHeightForWidth())
-        self.frame_20.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.frame_20.sizePolicy().hasHeightForWidth())
+        self.frame_20.setSizePolicy(sizePolicy2)
         self.frame_20.setMinimumSize(QSize(0, 0))
         self.frame_20.setMaximumSize(QSize(16777215, 16777215))
         self.frame_20.setStyleSheet(u"QFrame{\n"
@@ -3332,7 +4095,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 987, 400))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 100, 400))
         self.gridLayout_40 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(0, 0, 0, 0)
@@ -3846,7 +4609,7 @@ class Ui_MainPages(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 987, 200))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 100, 200))
         self.gridLayout_41 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(0, 0, 0, 0)
@@ -4570,17 +5333,17 @@ class Ui_MainPages(object):
         QWidget.setTabOrder(self.btn_ManaualMode, self.autostart_pushButton)
         QWidget.setTabOrder(self.autostart_pushButton, self.eMSstop_pushButton)
         QWidget.setTabOrder(self.eMSstop_pushButton, self.AutoMode_pattern_comboBox)
-        QWidget.setTabOrder(self.AutoMode_pattern_comboBox, self.outputStop_pushButton)
-        QWidget.setTabOrder(self.outputStop_pushButton, self.manaualMode_comboBox)
-        QWidget.setTabOrder(self.manaualMode_comboBox, self.measurement_comboBox)
-        QWidget.setTabOrder(self.measurement_comboBox, self.voltage_lineEdit)
-        QWidget.setTabOrder(self.voltage_lineEdit, self.voltageOutput_pushButton)
-        QWidget.setTabOrder(self.voltageOutput_pushButton, self.manualMeasurement_pushButton)
-        QWidget.setTabOrder(self.manualMeasurement_pushButton, self.noiseMeasurement_Voltage_lineEdit)
-        QWidget.setTabOrder(self.noiseMeasurement_Voltage_lineEdit, self.noiseMeasurement_Current_lineEdit)
-        QWidget.setTabOrder(self.noiseMeasurement_Current_lineEdit, self.noiseMeasurement_Time_lineEdit)
-        QWidget.setTabOrder(self.noiseMeasurement_Time_lineEdit, self.Noisetest_pushButton)
-        QWidget.setTabOrder(self.Noisetest_pushButton, self.scrollArea_2)
+        QWidget.setTabOrder(self.AutoMode_pattern_comboBox, self.Measurement_Stop_pushButton)
+        QWidget.setTabOrder(self.Measurement_Stop_pushButton, self.Measurement_Mode_comboBox)
+        QWidget.setTabOrder(self.Measurement_Mode_comboBox, self.Manual_Measurement_SingleMode_comboBox)
+        QWidget.setTabOrder(self.Manual_Measurement_SingleMode_comboBox, self.Manual_Measurement_SingleVoltage_lineEdit)
+        QWidget.setTabOrder(self.Manual_Measurement_SingleVoltage_lineEdit, self.Manual_Measurement_Start_pushButton)
+        QWidget.setTabOrder(self.Manual_Measurement_Start_pushButton, self.Manual_Measurement_Trigger_pushButton)
+        QWidget.setTabOrder(self.Manual_Measurement_Trigger_pushButton, self.Noise_Measurement_Voltage_lineEdit)
+        QWidget.setTabOrder(self.Noise_Measurement_Voltage_lineEdit, self.Noise_Measurement_Current_lineEdit)
+        QWidget.setTabOrder(self.Noise_Measurement_Current_lineEdit, self.Noise_Measurement_Time_lineEdit)
+        QWidget.setTabOrder(self.Noise_Measurement_Time_lineEdit, self.Noise_Measurement_Start_pushButton)
+        QWidget.setTabOrder(self.Noise_Measurement_Start_pushButton, self.scrollArea_2)
         QWidget.setTabOrder(self.scrollArea_2, self.scrollArea_3)
         QWidget.setTabOrder(self.scrollArea_3, self.RT_combobox)
         QWidget.setTabOrder(self.RT_combobox, self.patternfile_comboBox)
@@ -4604,9 +5367,10 @@ class Ui_MainPages(object):
         self.retranslateUi(MainPages)
 
         self.pages.setCurrentIndex(1)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
         self.stackedWidget_2.setCurrentIndex(0)
+        self.Manual_Measurement_Start_pushButton.setDefault(False)
 
 
         QMetaObject.connectSlotsByName(MainPages)
@@ -4624,20 +5388,41 @@ class Ui_MainPages(object):
         self.label_4.setText(QCoreApplication.translate("MainPages", u"\u4f9d\u983c\u5143", None))
         self.label_5.setText(QCoreApplication.translate("MainPages", u"\u4f9d\u983c\u8005", None))
         self.lineEdit_costomerName.setText(QCoreApplication.translate("MainPages", u"\u9ec4", None))
-        self.label_32.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u4f53\u7a4d(mm\u00b3)", None))
-        self.lineEdit_testMeterialName.setText(QCoreApplication.translate("MainPages", u"material_1", None))
-        self.lineEdit_meterialArea.setText(QCoreApplication.translate("MainPages", u"2.5", None))
-        self.lineEdit_testMeterial.setText(QCoreApplication.translate("MainPages", u"42", None))
-        self.label_10.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u306e\u539a\u3055(mm)", None))
-        self.lineEdit_thinkness.setText(QCoreApplication.translate("MainPages", u"1.5", None))
-        self.label_26.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u8868\u9762\u7a4d(mm\u00b2)", None))
-        self.label_8.setText(QCoreApplication.translate("MainPages", u"\u4e3b\u96fb\u6975\u5f84(mm)", None))
         self.lineEdit_MeterialinnerDie.setText(QCoreApplication.translate("MainPages", u"15", None))
-        self.label_24.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u540d\u79f0", None))
-        self.lineEdit_MeterialMainDie.setText(QCoreApplication.translate("MainPages", u"42", None))
-        self.label_9.setText(QCoreApplication.translate("MainPages", u"\u30ac\u30fc\u30c9\u96fb\u6975\u306e\u5185\u5f84(mm)", None))
+        self.label_32.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u4f53\u7a4d(mm\u00b3)", None))
         self.label_22.setText(QCoreApplication.translate("MainPages", u"\u6750\u6599", None))
+        self.label_8.setText(QCoreApplication.translate("MainPages", u"\u4e3b\u96fb\u6975\u5f84(mm)", None))
+        self.lineEdit_thinkness.setText(QCoreApplication.translate("MainPages", u"1.5", None))
+        self.label_9.setText(QCoreApplication.translate("MainPages", u"\u30ac\u30fc\u30c9\u96fb\u6975\u306e\u5185\u5f84(mm)", None))
+        self.label_10.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u306e\u539a\u3055(mm)", None))
+        self.lineEdit_MeterialMainDie.setText(QCoreApplication.translate("MainPages", u"42", None))
+        self.lineEdit_testMeterial.setText(QCoreApplication.translate("MainPages", u"42", None))
+        self.label_26.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u8868\u9762\u7a4d(mm\u00b2)", None))
+        self.label_24.setText(QCoreApplication.translate("MainPages", u"\u8a66\u6599\u540d\u79f0", None))
+        self.lineEdit_meterialArea.setText(QCoreApplication.translate("MainPages", u"2.5", None))
+        self.lineEdit_testMeterialName.setText(QCoreApplication.translate("MainPages", u"material_1", None))
         self.lineEdit_meterialVolume.setText(QCoreApplication.translate("MainPages", u"4.88", None))
+        self.AvgHelper_Enable_pushButton_1.setText(QCoreApplication.translate("MainPages", u"A", None))
+        self.AvgHelper_Value_lineEditor_1.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.AvgHelper_Enable_pushButton_5.setText(QCoreApplication.translate("MainPages", u"C", None))
+        self.AvgHelper_Value_lineEditor_5.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.AvgHelper_Enable_pushButton_3.setText(QCoreApplication.translate("MainPages", u"E", None))
+        self.AvgHelper_Value_lineEditor_3.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.AvgHelper_Enable_pushButton_4.setText(QCoreApplication.translate("MainPages", u"F", None))
+        self.AvgHelper_Value_lineEditor_4.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.AvgHelper_result.setText(QCoreApplication.translate("MainPages", u"\u5e73\u5747\u5024 52.1", None))
+        self.AvgHelper_A_submit_pushButton.setText(QCoreApplication.translate("MainPages", u"\u21e6 \u4e3b\u96fb\u6975\u5f84-\u8a08\u7b97\u5024\u767b\u9332", None))
+        self.AvgHelper_B_submit_pushButton.setText(QCoreApplication.translate("MainPages", u"\u21e6 \u5185\u5f84-\u8a08\u7b97\u5024\u767b\u9332", None))
+        self.AvgHelper_C_submit_pushButton.setText(QCoreApplication.translate("MainPages", u"\u21e6 \u539a\u3055-\u8a08\u7b97\u5024\u767b\u9332", None))
+        self.label_51.setText(QCoreApplication.translate("MainPages", u"\u5e73\u5747\u5024\u8a08\u7b97\u30d8\u30eb\u30d1\u30fc", None))
+        self.AvgHelper_Enable_pushButton_2.setText(QCoreApplication.translate("MainPages", u"B", None))
+        self.AvgHelper_Value_lineEditor_2.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.AvgHelper_Enable_pushButton_6.setText(QCoreApplication.translate("MainPages", u"D", None))
+        self.AvgHelper_Value_lineEditor_6.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.AvgHelper_Enable_pushButton_7.setText(QCoreApplication.translate("MainPages", u"G", None))
+        self.AvgHelper_Value_lineEditor_7.setText(QCoreApplication.translate("MainPages", u"0", None))
+        self.AvgHelper_Enable_pushButton_8.setText(QCoreApplication.translate("MainPages", u"H", None))
+        self.AvgHelper_Value_lineEditor_8.setText(QCoreApplication.translate("MainPages", u"0", None))
         self.lineEdit_PID_0_D.setText(QCoreApplication.translate("MainPages", u"593", None))
         self.lineEdit_PID_0_I.setText(QCoreApplication.translate("MainPages", u"1000", None))
         self.label_121.setText(QCoreApplication.translate("MainPages", u"PID\u8a2d\u5b9a 0", None))
@@ -4736,7 +5521,8 @@ class Ui_MainPages(object):
         self.timeUnit_comboBox.setItemText(2, QCoreApplication.translate("MainPages", u"30s/div", None))
         self.timeUnit_comboBox.setItemText(3, QCoreApplication.translate("MainPages", u"1min/div", None))
         self.timeUnit_comboBox.setItemText(4, QCoreApplication.translate("MainPages", u"10min/div", None))
-        self.timeUnit_comboBox.setItemText(5, QCoreApplication.translate("MainPages", u"1h/div", None))
+        self.timeUnit_comboBox.setItemText(5, QCoreApplication.translate("MainPages", u"30min/div", None))
+        self.timeUnit_comboBox.setItemText(6, QCoreApplication.translate("MainPages", u"1h/div", None))
 
         self.Resistor_checkBox.setText(QCoreApplication.translate("MainPages", u"\u62b5\u6297\u5024", None))
         self.Voltage_checkBox.setText(QCoreApplication.translate("MainPages", u"\u96fb\u5727", None))
@@ -4755,25 +5541,29 @@ class Ui_MainPages(object):
 
         self.Gas_mode_Label.setText(QCoreApplication.translate("MainPages", u"\u96f0\u56f2\u6c17\u30e2\u30fc\u30c9\uff1a\u5927\u6c17", None))
         self.label_18.setText("")
-        self.outputStop_pushButton.setText(QCoreApplication.translate("MainPages", u"\u51fa\u529b\u505c\u6b62", None))
-        self.manaualMode_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u4e00\u822c\u6e2c\u5b9a", None))
-        self.manaualMode_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"\u30ce\u30a4\u30ba\u6e2c\u5b9a", None))
+        self.Measurement_Stop_pushButton.setText(QCoreApplication.translate("MainPages", u"\u51fa\u529b\u505c\u6b62", None))
+        self.Measurement_Mode_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u4e00\u822c\u6e2c\u5b9a", None))
+        self.Measurement_Mode_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"\u30ce\u30a4\u30ba\u6e2c\u5b9a", None))
 
+        self.Manual_Measurement_PatternMode_pushButton.setText(QCoreApplication.translate("MainPages", u"Pattern", None))
         self.label_20.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u96fb\u5727(V)", None))
-        self.label_21.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u30e2\u30fc\u30c9", None))
-        self.measurement_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u9023\u7d9a\u4e8c\u56de\u6e2c\u5b9a", None))
-        self.measurement_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"\u4e00\u56de\u6e2c\u5b9a", None))
+        self.Manual_Measurement_PatternMode_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u9023\u7d9a\u4e8c\u56de\u6e2c\u5b9a", None))
+        self.Manual_Measurement_PatternMode_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"\u4e00\u56de\u6e2c\u5b9a", None))
 
-        self.voltage_lineEdit.setText(QCoreApplication.translate("MainPages", u"2000", None))
-        self.voltageOutput_pushButton.setText(QCoreApplication.translate("MainPages", u"\u96fb\u5727\u5370\u52a0", None))
-        self.manualMeasurement_pushButton.setText(QCoreApplication.translate("MainPages", u"\u30de\u30cb\u30e5\u30a2\u30eb\u6e2c\u5b9a", None))
-        self.noiseMeasurement_Voltage_lineEdit.setText(QCoreApplication.translate("MainPages", u"100", None))
+        self.Manual_Measurement_SingleMode_pushButton.setText(QCoreApplication.translate("MainPages", u"Single", None))
+        self.Manual_Measurement_SingleVoltage_lineEdit.setText(QCoreApplication.translate("MainPages", u"2000", None))
+        self.Manual_Measurement_SingleMode_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u9023\u7d9a\u4e8c\u56de\u6e2c\u5b9a", None))
+        self.Manual_Measurement_SingleMode_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"\u4e00\u56de\u6e2c\u5b9a", None))
+
+        self.Manual_Measurement_Start_pushButton.setText(QCoreApplication.translate("MainPages", u"\u96fb\u5727\u5370\u52a0", None))
+        self.Manual_Measurement_Trigger_pushButton.setText(QCoreApplication.translate("MainPages", u"\u30de\u30cb\u30e5\u30a2\u30eb\u6e2c\u5b9a", None))
+        self.Noise_Measurement_Voltage_lineEdit.setText(QCoreApplication.translate("MainPages", u"100", None))
         self.label_33.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u96fb\u5727(V)", None))
-        self.noiseMeasurement_Current_lineEdit.setText(QCoreApplication.translate("MainPages", u"1", None))
-        self.noiseMeasurement_Time_lineEdit.setText(QCoreApplication.translate("MainPages", u"10", None))
+        self.Noise_Measurement_Current_lineEdit.setText(QCoreApplication.translate("MainPages", u"1", None))
+        self.Noise_Measurement_Time_lineEdit.setText(QCoreApplication.translate("MainPages", u"10", None))
         self.label_44.setText(QCoreApplication.translate("MainPages", u"\u5408\u683c\u5224\u5b9a\u57fa\u6e96(pA)", None))
         self.label_36.setText(QCoreApplication.translate("MainPages", u"\u6e2c\u5b9a\u6642\u9593(min)", None))
-        self.Noisetest_pushButton.setText(QCoreApplication.translate("MainPages", u"\u30ce\u30a4\u30ba\u6e2c\u5b9a", None))
+        self.Noise_Measurement_Start_pushButton.setText(QCoreApplication.translate("MainPages", u"\u30ce\u30a4\u30ba\u6e2c\u5b9a", None))
         self.Temp_Totaltime_Label.setText(QCoreApplication.translate("MainPages", u"\u5408\u8a08\u6642\u9593: 0 \u6642\u9593 0 \u5206", None))
         self.label_63.setText(QCoreApplication.translate("MainPages", u"\u96f0\u56f2\u6c17", None))
         self.label_27.setText(QCoreApplication.translate("MainPages", u"\u30d1\u30bf\u30fc\u30f3\u540d", None))
