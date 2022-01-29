@@ -210,11 +210,11 @@ class Main_utility_manager(QWidget):
         # self.current_graph_data_array=[]
         # self.resistance_graph_data_array=[]
 
-        self.voltage_data_array     =numpy.zeros(shape=(1000000000, 2),dtype='f')
-        self.current_data_array     =numpy.zeros(shape=(1000000000, 2),dtype='f')
-        self.resistance_data_array  =numpy.zeros(shape=(1000000000, 2),dtype='f')
-        self.temp_sv_data_array     =numpy.zeros(shape=(1000000000, 2),dtype='f')
-        self.temp_pv_data_array     =numpy.zeros(shape=(1000000000, 2),dtype='f')
+        self.voltage_data_array     =numpy.zeros(shape=(100000000, 2),dtype='f')
+        self.current_data_array     =numpy.zeros(shape=(100000000, 2),dtype='f')
+        self.resistance_data_array  =numpy.zeros(shape=(100000000, 2),dtype='f')
+        self.temp_sv_data_array     =numpy.zeros(shape=(100000000, 2),dtype='f')
+        self.temp_pv_data_array     =numpy.zeros(shape=(100000000, 2),dtype='f')
 
         
 
@@ -243,7 +243,7 @@ class Main_utility_manager(QWidget):
         setting_transfer_Thread = threading.Thread(target = self.setting_transfer_Work,daemon=True)
         setting_transfer_Thread.start()
 
-        # self.startup_check_dialog()
+        self.startup_check_dialog()
         
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定可",0)
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
@@ -277,10 +277,10 @@ class Main_utility_manager(QWidget):
             self.close_app()
             return
 
-        # if not self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue():
-        #     self.lunchOptionDialog("Keithey 2657A & 2635B は通信異常です。GPIB-USBインターフェースを挿し直し、接続状況をご確認ください。",PyDialog.error_type)
-        #     self.close_app()
-        #     return
+        if not self._parent.MMG.memoryPool["System memory"]["2657A connection"].getValue():
+            self.lunchOptionDialog("Keithey 2657A & 2635B は通信異常です。GPIB-USBインターフェースを挿し直し、接続状況をご確認ください。",PyDialog.error_type)
+            self.close_app()
+            return
         
 
 
@@ -1353,7 +1353,7 @@ class Main_utility_manager(QWidget):
                     self.check_buttom_axix()
 
 
-            sucess,pos,index=self.get_data_from_view(self.voltage_data_array[self.data_array_depth-1][0]-1.1*self.timeMaxRange)
+            sucess,pos,index=self.get_data_from_view(self.voltage_data_array[self.data_array_depth-1][0]-1.1*self.timeMaxRange,False)
 
             skip_gap=1
             gap=(self.data_array_depth-index)
@@ -1493,7 +1493,7 @@ class Main_utility_manager(QWidget):
                 self.realTime_Current_Graph_vLine.setPos(pos)
                 self.realTime_Resistance_Graph_vLine.setPos(pos)
 
-    def get_data_from_view(self,pos):
+    def get_data_from_view(self,pos,real_make=True):
 
         if (    self.realTime_Voltage_Graph_set or 
                 self.realTime_Current_Graph_set or 
@@ -1530,9 +1530,11 @@ class Main_utility_manager(QWidget):
 
             if Finded_close_pos:
 
-                self.realTime_Voltage=self.voltage_data_array[most_clost_index][1]
-                self.realTime_Current=self.current_data_array[most_clost_index][1]
-                self.realTime_Resistor=self.resistance_data_array[most_clost_index][1]
+
+                if real_make:
+                    self.realTime_Voltage=self.voltage_data_array[most_clost_index][1]
+                    self.realTime_Current=self.current_data_array[most_clost_index][1]
+                    self.realTime_Resistor=self.resistance_data_array[most_clost_index][1]
 
                 return True,self.voltage_data_array[most_clost_index][0],most_clost_index
 
@@ -1717,8 +1719,8 @@ class Main_utility_manager(QWidget):
                 self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了RST",0)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No.変更RST"].getValue():
+                time.sleep(1)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",0)
-                # time.sleep(0.5)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更RST",0)
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.setEnabled(True)
                 self._parent.ui.load_pages.AutoMode_pattern_comboBox.setCursor(QCursor(Qt.ArrowCursor))
@@ -1801,8 +1803,6 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.Measurement_Stop_pushButton.setChecked(False)
             self._parent.ui.load_pages.Measurement_Stop_pushButton.setEnabled(True)
             self._parent.ui.load_pages.Measurement_Mode_comboBox.setEnabled(False)
-            self._parent.ui.load_pages.btn_ManaualMode.setEnabled(True)
-            self._parent.ui.load_pages.btn_ManaualMode.setVisible(True)
             self._parent.ui.load_pages.btn_AutoMode.setEnabled(False)
             self._parent.ui.load_pages.btn_AutoMode.setVisible(False)
         else:
@@ -1816,19 +1816,16 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
 
 
+
             #if PLC tell us not to do measurement
             if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
-                self._parent.ui.load_pages.btn_ManaualMode.setEnabled(False)
-                self._parent.ui.load_pages.btn_ManaualMode.setVisible(False)
-
+        
                 self._parent.ui.load_pages.Measurement_Mode_comboBox.setEnabled(False)
                 self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.setEnabled(False)
 
 
             #if we are free to process any measurement
             else:
-                self._parent.ui.load_pages.btn_ManaualMode.setEnabled(True)
-                self._parent.ui.load_pages.btn_ManaualMode.setVisible(True)
                 self._parent.ui.load_pages.Measurement_Mode_comboBox.setEnabled(True)
 
         #if Noise Measurement is ongoing
@@ -1854,7 +1851,6 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.Manual_Measurement_SingleVoltage_lineEdit.setEnabled(False)
             self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.blockSignals(True)
             self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.blockSignals(True)
-            self._parent.ui.load_pages.Manual_Measurement_SingleMode_comboBox.setEnabled(False)
             self._parent.ui.load_pages.Manual_Measurement_PatternMode_comboBox.setEnabled(False)
 
             #Check which measeurement mode are we
@@ -1889,6 +1885,7 @@ class Main_utility_manager(QWidget):
                             self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setChecked(False)
                             self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setEnabled(True)
                     else:
+                        self._parent.ui.load_pages.Manual_Measurement_SingleMode_comboBox.setEnabled(True)
                         self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setChecked(False)
                         self._parent.ui.load_pages.Manual_Measurement_Trigger_pushButton.setEnabled(False)
 
@@ -1901,6 +1898,7 @@ class Main_utility_manager(QWidget):
                 self._parent.ui.load_pages.Manual_Measurement_SingleMode_pushButton.setEnabled(False)
                 self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.setChecked(True)
                 self._parent.ui.load_pages.Manual_Measurement_PatternMode_pushButton.setEnabled(True)
+                self._parent.ui.load_pages.Manual_Measurement_SingleMode_comboBox.setEnabled(True)
 
                 if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
                     self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.setChecked(False)

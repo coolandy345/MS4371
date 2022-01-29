@@ -52,7 +52,7 @@ border-style: solid;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="styleSheet">
@@ -128,7 +128,7 @@ QLineEdit:read-only {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1001</width>
+            <width>1038</width>
             <height>818</height>
            </rect>
           </property>
@@ -626,78 +626,6 @@ QFrame:hover{
                     <property name="horizontalSpacing">
                      <number>12</number>
                     </property>
-                    <item row="3" column="1">
-                     <widget class="QLineEdit" name="lineEdit_MeterialinnerDie">
-                      <property name="minimumSize">
-                       <size>
-                        <width>200</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>200</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>15</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="6" column="0">
-                     <widget class="QLabel" name="label_32">
-                      <property name="minimumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>試料体積(mm³)</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="label_22">
-                      <property name="minimumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>材料</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
                     <item row="2" column="0">
                      <widget class="QLabel" name="label_8">
                       <property name="minimumSize">
@@ -717,172 +645,6 @@ QFrame:hover{
                       </property>
                       <property name="text">
                        <string>主電極径(mm)</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="1">
-                     <widget class="QLineEdit" name="lineEdit_thinkness">
-                      <property name="minimumSize">
-                       <size>
-                        <width>200</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>200</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>1.5</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QLabel" name="label_9">
-                      <property name="minimumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>ガード電極の内径(mm)</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="0">
-                     <widget class="QLabel" name="label_10">
-                      <property name="minimumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>試料の厚さ(mm)</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="1">
-                     <widget class="QLineEdit" name="lineEdit_MeterialMainDie">
-                      <property name="minimumSize">
-                       <size>
-                        <width>200</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>200</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>42</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QLineEdit" name="lineEdit_testMeterial">
-                      <property name="minimumSize">
-                       <size>
-                        <width>200</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>200</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>42</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="5" column="0">
-                     <widget class="QLabel" name="label_26">
-                      <property name="minimumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>試料表面積(mm²)</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="label_24">
-                      <property name="minimumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>140</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
-                      <property name="text">
-                       <string>試料名称</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -914,6 +676,100 @@ QFrame:hover{
                       </property>
                      </widget>
                     </item>
+                    <item row="3" column="0">
+                     <widget class="QLabel" name="label_9">
+                      <property name="minimumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>ガード電極の内径(mm)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QLineEdit" name="lineEdit_testMeterial">
+                      <property name="minimumSize">
+                       <size>
+                        <width>200</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>200</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>42</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_24">
+                      <property name="minimumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>試料名称</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QLineEdit" name="lineEdit_MeterialMainDie">
+                      <property name="minimumSize">
+                       <size>
+                        <width>200</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>200</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>42</string>
+                      </property>
+                     </widget>
+                    </item>
                     <item row="0" column="1">
                      <widget class="QLineEdit" name="lineEdit_testMeterialName">
                       <property name="minimumSize">
@@ -933,6 +789,128 @@ QFrame:hover{
                       </property>
                       <property name="text">
                        <string>material_1</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_22">
+                      <property name="minimumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>材料</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="1">
+                     <widget class="QLineEdit" name="lineEdit_thinkness">
+                      <property name="minimumSize">
+                       <size>
+                        <width>200</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>200</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>1.5</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="0">
+                     <widget class="QLabel" name="label_32">
+                      <property name="minimumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>試料体積(mm³)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="0">
+                     <widget class="QLabel" name="label_10">
+                      <property name="minimumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>試料の厚さ(mm)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="5" column="0">
+                     <widget class="QLabel" name="label_26">
+                      <property name="minimumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>140</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>試料表面積(mm²)</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -959,6 +937,72 @@ QFrame:hover{
                       <property name="alignment">
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                       </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QLineEdit" name="lineEdit_MeterialinnerDie">
+                      <property name="minimumSize">
+                       <size>
+                        <width>200</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>200</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>15</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="7" column="0" colspan="2">
+                     <widget class="QFrame" name="frame_100">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_28">
+                       <item alignment="Qt::AlignRight">
+                        <widget class="QCheckBox" name="AvgHelper_Record_checkBox">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">padding:5px;
+background-color: rgba(0, 0, 0, 80);</string>
+                         </property>
+                         <property name="text">
+                          <string>平均計算元数値を結果CSVに登録</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                    </layout>
@@ -1003,687 +1047,6 @@ QFrame:hover{
                     <property name="horizontalSpacing">
                      <number>12</number>
                     </property>
-                    <item row="2" column="1">
-                     <widget class="QFrame" name="frame_92">
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_19">
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_1">
-                         <property name="minimumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="layoutDirection">
-                          <enum>Qt::LeftToRight</enum>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(44, 50, 61);
-	border-color: rgb(19, 21, 26);
-	border-width: 1px;
-	border-style: solid;
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,20);
-	font: 15px  &quot;游ゴシック&quot;;
-}
-QPushButton:checked{
-	color: rgb(44, 36, 0);
-	background-color: rgb(244, 200, 25);
-}
-
-QPushButton:hover {
-	color: rgb(202, 206, 216);
-	background-color: rgba(0, 0, 0,20);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgba(226, 210, 36,128);
-}
-</string>
-                         </property>
-                         <property name="text">
-                          <string>A</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeatInterval">
-                          <number>100</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_1">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>60</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true"/>
-                         </property>
-                         <property name="text">
-                          <string>0</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="4" column="1">
-                     <widget class="QFrame" name="frame_96">
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_23">
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_5">
-                         <property name="minimumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="layoutDirection">
-                          <enum>Qt::LeftToRight</enum>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(44, 50, 61);
-	border-color: rgb(19, 21, 26);
-	border-width: 1px;
-	border-style: solid;
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,20);
-	font: 15px  &quot;游ゴシック&quot;;
-}
-QPushButton:checked{
-	color: rgb(44, 36, 0);
-	background-color: rgb(244, 200, 25);
-}
-
-QPushButton:hover {
-	color: rgb(202, 206, 216);
-	background-color: rgba(0, 0, 0,20);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgba(226, 210, 36,128);
-}
-</string>
-                         </property>
-                         <property name="text">
-                          <string>C</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeatInterval">
-                          <number>100</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_5">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>60</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true"/>
-                         </property>
-                         <property name="text">
-                          <string>0</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="2" column="2">
-                     <widget class="QFrame" name="frame_94">
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_21">
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_3">
-                         <property name="minimumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="layoutDirection">
-                          <enum>Qt::LeftToRight</enum>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(44, 50, 61);
-	border-color: rgb(19, 21, 26);
-	border-width: 1px;
-	border-style: solid;
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,20);
-	font: 15px  &quot;游ゴシック&quot;;
-}
-QPushButton:checked{
-	color: rgb(44, 36, 0);
-	background-color: rgb(244, 200, 25);
-}
-
-QPushButton:hover {
-	color: rgb(202, 206, 216);
-	background-color: rgba(0, 0, 0,20);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgba(226, 210, 36,128);
-}
-</string>
-                         </property>
-                         <property name="text">
-                          <string>E</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeatInterval">
-                          <number>100</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_3">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>60</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true"/>
-                         </property>
-                         <property name="text">
-                          <string>0</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="3" column="2">
-                     <widget class="QFrame" name="frame_95">
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_22">
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_4">
-                         <property name="minimumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="layoutDirection">
-                          <enum>Qt::LeftToRight</enum>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(44, 50, 61);
-	border-color: rgb(19, 21, 26);
-	border-width: 1px;
-	border-style: solid;
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,20);
-	font: 15px  &quot;游ゴシック&quot;;
-}
-QPushButton:checked{
-	color: rgb(44, 36, 0);
-	background-color: rgb(244, 200, 25);
-}
-
-QPushButton:hover {
-	color: rgb(202, 206, 216);
-	background-color: rgba(0, 0, 0,20);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgba(226, 210, 36,128);
-}
-</string>
-                         </property>
-                         <property name="text">
-                          <string>F</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeatInterval">
-                          <number>100</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_4">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>60</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true"/>
-                         </property>
-                         <property name="text">
-                          <string>0</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="6" column="0" colspan="3">
-                     <widget class="QFrame" name="frame_5">
-                      <property name="styleSheet">
-                       <string notr="true">background-color: rgb(29, 33, 40);</string>
-                      </property>
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_19">
-                       <property name="spacing">
-                        <number>6</number>
-                       </property>
-                       <property name="leftMargin">
-                        <number>6</number>
-                       </property>
-                       <property name="topMargin">
-                        <number>6</number>
-                       </property>
-                       <property name="rightMargin">
-                        <number>6</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>6</number>
-                       </property>
-                       <item>
-                        <widget class="QFrame" name="frame_91">
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QHBoxLayout" name="horizontalLayout_18">
-                          <property name="leftMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
-                          <item>
-                           <widget class="QLabel" name="AvgHelper_result">
-                            <property name="minimumSize">
-                             <size>
-                              <width>0</width>
-                              <height>35</height>
-                             </size>
-                            </property>
-                            <property name="maximumSize">
-                             <size>
-                              <width>16777215</width>
-                              <height>35</height>
-                             </size>
-                            </property>
-                            <property name="styleSheet">
-                             <string notr="true"/>
-                            </property>
-                            <property name="text">
-                             <string>平均値 52.1</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignCenter</set>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QPushButton" name="AvgHelper_A_submit_pushButton">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="layoutDirection">
-                          <enum>Qt::LeftToRight</enum>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(65, 65, 65);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 10px;
-	border-color: rgb(65, 65, 65);
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,30);
-	font: 15px  &quot;游ゴシック&quot;;
-}
-
-QPushButton:hover {
-	color: rgb(44, 36, 0);
-	background-color: rgb(109, 182, 238);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgb(69, 140, 207);
-}
-
-</string>
-                         </property>
-                         <property name="text">
-                          <string>⇦ 主電極径-計算値登録</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>false</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeatInterval">
-                          <number>100</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QPushButton" name="AvgHelper_B_submit_pushButton">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="layoutDirection">
-                          <enum>Qt::LeftToRight</enum>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(65, 65, 65);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 10px;
-	border-color: rgb(65, 65, 65);
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,30);
-	font: 15px  &quot;游ゴシック&quot;;
-}
-
-QPushButton:hover {
-	color: rgb(44, 36, 0);
-	background-color: rgb(109, 182, 238);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgb(69, 140, 207);
-}
-
-</string>
-                         </property>
-                         <property name="text">
-                          <string>⇦ 内径-計算値登録</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>false</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeatInterval">
-                          <number>100</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QPushButton" name="AvgHelper_C_submit_pushButton">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="layoutDirection">
-                          <enum>Qt::LeftToRight</enum>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(65, 65, 65);
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 10px;
-	border-color: rgb(65, 65, 65);
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,30);
-	font: 15px  &quot;游ゴシック&quot;;
-}
-
-QPushButton:hover {
-	color: rgb(44, 36, 0);
-	background-color: rgb(109, 182, 238);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgb(69, 140, 207);
-}
-
-</string>
-                         </property>
-                         <property name="text">
-                          <string>⇦ 厚さ-計算値登録</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>false</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeatInterval">
-                          <number>100</number>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
                     <item row="0" column="0" colspan="3">
                      <widget class="QLabel" name="label_51">
                       <property name="minimumSize">
@@ -1707,214 +1070,6 @@ QPushButton:pressed {
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
                       </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <widget class="QFrame" name="frame_93">
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_20">
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_2">
-                         <property name="minimumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="layoutDirection">
-                          <enum>Qt::LeftToRight</enum>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(44, 50, 61);
-	border-color: rgb(19, 21, 26);
-	border-width: 1px;
-	border-style: solid;
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,20);
-	font: 15px  &quot;游ゴシック&quot;;
-}
-QPushButton:checked{
-	color: rgb(44, 36, 0);
-	background-color: rgb(244, 200, 25);
-}
-
-QPushButton:hover {
-	color: rgb(202, 206, 216);
-	background-color: rgba(0, 0, 0,20);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgba(226, 210, 36,128);
-}
-</string>
-                         </property>
-                         <property name="text">
-                          <string>B</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeatInterval">
-                          <number>100</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_2">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>60</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true"/>
-                         </property>
-                         <property name="text">
-                          <string>0</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item row="5" column="1">
-                     <widget class="QFrame" name="frame_97">
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_24">
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_6">
-                         <property name="minimumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>40</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="layoutDirection">
-                          <enum>Qt::LeftToRight</enum>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton:enabled {
-	color: rgb(202, 206, 216);
-	font: 15px  &quot;游ゴシック&quot;;
-	background-color: rgb(44, 50, 61);
-	border-color: rgb(19, 21, 26);
-	border-width: 1px;
-	border-style: solid;
-}
-QPushButton:disabled {
-	color: rgb(70, 80, 95);
-	background-color: rgba(0, 0, 0,20);
-	font: 15px  &quot;游ゴシック&quot;;
-}
-QPushButton:checked{
-	color: rgb(44, 36, 0);
-	background-color: rgb(244, 200, 25);
-}
-
-QPushButton:hover {
-	color: rgb(202, 206, 216);
-	background-color: rgba(0, 0, 0,20);
-}
-
-QPushButton:pressed {
-	color: rgb(44, 36, 0);
-	background-color: rgba(226, 210, 36,128);
-}
-</string>
-                         </property>
-                         <property name="text">
-                          <string>D</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoRepeatInterval">
-                          <number>100</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_6">
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>60</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true"/>
-                         </property>
-                         <property name="text">
-                          <string>0</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
                      </widget>
                     </item>
                     <item row="4" column="2">
@@ -2102,6 +1257,895 @@ QPushButton:pressed {
                        </item>
                        <item>
                         <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_8">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>60</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <property name="text">
+                          <string>0</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QFrame" name="frame_93">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_20">
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_2">
+                         <property name="minimumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(44, 50, 61);
+	border-color: rgb(19, 21, 26);
+	border-width: 1px;
+	border-style: solid;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,20);
+	font: 15px  &quot;游ゴシック&quot;;
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(244, 200, 25);
+}
+
+QPushButton:hover {
+	color: rgb(202, 206, 216);
+	background-color: rgba(0, 0, 0,20);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgba(226, 210, 36,128);
+}
+</string>
+                         </property>
+                         <property name="text">
+                          <string>B</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeatInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_2">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>60</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <property name="text">
+                          <string>0</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QFrame" name="frame_92">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_19">
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_1">
+                         <property name="minimumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(44, 50, 61);
+	border-color: rgb(19, 21, 26);
+	border-width: 1px;
+	border-style: solid;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,20);
+	font: 15px  &quot;游ゴシック&quot;;
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(244, 200, 25);
+}
+
+QPushButton:hover {
+	color: rgb(202, 206, 216);
+	background-color: rgba(0, 0, 0,20);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgba(226, 210, 36,128);
+}
+</string>
+                         </property>
+                         <property name="text">
+                          <string>A</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeatInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_1">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>60</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <property name="text">
+                          <string>0</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="6" column="0" colspan="3">
+                     <widget class="QFrame" name="frame_5">
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(29, 33, 40);</string>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_19">
+                       <property name="spacing">
+                        <number>6</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>6</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>6</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>6</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>6</number>
+                       </property>
+                       <item>
+                        <widget class="QFrame" name="frame_91">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QHBoxLayout" name="horizontalLayout_18">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QLabel" name="AvgHelper_result">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>35</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>35</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true"/>
+                            </property>
+                            <property name="text">
+                             <string>平均値 52.1</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="AvgHelper_A_submit_pushButton">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 10px;
+	border-color: rgb(65, 65, 65);
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,30);
+	font: 15px  &quot;游ゴシック&quot;;
+}
+
+QPushButton:hover {
+	color: rgb(44, 36, 0);
+	background-color: rgb(109, 182, 238);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgb(69, 140, 207);
+}
+
+</string>
+                         </property>
+                         <property name="text">
+                          <string>⇦ 主電極径に登録</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>false</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeatInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="AvgHelper_B_submit_pushButton">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 10px;
+	border-color: rgb(65, 65, 65);
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,30);
+	font: 15px  &quot;游ゴシック&quot;;
+}
+
+QPushButton:hover {
+	color: rgb(44, 36, 0);
+	background-color: rgb(109, 182, 238);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgb(69, 140, 207);
+}
+
+</string>
+                         </property>
+                         <property name="text">
+                          <string>⇦ 内径に登録</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>false</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeatInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="AvgHelper_C_submit_pushButton">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(65, 65, 65);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 10px;
+	border-color: rgb(65, 65, 65);
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,30);
+	font: 15px  &quot;游ゴシック&quot;;
+}
+
+QPushButton:hover {
+	color: rgb(44, 36, 0);
+	background-color: rgb(109, 182, 238);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgb(69, 140, 207);
+}
+
+</string>
+                         </property>
+                         <property name="text">
+                          <string>⇦ 厚さに登録</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>false</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeatInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="4" column="1">
+                     <widget class="QFrame" name="frame_94">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_21">
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_3">
+                         <property name="minimumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(44, 50, 61);
+	border-color: rgb(19, 21, 26);
+	border-width: 1px;
+	border-style: solid;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,20);
+	font: 15px  &quot;游ゴシック&quot;;
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(244, 200, 25);
+}
+
+QPushButton:hover {
+	color: rgb(202, 206, 216);
+	background-color: rgba(0, 0, 0,20);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgba(226, 210, 36,128);
+}
+</string>
+                         </property>
+                         <property name="text">
+                          <string>C</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeatInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_3">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>60</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <property name="text">
+                          <string>0</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="5" column="1">
+                     <widget class="QFrame" name="frame_95">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_22">
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_4">
+                         <property name="minimumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(44, 50, 61);
+	border-color: rgb(19, 21, 26);
+	border-width: 1px;
+	border-style: solid;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,20);
+	font: 15px  &quot;游ゴシック&quot;;
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(244, 200, 25);
+}
+
+QPushButton:hover {
+	color: rgb(202, 206, 216);
+	background-color: rgba(0, 0, 0,20);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgba(226, 210, 36,128);
+}
+</string>
+                         </property>
+                         <property name="text">
+                          <string>D</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeatInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_4">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>60</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <property name="text">
+                          <string>0</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="3" column="2">
+                     <widget class="QFrame" name="frame_97">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_24">
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_6">
+                         <property name="minimumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(44, 50, 61);
+	border-color: rgb(19, 21, 26);
+	border-width: 1px;
+	border-style: solid;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,20);
+	font: 15px  &quot;游ゴシック&quot;;
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(244, 200, 25);
+}
+
+QPushButton:hover {
+	color: rgb(202, 206, 216);
+	background-color: rgba(0, 0, 0,20);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgba(226, 210, 36,128);
+}
+</string>
+                         </property>
+                         <property name="text">
+                          <string>F</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeatInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_6">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>60</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <property name="text">
+                          <string>0</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item row="2" column="2">
+                     <widget class="QFrame" name="frame_96">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_23">
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QPushButton" name="AvgHelper_Enable_pushButton_5">
+                         <property name="minimumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>40</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton:enabled {
+	color: rgb(202, 206, 216);
+	font: 15px  &quot;游ゴシック&quot;;
+	background-color: rgb(44, 50, 61);
+	border-color: rgb(19, 21, 26);
+	border-width: 1px;
+	border-style: solid;
+}
+QPushButton:disabled {
+	color: rgb(70, 80, 95);
+	background-color: rgba(0, 0, 0,20);
+	font: 15px  &quot;游ゴシック&quot;;
+}
+QPushButton:checked{
+	color: rgb(44, 36, 0);
+	background-color: rgb(244, 200, 25);
+}
+
+QPushButton:hover {
+	color: rgb(202, 206, 216);
+	background-color: rgba(0, 0, 0,20);
+}
+
+QPushButton:pressed {
+	color: rgb(44, 36, 0);
+	background-color: rgba(226, 210, 36,128);
+}
+</string>
+                         </property>
+                         <property name="text">
+                          <string>E</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoRepeatInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="AvgHelper_Value_lineEditor_5">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -7442,16 +7486,6 @@ QComboBox:hover {
                              <property name="frame">
                               <bool>true</bool>
                              </property>
-                             <item>
-                              <property name="text">
-                               <string>連続二回測定</string>
-                              </property>
-                             </item>
-                             <item>
-                              <property name="text">
-                               <string>一回測定</string>
-                              </property>
-                             </item>
                             </widget>
                            </item>
                            <item row="1" column="0">
@@ -8478,7 +8512,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>987</width>
                       <height>400</height>
                      </rect>
                     </property>
@@ -9175,7 +9209,7 @@ QComboBox:hover {
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">color: rgb(221, 0, 0);</string>
+                 <string notr="true">color: rgb(244, 0, 0);</string>
                 </property>
                 <property name="text">
                  <string>無効入力:</string>
@@ -9707,7 +9741,7 @@ QFrame:focus{
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>987</width>
                       <height>200</height>
                      </rect>
                     </property>

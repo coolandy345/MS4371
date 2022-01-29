@@ -485,15 +485,15 @@ class TestPatternWidget(QWidget):
         self._parent.ui.load_pages.test_commect_lineEdit.textChanged.connect(self.ui_click_callback)
         
         self._parent.ui.load_pages.test_time_LineEdit.editingFinished.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.test_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.test_time_LineEdit.setValidator(QDoubleValidator(decimals=4))
         self._parent.ui.load_pages.test_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.test_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=2))
+        self._parent.ui.load_pages.test_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=4))
         self._parent.ui.load_pages.bg0_time_LineEdit.editingFinished.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.bg0_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.bg0_time_LineEdit.setValidator(QDoubleValidator(decimals=4))
         self._parent.ui.load_pages.bg_time_LineEdit.editingFinished.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.bg_time_LineEdit.setValidator(QDoubleValidator(decimals=3))
+        self._parent.ui.load_pages.bg_time_LineEdit.setValidator(QDoubleValidator(decimals=4))
         self._parent.ui.load_pages.bg_sampletime_LineEdit.editingFinished.connect(self.ui_click_callback)
-        self._parent.ui.load_pages.bg_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=2))
+        self._parent.ui.load_pages.bg_sampletime_LineEdit.setValidator(QDoubleValidator(decimals=4))
 
         self._parent.ui.load_pages.speed_comboBox.currentIndexChanged.connect(self.ui_click_callback)
         self._parent.ui.load_pages.filter_comboBox.currentIndexChanged.connect(self.ui_click_callback)
@@ -704,42 +704,42 @@ class TestPatternWidget(QWidget):
 
         elif btn_name=="test_sampletime_LineEdit":
             data=float(self._parent.ui.load_pages.test_sampletime_LineEdit.text())
-            data,err=self.maxmin(999,0.01,data)
+            data_modifly,err=self.maxmin(999,0.01,data)
             if err:
-                self._parent.ui.load_pages.test_sampletime_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.test_sampletime_LineEdit.setText(str(data_modifly))
 
-            self.cache_steplist.set_Test_sampletime(data)
+            self.cache_steplist.set_Test_sampletime(data_modifly)
             self.update_Request=True
 
 
         elif btn_name=="bg0_time_LineEdit":
             data=float(self._parent.ui.load_pages.bg0_time_LineEdit.text())
-            data,err=self.maxmin(999,0,data)
+            data_modifly,err=self.maxmin(999,0,data)
             if err:
-                self._parent.ui.load_pages.bg0_time_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.bg0_time_LineEdit.setText(str(data_modifly))
 
-            self.cache_steplist.set_BG0_test_time(data)
+            self.cache_steplist.set_BG0_test_time(data_modifly)
             self.update_Request=True
 
 
 
         elif btn_name=="bg_time_LineEdit":
             data=float(self._parent.ui.load_pages.bg_time_LineEdit.text())
-            data,err=self.maxmin(999,0,data)
+            data_modifly,err=self.maxmin(999,0,data)
             if err:
-                self._parent.ui.load_pages.bg_time_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.bg_time_LineEdit.setText(str(data_modifly))
 
-            self.cache_steplist.set_BG_test_time(data)
+            self.cache_steplist.set_BG_test_time(data_modifly)
             self.update_Request=True
 
 
         elif btn_name=="bg_sampletime_LineEdit":
             data=float(self._parent.ui.load_pages.bg_sampletime_LineEdit.text())
-            data,err=self.maxmin(999,0.01,data)
+            data_modifly,err=self.maxmin(999,0.01,data)
             if err:
-                self._parent.ui.load_pages.bg_sampletime_LineEdit.setText(str(data))
+                self._parent.ui.load_pages.bg_sampletime_LineEdit.setText(str(data_modifly))
 
-            self.cache_steplist.set_BG_sampletime(data)
+            self.cache_steplist.set_BG_sampletime(data_modifly)
             self.update_Request=True
 
         elif btn_name=="filter_comboBox":

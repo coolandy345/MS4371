@@ -384,7 +384,19 @@ class testlist():
         pass
 
     def checkRule(self):
+        
         errorRule=""
+        if self.speed==1:
+            if self.test_sampletime<=0.167 or self.BG_sampletime<=0.167:
+                errorRule="サンプリング時間は 0.167秒 以上設定ください。"
+            else:
+                errorRule=""
+
+        else:
+            if self.test_sampletime<=0.0167 or self.BG_sampletime<=0.0167:
+                errorRule="サンプリング時間は 0.0167秒 以上設定ください。"
+            else:
+                errorRule=""
 
         return errorRule
 

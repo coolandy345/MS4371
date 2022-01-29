@@ -281,21 +281,30 @@ class GPIB_device():
             print("secess init GPIB device at {}".format(self.name))
             self.connect_action(True)
             time.sleep(0.01)
+            
             self.send_Command("""
-                                
                                 abort
                                 *CLS
                                 reset()
-                                smua.reset()
-                                smua.source.output = 0
                                 tsplink.reset()
+                                node[1].smua.reset()
+                                node[2].smua.reset()
+                                node[1].smua.source.output = 0
+                                node[2].smua.source.output = 0
                                 beeper.beep(0.1, 2400)
-                                display.clear()
-                                display.setcursor(1, 1)
-                                display.settext("standby")
-                                delay(0.5)
-                                display.screen = display.SMUA
-                                display.smua.measure.func = display.MEASURE_DCVOLTS
+
+                                node[1].display.clear()
+                                node[1].display.setcursor(1, 1)
+                                node[1].display.settext("[STATUS] Initial ")
+                                node[1].display.setcursor(2, 1)
+                                node[1].display.settext("MS4371 Connect & Ready")
+                                node[2].display.clear()
+                                node[2].display.setcursor(1, 1)
+                                node[2].display.settext("[STATUS] Initial ")
+                                node[2].display.setcursor(2, 1)
+                                node[2].display.settext("MS4371 Connect & Ready")
+
+                                delay(1)
                                 """)
 
 
@@ -412,11 +421,12 @@ class GPIB_device():
         
 
 class GPIB_device_2635B(GPIB_device):
-    def __init__(self,memoryPool,queuePool):
+    def __init__(self,PoolSemaphore,memoryPool,queuePool):
+        self.PoolSemaphore=PoolSemaphore
         self.memoryPool=memoryPool
         self.queuePool=queuePool
         
-        super().__init__(memoryPool,queuePool,address=self.memoryPool["System memory"]["2635B GPIB address"].getValue(),name="2635B")
+        super().__init__(PoolSemaphore,memoryPool,queuePool,address=self.memoryPool["System memory"]["2635B GPIB address"].getValue(),name="2635B")
 
 
     

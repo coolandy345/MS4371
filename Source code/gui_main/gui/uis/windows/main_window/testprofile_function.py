@@ -141,6 +141,8 @@ class Testfile_manager(QWidget):
             self.AvgHelper.append(data)
 
 
+        self.AvgHelper_Record_Enabled=self._parent.MMG.memoryPool["System memory"]["AvgHelper_Record_Enabled"].getValue()
+
         self.pid_parameter_list=[]
         for pid_number in range(0,10):
             pid=["P","I","D"]
@@ -230,7 +232,7 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.AvgHelper_Value_lineEditor_8.setText(str(self.AvgHelper[7][1]))
         
 
-
+        self._parent.ui.load_pages.AvgHelper_Record_checkBox.setChecked(self.AvgHelper_Record_Enabled)
     
 
 
@@ -382,6 +384,9 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.AvgHelper_Value_lineEditor_8.setValidator(QDoubleValidator())
 
         
+        self._parent.ui.load_pages.AvgHelper_Record_checkBox.clicked.connect(self.button_callback)
+
+        
         self.areaVolumeCal()
         
 
@@ -444,6 +449,9 @@ class Testfile_manager(QWidget):
         self._parent.ui.load_pages.lineEdit_PID_9_P.setEnabled(enable)
         self._parent.ui.load_pages.lineEdit_PID_9_I.setEnabled(enable)
         self._parent.ui.load_pages.lineEdit_PID_9_D.setEnabled(enable)
+
+
+        self._parent.ui.load_pages.AvgHelper_Record_checkBox.setEnabled(enable)
 
     def lunchOptionDialog(self,message,type):
 
@@ -609,8 +617,11 @@ class Testfile_manager(QWidget):
             self.set_memorypool_register("System memory","AvgHelper_Value_8",self.AvgHelper[7][1])
             self.AvgHelper_update()
 
-        
 
+        elif btn=="AvgHelper_Record_checkBox":
+            enabled=float(self._parent.ui.load_pages.AvgHelper_Record_checkBox.isChecked())
+            self.set_memorypool_register("System memory","AvgHelper_Record_Enabled",enabled)
+        
 
         elif btn=="lineEdit_PID_0_P":
             if float(self._parent.ui.load_pages.lineEdit_PID_0_P.text())<0.1:

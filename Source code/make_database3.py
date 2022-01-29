@@ -74,6 +74,12 @@ cur.execute(text)
 text="INSERT INTO '{}' values('Manual_Measurement_Ready','{}','{}')".format(Table_name,"一回測定","NULL")
 cur.execute(text)
 
+text="INSERT INTO '{}' values('Manual_Measurement_Mode','{}','{}')".format(Table_name,"Single","NULL")
+cur.execute(text)
+
+text="INSERT INTO '{}' values('Manual_Measurement_Pattern_Number','{}','{}')".format(Table_name,"0","NULL")
+cur.execute(text)
+
 text="INSERT INTO '{}' values('Manual_Measurement_trigger','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(text)
 
@@ -95,6 +101,9 @@ cur.execute(text)
 text="INSERT INTO '{}' values('Noise_Measurement_Current','{}','{}')".format(Table_name,0,"NULL")
 cur.execute(text)    
 
+text="INSERT INTO '{}' values('AvgHelper_Record_Enabled','{}','{}')".format(Table_name,0,"NULL")
+cur.execute(text)
+
 for index in range(1,9):
     text="INSERT INTO '{}' values('AvgHelper_Value_{}','{}','{}')".format(Table_name,index,0,"NULL")
     cur.execute(text)
@@ -102,6 +111,5 @@ for index in range(1,9):
 for index in range(1,9):
     text="INSERT INTO '{}' values('AvgHelper_Enable_{}','{}','{}')".format(Table_name,index,0,"NULL")
     cur.execute(text)
-
 
 System_Registor_Database.commit()

@@ -114,7 +114,7 @@ class Csv_manager():
             writer.writerow(['測定時間(min)', self.profile.noise_testTime])
 
 
-    def prepare_ManualTestCsvFile(self,profile):
+    def prepare_Manual_Single_TestCsvFile(self,profile):
 
         self.profile=profile
 
@@ -136,8 +136,32 @@ class Csv_manager():
             writer.writerow(['材料の厚さ(mm)', self.profile.thinkness])
             writer.writerow(['測定電圧(V)', self.profile.voltage])
             writer.writerow("")
+            System_memory=self.memoryPool["System memory"]
 
-            
+            if System_memory["AvgHelper_Record_Enabled"].getValue():
+
+                avarage_numbers=0
+                avarage_data=0
+                got_avarage=False
+                for index in range(1,9):
+                    if System_memory["AvgHelper_Enable_{}".format(index)].getValue():
+
+                        avarage_numbers+=1
+                        avarage_data+=System_memory["AvgHelper_Value_{}".format(index)].getValue()
+
+                        if not got_avarage:
+                            got_avarage=True
+
+                        writer.writerow(['平均値'+self._123_to_abc(index),System_memory["AvgHelper_Value_{}".format(index)].getValue()])
+                    else:
+                        writer.writerow(['平均値'+self._123_to_abc(index),"不使用"])
+
+                if got_avarage:
+                    writer.writerow(['計算平均値', avarage_data/avarage_numbers])
+                    got_avarage=True
+
+                
+                writer.writerow("")
 
     def result_NoiseTestCsvFile(self,text,max,min):
         print("result_NoiseTestCsvFile",text,max,min)
@@ -366,7 +390,81 @@ class Csv_manager():
                 if self.dataRecord_Stop:
                     return
 
+    def _123_to_abc(self,number):
+
+        if number==1:
+            return "A"
+        elif number==2:
+            return "B"
+        elif number==3:
+            return "C"
+        elif number==4:
+            return "D"
+        elif number==5:
+            return "E"
+        elif number==6:
+            return "F"
+        elif number==7:
+            return "G"
+        elif number==8:
+            return "H"
+
+    def prepare_Manual_Pattern_TestCsvFile(self,profile):
+        self.profile=profile
+
+        self.csv = os.path.join(self.main_folder_path, "手動測定結果データ_{}.csv".format(self.profile.file_name))
+
+
+        with open(self.csv, 'w', newline='') as csvfile:
+
+            writer = csv.writer(csvfile)
+
+            writer.writerow(['測定日', self.profile.date])
+            writer.writerow(['測定番号', self.profile.number])
+            if self.profile.mode==2:
+                writer.writerow(['依頼元', self.profile.costomer])
+                writer.writerow(['依頼者', self.profile.costomerName])
+            writer.writerow(['試料名称', self.profile.meterialName])
+            writer.writerow(['材料', self.profile.meterial])
+            writer.writerow(['主電極径(mm)', self.profile.mainDia])
+            writer.writerow(['ガード電極の内径(mm)', self.profile.innerDia])
+            writer.writerow(['電極面積(mm2)', (((float(self.profile.mainDia)+float(self.profile.innerDia))/2)/2)*(((float(self.profile.mainDia)+float(self.profile.innerDia))/2)/2)*math.pi])
+            writer.writerow(['材料の厚さ(mm)', self.profile.thinkness])
+
+            System_memory=self.memoryPool["System memory"]
+
+            if System_memory["AvgHelper_Record_Enabled"].getValue():
+                writer.writerow("")
+
+                avarage_numbers=0
+                avarage_data=0
+                got_avarage=False
+                for index in range(1,9):
+                    if System_memory["AvgHelper_Enable_{}".format(index)].getValue():
+
+                        avarage_numbers+=1
+                        avarage_data+=System_memory["AvgHelper_Value_{}".format(index)].getValue()
+
+                        if not got_avarage:
+                            got_avarage=True
+
+                        writer.writerow(['平均値'+self._123_to_abc(index),System_memory["AvgHelper_Value_{}".format(index)].getValue()])
+                    else:
+                        writer.writerow(['平均値'+self._123_to_abc(index),"不使用"])
+
+                if got_avarage:
+                    writer.writerow(['計算平均値', avarage_data/avarage_numbers])
+                    got_avarage=True
             
+            writer.writerow("")
+            writer.writerow(['測定電圧(v)', self.profile.voltage])
+            writer.writerow(['主測定時間(min)', self.profile.time])
+            writer.writerow(['主測定サンプリング周期(s)', self.profile.time_sample])
+            writer.writerow(['BG 測定時間(min)', self.profile.bg_time])
+            writer.writerow(['BG 測定サンプリング周期(s)', self.profile.bg_time_sample])
+            writer.writerow(['Speed', "{}".format(self.profile.speed)])
+            writer.writerow(['Filter', "{}".format(self.profile.filter)])
+            writer.writerow(['Filter count', self.profile.filter_count])
 
     def prepare_CsvFile(self,profile):
 
@@ -398,6 +496,30 @@ class Csv_manager():
             writer.writerow(['電極面積(mm2)', (((float(self.profile.mainDia)+float(self.profile.innerDia))/2)/2)*(((float(self.profile.mainDia)+float(self.profile.innerDia))/2)/2)*math.pi])
             writer.writerow(['材料の厚さ(mm)', self.profile.thinkness])
             writer.writerow(['測定雰囲気', self.profile.gas])
+            System_memory=self.memoryPool["System memory"]
+
+            if System_memory["AvgHelper_Record_Enabled"].getValue():
+                writer.writerow("")
+
+                avarage_numbers=0
+                avarage_data=0
+                got_avarage=False
+                for index in range(1,9):
+                    if System_memory["AvgHelper_Enable_{}".format(index)].getValue():
+
+                        avarage_numbers+=1
+                        avarage_data+=System_memory["AvgHelper_Value_{}".format(index)].getValue()
+
+                        if not got_avarage:
+                            got_avarage=True
+
+                        writer.writerow(['平均値'+self._123_to_abc(index),System_memory["AvgHelper_Value_{}".format(index)].getValue()])
+                    else:
+                        writer.writerow(['平均値'+self._123_to_abc(index),"不使用"])
+
+                if got_avarage:
+                    writer.writerow(['計算平均値', avarage_data/avarage_numbers])
+                    got_avarage=True
             writer.writerow("")
             writer.writerow(['測定電圧(v)', self.profile.voltage])
             writer.writerow(['主測定時間(min)', self.profile.time])
