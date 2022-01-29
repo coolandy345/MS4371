@@ -429,7 +429,7 @@ class PyTempStep(QWidget):
             self.pattern.TestPattern_label.setEnabled(False)
             self.pattern.TestPattern_comboBox.setEnabled(False)
 
-            self.update_testFileCombobox(0)
+            # self.update_testFileCombobox(0)
             
         elif (self.pattern.Type_comboBox.currentText()) == "測定":
 
@@ -484,7 +484,7 @@ class PyTempStep(QWidget):
             self.pattern.TestPattern_label.setEnabled(True)
             self.pattern.TestPattern_comboBox.setEnabled(True)
 
-            self.update_testFileCombobox(0)
+            # self.update_testFileCombobox(0)
 
         elif (self.pattern.Type_comboBox.currentText()) == "END":
 
@@ -548,7 +548,7 @@ class PyTempStep(QWidget):
             self.pattern.TestPattern_label.setEnabled(False)
             self.pattern.TestPattern_comboBox.setEnabled(False)
 
-            self.update_testFileCombobox(0)
+            # self.update_testFileCombobox(0)
 
         if not self.callback_stop:
             

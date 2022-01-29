@@ -243,7 +243,7 @@ class Main_utility_manager(QWidget):
         setting_transfer_Thread = threading.Thread(target = self.setting_transfer_Work,daemon=True)
         setting_transfer_Thread.start()
 
-        self.startup_check_dialog()
+        # self.startup_check_dialog()
         
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定可",0)
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
