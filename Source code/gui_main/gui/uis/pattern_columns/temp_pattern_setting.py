@@ -349,7 +349,7 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.patternfile_comboBox.setCurrentIndex(self.focus_patternFile_number-1)
         self._parent.ui.load_pages.patternfile_comboBox.blockSignals(False)
 
-        
+
         self._parent.ui.load_pages.commect_lineEdit.blockSignals(True)
         self._parent.ui.load_pages.commect_lineEdit.setEnabled(self.editorEnable)
         self._parent.ui.load_pages.commect_lineEdit.setText(str(self.cache_steplist.comment))
@@ -358,21 +358,29 @@ class TempPatternWidget(QWidget):
 
         hour=self.cache_steplist.total_time//60
         min=self.cache_steplist.total_time%60
-        self._parent.ui.load_pages.Temp_Totaltime_Label.setText("合計時間：{} 時間 {} 分".format(hour,min))
-        
+        self._parent.ui.load_pages.Temp_Totaltime_Label.setText("合計時間:{} 時間 {} 分".format(hour,min))
+
+        self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(True)
+        self._parent.ui.load_pages.RT_testpattern_combobox.clear()
+        self._parent.ui.load_pages.RT_testpattern_combobox.addItems(self._parent.testPattern.patternFile_nameList)
+        if self.cache_steplist.RT_measure==1:
+            self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(self.cache_steplist.RT_testpattern-1)
+        self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(False)
+
         if self.cache_steplist.RT_measure==1 and self.editorEnable:
 
-            self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(self.editorEnable)
+            self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(True)
 
-            self.update_testPattern_Combobox()
+            
 
-        #elif self.cache_steplist.RT_measure==1:
-        #    self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(False)
-        #    self.cache_steplist.RT_testpattern=0
+            if self._parent.ui.load_pages.RT_testpattern_combobox.currentIndex()==-1:
+                self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(True)
+                self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(0)
+                self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(False)
+
         else:
             self._parent.ui.load_pages.RT_testpattern_combobox.setEnabled(False)
             self.cache_steplist.RT_testpattern=0
-
 
 
 
@@ -386,7 +394,7 @@ class TempPatternWidget(QWidget):
         self._parent.ui.load_pages.RT_combobox.setCurrentIndex(self.cache_steplist.RT_measure)
         self._parent.ui.load_pages.RT_combobox.blockSignals(False)
 
-        
+
 
         self.save_IconButtonActiveState=self.content_Change
         self.delete_IconButtonActiveState=self.editorEnable
@@ -394,21 +402,70 @@ class TempPatternWidget(QWidget):
         self.IconButtonUpdate=True
 
         errormessage=self.cache_steplist.checkRule()
-        
+
         self._parent.ui.load_pages.PatternErrorMessagelabel.setText(errormessage)
 
     def update_testPattern_Combobox(self):
-        self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(True)
-        self._parent.ui.load_pages.RT_testpattern_combobox.clear()
-        self._parent.ui.load_pages.RT_testpattern_combobox.addItems(self._parent.testPattern.patternFile_nameList)
-        self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(self.cache_steplist.RT_testpattern-1)
-        self._parent.ui.load_pages.RT_testpattern_combobox.blockSignals(False)
 
-        if self._parent.ui.load_pages.RT_testpattern_combobox.currentIndex()==-1:
-            self._parent.ui.load_pages.RT_testpattern_combobox.setCurrentIndex(0)
+        Old_testpattern_list=[]
+        for index in range(0,self._parent.ui.load_pages.RT_testpattern_combobox.count()):
+            Old_testpattern_list.append(self._parent.ui.load_pages.RT_testpattern_combobox.itemText(index))
 
-        for widge in self.step_widges_list[1:]:
-            widge.update_testFileCombobox()
+        if self.cache_steplist.RT_measure==1:
+            
+            Old_RT_testpattern_Target_name=self._parent.ui.load_pages.RT_testpattern_combobox.currentText()
+
+
+            index_change=False
+            for name in self._parent.testPattern.patternFile_nameList:
+                if name==Old_RT_testpattern_Target_name:
+                    index_change=True
+                    self.cache_steplist.set_RT_testpattern(self._parent.testPattern.patternFile_nameList.index(Old_RT_testpattern_Target_name)+1)
+                    break
+
+            if not index_change:
+                
+                old_index=Old_testpattern_list.index(Old_RT_testpattern_Target_name)
+                now_total_num=len(self._parent.testPattern.patternFile_nameList)
+
+                if now_total_num>old_index:
+                    self.cache_steplist.set_RT_testpattern(old_index+1)
+                else:
+                    self.cache_steplist.set_RT_testpattern(now_total_num)
+
+        else:
+            self.cache_steplist.set_RT_testpattern(0)
+
+
+        for step in range(1,self.cache_steplist.step_number):
+            stepUnit=self.cache_steplist.getStep(step)
+            Old_RT_testpattern_Target_name=Old_testpattern_list[stepUnit.test_measure_PatternNo]
+
+            index_change=False
+            for name in self._parent.testPattern.patternFile_nameList:
+                if name==Old_RT_testpattern_Target_name:
+                    index_change=True
+
+                    stepUnit.test_measure_PatternNo=self._parent.testPattern.patternFile_nameList.index(Old_RT_testpattern_Target_name)
+                    self.cache_steplist.setStep(step,stepUnit)
+                    break
+
+            if not index_change:
+                
+                old_index=Old_testpattern_list.index(Old_RT_testpattern_Target_name)
+                now_total_num=len(self._parent.testPattern.patternFile_nameList)
+
+                if now_total_num>old_index:
+                    
+                    stepUnit.test_measure_PatternNo=old_index
+                    self.cache_steplist.setStep(step,stepUnit)
+                else:
+                    stepUnit.test_measure_PatternNo=now_total_num-1
+                    self.cache_steplist.setStep(step,stepUnit)
+
+        
+        self.update()
+
 
 
     def utility_setup(self):
@@ -588,8 +645,8 @@ class TempPatternWidget(QWidget):
                 self.step_widges_list[_step].pattern.Shift_lineEdit.setText("{}".format(unit.shift))
                 self.step_widges_list[_step]._shift=unit.shift
 
-                self.step_widges_list[_step].update_testFileCombobox(unit.test_measure_PatternNo)
                 self.step_widges_list[_step]._test_pattern=unit.test_measure_PatternNo
+                self.step_widges_list[_step].update_testFileCombobox(unit.test_measure_PatternNo)
                 
                 self.step_widges_list[_step].time_style()
                 #self.step_widges_list[_step].pattern.TestPattern_comboBox.setCurrentIndex(unit.test_measure_PatternNo)
@@ -725,15 +782,16 @@ class TempPatternWidget(QWidget):
             if self.cache_steplist.RT_measure:
                 self.cache_steplist.RT_testpattern=self._parent.ui.load_pages.RT_testpattern_combobox.currentIndex()+1
             else:
-                self.cache_steplist.RT_testpattern=-1
+                self.cache_steplist.RT_testpattern=0
             
             self.update()
 
-        elif btn_name=="RT_testpattern_combobox": 
-            self.cache_steplist.set_RT_testpattern(self._parent.ui.load_pages.RT_testpattern_combobox.currentIndex()+1)
-            self._parent.ui.load_pages.testfile_comboBox.setCurrentText("{}".format(self._parent.ui.load_pages.RT_testpattern_combobox.currentText()))
+        elif btn_name=="RT_testpattern_combobox":
+            if self.cache_steplist.RT_measure==1:
+                self.cache_steplist.set_RT_testpattern(self._parent.ui.load_pages.RT_testpattern_combobox.currentIndex()+1)
+            # self._parent.ui.load_pages.testfile_comboBox.setCurrentText("{}".format(self._parent.ui.load_pages.RT_testpattern_combobox.currentText()))
             
-            self.update()
+                self.update()
         
         
     def patternFile_Load(self):
@@ -894,7 +952,6 @@ class TempPatternWidget(QWidget):
     def set_memorypool_register(self,pool_name,registor_name,value):
         if self._parent.MMG.memoryPool[pool_name][registor_name].getValue()!=value:
             self.PoolSemaphore.acquire()
-            # print("set_memorypool_register",pool_name,registor_name,value)
             self._parent.MMG.memoryPool[pool_name][registor_name].setValue(value)
             sendItem=MemoryUnit(pool_name,registor_name)
             self.queuePool["memory_UploadToMaster_Queue"].put(sendItem)
@@ -1110,26 +1167,26 @@ class TempPatternWidget(QWidget):
         # print("step_modifly_manager",step)
         stepUnit=self.cache_steplist.getStep(step)
 
-        stepUnit.Step_Type                          =self.step_widges_list[step]._type      
-        stepUnit.time_hour                          =self.step_widges_list[step]._hour
-        stepUnit.time_min                           =self.step_widges_list[step]._minute
-        stepUnit.SV                                     =self.step_widges_list[step]._temperature
-        stepUnit.N2_flowRate                     =self.step_widges_list[step]._n2_flowrate
-        stepUnit.PID_muffle_No                  =self.step_widges_list[step]._PID_muffle_no
-        stepUnit.PID_heater_No                  =self.step_widges_list[step]._PID_heater_no
-        stepUnit.time_keep                          =self.step_widges_list[step]._keep_seccond
-        stepUnit.sp_limit_up                         =self.step_widges_list[step]._sp_limit_up
-        stepUnit.sp_limit_down                     =self.step_widges_list[step]._sp_limit_down
-        stepUnit.shift                                     =self.step_widges_list[step]._shift
-        stepUnit.test_measure_PatternNo   =self.step_widges_list[step]._test_pattern
+        stepUnit.Step_Type                  =self.step_widges_list[step]._type      
+        stepUnit.time_hour                  =self.step_widges_list[step]._hour
+        stepUnit.time_min                   =self.step_widges_list[step]._minute
+        stepUnit.SV                         =self.step_widges_list[step]._temperature
+        stepUnit.N2_flowRate                =self.step_widges_list[step]._n2_flowrate
+        stepUnit.PID_muffle_No              =self.step_widges_list[step]._PID_muffle_no
+        stepUnit.PID_heater_No              =self.step_widges_list[step]._PID_heater_no
+        stepUnit.time_keep                  =self.step_widges_list[step]._keep_seccond
+        stepUnit.sp_limit_up                =self.step_widges_list[step]._sp_limit_up
+        stepUnit.sp_limit_down              =self.step_widges_list[step]._sp_limit_down
+        stepUnit.shift                      =self.step_widges_list[step]._shift
+        stepUnit.test_measure_PatternNo     =self.step_widges_list[step]._test_pattern
 
 
         self.cache_steplist.setStep(step,stepUnit)
-        
-        self.update(stepUnit,step)
-        
 
-    def update(self,stepUnit=None,step=0):
+        self.update()
+
+
+    def update(self):
         self.content_change_check()
         self.updata_step_widge()
         self.update_graph()

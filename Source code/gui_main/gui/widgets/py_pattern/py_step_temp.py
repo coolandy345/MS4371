@@ -339,8 +339,7 @@ class PyTempStep(QWidget):
             elif btn_name=="TestPattern_comboBox":
                 self._test_pattern=self.pattern.TestPattern_comboBox.currentIndex()
                 
-                self._parent.ui.load_pages.testfile_comboBox.setCurrentText("{}".format(self.pattern.TestPattern_comboBox.currentText()))
-
+                # self._parent.ui.load_pages.testfile_comboBox.setCurrentText("{}".format(self.pattern.TestPattern_comboBox.currentText()))
 
             self.time_style()
         
@@ -564,12 +563,12 @@ class PyTempStep(QWidget):
         
         testFile_count=len(self._parent.testPattern.patternFile_nameList)
         if number==None:
-            if self._test_pattern>testFile_count:
+            if self._test_pattern>=testFile_count:
                 self._test_pattern=testFile_count-1
             else:
                 pass
         else:
-            if number>testFile_count:
+            if number>=testFile_count:
                 self._test_pattern=testFile_count-1
             else:
                 self._test_pattern=number
@@ -582,6 +581,16 @@ class PyTempStep(QWidget):
 
         if self.pattern.TestPattern_comboBox.currentIndex()==-1:
             self.pattern.TestPattern_comboBox.setCurrentIndex(0)
+
+        # if not self.callback_stop:
+            
+        #     try:
+        #         #Call upper mother renew information
+        #         print("A4")
+        #         self._parent.tempPattern.step_modifly_manager(self._step)
+
+        #     except AttributeError: #When self._parent.tempPattern is not initial yet
+        #         return
 
 
     def addStepBtn_presscallback(self):

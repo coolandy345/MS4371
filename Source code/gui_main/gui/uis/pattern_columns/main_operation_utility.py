@@ -103,14 +103,20 @@ class Memory_Manager():
             #Wait for any Master memoryPool update request
             getItem_list=[]
             getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
-            self.PoolSemaphore.acquire()
             
-            #Wait for 0.01s for any others request
-            time.sleep(0.1)
-            # Collected al  item in this 0.1s
-            while not self.queuePool["memory_UploadToMaster_Queue"].empty():
-                getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
+            time.sleep(0.01)
 
+            # Collected all  item in this 0.1s
+            if not self.queuePool["memory_UploadToMaster_Queue"].empty():
+                #Wait for 0.01s for any others request
+                time.sleep(0.1)
+                
+                self.PoolSemaphore.acquire()
+                while not self.queuePool["memory_UploadToMaster_Queue"].empty():
+                    getItem_list.append(self.queuePool["memory_UploadToMaster_Queue"].get())
+            else:
+                
+                self.PoolSemaphore.acquire()
             
             #Check the pools has been changed
             poolNameList=[]
