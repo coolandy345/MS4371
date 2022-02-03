@@ -14,7 +14,7 @@ from cx_Freeze import setup, Executable
 #
 executables = [Executable("main.py",icon="icon.ico",base = "Win32GUI",target_name="MS4371 高温抵抗測定用電気炉",copyright="Copyright © 2021 MOTOYAMA. All rights reserved.",shortcut_name="MS4371 高温抵抗測定用電気炉")]
 
-includefiles = ['error.ico', 'icon.ico', 'warning.ico', 'libusb-1.0.dll', 'gui_main','Database and Profile','取説資料','データベース初期化工具.bat']
+includefiles = ['error.ico', 'icon.ico', 'warning.ico', 'libusb-1.0.dll', 'gui_main','Database and Profile','取説資料','データベース初期化工具.bat',"make_database.py","make_database2.py","make_database3.py","README.md"]
 
 build_exe_options={
                     "optimize": 1,
@@ -26,7 +26,7 @@ build_exe_options={
 setup(
     name="MS4371 高温抵抗測定用電気炉",
 
-    version="1.2.1",
+    version="1.4.1",
     description="MVC210100464 - 高温抵抗測定用電気炉",
     long_description="2021/12 株式会社モトヤマ 設計",
     options = {"build_exe": build_exe_options},

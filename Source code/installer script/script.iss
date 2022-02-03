@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MS4371 高温抵抗測定用電気炉"
-#define MyAppVersion "1.2.1"
+#define MyAppVersion "1.4.1"
 #define MyAppPublisher "株式会社モトヤマ"
 #define MyAppURL "https://www.motoyama.co.jp/"
 #define MyAppExeName "MS4371 高温抵抗測定用電気炉.exe"     
@@ -48,7 +48,12 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\libusb-1.0.dll"; DestDir: "{sys}"; Flags: ignoreversion
 Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\error.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\icon.ico"; DestDir: "{app}"; Flags: ignoreversion      
+Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\README.md"; DestDir: "{app}"; Flags: ignoreversion 
+Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\データベース初期化工具.bat"; DestDir: "{app}"; Flags: ignoreversion       
+Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\make_database.py"; DestDir: "{app}"; Flags: ignoreversion             
+Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\make_database2.py"; DestDir: "{app}"; Flags: ignoreversion    
+Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\make_database3.py"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\python3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\python39.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\kou\source\repos\MS4371-Main Program Source Code\Application\execute file\warning.ico"; DestDir: "{app}"; Flags: ignoreversion
