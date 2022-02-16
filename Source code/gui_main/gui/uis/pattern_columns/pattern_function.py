@@ -344,10 +344,10 @@ class testlist():
         active=0,
         step_number=0,
         test_time=0,
-        test_sampletime=0,
+        test_sampletime=0.001,
         BG0_test_time=0,
         BG_test_time=0,
-        BG_sampletime=0,
+        BG_sampletime=0.001,
         speed=0,
         filter_type=0,
         filter_count=0,
@@ -386,15 +386,27 @@ class testlist():
     def checkRule(self):
         
         errorRule=""
-        if self.speed==1:
-            if self.test_sampletime<=0.167 or self.BG_sampletime<=0.167:
-                errorRule="サンプリング時間は 0.167秒 以上設定ください。"
+        if self.speed==0:
+            if self.test_sampletime<=0.000167 or self.BG_sampletime<=0.000167:
+                errorRule="サンプリング時間は 0.167mS 以上設定ください。"
             else:
                 errorRule=""
-
-        else:
+        
+        elif self.speed==1:
+            if self.test_sampletime<=0.00167 or self.BG_sampletime<=0.00167:
+                errorRule="サンプリング時間は 1.67mS 以上設定ください。"
+            else:
+                errorRule=""
+        
+        elif self.speed==2:
             if self.test_sampletime<=0.0167 or self.BG_sampletime<=0.0167:
-                errorRule="サンプリング時間は 0.0167秒 以上設定ください。"
+                errorRule="サンプリング時間は 16.7mS 以上設定ください。"
+            else:
+                errorRule=""
+        
+        elif self.speed==3:
+            if self.test_sampletime<=0.167 or self.BG_sampletime<=0.167:
+                errorRule="サンプリング時間は 0.167 以上設定ください。"
             else:
                 errorRule=""
 

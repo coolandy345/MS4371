@@ -11,6 +11,5 @@
     "\\modbus_TcpServer",
     "\\registor_manager"
   ],
-  "SelectedNode": "\\gui_main\\gui\\uis\\pattern_columns\\main_operation_utility.py",
   "PreviewInSolutionExplorer": false
 }

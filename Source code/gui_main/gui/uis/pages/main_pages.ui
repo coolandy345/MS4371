@@ -127,8 +127,8 @@ QLineEdit:read-only {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-147</y>
-            <width>1038</width>
+            <y>0</y>
+            <width>1001</width>
             <height>818</height>
            </rect>
           </property>
@@ -10293,12 +10293,22 @@ QFrame:focus{
                    </property>
                    <item>
                     <property name="text">
-                     <string>Normal (1PLC)</string>
+                     <string>FAST (0.01PLC)</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>Hi Accuracy (10PLC)</string>
+                     <string>MED (0.1PLC)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>NORMAL (1PLC)</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>HI-ACCURACY (10PLC)</string>
                     </property>
                    </item>
                   </widget>

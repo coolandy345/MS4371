@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_pageslypyXP.ui'
+## Form generated from reading UI file 'main_pagespPHQeu.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.2
+## Created by: Qt User Interface Compiler version 6.1.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PyQt5.QtCore import *  # type: ignore
-from PyQt5.QtGui import *  # type: ignore
-from PyQt5.QtWidgets import *  # type: ignore
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 
 class Ui_MainPages(object):
@@ -91,7 +91,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1038, 818))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1001, 818))
         self.scrollAreaWidgetContents.setStyleSheet(u"QFrame:hover{\n"
 "	border:none;\n"
 "}\n"
@@ -3969,7 +3969,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 1045, 1650))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, -780, 1045, 1650))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.frame_20 = QFrame(self.scrollAreaWidgetContents_2)
@@ -4839,6 +4839,8 @@ class Ui_MainPages(object):
         self.speed_comboBox = QComboBox(self.frame_51)
         self.speed_comboBox.addItem("")
         self.speed_comboBox.addItem("")
+        self.speed_comboBox.addItem("")
+        self.speed_comboBox.addItem("")
         self.speed_comboBox.setObjectName(u"speed_comboBox")
         sizePolicy.setHeightForWidth(self.speed_comboBox.sizePolicy().hasHeightForWidth())
         self.speed_comboBox.setSizePolicy(sizePolicy)
@@ -5388,7 +5390,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(2)
         self.stackedWidget.setCurrentIndex(1)
         self.AutoMode_pattern_comboBox.setCurrentIndex(0)
         self.stackedWidget_2.setCurrentIndex(0)
@@ -5629,8 +5631,10 @@ class Ui_MainPages(object):
         self.label_66.setText(QCoreApplication.translate("MainPages", u"BG \u6e2c\u5b9a\u30b5\u30f3\u30d7\u30ea\u30f3\u30b0\u5468\u671f(s)", None))
         self.label_62.setText(QCoreApplication.translate("MainPages", u"BG0 \u6e2c\u5b9a\u6642\u9593(min)", None))
         self.bg0_time_LineEdit.setText(QCoreApplication.translate("MainPages", u"0", None))
-        self.speed_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"Normal (1PLC)", None))
-        self.speed_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"Hi Accuracy (10PLC)", None))
+        self.speed_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"FAST (0.01PLC)", None))
+        self.speed_comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"MED (0.1PLC)", None))
+        self.speed_comboBox.setItemText(2, QCoreApplication.translate("MainPages", u"NORMAL (1PLC)", None))
+        self.speed_comboBox.setItemText(3, QCoreApplication.translate("MainPages", u"HI-ACCURACY (10PLC)", None))
 
         self.filter_label.setText(QCoreApplication.translate("MainPages", u"Filter", None))
         self.filter_comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"\u306a\u3057", None))

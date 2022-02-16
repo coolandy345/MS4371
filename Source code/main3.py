@@ -1,5 +1,10 @@
-import numpy as np
+
 import time
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtSvg import *
+import numpy as np
 source = np.arange(20).reshape(10,2)
 print(source)
 

@@ -422,9 +422,13 @@ class Operator():
                     print(("measuretype",measuretype))
                     speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue()
                     if speed==0:
-                        speed="Normal (1PLC)"
+                        speed="FAST (0.01PLC)"
                     elif speed==1:
-                        speed="Hi Accuracy (10PLC)"
+                        speed="MED (0.1PLC)"
+                    elif speed==2:
+                        speed="NORMAL (1PLC)"
+                    elif speed==3:
+                        speed="HI-ACCURACY (10PLC)"
 
                     filter=Measurement_Pattern["PTNData_{}_filter_type".format(test_pattern_number)].getValue()
                     if filter==0:
@@ -494,7 +498,13 @@ class Operator():
                             script_sample_time=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_number)].getValue()
 
                         speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue()
-                        if speed==1:
+                        if speed==0:
+                            speed=0.01
+                        elif speed==1:
+                            speed=0.1
+                        elif speed==2:
+                            speed=1
+                        elif speed==3:
                             speed=10
                         else:
                             speed=1
@@ -581,18 +591,19 @@ class Operator():
                         self.gpib_2657A.send_Command("""
                                                         node[1].smua.source.func = smua.OUTPUT_DCVOLTS
                                                         node[1].smua.source.offmode = smua.OUTPUT_ZERO
-                                                        node[1].smua.source.rangev = 1500
+                                                        node[1].smua.source.autorangev = smua.AUTORANGE_ON
                                                         """)
 
                         
                         # print("script_voltage",type(script_voltage),script_voltage)
                         self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(float(script_voltage)))
+                        if abs(float(script_voltage))<=1500:
+                            self.gpib_2657A.send_Command("node[1].smua.source.limiti = 100e-3")
+                        else:
+                            self.gpib_2657A.send_Command("node[1].smua.source.limiti = 20e-3")
 
                         self.gpib_2657A.send_Command("""
-                                                        node[1].smua.source.limiti = 20e-3
-
                                                         node[2].smua.reset()
-                                                        
                                                         node[2].linefreq = 60
                                                         node[2].smua.nvbuffer1.clear()
                                                         node[2].smua.nvbuffer1.appendmode = 1
@@ -624,7 +635,7 @@ class Operator():
                                                         node[2].smua.source.offmode = smua.OUTPUT_ZERO
                                                         node[2].smua.source.rangev = 200e-3
                                                         node[2].smua.source.levelv = 0
-                                                        node[2].smua.source.limiti = 1e-9
+                                                        node[2].smua.source.limiti = 100e-3
 
                                                         node[1].display.screen = display.SMUA
                                                         node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
@@ -811,7 +822,7 @@ class Operator():
                                     voltage_value=data_list[index+2]
                                     current_timestemp=data_list[index+3]
                                     current_status=data_list[index+4]
-                                    current_value=data_list[index+5]
+                                    current_value=-1*data_list[index+5]
 
                                     index+=6
                                     if current_value!=0:
@@ -1054,15 +1065,17 @@ class Operator():
 
                                             node[1].smua.source.func = smua.OUTPUT_DCVOLTS
                                             node[1].smua.source.offmode = smua.OUTPUT_ZERO
-                                            node[1].smua.source.rangev = 1500
+                                            node[1].smua.source.autorangev = smua.AUTORANGE_ON
+                                            
                                             """)
 
             self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(self.manual_measurement_voltage))
-            # self.gpib_2657A.send_Command("smua.source.levelv = 0")
+            if abs(self.manual_measurement_voltage)<=1500:
+                self.gpib_2657A.send_Command("node[1].smua.source.limiti = 100e-3")
+            else:
+                self.gpib_2657A.send_Command("node[1].smua.source.limiti = 20e-3")
             
             self.gpib_2657A.send_Command("""
-                                            node[1].smua.source.limiti = 1e-6
-
                                             node[2].smua.reset()
                                             node[2].linefreq = 60
                                             node[2].smua.nvbuffer1.clear()
@@ -1085,7 +1098,7 @@ class Operator():
                                             node[2].smua.source.offmode = smua.OUTPUT_ZERO
                                             node[2].smua.source.rangev = 200e-3
                                             node[2].smua.source.levelv = 0
-                                            node[2].smua.source.limiti = 1e-9
+                                            node[2].smua.source.limiti = 100e-3
 
                                             node[1].display.screen = display.SMUA
                                             node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
@@ -1256,7 +1269,7 @@ class Operator():
                     voltage_value=data_list[index+2]
                     current_timestemp=data_list[index+3]
                     current_status=data_list[index+4]
-                    current_value=data_list[index+5]
+                    current_value=-1*data_list[index+5]
 
                     index+=6
                     if current_value!=0:
@@ -1439,19 +1452,21 @@ class Operator():
 
                                             node[1].smua.source.func = smua.OUTPUT_DCVOLTS
                                             node[1].smua.source.offmode = smua.OUTPUT_ZERO
-                                            node[1].smua.source.rangev = 1500
+                                            node[1].smua.source.autorangev = smua.AUTORANGE_ON
                                             """)
 
             
             self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(self.noise_measurement_voltage))
+            if abs(self.noise_measurement_voltage)<=1500:
+                self.gpib_2657A.send_Command("node[1].smua.source.limiti = 100e-3")
+            else:
+                self.gpib_2657A.send_Command("node[1].smua.source.limiti = 20e-3")
             
             self.gpib_2657A.send_Command("""
-                                            node[1].smua.source.limiti = 1e-6
-
                                             node[2].smua.reset()
                                             node[2].linefreq = 60
                                             node[2].smua.nvbuffer1.clear()
-                                            node[2].smua.nvbuffer1.appendmode = 1 
+                                            node[2].smua.nvbuffer1.appendmode = 1
                                             node[2].smua.nvbuffer1.cachemode = 0
                                             node[2].smua.nvbuffer1.clearcache()
                                             node[2].smua.nvbuffer1.collecttimestamps = 1
@@ -1470,7 +1485,7 @@ class Operator():
                                             node[2].smua.source.offmode = smua.OUTPUT_ZERO
                                             node[2].smua.source.rangev = 200e-3
                                             node[2].smua.source.levelv = 0
-                                            node[2].smua.source.limiti = 1e-9
+                                            node[2].smua.source.limiti = 100e-3
 
                                             node[1].display.screen = display.SMUA
                                             node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
@@ -1741,12 +1756,12 @@ class Operator():
             if text[0]=="finish":
                 self.gpib_2657A.send_Command("reset()")
                 text=self.gpib_2657A.read_Command()
-
+                
                 data_list=[]
                 for data in text[0].split("\t"):
                     data_list.append(data)
-
-                self.csv_manager.result_NoiseTestCsvFile(data_list[0],data_list[1],data_list[2])
+                
+                self.csv_manager.result_NoiseTestCsvFile(data_list[0],-1*data_list[2],-1*data_list[1])
                 
                 self.eventPool["Measure Stop"].set()
                 self.set_memorypool_register("System memory","Noise_Measurement_Active",0)
@@ -1770,7 +1785,7 @@ class Operator():
                     voltage_value=data_list[index+2]
                     current_timestemp=data_list[index+3]
                     current_status=data_list[index+4]
-                    current_value=data_list[index+5]
+                    current_value=-1*data_list[index+5]
 
                     index+=6
                     if current_value!=0:
@@ -1975,9 +1990,13 @@ class Operator():
 
                     speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue()
                     if speed==0:
-                        speed="Normal (1PLC)"
+                        speed="FAST (0.01PLC)"
                     elif speed==1:
-                        speed="Hi Accuracy (10PLC)"
+                        speed="MED (0.1PLC)"
+                    elif speed==2:
+                        speed="NORMAL (1PLC)"
+                    elif speed==3:
+                        speed="HI-ACCURACY (10PLC)"
 
                     filter=Measurement_Pattern["PTNData_{}_filter_type".format(test_pattern_number)].getValue()
                     if filter==0:
@@ -2049,7 +2068,13 @@ class Operator():
                             script_sample_time=Measurement_Pattern["PTNData_{}_BG測定sampletime".format(test_pattern_number)].getValue()
 
                         speed=Measurement_Pattern["PTNData_{}_speed".format(test_pattern_number)].getValue()
-                        if speed==1:
+                        if speed==0:
+                            speed=0.01
+                        elif speed==1:
+                            speed=0.1
+                        elif speed==2:
+                            speed=1
+                        elif speed==3:
                             speed=10
                         else:
                             speed=1
@@ -2137,17 +2162,18 @@ class Operator():
                         self.gpib_2657A.send_Command("""
                                                         node[1].smua.source.func = smua.OUTPUT_DCVOLTS
                                                         node[1].smua.source.offmode = smua.OUTPUT_ZERO
-                                                        node[1].smua.source.rangev = 1500
-                                                        
+                                                        node[1].smua.source.autorangev = smua.AUTORANGE_ON
                                                         """)
 
                         
                         # print("script_voltage",type(script_voltage),script_voltage)
                         self.gpib_2657A.send_Command("node[1].smua.source.levelv = {}".format(float(script_voltage)))
+                        if abs(float(script_voltage))<=1500:
+                            self.gpib_2657A.send_Command("node[1].smua.source.limiti = 100e-3")
+                        else:
+                            self.gpib_2657A.send_Command("node[1].smua.source.limiti = 20e-3")
 
                         self.gpib_2657A.send_Command("""
-                                                        node[1].smua.source.limiti = 20e-3
-
                                                         node[2].smua.reset()
                                                         node[2].linefreq = 60
                                                         node[2].smua.nvbuffer1.clear()
@@ -2180,7 +2206,7 @@ class Operator():
                                                         node[2].smua.source.offmode = smua.OUTPUT_ZERO
                                                         node[2].smua.source.rangev = 200e-3
                                                         node[2].smua.source.levelv = 0
-                                                        node[2].smua.source.limiti = 1e-9
+                                                        node[2].smua.source.limiti = 100e-3
 
                                                         node[1].display.screen = display.SMUA
                                                         node[1].display.smua.measure.func = display.MEASURE_DCVOLTS
@@ -2366,7 +2392,7 @@ class Operator():
                                     voltage_value=data_list[index+2]
                                     current_timestemp=data_list[index+3]
                                     current_status=data_list[index+4]
-                                    current_value=data_list[index+5]
+                                    current_value=-1*data_list[index+5]
 
                                     index+=6
                                     if current_value!=0:

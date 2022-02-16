@@ -704,7 +704,7 @@ class TestPatternWidget(QWidget):
 
         elif btn_name=="test_sampletime_LineEdit":
             data=float(self._parent.ui.load_pages.test_sampletime_LineEdit.text())
-            data_modifly,err=self.maxmin(999,0.01,data)
+            data_modifly,err=self.maxmin(999,0.0001,data)
             if err:
                 self._parent.ui.load_pages.test_sampletime_LineEdit.setText(str(data_modifly))
 
@@ -735,7 +735,7 @@ class TestPatternWidget(QWidget):
 
         elif btn_name=="bg_sampletime_LineEdit":
             data=float(self._parent.ui.load_pages.bg_sampletime_LineEdit.text())
-            data_modifly,err=self.maxmin(999,0.01,data)
+            data_modifly,err=self.maxmin(999,0.0001,data)
             if err:
                 self._parent.ui.load_pages.bg_sampletime_LineEdit.setText(str(data_modifly))
 

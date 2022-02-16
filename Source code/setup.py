@@ -26,7 +26,7 @@ build_exe_options={
 setup(
     name="MS4371 高温抵抗測定用電気炉",
 
-    version="1.4.1",
+    version="1.5.1",
     description="MVC210100464 - 高温抵抗測定用電気炉",
     long_description="2021/12 株式会社モトヤマ 設計",
     options = {"build_exe": build_exe_options},
