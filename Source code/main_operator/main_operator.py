@@ -1376,7 +1376,7 @@ class Operator():
             self.eventPool["Noise Measure Start"].clear()
 
             self.set_memorypool_register("System memory","Noise_Measurement_Active",1)
-            
+
 
             self.PoolSemaphore.acquire()
             self.noise_measurement_voltage=self.memoryPool["System memory"]["Noise_Measurement_Voltage"].getValue()

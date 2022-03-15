@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MS4371 高温抵抗測定用電気炉"
-#define MyAppVersion "1.4.1"
+#define MyAppVersion "1.5.1"
 #define MyAppPublisher "株式会社モトヤマ"
 #define MyAppURL "https://www.motoyama.co.jp/"
 #define MyAppExeName "MS4371 高温抵抗測定用電気炉.exe"     
