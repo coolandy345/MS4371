@@ -60,8 +60,9 @@ if __name__ == "__main__":
     EventPool["Setting_upload_toPLC_Start"]=MemoryPoolManager.Event()
     EventPool["Setting_upload_toPLC_Finish"]=MemoryPoolManager.Event()
 
-    EventPool["Auto Run Start"]=MemoryPoolManager.Event()
-    EventPool["Auto Run finish"]=MemoryPoolManager.Event()
+    EventPool["Auto Measure Request"]=MemoryPoolManager.Event()
+    EventPool["Auto Measure Start"]=MemoryPoolManager.Event()
+    EventPool["Auto Measure finish"]=MemoryPoolManager.Event()
     
     EventPool["Noise Measure Start"]=MemoryPoolManager.Event()
     EventPool["Noise Measure finish"]=MemoryPoolManager.Event()

@@ -225,7 +225,6 @@ class Main_utility_manager(QWidget):
         
 
 
-        self.autostart_signal=False
         self.measurement_start=False
 
 
@@ -249,7 +248,7 @@ class Main_utility_manager(QWidget):
         setting_transfer_Thread = threading.Thread(target = self.setting_transfer_Work,daemon=True)
         setting_transfer_Thread.start()
 
-        # self.startup_check_dialog()
+        self.startup_check_dialog()
         
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定可",0)
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
@@ -322,7 +321,7 @@ class Main_utility_manager(QWidget):
         
         #If we got ethernet access
         if self.ethernetConnecton_icon_active:
-
+            
             self._parent.ui.load_pages.remoteConnect_pushButton.setEnabled(True)
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
@@ -367,8 +366,8 @@ class Main_utility_manager(QWidget):
             self._parent.testfile_manager.set_content_Editeable(True)
 
             #Enbale AutoRun
-            
             self._parent.ui.load_pages.autostart_pushButton.setText("運転開始")
+
             if not self._parent.ui.load_pages.autostart_pushButton.isEnabled():
                 
                 if self._parent.ui.load_pages.AutoMode_pattern_comboBox.isEnabled():
@@ -623,7 +622,8 @@ class Main_utility_manager(QWidget):
 
         elif btn_name == "Measurement_Stop_pushButton":
             self._parent.ui.load_pages.Measurement_Stop_pushButton.blockSignals(True)
-        
+            
+            self.set_memorypool_register("System memory","測定異常コード",3)
             self.eventPool["Measure Stop"].set()
             # self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
             # self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
@@ -635,12 +635,12 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.autostart_pushButton.blockSignals(True)
             # self._parent.ui.load_pages.autostart_pushButton.setEnabled(False)
 
-            self.autostart_signal=True
             self.measurement_start=False
             self.eventPool["Measure Stop"].clear()
 
 
 
+            self.set_memorypool_register("Modbus Registor Pool - Registor","実行STEP No.",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1))
             
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
@@ -651,6 +651,9 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
+
+            self.measurement_PenddingWait_Thread = threading.Thread(target = self.measurement_PenddingWait_Work,daemon=True)
+            self.measurement_PenddingWait_Thread.start()
 
             
 
@@ -665,6 +668,7 @@ class Main_utility_manager(QWidget):
             set=self._parent.ui.load_pages.remoteConnect_pushButton.isChecked()
             self.set_memorypool_register("Modbus Registor Pool - Registor","リモート",int(set))
             self.measurement_start=False
+            self.set_memorypool_register("System memory","測定異常コード",3)
             self.eventPool["Measure Stop"].set()
             self.dataRecord_Start=False
             
@@ -682,13 +686,14 @@ class Main_utility_manager(QWidget):
 
         elif btn_name == "eMSstop_pushButton":
             # self._parent.ui.load_pages.eMSstop_pushButton.blockSignals(True)
+            self.set_memorypool_register("System memory","測定異常コード",3)
             self.eventPool["Measure Stop"].set()
             self.dataRecord_Start=False
             
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
-            self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
+            self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
 
 
         elif btn_name == "Manual_Measurement_SingleMode_comboBox":
@@ -961,6 +966,52 @@ class Main_utility_manager(QWidget):
 
         print("data_receive_Work is finish")
 
+
+    def measurement_PenddingWait_Work(self):
+        last_step=-1
+
+        while self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転開始"].getValue():
+
+            current_step=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行STEP No."].getValue()
+
+            if not last_step==current_step:
+
+                last_step=current_step
+                current_pattern=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No."].getValue()
+                hasMeasurement=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(current_pattern,current_step)].getValue()
+
+                if hasMeasurement:
+
+                    self.holding_time=10+self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(current_pattern,current_step)].getValue()*60
+                    self.eventPool["Auto Measure Request"].clear()
+
+                    self.measurement_startTimer_Thread = threading.Thread(target = self.measurement_startTimer_Work,daemon=True)
+                    self.measurement_startTimer_Thread.start()
+
+                    self.eventPool["Auto Measure Request"].wait()
+                    self.eventPool["Auto Measure Request"].clear()
+
+                    if not self.measurement_start:
+                        print("測定開始 信号到達",self.measurement_start)
+                        self.measurement_start=True
+                        measurement_finish_wait_Thread = threading.Thread(target = self.measurement_finish_wait_Work,daemon=True)
+                        measurement_finish_wait_Thread.start()
+                
+
+            time.sleep(0.1)
+
+    def measurement_startTimer_Work(self):
+
+        self.set_memorypool_register("System memory","測定異常コード",0)
+        time.sleep(self.holding_time)
+
+        if not self.measurement_start:
+            if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+                self.set_memorypool_register("System memory","測定異常コード",2)
+            else:
+                self.set_memorypool_register("System memory","測定異常コード",4)
+
+            self.eventPool["Auto Measure Request"].set()
 
 
     def utility_setup(self):
@@ -1693,17 +1744,33 @@ class Main_utility_manager(QWidget):
             
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定開始"].getValue():
-                if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
-                    if not self.measurement_start:
-                        print("測定開始 信号到達",self.measurement_start)
-                        self.measurement_start=True
-                        measurement_finish_wait_Thread = threading.Thread(target = self.measurement_finish_wait_Work,daemon=True)
-                        measurement_finish_wait_Thread.start()
+                self.eventPool["Auto Measure Request"].set()
+
+
+                # if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+                #     if not self.measurement_start:
+                #         print("測定開始 信号到達",self.measurement_start)
+                #         self.measurement_start=True
+                #         measurement_finish_wait_Thread = threading.Thread(target = self.measurement_finish_wait_Work,daemon=True)
+                #         measurement_finish_wait_Thread.start()
 
 
 
             if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
+                self.set_memorypool_register("System memory","測定異常コード",4)
                 self.eventPool["Measure Stop"].set()
+
+            if self.error_icon_active:
+                if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転開始"].getValue():
+                    self.set_memorypool_register("System memory","測定異常コード",5)
+                    self.eventPool["Measure Stop"].set()
+                    
+                    self.dataRecord_Start=False
+                    
+                    self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
+                    self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
+                    self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
+                    self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
 
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["運転開始RST"].getValue():
@@ -1718,9 +1785,6 @@ class Main_utility_manager(QWidget):
 
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定終了RST"].getValue():
                 self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
-                self.measurement_start=False
-                self.eventPool["Measure Stop"].clear()
-                self.dataRecord_Start=False
                 # time.sleep(0.5)
                 self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了RST",0)
 
@@ -1755,6 +1819,7 @@ class Main_utility_manager(QWidget):
         self.eventPool["Noise Measure finish"].wait()
         self.eventPool["Noise Measure finish"].clear()
         self.dataRecord_Start=False
+        self.measurement_start=False
         # print("ノイズ測定終了")
         
     def manual_measurement_finish_wait_Work(self):
@@ -1778,6 +1843,7 @@ class Main_utility_manager(QWidget):
             self.eventPool["Manual Measure Pattern finish"].clear()
 
         self.dataRecord_Start=False
+        self.measurement_start=False
         
         self._parent.ui.load_pages.Manual_Measurement_Start_pushButton.blockSignals(False)
         # print("手動測定終了")
@@ -1787,13 +1853,14 @@ class Main_utility_manager(QWidget):
         self.dataRecord_Start=True
         data_receive_Thread = threading.Thread(target = self.data_receive_Work,daemon=True)
         data_receive_Thread.start()
-        self.eventPool["Auto Run Start"].set()
-        self.eventPool["Auto Run finish"].clear()
-        self.eventPool["Auto Run finish"].wait()
-        self.eventPool["Auto Run finish"].clear()
+        self.eventPool["Auto Measure Start"].set()
+        self.eventPool["Auto Measure finish"].clear()
+        self.eventPool["Auto Measure finish"].wait()
+        self.eventPool["Auto Measure finish"].clear()
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
         self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",1)
         self.dataRecord_Start=False
+        self.measurement_start=False
         # print("測定終了")
 
     
@@ -1821,14 +1888,11 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.btn_AutoMode.setEnabled(True)
             self._parent.ui.load_pages.btn_AutoMode.setVisible(True)
 
-
-
             #if PLC tell us not to do measurement
             if self.ethernetConnecton_icon_active and not self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():
         
                 self._parent.ui.load_pages.Measurement_Mode_comboBox.setEnabled(False)
                 self._parent.ui.load_pages.Noise_Measurement_Start_pushButton.setEnabled(False)
-
 
             #if we are free to process any measurement
             else:
@@ -1849,7 +1913,6 @@ class Main_utility_manager(QWidget):
             self._parent.ui.load_pages.Noise_Measurement_Voltage_lineEdit.setEnabled(True)
             self._parent.ui.load_pages.Noise_Measurement_Time_lineEdit.setEnabled(True)
             self._parent.ui.load_pages.Noise_Measurement_Current_lineEdit.setEnabled(True)
-
 
         #if Manual Measurement is ongoing
         if self._parent.MMG.memoryPool["System memory"]["Manual_Measurement_Active"].getValue():

@@ -531,7 +531,26 @@ class Csv_manager():
             writer.writerow(['Filter count', self.profile.filter_count])
 
             
+    def record_finish_Work(self,error_code=0):
 
+        with open(self.csv, 'a', newline='') as csvfile:
+
+            writer = csv.writer(csvfile)
+            writer.writerow("")
+
+            now=datetime.datetime.now()
+
+            if error_code==1:
+                writer.writerow(["測定正常終了","","時刻","{}年_{}月_{}日_{}時_{}分_{}秒".format(now.year,now.month,now.day,now.hour,now.minute,now.second)])
+            elif error_code==2:
+                writer.writerow(["測定中止","シーケンス信号異常","時刻","{}年_{}月_{}日_{}時_{}分_{}秒".format(now.year,now.month,now.day,now.hour,now.minute,now.second)])
+            elif error_code==3:
+                writer.writerow(["測定中止","ユーザー停止操作","時刻","{}年_{}月_{}日_{}時_{}分_{}秒".format(now.year,now.month,now.day,now.hour,now.minute,now.second)])
+            elif error_code==4:
+                writer.writerow(["測定中止","測定禁止域","時刻","{}年_{}月_{}日_{}時_{}分_{}秒".format(now.year,now.month,now.day,now.hour,now.minute,now.second)])
+            elif error_code==5:
+                writer.writerow(["測定中止","装置警報発生、自動停止","時刻","{}年_{}月_{}日_{}時_{}分_{}秒".format(now.year,now.month,now.day,now.hour,now.minute,now.second)])
+            
 
     def prepare_Record_Header(self,type):
 
