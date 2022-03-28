@@ -1957,10 +1957,14 @@ class Operator():
             #check pattern & step
             pattern_number=Modbus_Registor_Pool["実行PTN No."].getValue()
             step_number=Modbus_Registor_Pool["実行STEP No."].getValue()
-            
-            if not pattern_number or not step_number:
+
+            # if not pattern_number or not step_number:
+            #     pattern_number=1
+            #     step_number=1
+            #     self.script_stop=1
+
+            if not pattern_number :
                 pattern_number=1
-                step_number=1
                 self.script_stop=1
 
             folder_name=""
@@ -1969,6 +1973,9 @@ class Operator():
                 folder_name="step_{}_{}℃".format(step_number,Modbus_Registor_Pool["PTNData_{}_STEP_{}_SV値".format(pattern_number,step_number)].getValue())
             else:
                 test_pattern_number=Modbus_Registor_Pool["PTNData_{}_RT測定パターン".format(pattern_number)].getValue()
+                if not test_pattern_number:
+                    # Error_code
+                    pass
                 folder_name="step_0_RT"
 
             test_step_count=Measurement_Pattern["PTNData_{}_実行STEP数".format(test_pattern_number)].getValue()
@@ -1980,15 +1987,11 @@ class Operator():
                 step_list=range(1,test_step_count+1)
             
             if not System_memory["測定異常コード"].getValue():
-                
                 stop_noise_measurement_Thread = threading.Thread(target = self.stop_measurement,daemon=True)
                 stop_noise_measurement_Thread.start()
-
             else:
-                
                 self.script_stop=System_memory["測定異常コード"].getValue()
                 
-
             self.last_time_of_measure=0
 
             for step in step_list:
@@ -2270,7 +2273,11 @@ class Operator():
                                                     loop_start=true
                                                     """)
 
-                    data_rate = float(0.04/script_sample_time)
+                    if script_sample_time:
+                        data_rate = float(0.04/script_sample_time)
+                    else:
+                        data_rate=1
+
                     # print("burst",math.ceil(data_rate))
                     if not data_rate>=1:
                         data_rate=1

@@ -1,8 +1,8 @@
 {
     "app_name": "MVC210100464 - 高温抵抗測定用電気炉",
-    "version" : "v1.6.1",
-    "copyright" : "Copyright © 2021 MOTOYAMA. All rights reserved.",
-    "year" : 2021,
+    "version" : "v1.7.1",
+    "copyright" : "Copyright © 2022 MOTOYAMA. All rights reserved.",
+    "year" : 2022,
     "theme_name" : "default",
     "custom_title_bar": true,
     "startup_size": [

@@ -256,9 +256,6 @@ class Main_utility_manager(QWidget):
         self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",1)
         self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",0)
 
-        
-
-
     def startup_check_dialog(self):
         subprocess2 = subprocess.Popen("ipconfig", shell=True, stdout=subprocess.PIPE)
         subprocess_return = subprocess2.stdout.read()
@@ -644,13 +641,15 @@ class Main_utility_manager(QWidget):
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.",int(self._parent.ui.load_pages.AutoMode_pattern_comboBox.currentIndex()+1))
             
             self.set_memorypool_register("Modbus Registor Pool - Registor","実行PTN No.変更",1)
-            time.sleep(1)
+            time.sleep(0.2)
             
             self.set_memorypool_register("System memory","Auto_Measurement_status",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定開始",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","測定終了",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転停止",0)
             self.set_memorypool_register("Modbus Registor Pool - Registor","運転開始",1)
+
+            time.sleep(0.01)
 
             self.measurement_PenddingWait_Thread = threading.Thread(target = self.measurement_PenddingWait_Work,daemon=True)
             self.measurement_PenddingWait_Thread.start()
@@ -978,12 +977,17 @@ class Main_utility_manager(QWidget):
 
                 last_step=current_step
                 current_pattern=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["実行PTN No."].getValue()
-                hasMeasurement=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(current_pattern,current_step)].getValue()
+                if current_step==0:
+                    hasMeasurement=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_RT計測".format(current_pattern,current_step)].getValue()
+                    self.holding_time=10
+                else:
+                    hasMeasurement=self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_測定有".format(current_pattern,current_step)].getValue()
+                    self.holding_time=10+self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(current_pattern,current_step)].getValue()*60
 
                 if hasMeasurement:
 
-                    self.holding_time=10+self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["PTNData_{}_STEP_{}_キープ時間".format(current_pattern,current_step)].getValue()*60
                     self.eventPool["Auto Measure Request"].clear()
+                    time.sleep(0.01)
 
                     self.measurement_startTimer_Thread = threading.Thread(target = self.measurement_startTimer_Work,daemon=True)
                     self.measurement_startTimer_Thread.start()
@@ -1004,6 +1008,7 @@ class Main_utility_manager(QWidget):
 
         self.set_memorypool_register("System memory","測定異常コード",0)
         time.sleep(self.holding_time)
+
 
         if not self.measurement_start:
             if self._parent.MMG.memoryPool["Modbus Registor Pool - Registor"]["測定可"].getValue():

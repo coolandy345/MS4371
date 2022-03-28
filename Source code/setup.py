@@ -12,7 +12,13 @@ import os
 import shutil
 from cx_Freeze import setup, Executable
 #
-executables = [Executable("change_database.py",icon="icon.ico",target_name="MS4371 高温抵抗測定用電気炉 データベース更新修正工具",copyright="Copyright © 2021 MOTOYAMA. All rights reserved.",shortcut_name="MS4371 高温抵抗測定用電気炉 データベース更新修正工具")]
+executables = [Executable(  "change_database.py",
+                            icon="icon.ico",
+                            target_name="MS4371 高温抵抗測定用電気炉 データベース更新修正工具",
+                            copyright="Copyright © 2022 MOTOYAMA. All rights reserved.",
+                            shortcut_name="MS4371 高温抵抗測定用電気炉 データベース更新修正工具"
+                        )
+                    ]
 
 build_exe_options={
                     "optimize": 1,
@@ -25,14 +31,14 @@ setup(
 
     version="1.0",
     description="データベース更新修正工具",
-    long_description="2021/12 株式会社モトヤマ 設計",
+    long_description="2022/03 株式会社モトヤマ 設計",
     options = {"build_exe": build_exe_options},
     executables=executables,
 )
 
 
 
-executables = [Executable("main.py",icon="icon.ico",base = "Win32GUI",target_name="MS4371 高温抵抗測定用電気炉",copyright="Copyright © 2021 MOTOYAMA. All rights reserved.",shortcut_name="MS4371 高温抵抗測定用電気炉")]
+executables = [Executable("main.py",icon="icon.ico",base = "Win32GUI",target_name="MS4371 高温抵抗測定用電気炉",copyright="Copyright © 2022 MOTOYAMA. All rights reserved.",shortcut_name="MS4371 高温抵抗測定用電気炉")]
 
 includefiles = ['error.ico', 'icon.ico', 'warning.ico', 'libusb-1.0.dll', 'gui_main','Database and Profile','tools','取説資料',"README.md"]
 
@@ -46,9 +52,9 @@ build_exe_options={
 setup(
     name="MS4371 高温抵抗測定用電気炉",
 
-    version="1.6.1",
+    version="1.7.1",
     description="MVC210100464 - 高温抵抗測定用電気炉",
-    long_description="2021/12 株式会社モトヤマ 設計",
+    long_description="2022/03 株式会社モトヤマ 設計",
     options = {"build_exe": build_exe_options},
     executables=executables,
 )
