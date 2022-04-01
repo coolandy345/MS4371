@@ -487,12 +487,12 @@ class Operator():
                     current_timestemp=0
                     current_status=0
                     current_value=0
-                    #Prepare CSV Header
-                    self.csv_manager.prepare_Record_Header(mode_type)
 
                     if self.script_stop:
-                        self.csv_manager.record_finish_Work(self.script_stop)
                         break
+
+                    #Prepare CSV Header
+                    self.csv_manager.prepare_Record_Header(mode_type)
 
                     #starting listen data arrive
                     self.csv_manager.startRecord_CsvFile()
@@ -800,7 +800,7 @@ class Operator():
                     area=(((r1+r2)/2)/2)*(((r1+r2)/2)/2)*math.pi
                     resistance_constance=area/(length*10)
 
-                    while not self.script_stop:
+                    while (not self.script_stop) and (not finish_property):
                         #print("read_Command")
                         text=self.gpib_2657A.read_Command()
                         # print(text)
@@ -810,7 +810,7 @@ class Operator():
                             # text=self.gpib_2657A.read_Command()
 
                             finish_property=True
-                            self.eventPool["Measure Stop"].set()
+                            # self.eventPool["Measure Stop"].set()
 
                         elif text[0].find('start') != -1:
                             pass
@@ -902,10 +902,11 @@ class Operator():
                 
                 
                     #starting listen data arrive
-                    self.csv_manager.record_finish_Work(self.script_stop)
                     self.csv_manager.stopRecord_CsvFile()
 
                     self.last_time_of_measure=voltage_timestemp-data_startTime+self.last_time_of_measure
+
+                self.csv_manager.record_finish_Work(self.script_stop)
 
             # print("Finish all measurement")
             time.sleep(0.1)
@@ -2086,14 +2087,12 @@ class Operator():
                     current_timestemp=0
                     current_status=0
                     current_value=0
-                    #Prepare CSV Header
-                    self.csv_manager.prepare_Record_Header(mode_type)
-
 
                     if self.script_stop:
-                        self.csv_manager.record_finish_Work(self.script_stop)
                         break
 
+                    #Prepare CSV Header
+                    self.csv_manager.prepare_Record_Header(mode_type)
 
                     #starting listen data arrive
                     self.csv_manager.startRecord_CsvFile()
@@ -2405,7 +2404,7 @@ class Operator():
                     area=(((r1+r2)/2)/2)*(((r1+r2)/2)/2)*math.pi
                     resistance_constance=area/(length*10)
 
-                    while not self.script_stop:
+                    while (not self.script_stop) and (not finish_property):
                         #print("read_Command")
                         text=self.gpib_2657A.read_Command()
                         # print(text)
@@ -2415,7 +2414,7 @@ class Operator():
                             # text=self.gpib_2657A.read_Command()
 
                             finish_property=True
-                            self.eventPool["Measure Stop"].set()
+                            # self.eventPool["Measure Stop"].set()
 
                         elif text[0].find('start') != -1:
                             pass
@@ -2506,9 +2505,10 @@ class Operator():
                     #                                 """)
                 
                     
-                    self.csv_manager.record_finish_Work(self.script_stop)
                     self.csv_manager.stopRecord_CsvFile()
                     self.last_time_of_measure=voltage_timestemp-data_startTime+self.last_time_of_measure
+
+                self.csv_manager.record_finish_Work(self.script_stop)
 
             # print("Finish all measurement")
             time.sleep(0.1)
